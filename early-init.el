@@ -21,7 +21,7 @@
     (when (file-exists-p user-init-file)
       (load user-init-file))))
 
-(minimal-emacs-load-user-init "user-pre-early-init.el")
+(minimal-emacs-load-user-init "pre-early-init.el")
 
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
@@ -49,7 +49,7 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-(minimal-emacs-load-user-init "user-post-early-init.el")
+(minimal-emacs-load-user-init "post-early-init.el")
 
 (provide 'early-init)
 
