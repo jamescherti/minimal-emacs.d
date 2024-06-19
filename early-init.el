@@ -14,6 +14,13 @@
 
 ;;; Code:
 
+(defvar default-user-emacs-directory user-emacs-directory
+  "Thed default value of `user-emacs-directory'.")
+(setq user-emacs-directory
+      (expand-file-name "var/" default-user-emacs-directory))
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "themes/" emacs-etc-dir))
+
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
 (setq gc-cons-threshold most-positive-fixnum)
