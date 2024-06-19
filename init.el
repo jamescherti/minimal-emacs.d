@@ -14,6 +14,9 @@
 
 ;;; Code:
 
+;;; Load user-pre-init.el
+(load-user-lisp "user-pre-init.el")
+
 ;;; package: Set package archives for package installation
 (progn
   (require 'package)
@@ -49,11 +52,8 @@
   (eval-when-compile
     (require 'use-package)))
 
-;;; Load user-init.el
-(let ((user-init-file (expand-file-name "user-init.el"
-                                        user-emacs-directory)))
-  (when (file-exists-p user-init-file)
-    (load user-init-file)))
+;;; Load user-pre-init.el
+(load-user-lisp "user-post-init.el")
 
 (provide 'init)
 

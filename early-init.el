@@ -14,6 +14,15 @@
 
 ;;; Code:
 
+(defun load-user-lisp (filename)
+  "Execute a file of Lisp code named FILENAME."
+  (let ((user-init-file (expand-file-name filename
+                                          user-emacs-directory)))
+    (when (file-exists-p user-init-file)
+      (load user-init-file))))
+
+(load-user-lisp "user-pre-early-init.el")
+
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
 (setq gc-cons-threshold most-positive-fixnum)
@@ -39,6 +48,8 @@
   (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
+
+(load-user-lisp "user-post-early-init.el")
 
 (provide 'early-init)
 
