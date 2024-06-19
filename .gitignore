@@ -1,5 +1,10 @@
-/lisp
-/var
-/etc
-/eln-cache
-/user-init.el
+/lisp/
+/var/
+/etc/
+/eln-cache/
+/elpa/
+/straight/
+/pre-init.el
+/post-init.el
+/pre-early-init.el
+/post-early-init.el
