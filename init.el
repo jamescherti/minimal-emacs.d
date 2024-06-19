@@ -15,7 +15,7 @@
 ;;; Code:
 
 ;;; Load user-pre-init.el
-(load-user-lisp "user-pre-init.el")
+(minimal-emacs-load-user-init "user-pre-init.el")
 
 ;;; package: Set package archives for package installation
 (progn
@@ -53,7 +53,7 @@
     (require 'use-package)))
 
 ;;; Load user-pre-init.el
-(load-user-lisp "user-post-init.el")
+(minimal-emacs-load-user-init "user-post-init.el")
 
 (provide 'init)
 
