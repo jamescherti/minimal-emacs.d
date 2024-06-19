@@ -20,7 +20,7 @@
       (expand-file-name "var/" default-user-emacs-directory))
 (add-to-list 'custom-theme-load-path
              (expand-file-name "themes/"
-                               (expand-file-name "etc/" emacs-base-dir)))
+                               (expand-file-name "etc/" user-emacs-directory)))
 
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
