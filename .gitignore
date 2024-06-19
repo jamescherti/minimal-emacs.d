@@ -2,3 +2,4 @@
 /var
 /etc
 /eln-cache
+/user-init.el

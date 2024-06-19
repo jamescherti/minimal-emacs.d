@@ -16,6 +16,7 @@
 
 ;;; package: Set package archives for package installation
 (progn
+  (require 'package)
   (setq package-enable-at-startup nil)
   (setq package-quickstart nil)
 
