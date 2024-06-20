@@ -135,9 +135,6 @@
 
 ;;; Minimal UI
 
-;; Show feedback after typing
-(setq echo-keystrokes 0.02)
-
 ;; Disable GUIs because theyr are inconsistent across systems, desktop
 ;; environments, and themes, and they don't match the look of Emacs.
 (setq use-file-dialog nil)
