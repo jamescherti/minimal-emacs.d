@@ -15,6 +15,8 @@
 ;;; Code:
 
 ;;; Load pre-early-init.el
+(defvar minimal-emacs-debug nil
+  "Non-nil to enable debug.")
 (defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 (defun minimal-emacs-load-user-init (filename)
@@ -32,6 +34,13 @@
 (defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
   "The value of `gc-cons-threshold' after Emacs startup.")
 
+;;; Misc
+
+(set-language-environment "UTF-8")
+
+;; Set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
+
 ;;; Garbage collection
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
@@ -41,21 +50,64 @@
 (add-hook 'emacs-startup-hook (lambda ()
                                 (setq gc-cons-threshold (* 16 1024 1024))))
 
-;;; file-name-handler-alist
+;;; Performance
 
-;; During startup, Emacs will process every opened and loaded file through this
-;; list to identify a suitable handler. However, at that point, it won't
-;; require any of them.
-(defvar minimal-emacs--default-file-name-handler-alist file-name-handler-alist
-  "The default value of the `file-name-handler-alist' variable.")
-(setq file-name-handler-alist nil)
-(defun minimal-emacs--restore-file-name-handler-alist ()
-  "Restore the variables that were modified by `early-init.el'."
-  (setq file-name-handler-alist minimal-emacs--default-file-name-handler-alist))
-(add-hook 'emacs-startup-hook #'minimal-emacs--restore-file-name-handler-alist)
+;; Increase how much is read from processes in a single chunk (default is 4kb).
+(setq read-process-output-max (* 128 1024))  ; 128kb
 
-;; Byte comp
-(setq load-prefer-newer t)  ; Prefer loading newer compiled files
+;; With this method, the redisplay process skips fontification (syntax
+;; highlighting) while you are actively typing or performing other actions.
+(setq redisplay-skip-fontification-on-input t)
+
+;; Reduce rendering/line scan work by not rendering cursors or regions in
+;; non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+;; Prefer loading newer compiled files
+(setq load-prefer-newer t)
+
+;; Disable warnings from the legacy advice API. They aren't useful.
+(setq ad-redefinition-action 'accept)
+
+;; Ignore warnings about "existing variables being aliased".
+(setq warning-suppress-types '((defvaralias) (lexical-binding)))
+
+(unless (daemonp)
+  (unless noninteractive
+    ;; Without this, Emacs will try to resize itself to a specific column size
+    (setq frame-inhibit-implied-resize t)
+
+    ;; A second, case-insensitive pass over `auto-mode-alist' is time wasted.
+    ;; No second pass of case-insensitive search over auto-mode-alist.
+    (setq auto-mode-case-fold nil)
+
+    ;; Reduce *Message* noise at startup. An empty scratch buffer (or the
+    ;; dashboard) is more than enough, and faster to display.
+    (setq inhibit-startup-screen t
+          inhibit-startup-echo-area-message user-login-name)
+    (setq initial-buffer-choice nil
+          inhibit-startup-buffer-menu t
+          inhibit-x-resources t)
+
+    ;; Disable bidirectional text scanning for a modest performance boost.
+    (setq-default bidi-display-reordering 'left-to-right
+                  bidi-paragraph-direction 'left-to-right)
+
+    ;; Give up some bidirectional functionality for slightly faster re-display.
+    (setq bidi-inhibit-bpa t)
+
+    ;; Remove "For information about GNU Emacs..." message at startup
+    (advice-add #'display-startup-echo-area-message :override #'ignore)
+
+    ;; Suppress the vanilla startup screen completely. We've disabled it with
+    ;; `inhibit-startup-screen', but it would still initialize anyway.
+    (advice-add #'display-startup-screen :override #'ignore)
+
+    ;; Shave seconds off startup time by starting the scratch buffer in
+    ;; `fundamental-mode'
+    (setq initial-major-mode 'fundamental-mode
+          initial-scratch-message nil)))
 
 ;; Native comp
 (defvar minimal-emacs-native-comp-reserved-cpus 2
@@ -77,29 +129,52 @@
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
+;; Suppress compiler warnings and don't inundate users with their popups.
+(setq native-comp-async-report-warnings-errors minimal-emacs-debug
+      native-comp-warning-on-missing-source minimal-emacs-debug)
+
+(setq debug-on-error minimal-emacs-debug
+      jka-compr-verbose minimal-emacs-debug)
+
+(setq byte-compile-warnings minimal-emacs-debug)
+(setq byte-compile-verbose minimal-emacs-debug)
+
 ;;; Simple UI
 
 ;; Disable startup screens and messages
-(setq inhibit-startup-screen t)
-(setq initial-scratch-message nil)
 (setq inhibit-splash-screen t)
 
 ;;; Disable unneeded UI elements
-(when (fboundp 'tooltip-mode)
-  (tooltip-mode -1))
-(unless (memq window-system '(mac ns))
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+
+;; HACK: I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
+;;   `scroll-bar-mode' because their manipulation of frame parameters can
+;;   trigger/queue a superfluous (and expensive, depending on the window system)
+;;   frame redraw at startup. The variables must be set to `nil' as well so
+;;   users don't have to call the functions twice to re-enable them.
+(push '(menu-bar-lines . 0)   default-frame-alist)
+(push '(tool-bar-lines . 0)   default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+(setq menu-bar-mode nil
+      tool-bar-mode nil
+      scroll-bar-mode nil)
+
+;; (unless (memq window-system '(mac ns))
+;;   (menu-bar-mode -1))
+;; (when (fboundp 'tool-bar-mode)
+;;   (tool-bar-mode -1))
+;; (when (fboundp 'scroll-bar-mode)
+;;   (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
 ;;; package: Set package archives for package installation
 (progn
   (require 'package)
+
+  ;; Since Emacs 27, package initialization occurs before `user-init-file' is
+  ;; loaded, but after `early-init-file'.
   (setq package-enable-at-startup t)
+
   (setq package-quickstart nil)
 
   (when (version< emacs-version "28")
@@ -115,8 +190,9 @@
                             ("nongnu" . 80)
                             ("stable" . 70)
                             ("melpa"  . 0)))
-  (when package-enable-at-startup
-    (package-initialize)))
+  ;; (when package-enable-at-startup
+  ;;   (package-initialize))
+  )
 
 ;;; use-package:
 (progn
