@@ -17,40 +17,14 @@
 ;;; Load user-pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
 
-;;; package: Set package archives for package installation
-(progn
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (setq package-quickstart nil)
+(use-package auto-compile
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
 
-  (when (version< emacs-version "28")
-    (add-to-list 'package-archives
-                 '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-  (add-to-list 'package-archives
-               '("stable" . "https://stable.melpa.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
-
-  (customize-set-variable 'package-archive-priorities
-                          '(("gnu"    . 99)
-                            ("nongnu" . 80)
-                            ("stable" . 70)
-                            ("melpa"  . 0)))
-  (when package-enable-at-startup
-    (package-initialize)))
-
-;;; use-package:
-(progn
-  ;; Always ensure packages are installed
-  (setq use-package-always-ensure t)
-
-  ;; Ensure the 'use-package' package is installed
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-
-  ;; Load use-package for package configuration
-  (eval-when-compile
-    (require 'use-package)))
+(use-package gcmh
+  :hook
+  (emacs-startup . gcmh-mode))
 
 ;;; Load user-pre-init.el
 (minimal-emacs-load-user-init "post-init.el")
