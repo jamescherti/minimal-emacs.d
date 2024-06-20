@@ -99,7 +99,7 @@
 ;;; package: Set package archives for package installation
 (progn
   (require 'package)
-  (setq package-enable-at-startup nil)
+  (setq package-enable-at-startup t)
   (setq package-quickstart nil)
 
   (when (version< emacs-version "28")
