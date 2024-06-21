@@ -25,7 +25,7 @@
          (expand-file-name filename
                            minimal-emacs--default-user-emacs-directory)))
     (when (file-exists-p user-init-file)
-      (load user-init-file))))
+      (load user-init-file nil t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 
