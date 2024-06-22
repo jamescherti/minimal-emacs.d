@@ -14,7 +14,7 @@
 
 ;;; Code:
 
-;;; Load user-pre-init.el
+;;; Load user-pre-init.el and init packages
 (minimal-emacs-load-user-init "pre-init.el")
 
 (use-package auto-compile
@@ -29,6 +29,18 @@
   ;; (gcmh-high-cons-threshold (* 16 1024 1024))
   :hook
   (emacs-startup . gcmh-mode))
+
+;;; Performance
+
+;; Don't ping things that look like domain names.
+(setq ffap-machine-p-known 'reject)
+
+;; By default, Emacs "updates" its ui more often than it needs to
+(setq idle-update-delay 1.0)
+
+;; Font compacting can be very resource-intensive, especially when rendering
+;; icon fonts on Windows. This will increase memory usage.
+(setq inhibit-compacting-font-caches t)
 
 ;;; Uniquify - Unique buffer name
 (progn
@@ -133,30 +145,9 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
-;;; Minimal UI
-
-;; Disable GUIs because theyr are inconsistent across systems, desktop
-;; environments, and themes, and they don't match the look of Emacs.
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
-(when (bound-and-true-p tooltip-mode)
-  (tooltip-mode -1))
-
-;;; Performance
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
-;; By default, Emacs "updates" its ui more often than it needs to
-(setq idle-update-delay 1.0)
-
-;; Font compacting can be very resource-intensive, especially when rendering
-;; icon fonts on Windows. This will increase memory usage.
-(setq inhibit-compacting-font-caches t)
-
-(provide 'init)
-
 ;;; Load user-pre-init.el
 (minimal-emacs-load-user-init "post-init.el")
+
+(provide 'init)
 
 ;;; init.el ends here

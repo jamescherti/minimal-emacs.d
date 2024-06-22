@@ -34,6 +34,9 @@
 (defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
   "The value of `gc-cons-threshold' after Emacs startup.")
 
+(defvar minimal-emacs-native-comp-reserved-cpus 2
+  "Number of CPUs to reserve and not use for `native-compile'.")
+
 ;;; Misc
 
 (set-language-environment "UTF-8")
@@ -52,6 +55,9 @@
 
 ;;; Performance
 
+;; Prefer loading newer compiled files
+(setq load-prefer-newer t)
+
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
 (setq read-process-output-max (* 128 1024))  ; 128kb
 
@@ -64,9 +70,6 @@
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
-;; Prefer loading newer compiled files
-(setq load-prefer-newer t)
-
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
 
@@ -74,7 +77,63 @@
 (setq warning-suppress-types '((defvaralias) (lexical-binding)))
 
 (unless (daemonp)
+  (let ((old-value (default-toplevel-value 'file-name-handler-alist)))
+    (set-default-toplevel-value
+     'file-name-handler-alist
+     ;; Determine the state of bundled libraries using calc-loaddefs.el.
+     ;; If compressed, retain the gzip handler in `file-name-handler-alist`.
+     ;; If compiled or neither, omit the gzip handler during startup for
+     ;; improved startup and package load time.
+     (if (eval-when-compile
+           (locate-file-internal "calc-loaddefs.el" load-path))
+         nil
+       (list (rassq 'jka-compr-handler old-value))))
+    ;; Ensure the new value persists through any current let-binding.
+    (set-default-toplevel-value 'file-name-handler-alist
+                                file-name-handler-alist)
+    ;; Remember the old value to reset it as needed. (put
+    ;; 'file-name-handler-alist 'initial-value old-value) Restore
+    ;; `file-name-handler-alist' later for handling encrypted or compressed
+    ;; files.
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (set-default-toplevel-value
+                 'file-name-handler-alist
+                 ;; Merge instead of overwrite to preserve any changes made
+                 ;; since startup.
+                 (delete-dups (append file-name-handler-alist old-value))))
+              101))
+
   (unless noninteractive
+    (progn
+      (defun minimal-emacs--reset-inhibited-vars-h ()
+        (setq-default inhibit-redisplay nil
+                      ;; Inhibiting `message' only prevents redraws and
+                      inhibit-message nil)
+        (redraw-frame))
+
+      (defvar minimal-emacs--default-mode-line-format mode-line-format
+        "Default value of `mode-line-format'.")
+      (setq-default mode-line-format nil)
+
+      (defun my--startup-load-user-init-file (fn &rest args)
+        "Around advice for startup--load-user-init-file to reset mode-line-format."
+        (let (init)
+          (unwind-protect
+              (progn
+                (apply fn args)  ; Start up as normal
+                (setq init t))
+            (unless init
+              ;; If we don't undo inhibit-{message, redisplay} and there's an
+              ;; error, we'll see nothing but a blank Emacs frame.
+              (minimal-emacs--reset-inhibited-vars-h))
+            (unless (default-toplevel-value 'mode-line-format)
+              (setq-default mode-line-format
+                            minimal-emacs--default-mode-line-format)))))
+
+      (advice-add 'startup--load-user-init-file :around
+                  #'my--startup-load-user-init-file))
+
     ;; Without this, Emacs will try to resize itself to a specific column size
     (setq frame-inhibit-implied-resize t)
 
@@ -109,10 +168,7 @@
     (setq initial-major-mode 'fundamental-mode
           initial-scratch-message nil)))
 
-;; Native comp
-(defvar minimal-emacs-native-comp-reserved-cpus 2
-  "Number of CPUs to reserve and not use for `native-compile'.")
-
+;;; Native comp
 (defun minimal-emacs-calculate-native-comp-async-jobs ()
   "Set `native-comp-async-jobs-number' based on the available CPUs."
   ;; The `num-processors' function is only available in Emacs >= 28.1
@@ -139,18 +195,16 @@
 (setq byte-compile-warnings minimal-emacs-debug)
 (setq byte-compile-verbose minimal-emacs-debug)
 
-;;; Simple UI
+;;; Disable unneeded UI elements
 
 ;; Disable startup screens and messages
 (setq inhibit-splash-screen t)
 
-;;; Disable unneeded UI elements
-
-;; HACK: I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
-;;   `scroll-bar-mode' because their manipulation of frame parameters can
-;;   trigger/queue a superfluous (and expensive, depending on the window system)
-;;   frame redraw at startup. The variables must be set to `nil' as well so
-;;   users don't have to call the functions twice to re-enable them.
+;; I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
+;; `scroll-bar-mode' because manipulating frame parameters can trigger or queue
+;; a superfluous and potentially expensive frame redraw at startup, depending
+;; on the window system. The variables must also be set to `nil' so users don't
+;; have to call the functions twice to re-enable them.
 (push '(menu-bar-lines . 0)   default-frame-alist)
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
@@ -158,6 +212,14 @@
 (setq menu-bar-mode nil
       tool-bar-mode nil
       scroll-bar-mode nil)
+
+(when (bound-and-true-p tooltip-mode)
+  (tooltip-mode -1))
+
+;; Disable GUIs because theyr are inconsistent across systems, desktop
+;; environments, and themes, and they don't match the look of Emacs.
+(setq use-file-dialog nil)
+(setq use-dialog-box nil)
 
 ;; (unless (memq window-system '(mac ns))
 ;;   (menu-bar-mode -1))
