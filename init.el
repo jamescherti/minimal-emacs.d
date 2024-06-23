@@ -14,6 +14,13 @@
 
 ;;; Code:
 
+;;; Install use-package
+;; Ensure the 'use-package' package is installed and loaded
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package)
+  (eval-when-compile
+    (require 'use-package)))
+
 ;;; Load user-pre-init.el and init packages
 (minimal-emacs-load-user-init "pre-init.el")
 
@@ -30,18 +37,6 @@
   :hook
   (emacs-startup . gcmh-mode))
 
-;;; Performance
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
-;; By default, Emacs "updates" its ui more often than it needs to
-(setq idle-update-delay 1.0)
-
-;; Font compacting can be very resource-intensive, especially when rendering
-;; icon fonts on Windows. This will increase memory usage.
-(setq inhibit-compacting-font-caches t)
-
 ;;; Uniquify - Unique buffer name
 (progn
   (setq uniquify-buffer-name-style 'reverse)
@@ -50,33 +45,30 @@
   (setq uniquify-ignore-buffers-re "^\\*"))
 
 ;;; Files
-(progn
-  ;; Do not auto-disable auto-save after deleting large chunks of text. The
-  ;; purpose of auto-save is to provide a failsafe, and disabling it
-  ;; contradicts this objective.
-  (setq auto-save-include-big-deletions t)
+;; Do not auto-disable auto-save after deleting large chunks of text. The
+;; purpose of auto-save is to provide a failsafe, and disabling it
+;; contradicts this objective.
+(setq auto-save-include-big-deletions t)
 
-  ;; Auto save options
-  (setq kill-buffer-delete-auto-save-files t)
+;; Auto save options
+(setq kill-buffer-delete-auto-save-files t)
 
-  ;; Do not save BackupFiles under the original name with a tilde `~’
-  (setq backup-by-copying t) ; Backup by copying rather renaming
-  (setq delete-old-versions t) ; Delete excess backup versions silently
-  (setq make-backup-files nil)
-  (setq version-control t))
+;; Do not save BackupFiles under the original name with a tilde `~’
+(setq backup-by-copying t) ; Backup by copying rather renaming
+(setq delete-old-versions t) ; Delete excess backup versions silently
+(setq make-backup-files nil)
+(setq version-control t)
 
 ;;; Subr
-(progn
-  ;; Allow for shorter responses: "y" for yes and "n" for no.
-  (defalias #'yes-or-no-p 'y-or-n-p)
-  ;; Never show the hello file
-  (defalias #'view-hello-file #'ignore))
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(defalias #'yes-or-no-p 'y-or-n-p)
+;; Never show the hello file
+(defalias #'view-hello-file #'ignore)
 
 ;;; Mule-util
 (setq truncate-string-ellipsis "…")
 
 ;;; Frames and windows
-
 (setq frame-title-format '("%b – Emacs")
       icon-title-format frame-title-format)
 
@@ -100,7 +92,6 @@
 (setq-default word-wrap t)
 
 ;;; Smooth scrolling
-
 ;; Enables faster scrolling through unfontified regions. This may result in
 ;; brief periods of inaccurate syntax highlighting immediately after scrolling,
 ;; which should quickly self-correct.

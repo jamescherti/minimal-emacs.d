@@ -14,11 +14,20 @@
 
 ;;; Code:
 
-;;; Load pre-early-init.el
+;;; Variables
 (defvar minimal-emacs-debug nil
   "Non-nil to enable debug.")
+
+(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
+  "The value of `gc-cons-threshold' after Emacs startup.")
+
+(defvar minimal-emacs-native-comp-reserved-cpus 2
+  "Number of CPUs to reserve and not use for `native-compile'.")
+
+;;; Load pre-early-init.el
 (defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
+
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((user-init-file
@@ -28,14 +37,6 @@
       (load user-init-file nil t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
-
-;;; Variables
-
-(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
-  "The value of `gc-cons-threshold' after Emacs startup.")
-
-(defvar minimal-emacs-native-comp-reserved-cpus 2
-  "Number of CPUs to reserve and not use for `native-compile'.")
 
 ;;; Misc
 
@@ -49,7 +50,9 @@
 ;; garbage collection during startup but will be reset later.
 (defvar minimal-emacs-default-gc-cons-threshold gc-cons-threshold
   "The default value of `gc-cons-threshold'.")
+
 (setq gc-cons-threshold most-positive-fixnum)
+
 (add-hook 'emacs-startup-hook (lambda ()
                                 (setq gc-cons-threshold (* 16 1024 1024))))
 
@@ -76,6 +79,16 @@
 ;; Ignore warnings about "existing variables being aliased".
 (setq warning-suppress-types '((defvaralias) (lexical-binding)))
 
+;; Don't ping things that look like domain names.
+(setq ffap-machine-p-known 'reject)
+
+;; By default, Emacs "updates" its ui more often than it needs to
+(setq idle-update-delay 1.0)
+
+;; Font compacting can be very resource-intensive, especially when rendering
+;; icon fonts on Windows. This will increase memory usage.
+(setq inhibit-compacting-font-caches t)
+
 (unless (daemonp)
   (let ((old-value (default-toplevel-value 'file-name-handler-alist)))
     (set-default-toplevel-value
@@ -91,10 +104,7 @@
     ;; Ensure the new value persists through any current let-binding.
     (set-default-toplevel-value 'file-name-handler-alist
                                 file-name-handler-alist)
-    ;; Remember the old value to reset it as needed. (put
-    ;; 'file-name-handler-alist 'initial-value old-value) Restore
-    ;; `file-name-handler-alist' later for handling encrypted or compressed
-    ;; files.
+    ;; Remember the old value to reset it as needed.
     (add-hook 'emacs-startup-hook
               (lambda ()
                 (set-default-toplevel-value
@@ -106,6 +116,7 @@
 
   (unless noninteractive
     (progn
+      ;; Disable mode-line-format during init
       (defun minimal-emacs--reset-inhibited-vars-h ()
         (setq-default inhibit-redisplay nil
                       ;; Inhibiting `message' only prevents redraws and
@@ -168,7 +179,7 @@
     (setq initial-major-mode 'fundamental-mode
           initial-scratch-message nil)))
 
-;;; Native comp
+;;; Native comp and Byte comp
 (defun minimal-emacs-calculate-native-comp-async-jobs ()
   "Set `native-comp-async-jobs-number' based on the available CPUs."
   ;; The `num-processors' function is only available in Emacs >= 28.1
@@ -209,8 +220,12 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
-(setq menu-bar-mode nil
-      tool-bar-mode nil
+
+;; (when (fboundp 'tool-bar-mode)
+;;   (tool-bar-mode -1))
+;; (when (fboundp 'scroll-bar-mode)
+;;   (scroll-bar-mode -1))
+(setq tool-bar-mode nil
       scroll-bar-mode nil)
 
 (when (bound-and-true-p tooltip-mode)
@@ -221,52 +236,42 @@
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 
-;; (unless (memq window-system '(mac ns))
-;;   (menu-bar-mode -1))
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
-;; (when (fboundp 'scroll-bar-mode)
-;;   (scroll-bar-mode -1))
+(unless (memq window-system '(mac ns))
+  ;; (menu-bar-mode -1)
+  (setq menu-bar-mode nil))
+
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
 ;;; package: Set package archives for package installation
-(progn
-  (require 'package)
+(require 'package)
 
-  ;; Since Emacs 27, package initialization occurs before `user-init-file' is
-  ;; loaded, but after `early-init-file'.
-  (setq package-enable-at-startup t)
+;; Since Emacs 27, package initialization occurs before `user-init-file' is
+;; loaded, but after `early-init-file'.
+(setq package-enable-at-startup t)
 
-  (setq package-quickstart nil)
+(setq package-quickstart nil)
 
-  (when (version< emacs-version "28")
-    (add-to-list 'package-archives
-                 '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(when (version< emacs-version "28")
   (add-to-list 'package-archives
-               '("stable" . "https://stable.melpa.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+               '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(add-to-list 'package-archives
+             '("stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 
-  (customize-set-variable 'package-archive-priorities
-                          '(("gnu"    . 99)
-                            ("nongnu" . 80)
-                            ("stable" . 70)
-                            ("melpa"  . 0)))
-  ;; (when package-enable-at-startup
-  ;;   (package-initialize))
-  )
+(customize-set-variable 'package-archive-priorities
+                        '(("gnu"    . 99)
+                          ("nongnu" . 80)
+                          ("stable" . 70)
+                          ("melpa"  . 0)))
 
 ;;; use-package:
-(progn
-  ;; Always ensure packages are installed
-  (setq use-package-always-ensure t)
+;; Always ensure packages are installed
+(setq use-package-always-ensure t)
 
-  ;; Ensure the 'use-package' package is installed
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-
-  ;; Load use-package for package configuration
+;; Load use-package for package configuration
+(when (package-installed-p 'use-package)
   (eval-when-compile
     (require 'use-package)))
 
