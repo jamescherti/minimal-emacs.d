@@ -37,13 +37,6 @@
   :hook
   (emacs-startup . gcmh-mode))
 
-;;; Uniquify - Unique buffer name
-(progn
-  (setq uniquify-buffer-name-style 'reverse)
-  (setq uniquify-separator "•")
-  (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-  (setq uniquify-ignore-buffers-re "^\\*"))
-
 ;;; Files
 ;; Do not auto-disable auto-save after deleting large chunks of text. The
 ;; purpose of auto-save is to provide a failsafe, and disabling it
