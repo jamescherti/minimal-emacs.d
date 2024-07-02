@@ -248,6 +248,11 @@
 ;; loaded, but after `early-init-file'.
 (setq package-enable-at-startup t)
 
+(setq package-quickstart nil)
+
+;; Always ensure packages are installed
+(setq use-package-always-ensure t)
+
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
 

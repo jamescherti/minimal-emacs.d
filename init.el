@@ -14,11 +14,12 @@
 
 ;;; Code:
 
+;;; Load pre-init.el (after package/use-package and before init)
+(minimal-emacs-load-user-init "pre-init.el")
+
 ;;; package.el
 
 (require 'package)
-
-(setq package-quickstart nil)
 
 (when (version< emacs-version "28")
   (add-to-list 'package-archives
@@ -52,11 +53,6 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Always ensure packages are installed
-(setq use-package-always-ensure t)
-
-;;; Load pre-init.el (after package/use-package and before init)
-(minimal-emacs-load-user-init "pre-init.el")
 ;;; Load auto-compile and gcmh
 
 (use-package auto-compile
