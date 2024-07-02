@@ -40,21 +40,22 @@
     (package-refresh-contents t)))
 
 ;;; use-package
-;; Always ensure packages are installed
-(setq use-package-always-ensure t)
-
 ;; Load use-package for package configuration
-(when (package-installed-p 'use-package)
-  (eval-when-compile
-    (require 'use-package)))
 
 ;; Ensure the 'use-package' package is installed and loaded
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents t)
   (package-install 'use-package)
   (eval-when-compile
     (require 'use-package)))
 
-;;; Load pre-init.el
+(eval-when-compile
+  (require 'use-package))
+
+;; Always ensure packages are installed
+(setq use-package-always-ensure t)
+
+;;; Load pre-init.el (after package/use-package and before init)
 (minimal-emacs-load-user-init "pre-init.el")
 ;;; Load auto-compile and gcmh
 
