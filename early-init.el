@@ -246,7 +246,7 @@
 ;;; package.el
 ;; Since Emacs 27, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'.
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup t)
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
