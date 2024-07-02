@@ -243,37 +243,10 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-;;; package: Set package archives for package installation
-(require 'package)
-
+;;; package.el
 ;; Since Emacs 27, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'.
-(setq package-enable-at-startup t)
-
-(setq package-quickstart nil)
-
-(when (version< emacs-version "28")
-  (add-to-list 'package-archives
-               '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(add-to-list 'package-archives
-             '("stable" . "https://stable.melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-
-(customize-set-variable 'package-archive-priorities
-                        '(("gnu"    . 99)
-                          ("nongnu" . 80)
-                          ("stable" . 70)
-                          ("melpa"  . 0)))
-
-;;; use-package:
-;; Always ensure packages are installed
-(setq use-package-always-ensure t)
-
-;; Load use-package for package configuration
-(when (package-installed-p 'use-package)
-  (eval-when-compile
-    (require 'use-package)))
+(setq package-enable-at-startup nil)
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")

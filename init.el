@@ -14,15 +14,48 @@
 
 ;;; Code:
 
-;;; Install use-package
+;;; package.el
+
+(defvar minimal-emacs-configure-package t
+  "Non-nil to configure package.el and use-package.")
+
+(when minimal-emacs-configure-package
+  (require 'package)
+
+  (setq package-quickstart nil)
+
+  (when (version< emacs-version "28")
+    (add-to-list 'package-archives
+                 '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+  (add-to-list 'package-archives
+               '("stable" . "https://stable.melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+
+  (customize-set-variable 'package-archive-priorities
+                          '(("gnu"    . 99)
+                            ("nongnu" . 80)
+                            ("stable" . 70)
+                            ("melpa"  . 0))))
+
+;;; use-package
+;; Always ensure packages are installed
+(setq use-package-always-ensure t)
+
+;; Load use-package for package configuration
+(when (package-installed-p 'use-package)
+  (eval-when-compile
+    (require 'use-package)))
+
 ;; Ensure the 'use-package' package is installed and loaded
 (unless (package-installed-p 'use-package)
   (package-install 'use-package)
   (eval-when-compile
     (require 'use-package)))
 
-;;; Load user-pre-init.el and init packages
+;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
+;;; Load auto-compile and gcmh
 
 (use-package auto-compile
   :config
