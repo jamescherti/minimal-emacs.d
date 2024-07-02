@@ -16,27 +16,28 @@
 
 ;;; package.el
 
-(defvar minimal-emacs-configure-package t
-  "Non-nil to configure package.el and use-package.")
+(require 'package)
 
-(when minimal-emacs-configure-package
-  (require 'package)
+(setq package-quickstart nil)
 
-  (setq package-quickstart nil)
-
-  (when (version< emacs-version "28")
-    (add-to-list 'package-archives
-                 '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(when (version< emacs-version "28")
   (add-to-list 'package-archives
-               '("stable" . "https://stable.melpa.org/packages/"))
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/"))
+               '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(add-to-list 'package-archives
+             '("stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 
-  (customize-set-variable 'package-archive-priorities
-                          '(("gnu"    . 99)
-                            ("nongnu" . 80)
-                            ("stable" . 70)
-                            ("melpa"  . 0))))
+(customize-set-variable 'package-archive-priorities
+                        '(("gnu"    . 99)
+                          ("nongnu" . 80)
+                          ("stable" . 70)
+                          ("melpa"  . 0)))
+
+(when package-enable-at-startup
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents t)))
 
 ;;; use-package
 ;; Always ensure packages are installed
