@@ -53,21 +53,6 @@
 (eval-when-compile
   (require 'use-package))
 
-;;; Load auto-compile and gcmh
-
-(use-package auto-compile
-  :config
-  (auto-compile-on-load-mode)
-  (auto-compile-on-save-mode))
-
-(use-package gcmh
-  :custom
-  (gcmh-idle-delay 'auto)
-  (gcmh-auto-idle-delay-factor 10)
-  ;; (gcmh-high-cons-threshold (* 16 1024 1024))
-  :hook
-  (emacs-startup . gcmh-mode))
-
 ;;; Files
 ;; Do not auto-disable auto-save after deleting large chunks of text. The
 ;; purpose of auto-save is to provide a failsafe, and disabling it
