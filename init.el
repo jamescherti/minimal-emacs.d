@@ -62,11 +62,17 @@
 ;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
-;; Do not save BackupFiles under the original name with a tilde `~’
-(setq backup-by-copying t) ; Backup by copying rather renaming
-(setq delete-old-versions t) ; Delete excess backup versions silently
-(setq make-backup-files nil)
-(setq version-control t)
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backup" emacs-var-dir))))
+(setq backup-by-copying nil)
+(setq backup-by-copying-when-linked t)
+(setq make-backup-files t)
+(setq backup-by-copying t)  ; Backup by copying rather renaming
+(setq delete-old-versions t)  ; Delete excess backup versions silently
+(setq version-control t)  ; Use version numbers for backup files
+(setq kept-new-versions 10)
+(setq kept-old-versions 5)
+(setq vc-make-backup-files nil)  ; Do not backup version controlled files
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
