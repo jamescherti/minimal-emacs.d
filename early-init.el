@@ -64,10 +64,6 @@
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
 (setq read-process-output-max (* 128 1024))  ; 128kb
 
-;; With this method, the redisplay process skips fontification (syntax
-;; highlighting) while you are actively typing or performing other actions.
-(setq redisplay-skip-fontification-on-input t)
-
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
 ;; non-focused windows.
 (setq-default cursor-in-non-selected-windows nil)
