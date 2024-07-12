@@ -53,6 +53,11 @@
 (eval-when-compile
   (require 'use-package))
 
+;;; Cus-edit
+(setq custom-file
+      (expand-file-name "custom.el"
+                        minimal-emacs--default-user-emacs-directory))
+
 ;;; Files
 ;; Do not auto-disable auto-save after deleting large chunks of text. The
 ;; purpose of auto-save is to provide a failsafe, and disabling it
@@ -76,9 +81,9 @@
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
+(setq use-short-answers t)
 (defalias #'yes-or-no-p 'y-or-n-p)
-;; Never show the hello file
-(defalias #'view-hello-file #'ignore)
+(defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;;; Mule-util
 (setq truncate-string-ellipsis "…")
