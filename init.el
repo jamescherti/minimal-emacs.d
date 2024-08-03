@@ -71,8 +71,8 @@
 ;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backup" emacs-var-dir))))
+;; (setq backup-directory-alist
+;;       `(("." . ,(expand-file-name "backup" emacs-var-dir))))
 (setq backup-by-copying nil)
 (setq backup-by-copying-when-linked t)
 (setq make-backup-files t)
