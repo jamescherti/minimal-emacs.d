@@ -32,7 +32,7 @@
 (customize-set-variable 'package-archive-priorities
                         '(("gnu"    . 99)
                           ("nongnu" . 80)
-                          ("stable" . 70)
+                          ("melpa-stable" . 70)
                           ("melpa"  . 0)))
 
 (when package-enable-at-startup
