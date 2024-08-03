@@ -70,6 +70,38 @@ The minimal-emacs.d init files support additional customization files that are l
 
 - `~/.emacs.d/post-early-init.el`: This file is loaded after `early-init.el` but before `init.el`. It is useful for setting up configurations that depend on the early initialization but need to be set before the main initialization begins.
 
+## Frequently asked questions
+
+### How to configure Vim keybindings using Evil?
+
+Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` set up Evil along with some additional packages for undo functionality:
+
+``` emacs-lisp
+(use-package undo-fu
+  :ensure t)
+
+(use-package undo-fu-session
+  :ensure t)
+
+(use-package evil
+  :ensure t
+  :after undo-fu
+  :custom
+  (evil-want-keybinding nil)
+  (evil-undo-system 'undo-fu)
+  :config
+  (evil-select-search-module 'evil-search-module 'evil-search)
+  (evil-mode 1))
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :custom
+  (evil-want-integration t)
+  :config
+  (evil-collection-init))
+```
+
 ## License
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
