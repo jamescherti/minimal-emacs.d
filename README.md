@@ -81,6 +81,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :ensure t
   :custom
   (evil-want-keybinding nil)
+  (evil-want-integration t)
   :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-mode 1))
@@ -88,8 +89,6 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 (use-package evil-collection
   :ensure t
   :after evil
-  :custom
-  (evil-want-integration t)
   :config
   (evil-collection-init))
 ```
