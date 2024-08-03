@@ -10,3 +10,5 @@
 /post-init.el
 /pre-early-init.el
 /post-early-init.el
+/easysession
+/transient
