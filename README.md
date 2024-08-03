@@ -77,18 +77,10 @@ The minimal-emacs.d init files support additional customization files that are l
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` set up Evil along with some additional packages for undo functionality:
 
 ``` emacs-lisp
-(use-package undo-fu
-  :ensure t)
-
-(use-package undo-fu-session
-  :ensure t)
-
 (use-package evil
   :ensure t
-  :after undo-fu
   :custom
   (evil-want-keybinding nil)
-  (evil-undo-system 'undo-fu)
   :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-mode 1))
