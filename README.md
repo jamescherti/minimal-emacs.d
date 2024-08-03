@@ -1,11 +1,10 @@
 # Minimal ~/.emacs.d
 
-This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration.
-
-These files are designed to optimize startup time, configure essential settings, and manage package installations efficiently.
+This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration. These files are designed to optimize startup time, configure essential settings, and manage package installations efficiently.
 
 ## Installation
 
+Execute the following command to clone this repository into `~/.emacs.d`:
 ```
 git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 ```
@@ -13,13 +12,13 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 ## Features
 
 1. **Performance Improvements:**
-   - Prefers loading newer compiled files.
    - Increases the amount read from processes in a single chunk.
+   - Customizes `file-name-handler-alist` for improved startup time and package load time.
    - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
    - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
-   - Avoids unnecessary network checks and excessive UI updates.
+   - Avoids unnecessary excessive UI updates.
    - Disables font compacting to avoid high memory usage.
-   - Customizes `file-name-handler-alist` for improved startup time and package load time.
+   - Prefers loading newer compiled files.
    - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
    - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
    - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
