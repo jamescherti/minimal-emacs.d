@@ -53,10 +53,14 @@
 (eval-when-compile
   (require 'use-package))
 
-;;; Cus-edit
+;;; Misc
+(setq enable-recursive-minibuffers t)
 (setq custom-file
       (expand-file-name "custom.el"
                         minimal-emacs--default-user-emacs-directory))
+
+;; switch-to-buffer runs pop-to-buffer-same-window instead
+(setq switch-to-buffer-obey-display-actions t)
 
 ;;; Files
 ;; Do not auto-disable auto-save after deleting large chunks of text. The

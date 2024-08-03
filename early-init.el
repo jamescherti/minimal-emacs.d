@@ -184,13 +184,14 @@
   (setq features (delq 'native-compile features)))
 
 ;; Suppress compiler warnings and don't inundate users with their popups.
-(setq native-comp-async-report-warnings-errors minimal-emacs-debug
-      native-comp-warning-on-missing-source minimal-emacs-debug)
+(setq native-comp-async-report-warnings-errors
+      (or minimal-emacs-debug 'silent))
+(setq native-comp-warning-on-missing-source minimal-emacs-debug)
 
 (setq debug-on-error minimal-emacs-debug
       jka-compr-verbose minimal-emacs-debug)
 
-(setq byte-compile-warnings minimal-emacs-debug)
+(setq byte-compile-warnings (or minimal-emacs-debug '(not obsolete)))
 (setq byte-compile-verbose minimal-emacs-debug)
 
 ;;; Disable unneeded UI elements
