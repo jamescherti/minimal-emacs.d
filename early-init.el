@@ -21,9 +21,6 @@
 (defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
   "The value of `gc-cons-threshold' after Emacs startup.")
 
-(defvar minimal-emacs-native-comp-reserved-cpus 2
-  "Number of CPUs to reserve and not use for `native-compile'.")
-
 ;;; Load pre-early-init.el
 (defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
@@ -175,19 +172,13 @@
     (setq initial-major-mode 'fundamental-mode
           initial-scratch-message nil)))
 
-;;; Native comp and Byte comp
-(defun minimal-emacs-calculate-native-comp-async-jobs ()
-  "Set `native-comp-async-jobs-number' based on the available CPUs."
-  ;; The `num-processors' function is only available in Emacs >= 28.1
-  (max 1 (- (num-processors) minimal-emacs-native-comp-reserved-cpus)))
+;;; Native compilation and Byte compilation
 
 (if (and (featurep 'native-compile)
          (fboundp 'native-comp-available-p)
          (native-comp-available-p))
     ;; Activate `native-compile'
-    (setq native-comp-async-jobs-number
-          (minimal-emacs-calculate-native-comp-async-jobs)
-          native-comp-deferred-compilation t
+    (setq native-comp-deferred-compilation t
           package-native-compile t)
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))

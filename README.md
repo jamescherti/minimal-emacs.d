@@ -4,21 +4,50 @@ This repository hosts a minimal Emacs configuration with `early-init.el` and `in
 
 These files are designed to optimize startup time, configure essential settings, and manage package installations efficiently.
 
-## Features
-
-- Optimized garbage collection for faster startup.
-- Suppression of unnecessary warnings and verbose outputs during byte compilation.
-- Configuration of package archives (MELPA and ELPA).
-- Disabling of unnecessary UI elements (menu bar, tool bar, scroll bar).
-- Automatic installation of essential packages using use-package.
-- Support for additional user-specific configurations.
-
 ## Installation
 
 ```
 git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 ```
 
+## Features
+
+1. **Performance Improvements:**
+   - Prefers loading newer compiled files.
+   - Increases the amount read from processes in a single chunk.
+   - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
+   - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
+   - Avoids unnecessary network checks and excessive UI updates.
+   - Disables font compacting to avoid high memory usage.
+   - Customizes `file-name-handler-alist` for improved startup time and package load time.
+   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
+   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
+   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
+
+2. **Native Compilation and Byte Compilation:**
+   - Configures `native-compile` settings
+   - Suppresses compiler warnings and errors during native compilation.
+
+4. **UI Element Management:**
+   - Disables the startup screen and messages, including menu bar, tool bar, and scroll bars.
+   - Configures Emacs to avoid resizing frames and minimizes unnecessary UI updates.
+
+5. **Package Management:**
+   - Configures package archives and priorities for MELPA, ELPA, and other repositories.
+
+6. **Customizable Initialization Files:**
+   - Supports additional configuration files (`pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`) to allow further customization at different stages of the startup process.
+
+7. **File Management:**
+   - Manages auto-save and backup files, including backup options and version control settings.
+
+8. **User Experience Enhancements:**
+   - Configures user interface settings such as cursor behavior, scrolling, and response to prompts.
+   - Disables beeping and blinking to avoid distractions.
+
+9. **Buffer and Window Configuration:**
+   - Sets default fringe widths and buffer boundaries.
+   - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
 
 ## Update
 
