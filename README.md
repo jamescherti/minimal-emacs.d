@@ -1,6 +1,6 @@
 # Minimal ~/.emacs.d
 
-This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration. These files are designed to optimize startup time, configure essential settings, and manage package installations efficiently.
+This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration, offering a robust foundation for a better vanilla Emacs experience.
 
 ## Installation
 
