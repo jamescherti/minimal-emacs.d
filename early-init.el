@@ -4,7 +4,7 @@
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1
+;; Version: 0.9.9
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
