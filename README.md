@@ -74,7 +74,7 @@ The minimal-emacs.d init files support additional customization files that are l
 
 ### How to configure Vim keybindings using Evil?
 
-Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` set up Evil along with some additional packages for undo functionality:
+Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
 
 ``` emacs-lisp
 (use-package evil
