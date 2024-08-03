@@ -14,7 +14,7 @@
 
 ;;; Code:
 
-;;; Load pre-init.el (after package/use-package and before init)
+;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
 
 ;;; package.el
@@ -157,7 +157,7 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
-;;; Load user-pre-init.el
+;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
 
 (provide 'init)

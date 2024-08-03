@@ -24,7 +24,7 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
    - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
 
 2. **Native Compilation and Byte Compilation:**
-   - Configures `native-compile` settings
+   - Configures native compilation and byte compilation settings
    - Suppresses compiler warnings and errors during native compilation.
 
 4. **UI Element Management:**
