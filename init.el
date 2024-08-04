@@ -4,7 +4,7 @@
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1.0.1
+;; Version: 1.0.0
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -32,7 +32,7 @@
 (customize-set-variable 'package-archive-priorities
                         '(("gnu"    . 99)
                           ("nongnu" . 80)
-                          ("melpa-stable" . 70)
+                          ("stable" . 70)
                           ("melpa"  . 0)))
 
 (when package-enable-at-startup
