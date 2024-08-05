@@ -94,6 +94,13 @@ The minimal-emacs.d init files support additional customization files that are l
 
 - `~/.emacs.d/post-early-init.el`: This file is loaded after `early-init.el` but before `init.el`. It is useful for setting up configurations that depend on the early initialization but need to be set before the main initialization begins.
 
+Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-early-init.el` files with the following header to prevent them from being byte-compiled and to activate lexical binding:
+```elisp
+;;; FILENAME.el --- DESCRIPTION -*- no-byte-compile: t; lexical-binding: t; -*-
+```
+
+(Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
+
 ## Frequently asked questions
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?
@@ -176,6 +183,21 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 (setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
 ```
 
+### How to display the startup?
+
+Add the following to `~/.emacs.d/pre-early-init.el`:
+``` emacs-lisp
+(defun display-startup-time ()
+  "Display startup time."
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'display-startup-time)
+```
+
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
@@ -206,7 +228,7 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
 
-Special thanks to the Doom Emacs developers, as some of the performance optimizations have been inspired by the Doom Emacs project.
+Special thanks to the Doom Emacs developers, as some of the performance optimizations have been inspired by the Doom Emacs project and will serve to create better vanilla Emacs configurations.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
