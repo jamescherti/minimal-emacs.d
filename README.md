@@ -164,7 +164,9 @@ To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-in
 ``` emacs-lisp
 (use-package gcmh
   :ensure t
-  :hook (emacs-init . gcmh-mode))
+  :hook (after-init . gcmh-mode)
+  :custom
+  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
 ```
 
 ### How to increase gc-cons-threshold?
