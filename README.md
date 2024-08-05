@@ -11,6 +11,8 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
@@ -20,8 +22,11 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [Automatically compile Emacs Lisp code (auto-compile)](#automatically-compile-emacs-lisp-code-auto-compile)
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
+    - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
+    - [How to display the startup?](#how-to-display-the-startup)
     - [How to configure straight.el?](#how-to-configure-straightel)
-- [License](#license)
+    - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
+- [Author and license](#author-and-license)
 - [Links](#links)
 
 <!-- markdown-toc end -->
