@@ -139,6 +139,20 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   (vim-tab-bar-mode 1))
 ```
 
+### Automatically compile Emacs Lisp libraries
+
+Add the following to the beginning of `~/.emacs.d/pre-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package auto-compile
+  :custom
+  (auto-compile-check-parens nil)
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
+```
+
+(`auto-compile` provides two minor modes which automatically recompile Emacs Lisp source files. Together these modes guarantee that Emacs never loads outdated byte code files.)
+
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
