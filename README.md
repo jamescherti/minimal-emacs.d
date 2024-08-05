@@ -155,9 +155,10 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 ## How did the author speed up the Emacs configuration startup?
 
-- He defers loading packages when it is not necessary to load them on startup by using `:defer t`.
+- He defers loading packages when it is not necessary to load them on startup by using `:defer t` with `use-package`.
+- He prefers using local minor modes rather than global ones.
 - He also utilizes byte compilation and native compilation.
-- The optimizations in `minimal-emacs.d` also contribute significantly to speeding up Emacs startup.
+- He uses `minimal-emacs.d` as his `early-init.el` and `init.el` because it includes optimizations.
 
 ## License
 
