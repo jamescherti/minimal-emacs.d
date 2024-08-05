@@ -23,9 +23,9 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
     - [Automatically compile Emacs Lisp code (auto-compile)](#automatically-compile-emacs-lisp-code-auto-compile)
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
+    - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
     - [How to display the startup?](#how-to-display-the-startup)
     - [How to configure straight.el?](#how-to-configure-straightel)
-    - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
 - [Author and license](#author-and-license)
 - [Links](#links)
 
@@ -188,6 +188,15 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 (setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
 ```
 
+### How to run the minimal-emacs.d Emacs configuration from another directory?
+
+To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
+```
+emacs --init-directory ~/.config/minimal-emacs.d/
+```
+
+(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
+
 ### How to display the startup?
 
 Add the following to `~/.emacs.d/post-early-init.el`:
@@ -228,15 +237,6 @@ Add the following to `~/.emacs.d/post-early-init.el`:
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 ```
-
-### How to run the minimal-emacs.d Emacs configuration from another directory?
-
-To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
-```
-emacs --init-directory ~/.config/minimal-emacs.d/
-```
-
-(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
 
 ## Author and license
 
