@@ -185,7 +185,7 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 
 ### How to display the startup?
 
-Add the following to `~/.emacs.d/pre-early-init.el`:
+Add the following to `~/.emacs.d/post-early-init.el`:
 ``` emacs-lisp
 (defun display-startup-time ()
   "Display startup time."
