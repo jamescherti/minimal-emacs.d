@@ -59,7 +59,7 @@
 (setq load-prefer-newer t)
 
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
-(setq read-process-output-max (* 128 1024))  ; 128kb
+(setq read-process-output-max (* 256 1024))  ; 256kb
 
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
 ;; non-focused windows.
