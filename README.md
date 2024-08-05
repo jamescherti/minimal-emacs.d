@@ -4,6 +4,21 @@ Optimizing Emacs for speed and efficiency involves fine-tuning its startup proce
 
 This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration, offering a robust foundation for a better vanilla Emacs experience.
 
+## Table of contents
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+- [Installation](#installation)
+- [Features](#features)
+- [Update](#update)
+- [Customizations](#customizations)
+- [Frequently asked questions](#frequently-asked-questions)
+    - [Question: Are post-early-init.el and pre-init.el the same file in terms of the logic?](#question-are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
+    - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
+    - [How to configure straight.el?](#how-to-configure-straightel)
+- [How long does the author's Emacs configuration take to start?](#how-long-does-the-authors-emacs-configuration-take-to-start)
+- [License](#license)
+- [Links](#links)
+<!-- markdown-toc end -->
+
 ## Installation
 
 Execute the following command to clone this repository into `~/.emacs.d`:
