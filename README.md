@@ -16,7 +16,7 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
 - [Update](#update)
 - [Customizations](#customizations)
 - [Frequently asked questions](#frequently-asked-questions)
-    - [Question: Are post-early-init.el and pre-init.el the same file in terms of the logic?](#question-are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
+    - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#question-are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [How to configure straight.el?](#how-to-configure-straightel)
 - [How long does the author's Emacs configuration take to start?](#how-long-does-the-authors-emacs-configuration-take-to-start)
@@ -94,7 +94,7 @@ The minimal-emacs.d init files support additional customization files that are l
 
 ## Frequently asked questions
 
-### Question: Are post-early-init.el and pre-init.el the same file in terms of the logic?
+### Are post-early-init.el and pre-init.el the same file in terms of the logic?
 
 During the execution of `early-init.el` (and `pre-early-init.el` and  `post-early-init.el`), Emacs has not yet loaded the graphical user interface (GUI). This file is used for configurations that need to be applied before the GUI is initialized, such as settings that affect the early stages of the Emacs startup process.
 
