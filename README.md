@@ -141,7 +141,9 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 ### Automatically compile Emacs Lisp libraries
 
-Add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
+
+To activate auto-compile, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
 ``` emacs-lisp
 (use-package auto-compile
   :ensure t
@@ -152,15 +154,15 @@ Add the following to the beginning of `~/.emacs.d/post-init.el`, before all othe
   (auto-compile-on-save-mode))
 ```
 
-(`auto-compile` provides two minor modes which automatically recompile Emacs Lisp source files. Together these modes guarantee that Emacs never loads outdated byte code files.)
+### How to activate gcmh-mode?
 
-### how to activate gcmh?
+The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
 
-Add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
 ``` emacs-lisp
 (use-package gcmh
   :ensure t
-  :hook ((emacs-startup . gcmh-mode)))
+  :hook (emacs-init . gcmh-mode))
 ```
 
 ### How to configure straight.el?
