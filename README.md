@@ -111,7 +111,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 ## How long does the author's Emacs configuration take to start?
 
-The author is using minimal-emacs.d as his early-init.el and init.el. He is using 152 packages.
+The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) as his `early-init.el` and `init.el`. He is using 152 packages.
 
 His Emacs configuration starts in 0.44 seconds.
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
