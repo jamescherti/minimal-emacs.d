@@ -103,7 +103,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   (vim-tab-bar-mode 1))
 ```
 
-## How long does the authors Emacs configuration take to load?
+## How long does the author's Emacs configuration take to start?
 
 The author is using minimal-emacs.d as his early-init.el and init.el. He is using 152 packages (including corfu, cape, consult, evil, evil-collection, vertico, vim-tab-bar, easysession, outline-indent, and many others).
 
