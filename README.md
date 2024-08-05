@@ -141,7 +141,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 ### Automatically compile Emacs Lisp libraries
 
-Add the following to the beginning of `~/.emacs.d/pre-init.el`, before all other `use-package` statements:
+Add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
 ``` emacs-lisp
 (use-package auto-compile
   :ensure t
@@ -153,6 +153,15 @@ Add the following to the beginning of `~/.emacs.d/pre-init.el`, before all other
 ```
 
 (`auto-compile` provides two minor modes which automatically recompile Emacs Lisp source files. Together these modes guarantee that Emacs never loads outdated byte code files.)
+
+### how to activate gcmh?
+
+Add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package gcmh
+  :ensure t
+  :hook ((emacs-startup . gcmh-mode)))
+```
 
 ### How to configure straight.el?
 
