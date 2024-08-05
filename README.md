@@ -80,7 +80,6 @@ During the execution of `early-init.el` (and `pre-early-init.el` and  `post-earl
 
 Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
 
-
 ### How to configure Vim keybindings using Evil?
 
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
