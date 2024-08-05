@@ -105,7 +105,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 ## How long does the author's Emacs configuration take to start?
 
-The author is using minimal-emacs.d as his early-init.el and init.el. He is using 152 packages (including corfu, cape, consult, evil, evil-collection, vertico, vim-tab-bar, easysession, outline-indent, and many others).
+The author is using minimal-emacs.d as his early-init.el and init.el. He is using 152 packages.
 
 His Emacs configuration starts in 0.44 seconds.
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
