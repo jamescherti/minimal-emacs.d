@@ -191,7 +191,7 @@
 (setq debug-on-error minimal-emacs-debug
       jka-compr-verbose minimal-emacs-debug)
 
-(setq byte-compile-warnings (or minimal-emacs-debug '(not obsolete)))
+(setq byte-compile-warnings minimal-emacs-debug)
 (setq byte-compile-verbose minimal-emacs-debug)
 
 ;;; Disable unneeded UI elements
