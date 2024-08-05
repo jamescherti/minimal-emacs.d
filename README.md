@@ -41,7 +41,7 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
    - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
    - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
    - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
-   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
+   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers for the `file-name-handler-alist` optimizations; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
    - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
    - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
    - Avoids unnecessary excessive UI updates.
