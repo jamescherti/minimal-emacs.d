@@ -169,7 +169,7 @@ To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-in
 
 ### How to increase gc-cons-threshold?
 
-Add the following to `~/.emacs.d/post-early-init.el`:
+Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emacs.d` restores the specified amount after startup:
 ``` emacs-lisp
 (setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
 ```
