@@ -224,6 +224,15 @@ Add the following to `~/.emacs.d/post-early-init.el`:
   (load bootstrap-file nil 'nomessage))
 ```
 
+### How to run the minimal-emacs.d Emacs configuration from another directory?
+
+To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
+```
+emacs --init-directory ~/.config/minimal-emacs.d/
+```
+
+(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
+
 ## Author and license
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
