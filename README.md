@@ -202,9 +202,11 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
   (load bootstrap-file nil 'nomessage))
 ```
 
-## License
+## Author and license
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
+
+Special thanks to the Doom Emacs developers, as some of the performance optimizations have been inspired by the Doom Emacs project.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
