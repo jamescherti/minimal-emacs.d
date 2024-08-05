@@ -11,17 +11,20 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
 - [Customizations](#customizations)
 - [Frequently asked questions](#frequently-asked-questions)
-    - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#question-are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
+    - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
+    - [Automatically compile Emacs Lisp libraries](#automatically-compile-emacs-lisp-libraries)
+    - [How to activate gcmh-mode?](#how-to-activate-gcmh-mode)
     - [How to configure straight.el?](#how-to-configure-straightel)
-- [How long does the author's Emacs configuration take to start?](#how-long-does-the-authors-emacs-configuration-take-to-start)
 - [License](#license)
 - [Links](#links)
+
 <!-- markdown-toc end -->
 
 ## Installation
