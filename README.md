@@ -37,7 +37,7 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 
 1. **Performance Improvements:**
    - Increases the amount read from processes in a single chunk.
-   - Customizes `file-name-handler-alist` for improved startup time and package load time.
+   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
    - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
    - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
    - Avoids unnecessary excessive UI updates.
@@ -227,8 +227,6 @@ Add the following to `~/.emacs.d/pre-early-init.el`:
 ## Author and license
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
-
-Special thanks to the Doom Emacs developers; some of the performance optimizations have been inspired by their project and will contribute to improving vanilla Emacs configurations.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
