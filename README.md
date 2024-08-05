@@ -228,7 +228,7 @@ Add the following to `~/.emacs.d/pre-early-init.el`:
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
 
-Special thanks to the Doom Emacs developers, as some of the performance optimizations have been inspired by the Doom Emacs project and will serve to create better vanilla Emacs configurations.
+Special thanks to the Doom Emacs developers; some of the performance optimizations have been inspired by their project and will contribute to improving vanilla Emacs configurations.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
