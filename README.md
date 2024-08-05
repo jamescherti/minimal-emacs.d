@@ -4,6 +4,9 @@ Optimizing Emacs for speed and efficiency involves fine-tuning its startup proce
 
 This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration, offering a robust foundation for a better vanilla Emacs experience.
 
+The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) as his `early-init.el` and `init.el`. He is using 152 packages. His Emacs configuration starts in 0.44 seconds:
+![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
+
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 - [Installation](#installation)
@@ -150,14 +153,11 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   (load bootstrap-file nil 'nomessage))
 ```
 
-## How long does the author's Emacs configuration take to start?
+## How did the author speed up the Emacs configuration startup?
 
-The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) as his `early-init.el` and `init.el`. He is using 152 packages.
-
-His Emacs configuration starts in 0.44 seconds.
-![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
-
-(He defers loading packages when it is not necessary to load them on startup by using `:defer t`. He also utilizes byte compilation and native compilation. The optimizations in minimal-emacs.d also contribute significantly to speeding up Emacs startup.)
+- He defers loading packages when it is not necessary to load them on startup by using `:defer t`.
+- He also utilizes byte compilation and native compilation.
+- The optimizations in `minimal-emacs.d` also contribute significantly to speeding up Emacs startup.
 
 ## License
 
