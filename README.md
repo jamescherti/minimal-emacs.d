@@ -37,15 +37,15 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 
 1. **Performance Improvements:**
    - Increases the amount read from processes in a single chunk.
+   - Prefers loading newer compiled files.
+   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
+   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
+   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
    - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
    - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
    - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
    - Avoids unnecessary excessive UI updates.
    - Disables font compacting to avoid high memory usage.
-   - Prefers loading newer compiled files.
-   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
-   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
-   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
 
 2. **Native Compilation and Byte Compilation:**
    - Configures native compilation and byte compilation settings
