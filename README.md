@@ -148,7 +148,7 @@ The auto-compile package automates the byte-compilation of Emacs Lisp files, ens
 To activate auto-compile, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
 ``` emacs-lisp
 (use-package auto-compile
-  :ensure t
+  :demand t
   :custom
   (auto-compile-check-parens nil)
   :config
