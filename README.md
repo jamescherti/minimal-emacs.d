@@ -110,7 +110,7 @@ The author is using minimal-emacs.d as his early-init.el and init.el. He is usin
 His Emacs configuration starts in 0.44 seconds.
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
 
-(He defers loading packages when it is not required to load them on startup using `:defer t`.)
+(He defers loading packages when it is not required to load them on startup using `:defer t`. He also uses byte compilation and native compilation)
 
 ## License
 
