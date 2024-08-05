@@ -108,6 +108,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 (use-package evil
   :ensure t
   :custom
+  (evil-undo-system 'undo-fu)
   (evil-want-keybinding nil)
   (evil-want-integration t)
   :config
@@ -119,6 +120,15 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :after evil
   :config
   (evil-collection-init))
+
+(use-package undo-fu
+  :ensure t)
+
+(use-package undo-fu-session
+  :ensure t
+  :config
+  (undo-fu-session-global-mode))
+
 ```
 
 You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) Emacs package to `~/.emacs.d/post-init.el` to give the built-in Emacs tab-bar a style similar to Vim's tabbed browsing interface:
