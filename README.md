@@ -72,7 +72,7 @@ The minimal-emacs.d init files support additional customization files that are l
 
 - `~/.emacs.d/post-early-init.el`: This file is loaded after `early-init.el` but before `init.el`. It is useful for setting up configurations that depend on the early initialization but need to be set before the main initialization begins.
 
-**_Question:_ Are post-early-init.el and pre-init.el the same file in terms of the logic?**
+**Question: Are post-early-init.el and pre-init.el the same file in terms of the logic?**
 
 During the execution of `early-init.el` (and `pre-early-init.el` and  `post-early-init.el`), Emacs has not yet loaded the graphical user interface (GUI). This file is used for configurations that need to be applied before the GUI is initialized, such as settings that affect the early stages of the Emacs startup process.
 
