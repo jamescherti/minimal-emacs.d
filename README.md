@@ -144,6 +144,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 Add the following to the beginning of `~/.emacs.d/pre-init.el`, before all other `use-package` statements:
 ``` emacs-lisp
 (use-package auto-compile
+  :ensure t
   :custom
   (auto-compile-check-parens nil)
   :config
