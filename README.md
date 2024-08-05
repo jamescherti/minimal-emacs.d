@@ -167,6 +167,13 @@ To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-in
   :hook (emacs-init . gcmh-mode))
 ```
 
+### How to increase gc-cons-threshold?
+
+Add the following to `~/.emacs.d/post-early-init.el`:
+``` emacs-lisp
+(setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
+```
+
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
