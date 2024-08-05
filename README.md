@@ -11,7 +11,6 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
@@ -19,8 +18,8 @@ The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-ema
 - [Frequently asked questions](#frequently-asked-questions)
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
-    - [Automatically compile Emacs Lisp libraries](#automatically-compile-emacs-lisp-libraries)
-    - [How to activate gcmh-mode?](#how-to-activate-gcmh-mode)
+    - [Automatically compile Emacs Lisp code (auto-compile)](#automatically-compile-emacs-lisp-code-auto-compile)
+    - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to configure straight.el?](#how-to-configure-straightel)
 - [License](#license)
 - [Links](#links)
@@ -142,7 +141,7 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   (vim-tab-bar-mode 1))
 ```
 
-### Automatically compile Emacs Lisp libraries
+### Automatically compile Emacs Lisp code (auto-compile)
 
 The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
 
@@ -157,7 +156,7 @@ To activate auto-compile, add the following to the beginning of `~/.emacs.d/post
   (auto-compile-on-save-mode))
 ```
 
-### How to activate gcmh-mode?
+### How to activate the Garbage Collector Magic Hack (gcmh-mode)
 
 The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
 
