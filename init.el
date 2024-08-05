@@ -96,7 +96,8 @@
 (setq frame-title-format '("%b – Emacs")
       icon-title-format frame-title-format)
 
-;; Do not resize the frames in steps. It can leave gaps.
+;; Resizing the Emacs frame can be costly when changing the font. Disable this
+;; to improve startup times with fonts larger than the system default.
 (setq frame-resize-pixelwise t)
 
 ;; However, do not resize windows pixelwise, as this can cause crashes in some
