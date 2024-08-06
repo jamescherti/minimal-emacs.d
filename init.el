@@ -62,26 +62,45 @@
 ;; switch-to-buffer runs pop-to-buffer-same-window instead
 (setq switch-to-buffer-obey-display-actions t)
 
-;;; Files
-;; Do not auto-disable auto-save after deleting large chunks of text. The
-;; purpose of auto-save is to provide a failsafe, and disabling it
-;; contradicts this objective.
-(setq auto-save-include-big-deletions t)
+;;; Backup files
 
-;; Auto save options
-(setq kill-buffer-delete-auto-save-files t)
+;; Don't generate backups or lockfiles. While auto-save maintains a copy so long
+;; as a buffer is unsaved, backups create copies once, when the file is first
+;; written, and never again until it is killed and reopened. This is better
+;; suited to version control, and I don't want world-readable copies of
+;; potentially sensitive material floating around our filesystem.
+(setq create-lockfiles nil)
 
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backup" user-emacs-directory))))
-(setq backup-by-copying nil)
+(setq tramp-backup-directory-alist backup-directory-alist)
 (setq backup-by-copying-when-linked t)
-(setq make-backup-files t)
 (setq backup-by-copying t)  ; Backup by copying rather renaming
 (setq delete-old-versions t)  ; Delete excess backup versions silently
 (setq version-control t)  ; Use version numbers for backup files
-(setq kept-new-versions 10)
+(setq kept-new-versions 5)
 (setq kept-old-versions 5)
+(setq make-backup-files t)
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
+
+;;; Auto save
+;; Enable auto-save to safeguard against crashes or data loss. The
+;; `recover-file' or `recover-session' functions can be used to restore
+;; auto-saved data.
+(setq auto-save-default t)
+
+;; Do not auto-disable auto-save after deleting large chunks of text. The
+;; purpose of auto-save is to provide a failsafe, and disabling it contradicts
+;; this objective.
+(setq auto-save-include-big-deletions t)
+
+(setq auto-save-list-file-prefix
+      (expand-file-name "autosave/" user-emacs-directory))
+(setq tramp-auto-save-directory
+      (expand-file-name "tramp-autosave/" user-emacs-directory))
+
+;; Auto save options
+(setq kill-buffer-delete-auto-save-files t)
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
