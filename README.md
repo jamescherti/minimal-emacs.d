@@ -114,6 +114,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
+The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by `minimal-emacs.d`. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 ;; Auto-revert in Emacs is a feature that automatically updates the
 ;; contents of a buffer to reflect changes made to the underlying file
