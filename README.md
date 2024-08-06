@@ -16,17 +16,18 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 - [Features](#features)
 - [Update](#update)
 - [Customizations](#customizations)
-- [Frequently asked questions](#frequently-asked-questions)
+    - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
-    - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
-    - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
-    - [Automatically compile Emacs Lisp code (auto-compile)](#automatically-compile-emacs-lisp-code-auto-compile)
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
+    - [How to automatically compile Emacs Lisp code (auto-compile)](#how-to-automatically-compile-emacs-lisp-code-auto-compile)
+    - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
+- [Frequently asked questions](#frequently-asked-questions)
+    - [How to configure straight.el?](#how-to-configure-straightel)
+    - [How to display the startup time?](#how-to-display-the-startup-time)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
     - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
-    - [How to display the startup?](#how-to-display-the-startup)
-    - [How to configure straight.el?](#how-to-configure-straightel)
+    - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
 - [Author and license](#author-and-license)
 - [Links](#links)
 
@@ -91,6 +92,7 @@ git -C ~/.emacs.d pull
 
 ## Customizations
 
+### How to customize early-init.el and init.el?
 The `init.el` and `early-init.el` files should never be modified directly because they are intended to be managed by Git during an update.
 
 The minimal-emacs.d init files support additional customization files that are loaded at different stages of the Emacs startup process. These files allow you to further customize the initialization sequence:
@@ -109,8 +111,6 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 ```
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
-
-## Frequently asked questions
 
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
@@ -138,11 +138,35 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'save-place-mode)
 ```
 
-### Are post-early-init.el and pre-init.el the same file in terms of the logic?
+### How to activate the Garbage Collector Magic Hack (gcmh-mode)
 
-During the execution of `early-init.el` (and `pre-early-init.el` and  `post-early-init.el`), Emacs has not yet loaded the graphical user interface (GUI). This file is used for configurations that need to be applied before the GUI is initialized, such as settings that affect the early stages of the Emacs startup process.
+The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
 
-Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
+To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package gcmh
+  :ensure t
+  :hook (after-init . gcmh-mode)
+  :custom
+  (gcmh-idle-delay 'auto)
+  (gcmh-auto-idle-delay-factor 10)
+  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
+```
+
+### How to automatically compile Emacs Lisp code (auto-compile)
+
+The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
+
+To activate auto-compile, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package auto-compile
+  :demand t
+  :custom
+  (auto-compile-check-parens nil)
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
+```
 
 ### How to configure Vim keybindings using Evil?
 
@@ -198,71 +222,7 @@ You can also install `vdiff`, which provides Vimdiff-like functionality for Emac
   (vdiff-only-highlight-refinements t))
 ```
 
-### Automatically compile Emacs Lisp code (auto-compile)
-
-The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
-
-To activate auto-compile, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
-``` emacs-lisp
-(use-package auto-compile
-  :demand t
-  :custom
-  (auto-compile-check-parens nil)
-  :config
-  (auto-compile-on-load-mode)
-  (auto-compile-on-save-mode))
-```
-
-### How to activate the Garbage Collector Magic Hack (gcmh-mode)
-
-The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
-
-To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
-``` emacs-lisp
-(use-package gcmh
-  :ensure t
-  :hook (after-init . gcmh-mode)
-  :custom
-  (gcmh-idle-delay 'auto)
-  (gcmh-auto-idle-delay-factor 10)
-  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
-```
-
-### How to increase gc-cons-threshold?
-
-Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emacs.d` restores the specified amount after startup:
-``` emacs-lisp
-(setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
-```
-
-### How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?
-
-
-If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼), use the code snippet in this article: [Changing the Ellipsis (“…”) in outline-mode and outline-minor-mode](https://www.jamescherti.com/emacs-customize-ellipsis-outline-minor-mode/).
-
-### How to run the minimal-emacs.d Emacs configuration from another directory?
-
-To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
-```
-emacs --init-directory ~/.config/minimal-emacs.d/
-```
-
-(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
-
-### How to display the startup?
-
-Add the following to `~/.emacs.d/pre-init.el`:
-``` emacs-lisp
-(defun display-startup-time ()
-  "Display startup time."
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                    (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'display-startup-time)
-```
+## Frequently asked questions
 
 ### How to configure straight.el?
 
@@ -289,6 +249,48 @@ Add the following to `~/.emacs.d/pre-init.el`:
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 ```
+
+### How to display the startup time?
+
+Add the following to `~/.emacs.d/pre-init.el`:
+``` emacs-lisp
+(defun display-startup-time ()
+  "Display startup time."
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'display-startup-time)
+```
+
+### How to increase gc-cons-threshold?
+
+Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emacs.d` restores the specified amount after startup:
+``` emacs-lisp
+(setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
+```
+
+### How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?
+
+
+If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼), use the code snippet in this article: [Changing the Ellipsis (“…”) in outline-mode and outline-minor-mode](https://www.jamescherti.com/emacs-customize-ellipsis-outline-minor-mode/).
+
+### How to run the minimal-emacs.d Emacs configuration from another directory?
+
+To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
+```
+emacs --init-directory ~/.config/minimal-emacs.d/
+```
+
+(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
+
+### Are post-early-init.el and pre-init.el the same file in terms of the logic?
+
+During the execution of `early-init.el` (and `pre-early-init.el` and  `post-early-init.el`), Emacs has not yet loaded the graphical user interface (GUI). This file is used for configurations that need to be applied before the GUI is initialized, such as settings that affect the early stages of the Emacs startup process.
+
+Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
 
 ## Author and license
 
