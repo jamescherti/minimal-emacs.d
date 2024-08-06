@@ -62,6 +62,17 @@
 ;; switch-to-buffer runs pop-to-buffer-same-window instead
 (setq switch-to-buffer-obey-display-actions t)
 
+;;; Files
+
+;; Disable the warning "X and Y are the same file". Ignoring this warning is
+;; acceptable since it will redirect you to the existing buffer regardless.
+(setq find-file-suppress-same-file-warnings t)
+
+;; Resolve symlinks when opening files, so that any operations are conducted
+;; from the file's true directory (like `find-file').
+(setq find-file-visit-truename t
+      vc-follow-symlinks t)
+
 ;;; Backup files
 
 ;; Avoid generating backups or lockfiles to prevent creating world-readable
