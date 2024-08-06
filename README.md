@@ -11,18 +11,19 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
 
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
 - [Customizations](#customizations)
 - [Frequently asked questions](#frequently-asked-questions)
+    - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [Automatically compile Emacs Lisp code (auto-compile)](#automatically-compile-emacs-lisp-code-auto-compile)
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
+    - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
     - [How to display the startup?](#how-to-display-the-startup)
     - [How to configure straight.el?](#how-to-configure-straightel)
