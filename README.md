@@ -199,7 +199,7 @@ emacs --init-directory ~/.config/minimal-emacs.d/
 
 ### How to display the startup?
 
-Add the following to `~/.emacs.d/post-early-init.el`:
+Add the following to `~/.emacs.d/pre-init.el`:
 ``` emacs-lisp
 (defun display-startup-time ()
   "Display startup time."
