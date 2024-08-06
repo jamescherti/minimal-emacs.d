@@ -202,7 +202,7 @@
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 (when minimal-emacs-saveplace-enabled
-  (save-place-mode))
+  (add-hook 'after-init-hook #'save-place-mode))
 
 ;;; savehist
 (setq savehist-save-minibuffer-history t)  ;; Default
