@@ -250,21 +250,6 @@ You can also install `vdiff`, which provides Vimdiff-like functionality for Emac
   (load bootstrap-file nil 'nomessage))
 ```
 
-### How to display the startup time?
-
-Add the following to `~/.emacs.d/pre-init.el`:
-``` emacs-lisp
-(defun display-startup-time ()
-  "Display startup time."
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                    (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'display-startup-time)
-```
-
 ### How to increase gc-cons-threshold?
 
 Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emacs.d` restores the specified amount after startup:
