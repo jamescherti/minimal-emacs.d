@@ -153,6 +153,21 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   (vim-tab-bar-mode 1))
 ```
 
+You can also install `vdiff`, which provides Vimdiff-like functionality for Emacs.
+``` emacs-lisp
+(use-package vdiff
+  :ensure t
+  :defer t
+  :commands (vdiff-buffers
+             vdiff-buffers3
+             vdiff-quit
+             vdiff-files
+             vdiff-files3)
+  :custom
+  (vdiff-auto-refine t)
+  (vdiff-only-highlight-refinements t))
+```
+
 ### Automatically compile Emacs Lisp code (auto-compile)
 
 The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
@@ -178,6 +193,8 @@ To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-in
   :ensure t
   :hook (after-init . gcmh-mode)
   :custom
+  (gcmh-idle-delay 'auto)
+  (gcmh-auto-idle-delay-factor 10)
   (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
 ```
 

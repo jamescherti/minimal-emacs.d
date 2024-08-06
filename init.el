@@ -54,13 +54,39 @@
   (require 'use-package))
 
 ;;; Misc
+
+;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)
+
 (setq custom-file
       (expand-file-name "custom.el"
                         minimal-emacs--default-user-emacs-directory))
 
 ;; switch-to-buffer runs pop-to-buffer-same-window instead
 (setq switch-to-buffer-obey-display-actions t)
+
+;; Keep the cursor out of the read-only portions of the.minibuffer
+(setq minibuffer-prompt-properties
+      '(read-only t intangible t cursor-intangible t face
+                  minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+(setq show-paren-delay 0.1
+      show-paren-highlight-openparen t
+      show-paren-when-point-inside-paren t
+      show-paren-when-point-in-periphery t)
+
+(setq whitespace-line-column nil)  ; whitespace-mode
+
+;; I reduced the default value of 9 to simplify the font-lock keyword,
+;; aiming to improve performance. This package helps differentiate
+;; nested delimiter pairs, particularly in languages with heavy use of
+;; parentheses.
+(setq rainbow-delimiters-max-face-count 5)
+
+;; Can be activated with `display-line-numbers-mode'
+(setq-default display-line-numbers-width 3)
+(setq-default display-line-numbers-widen t)
 
 ;;; Files
 
@@ -72,6 +98,27 @@
 ;; from the file's true directory (like `find-file').
 (setq find-file-visit-truename t
       vc-follow-symlinks t)
+
+;; Skip confirmation prompts when creating a new file or buffer
+(setq confirm-nonexistent-file-or-buffer nil)
+
+(setq uniquify-buffer-name-style 'forward)
+
+(setq mouse-yank-at-point t)
+
+(setq frame-title-format '("%b – Emacs")
+      icon-title-format frame-title-format)
+
+;; Prefer vertical splits over horizontal ones
+(setq split-width-threshold 170
+      split-height-threshold nil)
+
+;; The native border "uses" a pixel of the fringe on the rightmost
+;; splits, whereas `window-divider` does not.
+(setq window-divider-default-bottom-width 1
+      window-divider-default-places t
+      window-divider-default-right-width 1)
+(add-hook 'after-init-hook #'window-divider-mode)
 
 ;;; Backup files
 
@@ -97,9 +144,9 @@
 ;; auto-saved data.
 (setq auto-save-default t)
 
-;; Do not auto-disable auto-save after deleting large chunks of text. The
-;; purpose of auto-save is to provide a failsafe, and disabling it contradicts
-;; this objective.
+;; Do not auto-disable auto-save after deleting large chunks of
+;; text. The purpose of auto-save is to provide a failsafe, and
+;; disabling it contradicts this objective.
 (setq auto-save-include-big-deletions t)
 
 (setq auto-save-list-file-prefix
@@ -111,9 +158,11 @@
 (setq kill-buffer-delete-auto-save-files t)
 
 ;;; Auto revert
-(setq auto-revert-stop-on-user-input nil
-      auto-revert-use-notify nil
-      revert-without-query (list ".")  ; Do not prompt
+;; Auto-revert in Emacs is a feature that automatically updates the
+;; contents of a buffer to reflect changes made to the underlying file
+;; on disk.
+(setq revert-without-query (list ".")  ; Do not prompt
+      auto-revert-stop-on-user-input nil
       auto-revert-verbose t)
 
 ;;; recentf
@@ -121,6 +170,7 @@
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
 (setq recentf-max-saved-items 300) ; default is 20
+(setq recentf-auto-cleanup 'mode)
 (add-hook 'after-init-hook #'recentf-mode)
 
 ;;; savehist
@@ -129,8 +179,9 @@
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
-(setq use-short-answers t)
-(defalias #'yes-or-no-p 'y-or-n-p)
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;;; Mule-util
@@ -243,6 +294,15 @@
 
 ;; Remove duplicates from the kill ring to reduce clutter
 (setq kill-do-not-save-duplicates t)
+
+;;; ansi-color
+(setq comint-prompt-read-only t)
+(setq comint-buffer-maximum-size 2048)
+
+;;; compile
+(setq compilation-always-kill t
+      compilation-ask-about-save nil
+      compilation-scroll-output 'first-error)
 
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")

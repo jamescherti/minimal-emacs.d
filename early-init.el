@@ -39,6 +39,8 @@
 
 (set-language-environment "UTF-8")
 
+(setq custom-theme-directory (expand-file-name "themes/" user-emacs-directory))
+
 ;; Set-language-environment sets default-input-method, which is unwanted.
 (setq default-input-method nil)
 
