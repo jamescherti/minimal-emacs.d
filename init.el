@@ -17,19 +17,6 @@
 ;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
 
-;;; Variables
-(defvar minimal-emacs-window-divider-mode-enabled t
-  "Non-nil to enable `window-divider-mode'.")
-
-(defvar minimal-emacs-recentf-enabled t
-  "Non-nil to enable `recentf'.")
-
-(defvar minimal-emacs-savehist-enabled t
-  "Non-nil to enable `savehist'.")
-
-(defvar minimal-emacs-saveplace-enabled t
-  "Non-nil to enable `saveplace'.")
-
 ;;; package.el
 
 (require 'package)
@@ -137,8 +124,7 @@
       window-divider-default-places t
       window-divider-default-right-width 1)
 
-(when minimal-emacs-window-divider-mode-enabled
-  (add-hook 'after-init-hook #'window-divider-mode))
+(add-hook 'after-init-hook #'window-divider-mode)
 
 ;;; Backup files
 
@@ -192,23 +178,20 @@
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-auto-cleanup 'mode)
 
-(when minimal-emacs-recentf-enabled
-  (add-hook 'after-init-hook #'recentf-mode))
-
 ;;; saveplace
 ;; `save-place-mode` enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
-(when minimal-emacs-saveplace-enabled
-  (add-hook 'after-init-hook #'save-place-mode))
 
 ;;; savehist
+;; `savehist` is an Emacs feature that preserves the minibuffer history between
+;; sessions. It saves the history of inputs in the minibuffer, such as commands,
+;; search strings, and other prompts, to a file. This allows users to retain
+;; their minibuffer history across Emacs restarts.
+(setq history-length 300)
 (setq savehist-save-minibuffer-history t)  ;; Default
-
-(when minimal-emacs-savehist-enabled
-  (add-hook 'after-init-hook #'savehist-mode))
 
 ;;; Frames and windows
 
