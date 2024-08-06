@@ -88,6 +88,13 @@
 (setq-default display-line-numbers-width 3)
 (setq-default display-line-numbers-widen t)
 
+(setq comint-prompt-read-only t)
+(setq comint-buffer-maximum-size 2048)
+
+(setq compilation-always-kill t
+      compilation-ask-about-save nil
+      compilation-scroll-output 'first-error)
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
@@ -279,9 +286,8 @@
 ;; Disable wrapping by default due to its performance cost.
 (setq-default truncate-lines t)
 
-;; If enabled and `truncate-lines' is disabled, soft wrapping will not
-;; occur when the window is narrower than
-;; `truncate-partial-width-windows' characters.
+;; If enabled and `truncate-lines' is disabled, soft wrapping will not occur
+;; when the window is narrower than `truncate-partial-width-windows' characters.
 (setq truncate-partial-width-windows nil)
 
 ;; Prefer spaces over tabs. Spaces offer a more consistent default compared to
@@ -290,10 +296,6 @@
               tab-width 4)
 
 (setq-default tab-always-indent t)
-
-;; An archaic default in the age of widescreen 4k displays? I disagree. We still
-;; frequently split our terminals and editor frames, or have them side-by-side,
-;; using up more of that newly available horizontal real-estate.
 
 ;; We often split terminals and editor windows or place them side-by-side,
 ;; making use of the additional horizontal space.
@@ -309,15 +311,6 @@
 
 ;; Remove duplicates from the kill ring to reduce clutter
 (setq kill-do-not-save-duplicates t)
-
-;;; ansi-color
-(setq comint-prompt-read-only t)
-(setq comint-buffer-maximum-size 2048)
-
-;;; compile
-(setq compilation-always-kill t
-      compilation-ask-about-save nil
-      compilation-scroll-output 'first-error)
 
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
