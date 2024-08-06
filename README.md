@@ -11,7 +11,6 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
@@ -21,16 +20,14 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to automatically compile Emacs Lisp code (auto-compile)](#how-to-automatically-compile-emacs-lisp-code-auto-compile)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
-- [Frequently asked questions](#frequently-asked-questions)
     - [How to configure straight.el?](#how-to-configure-straightel)
-    - [How to display the startup time?](#how-to-display-the-startup-time)
+- [Frequently asked questions](#frequently-asked-questions)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
     - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
 - [Author and license](#author-and-license)
 - [Links](#links)
-
 <!-- markdown-toc end -->
 
 ## Installation
@@ -222,8 +219,6 @@ You can also install `vdiff`, which provides Vimdiff-like functionality for Emac
   (vdiff-only-highlight-refinements t))
 ```
 
-## Frequently asked questions
-
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
@@ -249,6 +244,8 @@ You can also install `vdiff`, which provides Vimdiff-like functionality for Emac
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 ```
+
+## Frequently asked questions
 
 ### How to increase gc-cons-threshold?
 
