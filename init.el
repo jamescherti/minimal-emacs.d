@@ -110,6 +110,18 @@
 ;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
+;;; Auto revert
+(setq auto-revert-stop-on-user-input nil
+      auto-revert-use-notify nil
+      revert-without-query (list ".")  ; Do not prompt
+      auto-revert-verbose t)
+
+;;; recentf
+(setq recentf-max-saved-items 300) ; default is 20
+
+;;; savehist
+;; (setq savehist-save-minibuffer-history t)  ;; Default
+
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
 (setq use-short-answers t)
@@ -140,8 +152,6 @@
 ;; Do not show an arrow at the top/bottomin the fringe and empty lines
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
-
-(setq-default word-wrap t)
 
 ;;; Smooth scrolling
 ;; Enables faster scrolling through unfontified regions. This may result in
@@ -188,6 +198,46 @@
 ;; No beeping or blinking
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
+
+;;; Indent and formatting
+
+;; Continue wrapped lines at whitespace rather than breaking in the
+;; middle of a word.
+(setq-default word-wrap t)
+
+;; Disable wrapping by default due to its performance cost.
+(setq-default truncate-lines t)
+
+;; If enabled and `truncate-lines' is disabled, soft wrapping will not
+;; occur when the window is narrower than
+;; `truncate-partial-width-windows' characters.
+(setq truncate-partial-width-windows nil)
+
+;; Prefer spaces over tabs. Spaces offer a more consistent default compared to
+;; 8-space tabs. This setting can be adjusted on a per-mode basis as needed.
+(setq-default indent-tabs-mode nil
+              tab-width 4)
+
+(setq-default tab-always-indent t)
+
+;; An archaic default in the age of widescreen 4k displays? I disagree. We still
+;; frequently split our terminals and editor frames, or have them side-by-side,
+;; using up more of that newly available horizontal real-estate.
+
+;; We often split terminals and editor windows or place them side-by-side,
+;; making use of the additional horizontal space.
+(setq-default fill-column 80)
+
+;; Disable the obsolete practice of end-of-line spacing from the
+;; typewriter era.
+(setq sentence-end-double-space nil)
+
+;; According to the POSIX, a line is defined as "a sequence of zero or
+;; more non-newline characters followed by a terminating newline".
+(setq require-final-newline t)
+
+;; Remove duplicates from the kill ring to reduce clutter
+(setq kill-do-not-save-duplicates t)
 
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
