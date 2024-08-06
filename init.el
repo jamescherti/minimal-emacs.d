@@ -64,12 +64,10 @@
 
 ;;; Backup files
 
-;; Don't generate backups or lockfiles. While auto-save maintains a copy so long
-;; as a buffer is unsaved, backups create copies once, when the file is first
-;; written, and never again until it is killed and reopened. This is better
-;; suited to version control, and I don't want world-readable copies of
-;; potentially sensitive material floating around our filesystem.
+;; Avoid generating backups or lockfiles to prevent creating world-readable
+;; copies of files.
 (setq create-lockfiles nil)
+(setq make-backup-files nil)
 
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backup" user-emacs-directory))))
@@ -80,7 +78,6 @@
 (setq version-control t)  ; Use version numbers for backup files
 (setq kept-new-versions 5)
 (setq kept-old-versions 5)
-(setq make-backup-files t)
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
 
 ;;; Auto save
