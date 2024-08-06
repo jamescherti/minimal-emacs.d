@@ -117,10 +117,15 @@
       auto-revert-verbose t)
 
 ;;; recentf
+;; `recentf' is an Emacs package that maintains a list of recently
+;; accessed files, making it easier to reopen files you have worked on
+;; recently.
 (setq recentf-max-saved-items 300) ; default is 20
+(add-hook 'after-init-hook #'recentf-mode)
 
 ;;; savehist
-;; (setq savehist-save-minibuffer-history t)  ;; Default
+(setq savehist-save-minibuffer-history t)  ;; Default
+(add-hook 'after-init-hook #'savehist-mode)
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.
