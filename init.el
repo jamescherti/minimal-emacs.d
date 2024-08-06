@@ -171,6 +171,9 @@
       auto-revert-stop-on-user-input nil
       auto-revert-verbose t)
 
+;; Revert other buffers (e.g, Dired)
+(setq global-auto-revert-non-file-buffers t)
+
 ;;; recentf
 ;; `recentf' is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
