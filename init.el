@@ -27,6 +27,9 @@
 (defvar minimal-emacs-savehist-enabled t
   "Non-nil to enable `savehist'.")
 
+(defvar minimal-emacs-saveplace-enabled t
+  "Non-nil to enable `saveplace'.")
+
 ;;; package.el
 
 (require 'package)
@@ -191,6 +194,15 @@
 
 (when minimal-emacs-recentf-enabled
   (add-hook 'after-init-hook #'recentf-mode))
+
+;;; saveplace
+;; `save-place-mode` enables Emacs to remember the last location within a file
+;; upon reopening. This feature is particularly beneficial for resuming work at
+;; the precise point where you previously left off.
+(setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
+(setq save-place-limit 600)
+(when minimal-emacs-saveplace-enabled
+  (save-place-mode))
 
 ;;; savehist
 (setq savehist-save-minibuffer-history t)  ;; Default
