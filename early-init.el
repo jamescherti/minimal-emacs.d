@@ -14,14 +14,8 @@
 
 ;;; Code:
 
-;;; Variables
-(defvar minimal-emacs-debug nil
-  "Non-nil to enable debug.")
-
-(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
-  "The value of `gc-cons-threshold' after Emacs startup.")
-
 ;;; Load pre-early-init.el
+
 (defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 
@@ -40,6 +34,22 @@
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 
+;;; Variables
+(defvar minimal-emacs-debug nil
+  "Non-nil to enable debug.")
+
+(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
+  "The value of `gc-cons-threshold' after Emacs startup.")
+
+(defvar minimal-emacs-frame-title-format "%b – Emacs"
+  "Template for displaying the title bar of visible and iconified frame.")
+
+(defvar minimal-emacs-default-gc-cons-threshold gc-cons-threshold
+  "The default value of `gc-cons-threshold'.")
+
+(defvar minimal-emacs--default-mode-line-format mode-line-format
+  "Default value of `mode-line-format'.")
+
 ;;; Misc
 
 (set-language-environment "UTF-8")
@@ -50,8 +60,6 @@
 ;;; Garbage collection
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
-(defvar minimal-emacs-default-gc-cons-threshold gc-cons-threshold
-  "The default value of `gc-cons-threshold'.")
 
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -122,8 +130,6 @@
                       inhibit-message nil)
         (redraw-frame))
 
-      (defvar minimal-emacs--default-mode-line-format mode-line-format
-        "Default value of `mode-line-format'.")
       (setq-default mode-line-format nil)
 
       (defun my--startup-load-user-init-file (fn &rest args)
@@ -249,8 +255,8 @@
 ;; Always ensure packages are installed
 (setq use-package-always-ensure t)
 
-(setq frame-title-format '("%b – Emacs")
-      icon-title-format frame-title-format)
+(setq frame-title-format minimal-emacs-frame-title-format
+      icon-title-format minimal-emacs-frame-title-format)
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
