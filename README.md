@@ -7,7 +7,7 @@ This repository hosts a minimal Emacs configuration with `early-init.el` and `in
 The author is using [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) as his `early-init.el` and `init.el`. He is using 152 packages and his Emacs configuration starts in 0.44 seconds:
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
 
-(The optimizations in minimal-emacs.d contribute significantly to speeding up Emacs startup. Other factors that helped: He defers loading packages when it is not necessary to load them on startup by using `:defer t` with `use-package`. He also utilizes byte compilation and native compilation.)
+(The optimizations in `minimal-emacs.d` significantly contribute to speeding up Emacs startup. Other factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and byte-compiling and native-compiling all `.el` files in advance using [elispcomp](https://github.com/jamescherti/elispcomp).)
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
