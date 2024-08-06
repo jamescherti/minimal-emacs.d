@@ -25,6 +25,11 @@
 (defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 
+(setq custom-theme-directory (expand-file-name "themes/" user-emacs-directory))
+(setq custom-file
+      (expand-file-name "custom.el"
+                        minimal-emacs--default-user-emacs-directory))
+
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((user-init-file
@@ -38,8 +43,6 @@
 ;;; Misc
 
 (set-language-environment "UTF-8")
-
-(setq custom-theme-directory (expand-file-name "themes/" user-emacs-directory))
 
 ;; Set-language-environment sets default-input-method, which is unwanted.
 (setq default-input-method nil)
@@ -230,6 +233,12 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add #'yes-or-no-p :override #'y-or-n-p))
+(defalias #'view-hello-file #'ignore)  ; Never show the hello file
+
 ;;; package.el
 ;; Since Emacs 27, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'.
@@ -239,6 +248,9 @@
 
 ;; Always ensure packages are installed
 (setq use-package-always-ensure t)
+
+(setq frame-title-format '("%b – Emacs")
+      icon-title-format frame-title-format)
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")

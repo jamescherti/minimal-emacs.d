@@ -53,23 +53,20 @@
 (eval-when-compile
   (require 'use-package))
 
-;;; Misc
-
+;;; Minibuffer
 ;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)
-
-(setq custom-file
-      (expand-file-name "custom.el"
-                        minimal-emacs--default-user-emacs-directory))
-
-;; switch-to-buffer runs pop-to-buffer-same-window instead
-(setq switch-to-buffer-obey-display-actions t)
 
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
       '(read-only t intangible t cursor-intangible t face
                   minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+;;; Misc
+
+;; switch-to-buffer runs pop-to-buffer-same-window instead
+(setq switch-to-buffer-obey-display-actions t)
 
 (setq show-paren-delay 0.1
       show-paren-highlight-openparen t
@@ -95,6 +92,7 @@
       compilation-ask-about-save nil
       compilation-scroll-output 'first-error)
 
+(setq truncate-string-ellipsis "…")
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
@@ -199,19 +197,7 @@
 (when minimal-emacs-savehist-enabled
   (add-hook 'after-init-hook #'savehist-mode))
 
-;;; Subr
-;; Allow for shorter responses: "y" for yes and "n" for no.
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
-(defalias #'view-hello-file #'ignore)  ; Never show the hello file
-
-;;; Mule-util
-(setq truncate-string-ellipsis "…")
-
 ;;; Frames and windows
-(setq frame-title-format '("%b – Emacs")
-      icon-title-format frame-title-format)
 
 ;; Resizing the Emacs frame can be costly when changing the font. Disable this
 ;; to improve startup times with fonts larger than the system default.
@@ -222,14 +208,6 @@
 (setq window-resize-pixelwise nil)
 
 (setq resize-mini-windows 'grow-only)
-
-;;; Buffer
-(setq-default left-fringe-width  8)
-(setq-default right-fringe-width 8)
-
-;; Do not show an arrow at the top/bottomin the fringe and empty lines
-(setq-default indicate-buffer-boundaries nil)
-(setq-default indicate-empty-lines nil)
 
 ;;; Smooth scrolling
 ;; Enables faster scrolling through unfontified regions. This may result in
@@ -278,6 +256,12 @@
 (setq ring-bell-function #'ignore)
 
 ;;; Indent and formatting
+(setq-default left-fringe-width  8)
+(setq-default right-fringe-width 8)
+
+;; Do not show an arrow at the top/bottomin the fringe and empty lines
+(setq-default indicate-buffer-boundaries nil)
+(setq-default indicate-empty-lines nil)
 
 ;; Continue wrapped lines at whitespace rather than breaking in the
 ;; middle of a word.

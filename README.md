@@ -208,6 +208,11 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 (setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
 ```
 
+### How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?
+
+
+If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼), use the code snippet in this article: [Changing the Ellipsis (“…”) in outline-mode and outline-minor-mode](https://www.jamescherti.com/emacs-customize-ellipsis-outline-minor-mode/).
+
 ### How to run the minimal-emacs.d Emacs configuration from another directory?
 
 To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
