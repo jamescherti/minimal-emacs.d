@@ -118,7 +118,12 @@
 (setq window-divider-default-bottom-width 1
       window-divider-default-places t
       window-divider-default-right-width 1)
-(add-hook 'after-init-hook #'window-divider-mode)
+
+(defvar minimal-emacs-window-divider-mode-enabled t
+  "Non-nil to enable `window-divider-mode'.")
+
+(when minimal-emacs-window-divider-mode-enabled
+  (add-hook 'after-init-hook #'window-divider-mode))
 
 ;;; Backup files
 
@@ -171,11 +176,21 @@
 ;; recently.
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-auto-cleanup 'mode)
-(add-hook 'after-init-hook #'recentf-mode)
+
+(defvar minimal-emacs-recentf-enabled t
+  "Non-nil to enable `recentf'.")
+
+(when minimal-emacs-recentf-enabled
+  (add-hook 'after-init-hook #'recentf-mode))
 
 ;;; savehist
 (setq savehist-save-minibuffer-history t)  ;; Default
-(add-hook 'after-init-hook #'savehist-mode)
+
+(defvar minimal-emacs-savehist-enabled t
+  "Non-nil to enable `savehist'.")
+
+(when minimal-emacs-savehist-enabled
+  (add-hook 'after-init-hook #'savehist-mode))
 
 ;;; Subr
 ;; Allow for shorter responses: "y" for yes and "n" for no.

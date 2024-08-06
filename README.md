@@ -77,6 +77,9 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
    - Sets default fringe widths and buffer boundaries.
    - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
 
+10. **Miscellaneous**
+    - Configure recentf, savehist, and auto-save
+
 ## Update
 
 To keep your Emacs configuration up to date, you can pull the latest changes from the repository. Run the following command in your terminal:
