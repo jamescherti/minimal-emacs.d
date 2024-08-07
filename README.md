@@ -1,8 +1,6 @@
 # Minimal ~/.emacs.d - Efficient Emacs startup and configuration
 
-Optimizing Emacs for speed and efficiency involves fine-tuning its startup process, managing essential settings, and handling package installations, etc.
-
-This repository hosts a minimal Emacs configuration with `early-init.el` and `init.el` files. It is designed to serve as a base for your vanilla Emacs configuration, offering a robust foundation for a better vanilla Emacs experience.
+The minimal-emacs.d repository provides an optimized Emacs startup with improved defaults, designed to serve as a robust foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 152 packages and his Emacs configuration starts in 0.44 seconds:
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
