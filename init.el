@@ -111,9 +111,6 @@
 
 (setq mouse-yank-at-point t)
 
-(setq frame-title-format '("%b – Emacs")
-      icon-title-format frame-title-format)
-
 ;; Prefer vertical splits over horizontal ones
 (setq split-width-threshold 170
       split-height-threshold nil)
