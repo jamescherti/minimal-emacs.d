@@ -286,7 +286,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 - [minimal-emacs.d @GitHub](https://github.com/jamescherti/minimal-emacs.d)
 
-Other Emacs packages from the same author:
+Other Emacs packages by the same author:
 - [vim-tab-bar.el](https://github.com/jamescherti/vim-tab-bar.el): Make the Emacs tab-bar Look Like Vim’s Tab Bar.
 - [outline-indent.el](https://github.com/jamescherti/outline-indent.el): An Emacs package that provides a minor mode that enables code folding and outlining based on indentation levels for various indentation-based text files, such as YAML, Python, and other indented text files.
 - [easysession.el](https://github.com/jamescherti/easysession.el): Easysession is lightweight Emacs session manager that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, the tab-bar, and the Emacs frames (with or without the Emacs frames size, width, and height).
