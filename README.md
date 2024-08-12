@@ -267,7 +267,7 @@ To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
   (setq vterm-timer-delay 0.01))
 ```
 
-(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev`)
+(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
 ### How to configure straight.el?
 
