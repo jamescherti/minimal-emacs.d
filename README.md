@@ -9,6 +9,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
@@ -18,6 +19,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to automatically compile Emacs Lisp code (auto-compile)](#how-to-automatically-compile-emacs-lisp-code-auto-compile)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
+    - [How to configure vterm](#how-to-configure-vterm)
     - [How to configure straight.el?](#how-to-configure-straightel)
 - [Frequently asked questions](#frequently-asked-questions)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
@@ -26,6 +28,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
 - [Author and license](#author-and-license)
 - [Links](#links)
+
 <!-- markdown-toc end -->
 
 ## Installation
