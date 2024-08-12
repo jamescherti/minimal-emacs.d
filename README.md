@@ -116,11 +116,12 @@ Emacs, by default, stores various configuration files, caches, backups, and othe
 
 One common solution to this issue is the installation of the no-littering package, which reorganizes these files into a more structured format, reducing the clutter in the `~/.emacs.d` directory.
 
-However, an alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/post-early-init.el`:
+However, an alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ```
 (setq minimal-emacs-user-directory user-emacs-directory)
-(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
-(setq user-emacs-directory minimal-emacs-var-dir)
+(setq minimal-emacs-var-dir
+      (expand-file-name "var/" minimal-emacs-user-directory))
+(setq user-emacs-directory minimal-emacs-var-dir) 
 ```
 
 ### How to activate recentf, savehist, saveplace, and auto-revert?
