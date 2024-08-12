@@ -182,6 +182,23 @@ To activate auto-compile, add the following to the beginning of `~/.emacs.d/post
   (auto-compile-on-save-mode))
 ```
 
+### How to configure vterm
+
+The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
+
+To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(use-package vterm
+  :ensure t
+  :defer t
+  :commands vterm
+  :config
+  ;; Speed up vterm
+  (setq vterm-timer-delay 0.01))
+```
+
+(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
+
 ### How to configure Vertico, Consult, and Embark
 
 Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities. Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed). Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
@@ -412,23 +429,6 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
   :commands global-evil-surround-mode
   :hook (after-init . global-evil-surround-mode))
 ```
-
-### How to configure vterm
-
-The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
-
-To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-(use-package vterm
-  :ensure t
-  :defer t
-  :commands vterm
-  :config
-  ;; Speed up vterm
-  (setq vterm-timer-delay 0.01))
-```
-
-(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
 ### How to configure straight.el?
 
