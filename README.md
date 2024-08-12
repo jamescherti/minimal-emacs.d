@@ -9,12 +9,12 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-
 - [Installation](#installation)
 - [Features](#features)
 - [Update](#update)
 - [Customizations](#customizations)
     - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
+    - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to automatically compile Emacs Lisp code (auto-compile)](#how-to-automatically-compile-emacs-lisp-code-auto-compile)
@@ -121,7 +121,7 @@ However, an alternative lightweight approach is to simply change the default `~/
 (setq minimal-emacs-user-directory user-emacs-directory)
 (setq minimal-emacs-var-dir
       (expand-file-name "var/" minimal-emacs-user-directory))
-(setq user-emacs-directory minimal-emacs-var-dir) 
+(setq user-emacs-directory minimal-emacs-var-dir)
 ```
 
 ### How to activate recentf, savehist, saveplace, and auto-revert?
