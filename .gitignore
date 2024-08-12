@@ -12,3 +12,7 @@
 /post-early-init.el
 /easysession
 /transient
+/custom.el
+/history
+/recentf
+/saveplace

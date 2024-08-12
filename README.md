@@ -198,11 +198,11 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 ``` emacs-lisp
 (use-package vim-tab-bar
   :ensure t
-  :config
-  (vim-tab-bar-mode 1))
+  :commands vim-tab-bar-mode
+  :hook (after-init . vim-tab-bar-mode))
 ```
 
-You can also install `vdiff`, which provides Vimdiff-like functionality for Emacs.
+You can also add `vdiff`, a package that provides Vimdiff-like functionality to Emacs:
 ``` emacs-lisp
 (use-package vdiff
   :ensure t
@@ -215,6 +215,41 @@ You can also install `vdiff`, which provides Vimdiff-like functionality for Emac
   :custom
   (vdiff-auto-refine t)
   (vdiff-only-highlight-refinements t))
+```
+
+You can also add `evil-commentary`, which allows you to comment and uncomment by pressing `gc` in both normal and visual modes:
+``` emacs-lisp
+(use-package evil-commentary
+  :after evil
+  :ensure t
+  :defer t
+  :commands (evil-commentary evil-commentary-line)
+  :custom
+  (comment-empty-lines t)
+  :init
+  (with-eval-after-load "evil"
+    (evil-define-key 'visual 'global (kbd "gc") #'evil-commentary)
+    (evil-define-key 'normal 'global (kbd "gc") #'evil-commentary-line)))
+```
+
+The `evil-visualstar` package allows using `*` or `#` search from the visual selection:
+``` emacs-lisp
+(use-package evil-visualstar
+  :after evil
+  :ensure t
+  :defer t
+  :commands global-evil-visualstar-mode
+  :hook (after-init . global-evil-visualstar-mode))
+```
+
+The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
+``` emacs-lisp
+(use-package evil-surround
+  :after evil
+  :ensure t
+  :defer t
+  :commands global-evil-surround-mode
+  :hook (after-init . global-evil-surround-mode))
 ```
 
 ### How to configure straight.el?
@@ -259,12 +294,21 @@ If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) t
 
 ### How to run the minimal-emacs.d Emacs configuration from another directory?
 
-To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option. For example, to run Emacs with the configuration located in ~/.config/minimal-emacs.d/, use the following command:
+To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option.
+
+For example, to run Emacs with the configuration located in `~/.config/minimal-emacs.d/`, follow these steps:
+
+1. Clone the repository into ~/.config/minimal-emacs.d/ using:
+```
+git clone https://github.com/jamescherti/minimal-emacs.d ~/.config/minimal-emacs.d
+```
+
+2. Start Emacs with the specified configuration directory:
 ```
 emacs --init-directory ~/.config/minimal-emacs.d/
 ```
 
-(This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.)
+This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?
 
