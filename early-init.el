@@ -132,7 +132,7 @@
 
       (setq-default mode-line-format nil)
 
-      (defun my--startup-load-user-init-file (fn &rest args)
+      (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
         "Around advice for startup--load-user-init-file to reset mode-line-format."
         (let (init)
           (unwind-protect
@@ -148,7 +148,7 @@
                             minimal-emacs--default-mode-line-format)))))
 
       (advice-add 'startup--load-user-init-file :around
-                  #'my--startup-load-user-init-file))
+                  #'minimal-emacs--startup-load-user-init-file))
 
     ;; Without this, Emacs will try to resize itself to a specific column size
     (setq frame-inhibit-implied-resize t)
