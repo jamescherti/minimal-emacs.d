@@ -114,7 +114,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
 
-One common solution to this issue is the installation of the no-littering package, which reorganizes these files into a more structured format, reducing the clutter in the `~/.emacs.d` directory.
+One common solution to this issue is the installation of the no-littering package, which reduces clutter in the `~/.emacs.d` directory.
 
 However, an alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ```
