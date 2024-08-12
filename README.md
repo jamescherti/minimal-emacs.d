@@ -110,6 +110,19 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
 
+### Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`
+
+Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
+
+One common solution to this issue is the installation of the no-littering package, which reorganizes these files into a more structured format, reducing the clutter in the `~/.emacs.d` directory.
+
+However, an alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/post-early-init.el`:
+```
+(setq minimal-emacs-user-directory user-emacs-directory)
+(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
+(setq user-emacs-directory minimal-emacs-var-dir)
+```
+
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by `minimal-emacs.d`. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:

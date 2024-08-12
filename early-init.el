@@ -16,19 +16,19 @@
 
 ;;; Load pre-early-init.el
 
-(defvar minimal-emacs--default-user-emacs-directory user-emacs-directory
+(defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 
 (setq custom-theme-directory (expand-file-name "themes/" user-emacs-directory))
 (setq custom-file
       (expand-file-name "custom.el"
-                        minimal-emacs--default-user-emacs-directory))
+                        minimal-emacs-user-directory))
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((user-init-file
          (expand-file-name filename
-                           minimal-emacs--default-user-emacs-directory)))
+                           minimal-emacs-user-directory)))
     (when (file-exists-p user-init-file)
       (load user-init-file nil t))))
 
