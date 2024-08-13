@@ -181,6 +181,7 @@ To activate auto-compile, add the following to the beginning of `~/.emacs.d/post
   :demand t
   :custom
   (auto-compile-check-parens nil)
+  (auto-compile-display-buffer nil)
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
@@ -257,7 +258,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :after consult
   :ensure t
   :defer t
   :hook
