@@ -228,8 +228,8 @@
       ;; `window-vscroll' for tall lines.
       auto-window-vscroll nil
       ;; Mouse
-      mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
-      mouse-wheel-scroll-amount-horizontal 2)
+      mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
+      mouse-wheel-scroll-amount-horizontal 1)
 
 ;;; Cursor
 ;; The blinking cursor is distracting and interferes with cursor settings in
