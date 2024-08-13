@@ -258,6 +258,12 @@
 (setq frame-title-format minimal-emacs-frame-title-format
       icon-title-format minimal-emacs-frame-title-format)
 
+;; Emacs comes with several built-in packages, such as Org-mode, that are
+;; essential for many users. However, these built-in packages are often not the
+;; latest versions available. Ensure that your built-in packages are always up
+;; to date with:
+(setq package-install-upgrade-built-in t)
+
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
 

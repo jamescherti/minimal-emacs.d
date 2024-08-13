@@ -298,6 +298,16 @@
 ;; otherwise empty.
 (setq comment-empty-lines t)
 
+;;; Mode line
+
+;; Setting `display-time-default-load-average' to nil makes Emacs omit the load
+;; average information from the mode line.
+(setq display-time-default-load-average nil)
+
+;; Display the current line and column numbers in the mode line
+(setq line-number-mode t)
+(setq column-number-mode t)
+
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
 
