@@ -257,8 +257,8 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
+  :after (consult embark)
   :ensure t
-  :defer t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -349,13 +349,15 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
 
 ``` emacs-lisp
+;; evil-want-keybinding must be declared before Evil and Evil Collection
+(setq evil-want-keybinding nil)
+
 (use-package evil
   :ensure t
-  :custom
-  (evil-undo-system 'undo-fu)
-  (evil-want-integration t)
   :init
-  (setq-default evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-mode 1))
@@ -363,7 +365,6 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 (use-package evil-collection
   :after evil
   :ensure t
-  :after evil
   :config
   (evil-collection-init))
 
