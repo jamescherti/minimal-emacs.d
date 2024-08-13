@@ -93,6 +93,10 @@
       compilation-scroll-output 'first-error)
 
 (setq truncate-string-ellipsis "…")
+
+;; Configure Emacs to ask for confirmation before exiting
+(setq confirm-kill-emacs 'y-or-n-p)
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
