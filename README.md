@@ -441,7 +441,7 @@ To set up Language Server Protocol (LSP) servers using Eglot, you can configure 
              eglot-format-buffer)
 
   :custom
-  (eglot-report-progress nil)  ;; Prevent Eglot minibuffer spam
+  (eglot-report-progress nil)  ; Prevent minibuffer spam
 
   :config
   ;; Optimizations
@@ -468,6 +468,9 @@ Here is an example of how to configure Eglot to enable or disable certain option
                          :mccabe (:enabled t)
                          :yapf (:enabled :json-false)
                          :rope_autoimport (:enabled :json-false)))))
+
+(add-hook 'python-mode-hook #'eglot)
+(add-hook 'python-ts-mode-hook #'eglot)
 ```
 
 ### How to configure straight.el?
