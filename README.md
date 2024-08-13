@@ -419,7 +419,7 @@ You can also add the following code to enable commenting and uncommenting by pre
 ``` emacs-lisp
 (with-eval-after-load "evil"
   (evil-define-operator my-evil-comment-or-uncomment (beg end)
-    "Toggle comment from BEG to END."
+    "Toggle comment for the region between BEG and END."
     (interactive "<r>")
     (comment-or-uncomment-region beg end))
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
