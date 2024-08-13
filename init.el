@@ -292,6 +292,12 @@
 ;; Remove duplicates from the kill ring to reduce clutter
 (setq kill-do-not-save-duplicates t)
 
+;; Ensures that empty lines within the commented region are also commented out.
+;; This prevents unintended visual gaps and maintains a consistent appearance,
+;; ensuring that comments apply uniformly to all lines, including those that are
+;; otherwise empty.
+(setq comment-empty-lines t)
+
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
 

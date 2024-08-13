@@ -418,7 +418,6 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
 ``` emacs-lisp
 (with-eval-after-load "evil"
-  (setq comment-empty-lines t)
   (evil-define-operator my-evil-comment-or-uncomment (beg end)
     "Toggle comment from BEG to END."
     (interactive "<r>")
