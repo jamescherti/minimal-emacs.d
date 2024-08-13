@@ -448,7 +448,8 @@ To set up Language Server Protocol (LSP) servers using Eglot, you can configure 
   (setq jsonrpc-event-hook nil))
 ```
 
-Here is an example of how to configure the `pylsp` server for Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
+Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
+
 ``` emacs-lisp
 (setq-default eglot-workspace-configuration
               `(:pylsp (:plugins
