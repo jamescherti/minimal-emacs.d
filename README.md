@@ -1,4 +1,5 @@
 # Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup
+![License](https://img.shields.io/github/license/jamescherti/minimal-emacs.d)
 
 The **minimal-emacs.d** repository offers a starter kit with improved Emacs defaults and optimized startup, designed to serve as a robust foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
 
