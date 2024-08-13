@@ -415,14 +415,15 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
   :hook (after-init . global-evil-surround-mode))
 ```
 
-You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (Special thanks to Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
+You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
 ``` emacs-lisp
 (with-eval-after-load "evil"
-  (evil-define-operator my-evil-comment (beg end)
+  (setq comment-empty-lines t)
+  (evil-define-operator my-evil-comment-or-uncomment (beg end)
     "Toggle comment from BEG to END."
     (interactive "<r>")
     (comment-or-uncomment-region beg end))
-  (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment))
+  (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 ```
 
 ### How to configure straight.el?
