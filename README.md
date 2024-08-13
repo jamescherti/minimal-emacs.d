@@ -425,6 +425,49 @@ You can also add the following code to enable commenting and uncommenting by pre
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 ```
 
+### Configuring LSP Servers with Eglot (built-in)
+
+To set up Language Server Protocol (LSP) servers using Eglot, you can configure it in your Emacs setup as follows. This configuration ensures minimal disruption from Eglot’s progress reporting and optimizes performance by disabling unnecessary logging.
+
+``` emacs-lisp
+(use-package eglot
+  :ensure nil
+  :defer t
+  :commands (eglot
+             eglot-rename
+             eglot-ensure
+             eglot-rename
+             eglot-format-buffer)
+
+  :custom
+  (eglot-report-progress nil)  ;; Prevent Eglot minibuffer spam
+
+  :config
+  ;; Optimizations
+  (fset #'jsonrpc--log-event #'ignore)
+  (setq jsonrpc-event-hook nil))
+```
+
+Here is an example of how to configure the `pylsp` server for Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
+``` emacs-lisp
+(setq-default eglot-workspace-configuration
+              `(:pylsp (:plugins
+                        (; Fix imports and syntax
+                         :isort (:enabled t)
+                         :autopep8 (:enabled t)
+
+                         ;; Syntax checkers (work with flymake)
+                         :pylint (:enabled t)
+                         :pycodestyle (:enabled t)
+                         :flake8 (:enabled t)
+                         :pyflakes (:enabled t)
+                         :pydocstyle (:enabled t)
+
+                         :mccabe (:enabled t)
+                         :yapf (:enabled :json-false)
+                         :rope_autoimport (:enabled :json-false)))))
+```
+
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
