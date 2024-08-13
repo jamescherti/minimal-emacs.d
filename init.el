@@ -224,8 +224,10 @@
       scroll-conservatively 10
       scroll-margin 0
       scroll-preserve-screen-position t
-      ;; Minimize cursor lag slightly by preventing automatic adjustment of
-      ;; `window-vscroll' for tall lines.
+      ;; Reduce cursor lag by preventing automatic adjustments to
+      ;; `window-vscroll' for unusually long lines. Setting
+      ;; `auto-window-vscroll' it to nil also resolves the issue of random
+      ;; half-screen jumps during scrolling.
       auto-window-vscroll nil
       ;; Mouse
       mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
