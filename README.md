@@ -125,8 +125,7 @@ However, an alternative lightweight approach is to simply change the default `~/
 (setq minimal-emacs-user-directory user-emacs-directory)
 (setq minimal-emacs-var-dir
       (expand-file-name "var/" minimal-emacs-user-directory))
-(setq package-user-dir
-      (expand-file-name "elpa" minimal-emacs-user-directory))
+(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
 (setq user-emacs-directory minimal-emacs-var-dir)
 ```
 
