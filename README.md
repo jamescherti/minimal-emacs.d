@@ -6,7 +6,7 @@ The **minimal-emacs.d** repository offers a starter kit with improved Emacs defa
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 152 packages and his Emacs configuration starts in 0.44 seconds:
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/emacs-startup.png)
 
-(The optimizations in `minimal-emacs.d` significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and byte-compiling and native-compiling all `.el` files in advance using [elispcomp](https://github.com/jamescherti/elispcomp). The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance.)
+(The optimizations in `minimal-emacs.d` significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and byte-compiling and native-compiling all `.el` files. The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance.)
 
 ## Table of contents
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
@@ -353,13 +353,15 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :ensure t
   :custom
   (evil-undo-system 'undo-fu)
-  (evil-want-keybinding nil)
   (evil-want-integration t)
+  :init
+  (setq-default evil-want-keybinding nil)
   :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-mode 1))
 
 (use-package evil-collection
+  :after evil
   :ensure t
   :after evil
   :config
