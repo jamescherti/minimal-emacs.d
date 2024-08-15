@@ -260,7 +260,7 @@
 ;; This controls how long Emacs will blink to show the deleted pairs with
 ;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
 ;; after each deletion, disrupting the flow of editing.
-(setq delete-pair-blink-delay 0.1)
+(setq delete-pair-blink-delay 0.03)
 
 ;;; Indent and formatting
 (setq-default left-fringe-width  8)
