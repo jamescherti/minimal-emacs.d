@@ -380,7 +380,15 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   (evil-collection-init))
 
 (use-package undo-fu
-  :ensure t)
+  :ensure t
+  :commands (undo-fu-only-undo
+             undo-fu-only-redo
+             undo-fu-only-redo-all
+             undo-fu-disable-checkpoint)
+  :custom
+  ;; 3 times the default values
+  (undo-limit (* 3 160000))
+  (undo-strong-limit (* 3 240000)))
 
 (use-package undo-fu-session
   :ensure t
@@ -429,6 +437,18 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
   :ensure t
   :defer t
   :commands global-evil-surround-mode
+  :custom
+  (evil-surround-pairs-alist
+   '((?\( . ("(" . ")"))
+     (?\[ . ("[" . "]"))
+     (?\{ . ("{" . "}"))
+
+     (?\) . ("(" . ")"))
+     (?\] . ("[" . "]"))
+     (?\} . ("{" . "}"))
+
+     (?< . ("<" . ">"))
+     (?> . ("<" . ">"))))
   :hook (after-init . global-evil-surround-mode))
 ```
 
