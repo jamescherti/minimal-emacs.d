@@ -82,8 +82,7 @@
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
 
-;; Ignore warnings about "existing variables being aliased".
-(setq warning-suppress-types '((defvaralias) (lexical-binding)))
+(setq warning-suppress-types '((lexical-binding)))
 
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
