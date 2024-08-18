@@ -130,6 +130,11 @@ However, an alternative lightweight approach is to simply change the default `~/
 (setq user-emacs-directory minimal-emacs-var-dir)
 ```
 
+To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device`:
+```
+(setq custom-file null-device)
+```
+
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by `minimal-emacs.d`. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
