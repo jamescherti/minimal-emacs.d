@@ -314,6 +314,9 @@
 ;; otherwise empty.
 (setq comment-empty-lines t)
 
+;; Eliminate delay before highlighting search matches
+(setq lazy-highlight-initial-delay 0)
+
 ;;; Mode line
 
 ;; Setting `display-time-default-load-average' to nil makes Emacs omit the load
