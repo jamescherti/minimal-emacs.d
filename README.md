@@ -193,7 +193,6 @@ To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-in
   (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
 ```
 
-
 ### How to configure vterm
 
 The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
