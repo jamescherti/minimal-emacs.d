@@ -552,6 +552,24 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (load bootstrap-file nil 'nomessage))
 ```
 
+### Which other packages can be interesting to add?
+
+Add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+;; Add context menu
+(when (display-graphic-p)
+  (context-menu-mode))
+
+(pixel-scroll-precision-mode)
+
+(display-time-mode)
+```
+
 ## Frequently asked questions
 
 ### How to increase gc-cons-threshold?

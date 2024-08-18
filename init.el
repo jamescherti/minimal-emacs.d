@@ -288,6 +288,11 @@
 
 (setq-default tab-always-indent t)
 
+;; Enable multi-line commenting which ensures that `comment-indent-new-line'
+;; properly continues comments onto new lines, which is useful for writing
+;; longer comments or docstrings that span multiple lines.
+(setq comment-multi-line t)
+
 ;; We often split terminals and editor windows or place them side-by-side,
 ;; making use of the additional horizontal space.
 (setq-default fill-column 80)
