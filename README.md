@@ -18,12 +18,14 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
-    - [How to activate the Garbage Collector Magic Hack (gcmh-mode)](#how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
-    - [How to automatically compile Emacs Lisp code (auto-compile)](#how-to-automatically-compile-emacs-lisp-code-auto-compile)
+    - [Optimization: How to automatically compile Emacs Lisp code (auto-compile)](#optimization-how-to-automatically-compile-emacs-lisp-code-auto-compile)
+    - [Optimization: Native Compilation](#optimization-native-compilation)
+    - [Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)](#optimization-how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to configure vterm](#how-to-configure-vterm)
     - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
+    - [Code completion with corfu](#code-completion-with-corfu)
     - [How to configure straight.el?](#how-to-configure-straightel)
 - [Frequently asked questions](#frequently-asked-questions)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
@@ -154,22 +156,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'save-place-mode)
 ```
 
-### How to activate the Garbage Collector Magic Hack (gcmh-mode)
-
-The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
-
-To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
-``` emacs-lisp
-(use-package gcmh
-  :ensure t
-  :hook (after-init . gcmh-mode)
-  :custom
-  (gcmh-idle-delay 'auto)
-  (gcmh-auto-idle-delay-factor 10)
-  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
-```
-
-### How to automatically compile Emacs Lisp code (auto-compile)
+### Optimization: How to automatically compile Emacs Lisp code (auto-compile)
 
 The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
 
@@ -185,7 +172,27 @@ To activate auto-compile, add the following to the beginning of `~/.emacs.d/post
   (auto-compile-on-save-mode))
 ```
 
-Additionally, please check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active. Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
+### Optimization: Native Compilation
+
+Check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active.
+
+Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
+
+### Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)
+
+The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
+
+To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package gcmh
+  :ensure t
+  :hook (after-init . gcmh-mode)
+  :custom
+  (gcmh-idle-delay 'auto)
+  (gcmh-auto-idle-delay-factor 10)
+  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
+```
+
 
 ### How to configure vterm
 
