@@ -264,7 +264,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :after (consult embark)
   :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
