@@ -49,6 +49,21 @@
 (defvar minimal-emacs--default-mode-line-format mode-line-format
   "Default value of `mode-line-format'.")
 
+(defvar minimal-emacs-disable-context-menu t
+  "Non-nil enables the context menu in graphical environments.")
+
+(defvar minimal-emacs-disable-tool-bar t
+  "Non-nil enables the tool bar in graphical environments.")
+
+(defvar minimal-emacs-disable-menu-bar t
+  "Non-nil enables the tool bar in graphical environments.")
+
+(defvar minimal-emacs-disable-dialogs t
+  "If non-nil, enable both file dialogs and dialog boxes.")
+
+(defvar minimal-emacs-disable-tooltips t
+  "When non-nil, tooltips are enabled. If nil, tooltips are disabled.")
+
 ;;; Misc
 
 (set-language-environment "UTF-8")
@@ -215,28 +230,30 @@
 ;; a superfluous and potentially expensive frame redraw at startup, depending
 ;; on the window system. The variables must also be set to `nil' so users don't
 ;; have to call the functions twice to re-enable them.
-(push '(menu-bar-lines . 0)   default-frame-alist)
-(push '(tool-bar-lines . 0)   default-frame-alist)
+(when minimal-emacs-disable-menu-bar
+  (push '(menu-bar-lines . 0)   default-frame-alist)
+  (unless (memq window-system '(mac ns))
+    (setq menu-bar-mode nil)))
+
+(when minimal-emacs-disable-tool-bar
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (setq tool-bar-mode nil))
+
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
-
-(setq tool-bar-mode nil
-      scroll-bar-mode nil)
-
-(when (bound-and-true-p tooltip-mode)
-  (tooltip-mode -1))
-
-;; Disable GUIs because theyr are inconsistent across systems, desktop
-;; environments, and themes, and they don't match the look of Emacs.
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
-
-(unless (memq window-system '(mac ns))
-  ;; (menu-bar-mode -1)
-  (setq menu-bar-mode nil))
-
+(setq scroll-bar-mode nil)
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
+
+(when minimal-emacs-disable-tooltips
+  (when (bound-and-true-p tooltip-mode)
+    (tooltip-mode -1)))
+
+;; Disable GUIs because they are inconsistent across systems, desktop
+;; environments, and themes, and they don't match the look of Emacs.
+(when minimal-emacs-disable-dialogs
+  (setq use-file-dialog nil)
+  (setq use-dialog-box nil))
 
 ;; Allow for shorter responses: "y" for yes and "n" for no.
 (if (boundp 'use-short-answers)

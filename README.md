@@ -135,6 +135,29 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 (setq custom-file null-device)
 ```
 
+### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+;; Enable both file dialogs and dialog boxes
+(setq minimal-emacs-disable-dialogs nil)
+
+;; Enable context menu (right-click menu)
+(setq minimal-emacs-disable-context-menu nil)
+
+;; Enable the tool bar at the top
+(setq minimal-emacs-disable-tool-bar nil)
+
+;; Enable the menu bar at the top
+(setq minimal-emacs-disable-menu-bar nil)
+
+;; Enable tooltips (hover text)
+(setq minimal-emacs-disable-tooltips nil)
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by `minimal-emacs.d`. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
@@ -491,18 +514,18 @@ Here is an example of how to configure Eglot to enable or disable certain option
 ``` emacs-lisp
 (setq-default eglot-workspace-configuration
               `(:pylsp (:plugins
-                        (; Fix imports and syntax
+                        (;; Fix imports and syntax using `eglot-format-buffer`
                          :isort (:enabled t)
                          :autopep8 (:enabled t)
 
-                         ;; Syntax checkers (work with flymake)
+                         ;; Syntax checkers (works with Flymake)
                          :pylint (:enabled t)
                          :pycodestyle (:enabled t)
                          :flake8 (:enabled t)
                          :pyflakes (:enabled t)
                          :pydocstyle (:enabled t)
-
                          :mccabe (:enabled t)
+
                          :yapf (:enabled :json-false)
                          :rope_autoimport (:enabled :json-false)))))
 
@@ -586,10 +609,6 @@ Add the following to `~/.emacs.d/post-init.el`:
   :config
   (which-key-mode))
 
-;; Add context menu
-(when (display-graphic-p)
-  (context-menu-mode))
-
 (pixel-scroll-precision-mode)
 
 (display-time-mode)
@@ -605,7 +624,6 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 ```
 
 ### How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?
-
 
 If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼), use the code snippet in this article: [Changing the Ellipsis (“…”) in outline-mode and outline-minor-mode](https://www.jamescherti.com/emacs-customize-ellipsis-outline-minor-mode/).
 

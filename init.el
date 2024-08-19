@@ -215,6 +215,12 @@
 ;; which should quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
 
+;;; Mouse
+
+;; Emacs 29
+(when (and (display-graphic-p) (fboundp 'context-menu-mode))
+  (add-hook 'after-init-hook #'context-menu-mode))
+
 (setq hscroll-margin 2
       hscroll-step 1
       ;; Emacs spends excessive time recentering the screen when the cursor
@@ -326,6 +332,11 @@
 ;; Display the current line and column numbers in the mode line
 (setq line-number-mode t)
 (setq column-number-mode t)
+
+;;; Filetype
+
+;; Do not notify the user each time Python tries to guess the indentation offset
+(setq python-indent-guess-indent-offset-verbose nil)
 
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
