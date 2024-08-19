@@ -235,6 +235,14 @@
   (unless (memq window-system '(mac ns))
     (setq menu-bar-mode nil)))
 
+(unless noninteractive
+  ;; Temporarily override the tool-bar-setup function to prevent it from
+  ;; running during the initial stages of startup
+  (advice-add #'tool-bar-setup :override #'ignore)
+  (define-advice startup--load-user-init-file
+      (:before (&rest _) minimal-emacs-setup-toolbar)
+    (advice-remove #'tool-bar-setup #'ignore)
+    (tool-bar-setup)))
 (when minimal-emacs-disable-tool-bar
   (push '(tool-bar-lines . 0) default-frame-alist)
   (setq tool-bar-mode nil))
