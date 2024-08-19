@@ -57,6 +57,8 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
    - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
    - Avoids unnecessary excessive UI updates.
    - Disables font compacting to avoid high memory usage.
+   - Defer tool bar setup
+   - Unset command line options irrelevant to the current OS
 
 2. **Native Compilation and Byte Compilation:**
    - Configures native compilation and byte compilation settings
