@@ -338,6 +338,11 @@
 ;; Do not notify the user each time Python tries to guess the indentation offset
 (setq python-indent-guess-indent-offset-verbose nil)
 
+;;; Font / Text scale
+
+;; Avoid automatic frame resizing when adjusting settings.
+(setq global-text-scale-adjust-resizes-frames nil)
+
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
 
