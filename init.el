@@ -278,7 +278,8 @@
 (setq-default indent-tabs-mode nil
               tab-width 4)
 
-(setq-default tab-always-indent t)
+;; Enable indentation and completion using the TAB key
+(setq-default tab-always-indent 'complete)
 
 ;; Enable multi-line commenting which ensures that `comment-indent-new-line'
 ;; properly continues comments onto new lines, which is useful for writing
