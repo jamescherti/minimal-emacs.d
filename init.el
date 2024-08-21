@@ -195,11 +195,18 @@
 
 (setq resize-mini-windows 'grow-only)
 
-;;; Smooth scrolling
+;;; Scrolling
 ;; Enables faster scrolling through unfontified regions. This may result in
 ;; brief periods of inaccurate syntax highlighting immediately after scrolling,
 ;; which should quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
+
+;; Move point to top/bottom of buffer before signaling a scrolling error.
+(setq scroll-error-top-bottom t)
+
+;; Keeps screen position if the scroll command moved it vertically out of the
+;; window.
+(setq scroll-preserve-screen-position t)
 
 ;;; Mouse
 
