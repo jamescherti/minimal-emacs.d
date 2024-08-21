@@ -64,6 +64,11 @@
 (defvar minimal-emacs-disable-tooltips t
   "When non-nil, tooltips are enabled. If nil, tooltips are disabled.")
 
+(defvar minimal-emacs-package-initialize-and-refresh t
+  "Whether to automatically initialize and refresh packages.
+When set to non-nil, Emacs will automatically call `package-initialize' and
+`package-refresh-contents' to set up and update the package system.")
+
 ;;; Misc
 
 (set-language-environment "UTF-8")
@@ -237,7 +242,10 @@
 (setq byte-compile-warnings minimal-emacs-debug)
 (setq byte-compile-verbose minimal-emacs-debug)
 
-;;; Disable unneeded UI elements
+;;; UI elements
+
+(setq frame-title-format minimal-emacs-frame-title-format
+      icon-title-format minimal-emacs-frame-title-format)
 
 ;; Disable startup screens and messages
 (setq inhibit-splash-screen t)
@@ -288,22 +296,19 @@
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;;; package.el
-;; Since Emacs 27, package initialization occurs before `user-init-file' is
-;; loaded, but after `early-init-file'.
-(setq package-enable-at-startup t)
-
+(setq package-enable-at-startup nil)
 (setq package-quickstart nil)
-
-;; Always ensure packages are installed
 (setq use-package-always-ensure t)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
+                                                      ("nongnu" . 80)
+                                                      ("stable" . 70)
+                                                      ("melpa"  . 0)))
 
-(setq frame-title-format minimal-emacs-frame-title-format
-      icon-title-format minimal-emacs-frame-title-format)
-
-;; Emacs comes with several built-in packages, such as Org-mode, that are
-;; essential for many users. However, these built-in packages are often not the
-;; latest versions available. Ensure that your built-in packages are always up
-;; to date with:
+;; Ensure that some built-in (e.g., org-mode) are always up to date
 (setq package-install-upgrade-built-in t)
 
 ;;; Load post-early-init.el

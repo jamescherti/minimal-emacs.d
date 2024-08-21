@@ -18,24 +18,7 @@
 (minimal-emacs-load-user-init "pre-init.el")
 
 ;;; package.el
-
-(require 'package)
-
-(when (version< emacs-version "28")
-  (add-to-list 'package-archives
-               '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-
-(customize-set-variable 'package-archive-priorities
-                        '(("gnu"    . 99)
-                          ("nongnu" . 80)
-                          ("stable" . 70)
-                          ("melpa"  . 0)))
-
-(when package-enable-at-startup
+(when minimal-emacs-package-initialize-and-refresh
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents t)))
