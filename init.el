@@ -97,6 +97,9 @@
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Delete by moving to trash in interactive mode
+(setq delete-by-moving-to-trash (not noninteractive))
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
