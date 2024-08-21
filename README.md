@@ -580,10 +580,6 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
 ``` emacs-lisp
-;; Users of Emacs versions >= 27 will want to set
-;; package-enable-at-startup to nil
-(setq package-enable-at-startup nil)
-
 ;; Straight
 (defvar bootstrap-version)
 (let ((bootstrap-file
