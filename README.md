@@ -18,7 +18,6 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
-    - [Optimization: How to automatically compile Emacs Lisp code (auto-compile)](#optimization-how-to-automatically-compile-emacs-lisp-code-auto-compile)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)](#optimization-how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
     - [How to configure vterm](#how-to-configure-vterm)
@@ -184,22 +183,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (add-hook 'after-init-hook #'save-place-mode)
-```
-
-### Optimization: How to automatically compile Emacs Lisp code (auto-compile)
-
-The auto-compile package automates the byte-compilation of Emacs Lisp files, ensuring that your code runs more efficiently by converting it to byte-code. This process reduces the load time and execution time of your Emacs configuration and other Lisp files, leading to faster performance. Additionally, auto-compile helps maintain an up-to-date and optimized configuration by recompiling files automatically when they are saved, eliminating the need for manual compilation and minimizing potential issues caused by outdated byte-code.
-
-To activate auto-compile, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
-``` emacs-lisp
-(use-package auto-compile
-  :demand t
-  :custom
-  (auto-compile-check-parens nil)
-  (auto-compile-display-buffer nil)
-  :config
-  (auto-compile-on-load-mode)
-  (auto-compile-on-save-mode))
 ```
 
 ### Optimization: Native Compilation
