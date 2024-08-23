@@ -18,7 +18,7 @@
 (minimal-emacs-load-user-init "pre-init.el")
 
 ;;; package.el
-(when minimal-emacs-package-initialize-and-refresh
+(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents t)))

@@ -1,4 +1,5 @@
 # Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup
+![License](https://img.shields.io/github/license/jamescherti/be-quiet.el)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
 The **minimal-emacs.d** repository offers a starter kit with improved Emacs defaults and optimized startup, designed to serve as a robust foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
@@ -377,6 +378,8 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  :custom
+  (evil-want-Y-yank-to-eol t)
   :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-mode 1))
