@@ -2,7 +2,7 @@
 ![License](https://img.shields.io/github/license/jamescherti/be-quiet.el)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
-The **minimal-emacs.d** repository offers a starter kit with improved Emacs defaults and optimized startup, designed to serve as a robust foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
+The **minimal-emacs.d** starter kit provides improved Emacs defaults and optimized startup, intended to serve as a solid foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
@@ -145,20 +145,7 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
 
 ``` emacs-lisp
-;; Enable both file dialogs and dialog boxes
-(setq minimal-emacs-disable-dialogs nil)
-
-;; Enable context menu (right-click menu)
-(setq minimal-emacs-disable-context-menu nil)
-
-;; Enable the tool bar at the top
-(setq minimal-emacs-disable-tool-bar nil)
-
-;; Enable the menu bar at the top
-(setq minimal-emacs-disable-menu-bar nil)
-
-;; Enable tooltips (hover text)
-(setq minimal-emacs-disable-tooltips nil)
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.

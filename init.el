@@ -8,9 +8,9 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; This is the main initialization file for Emacs. It configures package
-;; archives, ensures essential packages like `use-package` are installed, and
-;; sets up further package management and customization settings.
+;; The minimal-emacs.d starter kit provides improved Emacs defaults and
+;; optimized startup, intended to serve as a solid foundation for your vanilla
+;; Emacs configuration and enhance your overall Emacs experience.
 
 ;;; Code:
 
@@ -211,8 +211,9 @@
 ;;; Mouse
 
 ;; Emacs 29
-(when (and (display-graphic-p) (fboundp 'context-menu-mode))
-  (add-hook 'after-init-hook #'context-menu-mode))
+(when (memq 'context-menu minimal-emacs-ui-features)
+  (when (and (display-graphic-p) (fboundp 'context-menu-mode))
+    (add-hook 'after-init-hook #'context-menu-mode)))
 
 (setq hscroll-margin 2
       hscroll-step 1

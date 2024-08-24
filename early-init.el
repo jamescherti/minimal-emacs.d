@@ -8,16 +8,45 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; This file contains early initialization settings for Emacs. It is designed
-;; to optimize the startup process and configure essential settings before the
-;; main initialization.
+;; The minimal-emacs.d starter kit provides improved Emacs defaults and
+;; optimized startup, intended to serve as a solid foundation for your vanilla
+;; Emacs configuration and enhance your overall Emacs experience.
 
 ;;; Code:
 
-;;; Load pre-early-init.el
+;;; Variables
+
+(defvar minimal-emacs-ui-features '(context-menu)
+  "List of user interface features to disable in minimal Emacs setup.
+
+This variable holds a list Emacs UI features that can be enabled:
+- `context-menu`: Enables the context menu in graphical environments.
+- `tool-bar`: Enables the tool bar in graphical environments.
+- `menu-bar`: Enables the menu bar in graphical environments.
+- `dialogs`: Enables both file dialogs and dialog boxes.
+- `tooltips`: Enables tooltips.
+
+Each feature in the list corresponds to a specific UI component that can be
+turned on.")
+
+(defvar minimal-emacs-frame-title-format "%b – Emacs"
+  "Template for displaying the title bar of visible and iconified frame.")
+
+(defvar minimal-emacs-debug nil
+  "Non-nil to enable debug.")
+
+(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
+  "The value of `gc-cons-threshold' after Emacs startup.")
+
+(defvar minimal-emacs-package-initialize-and-refresh t
+  "Whether to automatically initialize and refresh packages.
+When set to non-nil, Emacs will automatically call `package-initialize' and
+`package-refresh-contents' to set up and update the package system.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
+
+;;; Load pre-early-init.el
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
@@ -32,42 +61,6 @@
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
 (setq custom-file (expand-file-name "custom.el" minimal-emacs-user-directory))
-
-;;; Variables
-(defvar minimal-emacs-debug nil
-  "Non-nil to enable debug.")
-
-(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
-  "The value of `gc-cons-threshold' after Emacs startup.")
-
-(defvar minimal-emacs-frame-title-format "%b – Emacs"
-  "Template for displaying the title bar of visible and iconified frame.")
-
-(defvar minimal-emacs-default-gc-cons-threshold gc-cons-threshold
-  "The default value of `gc-cons-threshold'.")
-
-(defvar minimal-emacs--default-mode-line-format mode-line-format
-  "Default value of `mode-line-format'.")
-
-(defvar minimal-emacs-disable-context-menu t
-  "Non-nil enables the context menu in graphical environments.")
-
-(defvar minimal-emacs-disable-tool-bar t
-  "Non-nil enables the tool bar in graphical environments.")
-
-(defvar minimal-emacs-disable-menu-bar t
-  "Non-nil enables the tool bar in graphical environments.")
-
-(defvar minimal-emacs-disable-dialogs t
-  "If non-nil, enable both file dialogs and dialog boxes.")
-
-(defvar minimal-emacs-disable-tooltips t
-  "When non-nil, tooltips are enabled. If nil, tooltips are disabled.")
-
-(defvar minimal-emacs-package-initialize-and-refresh t
-  "Whether to automatically initialize and refresh packages.
-When set to non-nil, Emacs will automatically call `package-initialize' and
-`package-refresh-contents' to set up and update the package system.")
 
 ;;; Misc
 
@@ -157,10 +150,12 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
                       inhibit-message nil)
         (redraw-frame))
 
+      (defvar minimal-emacs--default-mode-line-format mode-line-format
+        "Default value of `mode-line-format'.")
       (setq-default mode-line-format nil)
 
       (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
-        "Around advice for startup--load-user-init-file to reset mode-line-format."
+        "Advice for startup--load-user-init-file to reset mode-line-format."
         (let (init)
           (unwind-protect
               (progn
@@ -255,7 +250,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 ;; a superfluous and potentially expensive frame redraw at startup, depending
 ;; on the window system. The variables must also be set to `nil' so users don't
 ;; have to call the functions twice to re-enable them.
-(when minimal-emacs-disable-menu-bar
+(unless (memq 'menu-bar minimal-emacs-ui-features)
   (push '(menu-bar-lines . 0)   default-frame-alist)
   (unless (memq window-system '(mac ns))
     (setq menu-bar-mode nil)))
@@ -269,7 +264,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
         (:before (&rest _) minimal-emacs-setup-toolbar)
       (advice-remove #'tool-bar-setup #'ignore)
       (tool-bar-setup))))
-(when minimal-emacs-disable-tool-bar
+(unless (memq 'tool-bar minimal-emacs-ui-features)
   (push '(tool-bar-lines . 0) default-frame-alist)
   (setq tool-bar-mode nil))
 
@@ -279,13 +274,13 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-(when minimal-emacs-disable-tooltips
+(unless (memq 'tooltips minimal-emacs-ui-features)
   (when (bound-and-true-p tooltip-mode)
     (tooltip-mode -1)))
 
 ;; Disable GUIs because they are inconsistent across systems, desktop
 ;; environments, and themes, and they don't match the look of Emacs.
-(when minimal-emacs-disable-dialogs
+(unless (memq 'dialogs minimal-emacs-ui-features)
   (setq use-file-dialog nil)
   (setq use-dialog-box nil))
 
