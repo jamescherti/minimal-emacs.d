@@ -18,6 +18,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 - [Customizations](#customizations)
     - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
+    - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)](#optimization-how-to-activate-the-garbage-collector-magic-hack-gcmh-mode)
@@ -27,10 +28,12 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [How to configure straight.el?](#how-to-configure-straightel)
+    - [Which other packages can be interesting to add?](#which-other-packages-can-be-interesting-to-add)
 - [Frequently asked questions](#frequently-asked-questions)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
     - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
+    - [How to make minimal-emacs.d use an environment variable for changing ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-for-changing-emacsd-to-another-directory)
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
 - [Author and license](#author-and-license)
 - [Links](#links)
@@ -628,6 +631,23 @@ emacs --init-directory ~/.config/minimal-emacs.d/
 ```
 
 This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.
+
+### How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?
+
+Add the following to the top of the `~/.emacs.d/pre-early-init.el` file to make `minimal-emacs.d` use the `MINIMAL_EMACS_USER_DIRECTORY` environment variable to change `~/.emacs.d` to another directory:
+```emacs-lisp
+;; Place this at the very beginning of pre-early-init.el
+(let ((previous-minimal-emacs-user-directory (expand-file-name
+                                              minimal-emacs-user-directory))
+      (env-dir (getenv "MINIMAL_EMACS_USER_DIRECTORY")))
+  (setq minimal-emacs-user-directory (if env-dir
+                                         (expand-file-name env-dir)
+                                       (expand-file-name user-emacs-directory)))
+  (unless (string= minimal-emacs-user-directory
+                   previous-minimal-emacs-user-directory)
+    ;; Load pre-early-init.el from the new directory
+    (minimal-emacs-load-user-init "pre-early-init.el")))
+```
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?
 
