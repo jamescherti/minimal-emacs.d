@@ -18,23 +18,26 @@
 (minimal-emacs-load-user-init "pre-init.el")
 
 ;;; package.el
-(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents t)))
 
-;;; use-package
-;; Load use-package for package configuration
+(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+  (let ((package-refresh t))
+    ;; Refresh package contents and install `use-package` if necessary
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents t)
+      (setq package-refresh nil)
+      (package-install 'use-package))
+
+    ;; Ensure `use-package` is available at compile time
+    (eval-when-compile
+      (require 'use-package))
+
+    ;; Initialize the package system
+    (package-initialize)
+    (when (and package-refresh (not package-archive-contents))
+      ;; Refresh package contents again if needed
+      (package-refresh-contents t))))
 
 ;; Ensure the 'use-package' package is installed and loaded
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents t)
-  (package-install 'use-package)
-  (eval-when-compile
-    (require 'use-package)))
-
-(eval-when-compile
-  (require 'use-package))
 
 ;;; Minibuffer
 ;; Allow nested minibuffers
