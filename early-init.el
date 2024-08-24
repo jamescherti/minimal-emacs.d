@@ -251,7 +251,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 ;; on the window system. The variables must also be set to `nil' so users don't
 ;; have to call the functions twice to re-enable them.
 (unless (memq 'menu-bar minimal-emacs-ui-features)
-  (push '(menu-bar-lines . 0)   default-frame-alist)
+  (push '(menu-bar-lines . 0) default-frame-alist)
   (unless (memq window-system '(mac ns))
     (setq menu-bar-mode nil)))
 

@@ -18,24 +18,19 @@
 (minimal-emacs-load-user-init "pre-init.el")
 
 ;;; package.el
-
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
-  (let ((package-refresh t))
-    ;; Refresh package contents and install `use-package` if necessary
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents t)
-      (setq package-refresh nil)
-      (package-install 'use-package))
+  ;; Initialize and refresh package contents again if needed
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-    ;; Ensure `use-package` is available at compile time
-    (eval-when-compile
-      (require 'use-package))
+  ;; Install use-package if necessary
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
 
-    ;; Initialize the package system
-    (package-initialize)
-    (when (and package-refresh (not package-archive-contents))
-      ;; Refresh package contents again if needed
-      (package-refresh-contents t))))
+  ;; Ensure use-package is available at compile time
+  (eval-when-compile
+    (require 'use-package)))
 
 ;; Ensure the 'use-package' package is installed and loaded
 
