@@ -331,6 +331,13 @@
 ;; Do not notify the user each time Python tries to guess the indentation offset
 (setq python-indent-guess-indent-offset-verbose nil)
 
+(setq sh-indent-after-continuation 'always)
+
+(setq dired-clean-confirm-killing-deleted-buffers nil
+      dired-recursive-deletes 'top
+      dired-recursive-copies  'always
+      dired-create-destination-dirs 'ask)
+
 ;;; Font / Text scale
 
 ;; Avoid automatic frame resizing when adjusting settings.
