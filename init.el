@@ -336,6 +336,12 @@
 ;; Avoid automatic frame resizing when adjusting settings.
 (setq global-text-scale-adjust-resizes-frames nil)
 
+;;; Ediff
+
+;; Configure Ediff to use a single frame and split windows horizontally
+(setq ediff-window-setup-function #'ediff-setup-windows-plain
+      ediff-split-window-function #'split-window-horizontally)
+
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")
 

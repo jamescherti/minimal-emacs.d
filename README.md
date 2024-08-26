@@ -90,6 +90,7 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 
 10. **Miscellaneous**
     - Configure recentf, savehist, and auto-save
+    - Configure Ediff to use a single frame and split windows horizontally
 
 ## Update
 
