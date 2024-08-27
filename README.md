@@ -4,6 +4,8 @@
 
 The **minimal-emacs.d** starter kit provides improved Emacs defaults and optimized startup, intended to serve as a solid foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
 
+Creating `minimal-emacs.d` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free starting point that you can build on according to your needs. **You have full control over what to include, allowing you to customize Emacs to your preferences.**
+
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
@@ -141,16 +143,6 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 (setq custom-file null-device)
 ```
 
-### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
-
-To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
-
-``` emacs-lisp
-(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
-```
-
-These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
-
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by `minimal-emacs.d`. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
@@ -177,26 +169,20 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'save-place-mode)
 ```
 
+### Ensuring a single window at Emacs startup (automatically closing other windows, including compilation and warning windows)
+
+If you find it frustrating when multiple windows open upon Emacs startup (compilation window, warnings, etc.), add the following to `~/.emacs.d/post-init.el`:
+```
+(add-hook 'window-setup-hook 'delete-other-windows)
+```
+
+This ensures that only one window remains open when Emacs starts, which is helpful if you prefer a clean and focused workspace instead of a cluttered screen filled with multiple split windows.
+
 ### Optimization: Native Compilation
 
 Check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active.
 
 Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
-
-### Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)
-
-The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
-
-To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
-``` emacs-lisp
-(use-package gcmh
-  :ensure t
-  :hook (after-init . gcmh-mode)
-  :custom
-  (gcmh-idle-delay 'auto)
-  (gcmh-auto-idle-delay-factor 10)
-  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
-```
 
 ### How to configure vterm
 
@@ -552,6 +538,31 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
+
+### Optimization: How to activate the Garbage Collector Magic Hack (gcmh-mode)
+
+The Garbage Collector Magic Hack (gcmh-mode) optimizes Emacs' garbage collection process, reducing the frequency of garbage collection during normal operations and only performing it during idle times. This results in smoother performance and fewer interruptions, especially during intensive tasks or when working with large files.
+
+To activate gcmh-mode, add the following to the beginning of `~/.emacs.d/post-init.el`, before all other `use-package` statements:
+``` emacs-lisp
+(use-package gcmh
+  :ensure t
+  :hook (after-init . gcmh-mode)
+  :custom
+  (gcmh-idle-delay 'auto)
+  (gcmh-auto-idle-delay-factor 10)
+  (gcmh-low-cons-threshold minimal-emacs-gc-cons-threshold))
+```
+
+### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ### How to configure straight.el?
 
