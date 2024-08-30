@@ -169,15 +169,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'save-place-mode)
 ```
 
-### Ensuring a single window at Emacs startup (automatically closing other windows, including compilation and warning windows)
-
-If you find it frustrating when multiple windows open upon Emacs startup (compilation window, warnings, etc.), add the following to `~/.emacs.d/post-init.el`:
-```
-(add-hook 'window-setup-hook 'delete-other-windows)
-```
-
-This ensures that only one window remains open when Emacs starts, which is helpful if you prefer a clean and focused workspace instead of a cluttered screen filled with multiple split windows.
-
 ### Optimization: Native Compilation
 
 Check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active.
