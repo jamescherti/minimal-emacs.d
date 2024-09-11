@@ -304,9 +304,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
                                                       ("stable" . 70)
                                                       ("melpa"  . 0)))
 
-;; Ensure that some built-in (e.g., org-mode) are always up to date
-(setq package-install-upgrade-built-in t)
-
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
 
