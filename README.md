@@ -630,6 +630,24 @@ During the execution of `early-init.el` (and `pre-early-init.el` and  `post-earl
 
 Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
 
+### Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.
+
+The menu bar is disabled by default in `minimal-emacs.d` to provide a minimal, distraction-free environment, which many experienced users prefer.
+
+The menu bar can be re-enabled by adding the following configuration to `~/.emacs.d/pre-early-init.el`:
+```
+(setq minimal-emacs-ui-features '(menu-bar))
+```
+
+Other UI features can also be enabled by adding the following to `~/.emacs.d/pre-early-init.el`:
+```
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+# Why did the author develop minimal-emacs.d?
+
+The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration. This approach is inspired by the Arch Linux distribution, which follows the KISS principle by providing a minimal base system that users can fully customize with the help of the extensive documentation.
+
 ## Author and license
 
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
