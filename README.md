@@ -178,6 +178,18 @@ Check if native compilation is enabled by evaluating `(native-comp-available-p)`
 
 Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
 
+### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
+
+**Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
 ### How to configure vterm
 
 The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
@@ -533,16 +545,6 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
 
-### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
-
-To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
-
-``` emacs-lisp
-(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
-```
-
-These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
-
 ### How to configure straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
@@ -647,7 +649,7 @@ Other UI features can also be enabled by adding the following to `~/.emacs.d/pre
 (setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
 ```
 
-# Why did the author develop minimal-emacs.d?
+### Why did the author develop minimal-emacs.d?
 
 The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration. This approach is inspired by the Arch Linux distribution, which follows the KISS principle by providing a minimal base system that users can fully customize with the help of the extensive documentation.
 
