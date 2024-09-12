@@ -15,7 +15,6 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 **Table of Contents**
 
 - [Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup](#minimal-emacsd---emacs-starter-kit-with-better-defaults-and-optimized-startup)
-    - [Table of contents](#table-of-contents)
     - [Installation](#installation)
     - [Features](#features)
     - [Update](#update)
@@ -24,12 +23,12 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
         - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
         - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
         - [Optimization: Native Compilation](#optimization-native-compilation)
+        - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
         - [How to configure vterm](#how-to-configure-vterm)
         - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
         - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
         - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
         - [Code completion with corfu](#code-completion-with-corfu)
-        - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
         - [How to configure straight.el?](#how-to-configure-straightel)
         - [Which other packages can be interesting to add?](#which-other-packages-can-be-interesting-to-add)
     - [Frequently asked questions](#frequently-asked-questions)
@@ -39,7 +38,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
         - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
         - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
         - [Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.](#why-the-reflexive-disabling-of-the-menu-bar-its-a-major-aid-to-discoverability-especially-for-new-users)
-- [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
+        - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
     - [Author and license](#author-and-license)
     - [Links](#links)
 
@@ -651,7 +650,7 @@ Other UI features can also be enabled by adding the following to `~/.emacs.d/pre
 
 ### Why did the author develop minimal-emacs.d?
 
-The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration. This approach is inspired by the Arch Linux distribution, which follows the KISS principle by providing a minimal base system that users can fully customize with the help of the extensive documentation.
+The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration.
 
 ## Author and license
 
