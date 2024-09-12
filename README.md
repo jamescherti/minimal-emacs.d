@@ -16,6 +16,8 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 - [Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup](#minimal-emacsd---emacs-starter-kit-with-better-defaults-and-optimized-startup)
     - [Installation](#installation)
+        - [Installation into ~/.emacs.d](#installation-into-emacsd)
+        - [Alternative: Installation in `~/.minimal-emacs.d`](#alternative-installation-in-minimal-emacsd)
     - [Features](#features)
     - [Update](#update)
     - [Customizations](#customizations)
@@ -34,7 +36,6 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Frequently asked questions](#frequently-asked-questions)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
-        - [How to run the minimal-emacs.d Emacs configuration from another directory?](#how-to-run-the-minimal-emacsd-emacs-configuration-from-another-directory)
         - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
         - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
         - [Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.](#why-the-reflexive-disabling-of-the-menu-bar-its-a-major-aid-to-discoverability-especially-for-new-users)
@@ -46,10 +47,30 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Installation
 
+### Installation into ~/.emacs.d
+
 Execute the following command to clone this repository into `~/.emacs.d`:
 ```
 git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 ```
+
+### Alternative: Installation in `~/.minimal-emacs.d`
+
+To install `minimal-emacs.d` in a different directory, use the `--init-directory` Emacs option to specify your desired configuration path.
+
+For example, to install `minimal-emacs.d` in `~/.minimal-emacs.d/`, follow these steps:
+
+1. Clone the repository into `~/.minimal-emacs.d/` using:
+   ```
+   git clone https://github.com/jamescherti/minimal-emacs.d ~/.minimal-emacs.d
+   ```
+
+2. Start Emacs with the new configuration directory:
+   ```
+   emacs --init-directory ~/.minimal-emacs.d/
+   ```
+
+This approach helps keep your Emacs setup organized and allows you to easily switch between different configurations.
 
 ## Features
 
@@ -592,24 +613,6 @@ Add the following to `~/.emacs.d/pre-early-init.el` to ensure that `minimal-emac
 ### How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?
 
 If you want to to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼), use the code snippet in this article: [Changing the Ellipsis (“…”) in outline-mode and outline-minor-mode](https://www.jamescherti.com/emacs-customize-ellipsis-outline-minor-mode/).
-
-### How to run the minimal-emacs.d Emacs configuration from another directory?
-
-To run minimal-emacs.d from a different directory, you can specify the path to your configuration directory using the --init-directory option.
-
-For example, to run Emacs with the configuration located in `~/.config/minimal-emacs.d/`, follow these steps:
-
-1. Clone the repository into ~/.config/minimal-emacs.d/ using:
-```
-git clone https://github.com/jamescherti/minimal-emacs.d ~/.config/minimal-emacs.d
-```
-
-2. Start Emacs with the specified configuration directory:
-```
-emacs --init-directory ~/.config/minimal-emacs.d/
-```
-
-This allows you to keep your Emacs setup organized in a specific location and easily switch between different configurations.
 
 ### How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?
 
