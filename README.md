@@ -68,8 +68,6 @@ To install `minimal-emacs.d` in a different directory, use the `--init-directory
    emacs --init-directory ~/.minimal-emacs.d/
    ```
 
-This approach helps keep your Emacs setup organized and allows you to easily switch between different configurations.
-
 ## Features
 
 1. **Performance Improvements:**
