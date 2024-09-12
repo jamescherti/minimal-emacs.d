@@ -56,7 +56,7 @@ git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 
 ### Alternative: Installation in `~/.minimal-emacs.d`
 
-To install `minimal-emacs.d` in a different directory, use the `--init-directory` Emacs option to specify your desired configuration path. For example, to install `minimal-emacs.d` in `~/.minimal-emacs.d/`, follow these steps:
+To install `minimal-emacs.d` in a non-default directory, use the `--init-directory` Emacs option to specify your desired configuration path. For example, to install `minimal-emacs.d` in `~/.minimal-emacs.d/`, follow these steps:
 
 1. Clone the repository into `~/.minimal-emacs.d/` using:
    ```
