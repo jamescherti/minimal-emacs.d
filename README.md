@@ -11,7 +11,7 @@ By default, only essential features are enabled, providing a minimal base that i
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
-A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to `minimal-emacs.d`, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project.
+A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to `minimal-emacs.d`, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project. Please [send me](https://www.jamescherti.com/contact/) your feedback and I'll add it to this README.md file.
 
 (The optimizations in `minimal-emacs.d` significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and byte-compiling and native-compiling all `.el` files. The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance.)
 
