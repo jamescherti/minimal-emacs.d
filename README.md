@@ -1,20 +1,24 @@
-# Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup
+# Minimal ~/.emacs.d - Better Defaults and Optimized Startup
 ![License](https://img.shields.io/github/license/jamescherti/be-quiet.el)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
-The **minimal-emacs.d** starter kit provides improved Emacs defaults and optimized startup, intended to serve as a solid foundation for your vanilla Emacs configuration and enhance your overall Emacs experience.
+The **minimal-emacs.d** is a customizable base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for your vanilla Emacs configuration.
 
-Creating `minimal-emacs.d` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free starting point that you can build on according to your needs. **You have full control over what to include, allowing you to customize Emacs to your preferences.**
+Creating `minimal-emacs.d` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free base.
+
+By default, only essential features are enabled, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. The author intentionally avoid making decisions on behalf of the user, preferring to let them choose what to include in their setup. It’s ideal for those looking to start with a clean, vanilla Emacs setup and who are willing to learn.
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
+
+A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to minimal-emacs.d, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project.
 
 (The optimizations in `minimal-emacs.d` significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and byte-compiling and native-compiling all `.el` files. The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance.)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
-- [Minimal ~/.emacs.d - Emacs Starter Kit with Better Defaults and Optimized Startup](#minimal-emacsd---emacs-starter-kit-with-better-defaults-and-optimized-startup)
+- [Minimal ~/.emacs.d - Better Defaults and Optimized Startup](#minimal-emacsd---better-defaults-and-optimized-startup)
     - [Installation](#installation)
         - [Installation into ~/.emacs.d](#installation-into-emacsd)
         - [Alternative: Installation in `~/.minimal-emacs.d`](#alternative-installation-in-minimal-emacsd)
