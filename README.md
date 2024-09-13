@@ -19,11 +19,11 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
 **Table of Contents**
 
 - [Minimal ~/.emacs.d - Better Defaults and Optimized Startup](#minimal-emacsd---better-defaults-and-optimized-startup)
-    - [Installation](#installation)
+    - [Install minimal-emacs.d](#install-minimal-emacsd)
         - [Installation into ~/.emacs.d](#installation-into-emacsd)
         - [Alternative: Installation in `~/.minimal-emacs.d`](#alternative-installation-in-minimal-emacsd)
     - [Features](#features)
-    - [Update](#update)
+    - [Update minimal-emacs.d](#update-minimal-emacsd)
     - [Customizations](#customizations)
         - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
         - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
@@ -49,7 +49,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
 
 <!-- markdown-toc end -->
 
-## Installation
+## Install minimal-emacs.d
 
 ### Installation into ~/.emacs.d
 
@@ -117,7 +117,7 @@ To install `minimal-emacs.d` in a non-default directory, use the `--init-directo
     - Configure recentf, savehist, and auto-save
     - Configure Ediff to use a single frame and split windows horizontally
 
-## Update
+## Update minimal-emacs.d
 
 To keep your Emacs configuration up to date, you can pull the latest changes from the repository. Run the following command in your terminal:
 
