@@ -8,9 +8,9 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;; The minimal-emacs.d starter kit provides improved Emacs defaults and
-;; optimized startup, intended to serve as a solid foundation for your vanilla
-;; Emacs configuration and enhance your overall Emacs experience.
+;; The minimal-emacs.d project is a customizable base that provides better Emacs
+;; defaults and optimized startup, intended to serve as a solid foundation for
+;; your vanilla Emacs configuration.
 
 ;;; Code:
 
