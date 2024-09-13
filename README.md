@@ -4,9 +4,9 @@
 
 The **minimal-emacs.d** is a customizable base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for your vanilla Emacs configuration.
 
-Creating `minimal-emacs.d` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free base.
+Creating `minimal-emacs.d` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free, optimized base.
 
-By default, only essential features are enabled, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. The author intentionally avoid making decisions on behalf of the user, preferring to let them choose what to include in their setup. It’s ideal for those looking to start with a clean, vanilla Emacs setup and who are willing to learn.
+By default, only essential features are enabled, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs.
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
