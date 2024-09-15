@@ -41,7 +41,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
         - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
         - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
         - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
-        - [Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.](#why-the-reflexive-disabling-of-the-menu-bar-its-a-major-aid-to-discoverability-especially-for-new-users)
+        - [Why the reflexive disabling of the menu bar?](#why-the-reflexive-disabling-of-the-menu-bar)
         - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
     - [Features](#features)
     - [Author and license](#author-and-license)
@@ -592,7 +592,7 @@ During the execution of `early-init.el` (and `pre-early-init.el` and  `post-earl
 
 Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
 
-### Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.
+### Why the reflexive disabling of the menu bar?
 
 The menu bar is disabled by default in `minimal-emacs.d` to provide a minimal, distraction-free environment, which many experienced users prefer.
 
