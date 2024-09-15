@@ -25,7 +25,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
     - [Update minimal-emacs.d](#update-minimal-emacsd)
     - [Customizations](#customizations)
         - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
-        - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
+        - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
         - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
         - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
         - [Optimization: Native Compilation](#optimization-native-compilation)
@@ -102,7 +102,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
 
-### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
+### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
 **Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
 
