@@ -22,14 +22,13 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
     - [Install minimal-emacs.d](#install-minimal-emacsd)
         - [Installation into ~/.emacs.d](#installation-into-emacsd)
         - [Alternative: Installation in `~/.minimal-emacs.d`](#alternative-installation-in-minimal-emacsd)
-    - [Features](#features)
     - [Update minimal-emacs.d](#update-minimal-emacsd)
     - [Customizations](#customizations)
         - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
+        - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
         - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
         - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
         - [Optimization: Native Compilation](#optimization-native-compilation)
-        - [How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?](#how-to-enable-dialogs-context-menu-tool-bar-menu-bar-and-tooltips)
         - [How to configure vterm](#how-to-configure-vterm)
         - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
         - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
@@ -44,6 +43,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
         - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
         - [Why the reflexive disabling of the menu bar? It’s a major aid to discoverability, especially for new users.](#why-the-reflexive-disabling-of-the-menu-bar-its-a-major-aid-to-discoverability-especially-for-new-users)
         - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
+    - [Features](#features)
     - [Author and license](#author-and-license)
     - [Links](#links)
 
@@ -71,51 +71,6 @@ To install `minimal-emacs.d` in a non-default directory, use the `--init-directo
    ```
    emacs --init-directory ~/.minimal-emacs.d/
    ```
-
-## Features
-
-1. **Performance Improvements:**
-   - Increases the amount read from processes in a single chunk.
-   - Prefers loading newer compiled files.
-   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
-   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
-   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
-   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers for the `file-name-handler-alist` optimizations; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
-   - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
-   - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
-   - Avoids unnecessary excessive UI updates.
-   - Disables font compacting to avoid high memory usage.
-   - Defer tool bar setup
-   - Unset command line options irrelevant to the current OS
-
-2. **Native Compilation and Byte Compilation:**
-   - Configures native compilation and byte compilation settings
-   - Suppresses compiler warnings and errors during native compilation.
-
-4. **UI Element Management:**
-   - Disables the startup screen and messages, including menu bar, tool bar, and scroll bars.
-   - Configures Emacs to avoid resizing frames and minimizes unnecessary UI updates.
-
-5. **Package Management:**
-   - Configures package archives and priorities for MELPA, ELPA, and other repositories.
-
-6. **Customizable Initialization Files:**
-   - Supports additional configuration files (`pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`) to allow further customization at different stages of the startup process.
-
-7. **File Management:**
-   - Manages auto-save and backup files, including backup options and version control settings.
-
-8. **User Experience Enhancements:**
-   - Configures user interface settings such as cursor behavior, scrolling, and response to prompts.
-   - Disables beeping and blinking to avoid distractions.
-
-9. **Buffer and Window Configuration:**
-   - Sets default fringe widths and buffer boundaries.
-   - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
-
-10. **Miscellaneous**
-    - Configure recentf, savehist, and auto-save
-    - Configure Ediff to use a single frame and split windows horizontally
 
 ## Update minimal-emacs.d
 
@@ -146,6 +101,18 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 ```
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
+
+### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
+
+**Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
+
+To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
+
+``` emacs-lisp
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+```
+
+These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ### Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`
 
@@ -197,18 +164,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 Check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active.
 
 Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
-
-### How to enable dialogs, context menu, tool-bar, menu-bar, and tooltips?
-
-**Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
-
-To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
-
-``` emacs-lisp
-(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
-```
-
-These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
 ### How to configure vterm
 
@@ -654,6 +609,51 @@ Other UI features can also be enabled by adding the following to `~/.emacs.d/pre
 ### Why did the author develop minimal-emacs.d?
 
 The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration.
+
+## Features
+
+1. **Performance Improvements:**
+   - Increases the amount read from processes in a single chunk.
+   - Prefers loading newer compiled files.
+   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
+   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
+   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
+   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers for the `file-name-handler-alist` optimizations; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
+   - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
+   - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
+   - Avoids unnecessary excessive UI updates.
+   - Disables font compacting to avoid high memory usage.
+   - Defer tool bar setup
+   - Unset command line options irrelevant to the current OS
+
+2. **Native Compilation and Byte Compilation:**
+   - Configures native compilation and byte compilation settings
+   - Suppresses compiler warnings and errors during native compilation.
+
+4. **UI Element Management:**
+   - Disables the startup screen and messages, including menu bar, tool bar, and scroll bars.
+   - Configures Emacs to avoid resizing frames and minimizes unnecessary UI updates.
+
+5. **Package Management:**
+   - Configures package archives and priorities for MELPA, ELPA, and other repositories.
+
+6. **Customizable Initialization Files:**
+   - Supports additional configuration files (`pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`) to allow further customization at different stages of the startup process.
+
+7. **File Management:**
+   - Manages auto-save and backup files, including backup options and version control settings.
+
+8. **User Experience Enhancements:**
+   - Configures user interface settings such as cursor behavior, scrolling, and response to prompts.
+   - Disables beeping and blinking to avoid distractions.
+
+9. **Buffer and Window Configuration:**
+   - Sets default fringe widths and buffer boundaries.
+   - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
+
+10. **Miscellaneous**
+    - Configure recentf, savehist, and auto-save
+    - Configure Ediff to use a single frame and split windows horizontally
 
 ## Author and license
 
