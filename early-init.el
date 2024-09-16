@@ -270,7 +270,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       ;; running during the initial stages of startup
       (advice-add #'tool-bar-setup :override #'ignore)
       (define-advice startup--load-user-init-file
-          (:before (&rest _) minimal-emacs-setup-toolbar)
+          (:after (&rest _) minimal-emacs-setup-toolbar)
         (advice-remove #'tool-bar-setup #'ignore)
         (tool-bar-setup)))))
 (unless (memq 'tool-bar minimal-emacs-ui-features)
