@@ -1,4 +1,4 @@
-# Minimal ~/.emacs.d - Better Defaults and Optimized Startup
+# Minimal ~/.emacs.d - Vanilla Emacs Configuration with Better Defaults and Optimized Startup
 ![License](https://img.shields.io/github/license/jamescherti/be-quiet.el)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
@@ -18,7 +18,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
-- [Minimal ~/.emacs.d - Better Defaults and Optimized Startup](#minimal-emacsd---better-defaults-and-optimized-startup)
+- [Minimal ~/.emacs.d - Vanilla Emacs Configuration with Better Defaults and Optimized Startup](#minimal-emacsd---vanilla-emacs-configuration-with-better-defaults-and-optimized-startup)
     - [Install minimal-emacs.d](#install-minimal-emacsd)
         - [Installation into ~/.emacs.d](#installation-into-emacsd)
         - [Alternative: Installation in `~/.minimal-emacs.d`](#alternative-installation-in-minimal-emacsd)
