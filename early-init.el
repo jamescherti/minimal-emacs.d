@@ -164,10 +164,28 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
            (default-toplevel-value 'mode-line-format))
       (setq-default mode-line-format nil)
 
+      ;; Site-lisp files often produce excessive load messages, deprecation
+      ;; warnings, linter notices... Displaying this in the minibuffer can
+      ;; trigger unnecessary redraws and slow down startup.
+      (put 'site-run-file 'initial-value site-run-file)
+      (setq site-run-file nil)
+
       (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
         "Advice for startup--load-user-init-file to reset mode-line-format."
         (unwind-protect
             (progn
+              (when (setq site-run-file (get 'site-run-file 'initial-value))
+                (let ((inhibit-startup-screen inhibit-startup-screen))
+                  (cl-letf (((symbol-function 'load-file)
+                             (lambda (file)
+                               (load file nil (not minimal-emacs-debug))))
+                            ((symbol-function 'load)
+                             (lambda (file &optional noerror _nomessage
+                                           &rest args)
+                               (apply #'load file noerror
+                                      (not minimal-emacs-debug) args))))
+                    (load site-run-file t))))
+
               ;; Start up as normal
               (apply fn args))
           ;; If we don't undo inhibit-{message, redisplay} and there's an
