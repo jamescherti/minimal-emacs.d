@@ -143,15 +143,22 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
   (unless noninteractive
     (unless minimal-emacs-debug
-      ;; Disable mode-line-format during init
+      ;; Suppress redisplay and redraw during startup to avoid delays and
+      ;; prevent flashing an unstyled Emacs frame.
       (setq-default inhibit-redisplay t
                     inhibit-message t)
+
+      ;; Reset the above variables to prevent Emacs from appearing frozen or
+      ;; visually corrupted after startup or if a startup error occurs.
       (defun minimal-emacs--reset-inhibited-vars-h ()
         (setq-default inhibit-redisplay nil
-                      ;; Inhibiting `message' only prevents redraws and
                       inhibit-message nil)
         (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibited-vars-h))
       (add-hook 'post-command-hook #'minimal-emacs--reset-inhibited-vars-h -100)
+
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (setq mode-line-format nil)))
 
       (put 'mode-line-format 'initial-value
            (default-toplevel-value 'mode-line-format))
