@@ -657,6 +657,8 @@ The author began working on it after realizing that no existing starter kit offe
 
 ## Author and license
 
+The `minimal-emacs.d` project has been written by [James Cherti](https://www.jamescherti.com/) and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
+
 Copyright (C) 2024 [James Cherti](https://www.jamescherti.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
