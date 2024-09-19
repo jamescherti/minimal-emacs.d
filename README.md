@@ -2,7 +2,7 @@
 ![License](https://img.shields.io/github/license/jamescherti/be-quiet.el)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
-The `minimal-emacs.d` project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for your vanilla Emacs configuration.
+The `minimal-emacs.d` project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for a vanilla Emacs configuration.
 
 Creating `minimal-emacs.d` (`init.el` and `early-init.el`) involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind `minimal-emacs.d` is to provide a clean, bloat-free, optimized base.
 
