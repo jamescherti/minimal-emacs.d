@@ -43,6 +43,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
         - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
         - [Why the reflexive disabling of the menu bar?](#why-the-reflexive-disabling-of-the-menu-bar)
         - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
+        - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
     - [Features](#features)
     - [Author and license](#author-and-license)
     - [Links](#links)
@@ -609,6 +610,15 @@ Other UI features can also be enabled by adding the following to `~/.emacs.d/pre
 ### Why did the author develop minimal-emacs.d?
 
 The author began working on it after realizing that no existing starter kit offered a truly minimal setup with the flexibility for users to choose exactly what to include in their configuration.
+
+### How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?
+
+To ensure the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from a different directory, such as `~/.config/min-emacs/`, modify the `minimal-emacs-user-directory` variable by adding the following to your `~/.emacs.d/pre-early-init.el` file:
+```elisp
+(setq minimal-emacs-user-directory "~/.config/min-emacs/")
+```
+
+This will ensure that the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/min-emacs/`.
 
 ## Features
 
