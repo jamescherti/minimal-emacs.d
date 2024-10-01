@@ -76,7 +76,6 @@ To install `minimal-emacs.d` in a non-default directory, use the `--init-directo
 ## Update minimal-emacs.d
 
 To keep your Emacs configuration up to date, you can pull the latest changes from the repository. Run the following command in your terminal:
-
 ```
 git -C ~/.emacs.d pull
 ```
@@ -613,12 +612,12 @@ The author began working on it after realizing that no existing starter kit offe
 
 ### How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?
 
-To ensure the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from a different directory, such as `~/.config/min-emacs/`, modify the `minimal-emacs-user-directory` variable by adding the following to your `~/.emacs.d/pre-early-init.el` file:
+To ensure the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from a different directory, such as `~/.config/minimal-emacs.d/`, modify the `minimal-emacs-user-directory` variable by adding the following to your `~/.emacs.d/pre-early-init.el` file:
 ```elisp
-(setq minimal-emacs-user-directory "~/.config/min-emacs/")
+(setq minimal-emacs-user-directory "~/.config/minimal-emacs.d/")
 ```
 
-This will ensure that the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/min-emacs/`.
+This will ensure that the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/minimal-emacs.d/`.
 
 ## Features
 
