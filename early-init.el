@@ -269,12 +269,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
   (setq use-file-dialog nil)
   (setq use-dialog-box nil))
 
-;; Allow for shorter responses: "y" for yes and "n" for no.
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
-(defalias #'view-hello-file #'ignore)  ; Never show the hello file
-
 ;;; package.el
 (setq package-enable-at-startup nil)
 (setq package-quickstart nil)

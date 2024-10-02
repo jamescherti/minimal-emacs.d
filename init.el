@@ -60,10 +60,16 @@
                   minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;;; Interface
+;;; User interface
 
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq idle-update-delay 1.0)
+
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add #'yes-or-no-p :override #'y-or-n-p))
+(defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;;; Misc
 
