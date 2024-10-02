@@ -93,6 +93,9 @@
 ;; Delete by moving to trash in interactive mode
 (setq delete-by-moving-to-trash (not noninteractive))
 
+;; Increase how much is read from processes in a single chunk (default is 4kb).
+(setq read-process-output-max (* 512 1024))  ; 512kb
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
