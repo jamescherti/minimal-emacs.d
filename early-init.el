@@ -84,11 +84,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
 
-;; Reduce rendering/line scan work by not rendering cursors or regions in
-;; non-focused windows.
-(setq-default cursor-in-non-selected-windows nil)
-(setq highlight-nonselected-windows nil)
-
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 

@@ -273,6 +273,11 @@
 ;; especially for tabs.
 (setq x-stretch-cursor nil)
 
+;; Reduce rendering/line scan work by not rendering cursors or regions in
+;; non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
 ;;; Annoyances
 
 ;; No beeping or blinking
