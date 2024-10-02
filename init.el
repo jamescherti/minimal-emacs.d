@@ -34,12 +34,21 @@
 
 ;; Ensure the 'use-package' package is installed and loaded
 
-;;; Warnings and errors
+;;; Features, warnings, and errors
 
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
 
 (setq warning-suppress-types '((lexical-binding)))
+
+;; Some features that are not represented as packages can be found in
+;; `features', but this can be inconsistent. The following enforce consistency:
+(if (fboundp #'json-parse-string)
+    (push 'jansson features))
+(if (string-match-p "HARFBUZZ" system-configuration-features) ; no alternative
+    (push 'harfbuzz features))
+(if (bound-and-true-p module-file-suffix)
+    (push 'dynamic-modules features))
 
 ;;; Minibuffer
 ;; Allow nested minibuffers
