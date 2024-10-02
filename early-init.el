@@ -62,13 +62,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       (expand-file-name "themes/" minimal-emacs-user-directory))
 (setq custom-file (expand-file-name "custom.el" minimal-emacs-user-directory))
 
-;;; Misc
-
-(set-language-environment "UTF-8")
-
-;; Set-language-environment sets default-input-method, which is unwanted.
-(setq default-input-method nil)
-
 ;;; Garbage collection
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
@@ -78,6 +71,13 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (add-hook 'emacs-startup-hook
           (lambda ()
             (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
+
+;;; Misc
+
+(set-language-environment "UTF-8")
+
+;; Set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
 
 ;;; Performance
 
