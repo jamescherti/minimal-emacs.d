@@ -554,6 +554,9 @@ Add the following to `~/.emacs.d/post-init.el`:
 (pixel-scroll-precision-mode)
 
 (display-time-mode)
+(show-paren-mode +1)  ; Paren match highlighting
+(winner-mode 1)
+(pixel-scroll-precision-mode 1)
 ```
 
 ## Frequently asked questions
