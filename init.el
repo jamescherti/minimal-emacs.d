@@ -34,6 +34,13 @@
 
 ;; Ensure the 'use-package' package is installed and loaded
 
+;;; Warnings and errors
+
+;; Disable warnings from the legacy advice API. They aren't useful.
+(setq ad-redefinition-action 'accept)
+
+(setq warning-suppress-types '((lexical-binding)))
+
 ;;; Minibuffer
 ;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)

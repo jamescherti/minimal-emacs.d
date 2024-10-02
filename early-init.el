@@ -101,11 +101,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
-;; Disable warnings from the legacy advice API. They aren't useful.
-(setq ad-redefinition-action 'accept)
-
-(setq warning-suppress-types '((lexical-binding)))
-
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
