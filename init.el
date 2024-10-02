@@ -17,6 +17,11 @@
 ;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
 
+;;; Networking
+
+;; Don't ping things that look like domain names.
+(setq ffap-machine-p-known 'reject)
+
 ;;; package.el
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
