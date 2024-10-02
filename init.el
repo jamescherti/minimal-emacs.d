@@ -44,6 +44,11 @@
                   minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
+;;; Interface
+
+;; By default, Emacs "updates" its ui more often than it needs to
+(setq idle-update-delay 1.0)
+
 ;;; Misc
 
 ;; switch-to-buffer runs pop-to-buffer-same-window instead

@@ -109,9 +109,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
-;; By default, Emacs "updates" its ui more often than it needs to
-(setq idle-update-delay 1.0)
-
 ;; Font compacting can be very resource-intensive, especially when rendering
 ;; icon fonts on Windows. This will increase memory usage.
 (setq inhibit-compacting-font-caches t)
