@@ -35,7 +35,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
         - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
         - [Code completion with corfu](#code-completion-with-corfu)
         - [How to configure straight.el?](#how-to-configure-straightel)
-        - [Which other packages can be interesting to add?](#which-other-packages-can-be-interesting-to-add)
+        - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [Frequently asked questions](#frequently-asked-questions)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
@@ -542,7 +542,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (load bootstrap-file nil 'nomessage))
 ```
 
-### Which other packages can be interesting to add?
+### Which other customizations can be interesting to add?
 
 Add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
@@ -557,6 +557,9 @@ Add the following to `~/.emacs.d/post-init.el`:
 (show-paren-mode +1)  ; Paren match highlighting
 (winner-mode 1)
 (pixel-scroll-precision-mode 1)
+
+;; Configure Emacs to ask for confirmation before exiting
+(setq confirm-kill-emacs 'y-or-n-p)
 ```
 
 ## Frequently asked questions
