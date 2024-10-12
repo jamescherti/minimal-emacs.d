@@ -431,6 +431,14 @@ You can also add the following code to enable commenting and uncommenting by pre
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 ```
 
+Evil-snipe provides 2-character motions for quickly jumping around text compared to Evil's built-in f/F/t/T motions, incrementally highlighting candidate targets as you type. By default, snipe only binds s (forward) and S (backward) to evil-snipe-s and evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X (exclusive):
+``` emacs-lisp
+(use-package evil-snipe
+  :defer t
+  :commands evil-snipe-mode
+  :hook (after-init . evil-snipe-mode))
+```
+
 ### Configuring LSP Servers with Eglot (built-in)
 
 To set up Language Server Protocol (LSP) servers using Eglot, you can configure it in your Emacs setup as follows. This configuration ensures minimal disruption from Eglot’s progress reporting and optimizes performance by disabling unnecessary logging.
