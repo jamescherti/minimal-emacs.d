@@ -570,6 +570,10 @@ Add the following to `~/.emacs.d/post-init.el`:
 (setq confirm-kill-emacs 'y-or-n-p)
 ```
 
+It is also recommended to read the following articles:
+- [Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/)
+- [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
+
 ## Frequently asked questions
 
 ### How to increase gc-cons-threshold?
