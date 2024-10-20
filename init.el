@@ -113,6 +113,10 @@
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
 (setq read-process-output-max (* 512 1024))  ; 512kb
 
+;; Collects and displays all available documentation immediately, even if
+;; multiple sources provide it. It concatenates the results.
+(setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
