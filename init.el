@@ -242,13 +242,6 @@
 ;; window.
 (setq scroll-preserve-screen-position t)
 
-;;; Mouse
-
-;; Emacs 29
-(when (memq 'context-menu minimal-emacs-ui-features)
-  (when (and (display-graphic-p) (fboundp 'context-menu-mode))
-    (add-hook 'after-init-hook #'context-menu-mode)))
-
 (setq hscroll-margin 2
       hscroll-step 1
       ;; Emacs spends excessive time recentering the screen when the cursor
@@ -261,15 +254,21 @@
       ;; significantly off-screen.
       scroll-conservatively 10
       scroll-margin 0
-      scroll-preserve-screen-position t
       ;; Reduce cursor lag by preventing automatic adjustments to
       ;; `window-vscroll' for unusually long lines. Setting
       ;; `auto-window-vscroll' it to nil also resolves the issue of random
       ;; half-screen jumps during scrolling.
-      auto-window-vscroll nil
-      ;; Mouse
-      mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
+      auto-window-vscroll nil)
+
+;;; Mouse Scroll
+
+(setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
       mouse-wheel-scroll-amount-horizontal 1)
+
+;; Emacs 29
+(when (memq 'context-menu minimal-emacs-ui-features)
+  (when (and (display-graphic-p) (fboundp 'context-menu-mode))
+    (add-hook 'after-init-hook #'context-menu-mode)))
 
 ;;; Cursor
 ;; The blinking cursor is distracting and interferes with cursor settings in
