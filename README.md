@@ -552,7 +552,9 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 ### Which other customizations can be interesting to add?
 
-Add the following to `~/.emacs.d/post-init.el`:
+1. Read the following article from the same author: [Essential Emacs Packages for Efficient Software Development and Text Editing](https://www.jamescherti.com/essential-emacs-packages/)
+
+2. You can also add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package which-key
   :ensure t
