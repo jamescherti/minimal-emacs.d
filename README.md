@@ -188,6 +188,8 @@ Vertico, Consult, and Embark collectively enhance Emacs' completion and navigati
 
 Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and Embark:
 ``` emacs-lisp
+;; Tip: You can remove the `vertico-mode' use-package and replace it
+;;      with the built-in `fido-vertical-mode'.
 (use-package vertico
   ;; (Note: It is recommended to also enable the savehist package.)
   :ensure t
