@@ -145,8 +145,6 @@
       window-divider-default-places t
       window-divider-default-right-width 1)
 
-(add-hook 'after-init-hook #'window-divider-mode)
-
 ;;; Backup files
 
 ;; Avoid generating backups or lockfiles to prevent creating world-readable

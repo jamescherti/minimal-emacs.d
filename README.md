@@ -625,6 +625,12 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (uniquify-separator "•")
   (uniquify-after-kill-buffer-p t)
   (uniquify-ignore-buffers-re "^\\*"))
+
+;; Window dividers separate windows visually. Window dividers are bars that can
+;; be dragged with the mouse, thus allowing you to easily resize adjacent
+;; windows.
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Dividers.html
+(add-hook 'after-init-hook #'window-divider-mode)
 ```
 
 It is also recommended to read the following articles:
