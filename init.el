@@ -265,9 +265,6 @@
 
 ;;; Mouse Scroll
 
-(setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
-      mouse-wheel-scroll-amount-horizontal 1)
-
 ;; Emacs 29
 (when (memq 'context-menu minimal-emacs-ui-features)
   (when (and (display-graphic-p) (fboundp 'context-menu-mode))
