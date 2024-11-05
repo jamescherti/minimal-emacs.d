@@ -609,6 +609,9 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 2. You can also add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
+;; Hide warnings and display only errors
+(setq warning-minimum-level :error)
+
 (use-package which-key
   :ensure t
   :config
