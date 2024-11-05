@@ -597,6 +597,10 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
+
+;; Optional: Install use-package support
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode))
 ```
 
 ### Which other customizations can be interesting to add?
