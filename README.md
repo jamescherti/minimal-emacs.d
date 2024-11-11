@@ -780,5 +780,6 @@ Other Emacs packages by the same author:
 - [dir-config.el](https://github.com/jamescherti/dir-config.el): Automatically find and evaluate .dir-config.el Elisp files to configure directory-specific settings.
 - [flymake-bashate.el](https://github.com/jamescherti/flymake-bashate.el): A package that provides a Flymake backend for the bashate Bash script style checker.
 - [flymake-ansible-lint.el](https://github.com/jamescherti/flymake-ansible-lint.el): An Emacs package that offers a Flymake backend for `ansible-lint`.
-- **[compile-angel.el](https://github.com/jamescherti/compile-angel.el)**: An Emacs package that automatically compiles Emacs loaded or saved Elisp libraries. This lightweight alternative to `auto-compile` not only compiles Elisp files loaded with `load` and `require`, but also handles deferred and autoloaded files.
-- **[inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el)**: A package that disables mouse input in Emacs, offering a simpler and faster alternative to the `disable-mouse` package.
+- [compile-angel.el](https://github.com/jamescherti/compile-angel.el): An Emacs package that automatically compiles Emacs loaded or saved Elisp libraries. This lightweight alternative to `auto-compile` not only compiles Elisp files loaded with `load` and `require`, but also handles deferred and autoloaded files.
+- [inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el): A package that disables mouse input in Emacs, offering a simpler and faster alternative to the `disable-mouse` package.
+- [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el): This package enables Emacs to function as an offline dictionary by using the sdcv command-line tool directly within Emacs.
