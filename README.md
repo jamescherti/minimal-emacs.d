@@ -38,6 +38,7 @@ A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/com
         - [How to configure elpaca (package manager)](#how-to-configure-elpaca-package-manager)
         - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [Frequently asked questions](#frequently-asked-questions)
+        - [How to a load lisp file for machine-specific customizations](#how-to-a-load-lisp-file-for-machine-specific-customizations)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
         - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
@@ -647,6 +648,17 @@ It is also recommended to read the following articles:
 - [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
 
 ## Frequently asked questions
+
+### How to a load lisp file for machine-specific customizations
+
+Add the following line to the end of your `post-init.el` file:
+```lisp
+(minimal-emacs-load-user-init "local.el")
+```
+
+This allows `local.el` to load, enabling custom configurations specific to the machine.
+
+(Ensure that `local.el` is in the same directory as `post-init.el`.)
 
 ### How to increase gc-cons-threshold?
 
