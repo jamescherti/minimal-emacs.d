@@ -44,7 +44,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Why the reflexive disabling of the menu bar?](#why-the-reflexive-disabling-of-the-menu-bar)
     - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
     - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
-    - [How to make minimal-emacs.d install packages in the early-init phase, instead of init?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-init)
+    - [How to make `minimal-emacs.d` install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
     - [Are there any comments from users?](#are-there-any-comments-from-users)
   - [Features](#features)
   - [Author and license](#author-and-license)
@@ -721,9 +721,10 @@ To ensure the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-i
 
 This will ensure that the `minimal-emacs.d` configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/minimal-emacs.d/`.
 
-### How to make minimal-emacs.d install packages in the early-init phase, instead of init?
+### How to make `minimal-emacs.d` install packages in the early-init phase instead of the init phase?
 
-To load packages in the early-init phase, add the following to `post-early-init.el`:
+To install and load packages during the early-init phase, add the following to `post-early-init.el`:
+
 ```elisp
 (setq minimal-emacs-package-initialize-and-refresh nil)
 
@@ -736,9 +737,11 @@ To load packages in the early-init phase, add the following to `post-early-init.
     (package-install 'use-package))
   (eval-when-compile
     (require 'use-package)))
+
+;; TODO: Add your use-package code here
 ```
 
-The drawback of using early-init phase instead of init.el is that if a package fails, you will not be able to see anything in the Emacs GUI. You will need to open the terminal to view Emacs's stdout.
+A drawback of using the early-init phase instead of init is that if a package fails (e.g, due to a network issue), no output will be displayed in the Emacs GUI. You will need to open a terminal to view Emacs's stdout for error messages.
 
 ### Are there any comments from users?
 
