@@ -728,6 +728,11 @@ To install and load packages during the early-init phase, add the following to `
 ```elisp
 (setq minimal-emacs-package-initialize-and-refresh nil)
 
+;; If you want to ignore the warning:
+;; "Warning (package): Unnecessary call to package-initialize in init file."
+;; Uncomment the following setq:
+;; (setq warning-suppress-types '((package)))
+
 ;; Initialize packages in the early-init phase instead of init
 (progn
   (package-initialize)
