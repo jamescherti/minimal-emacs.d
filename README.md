@@ -18,7 +18,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 - [Minimal ~/.emacs.d - Vanilla Emacs Configuration with Better Defaults and Optimized Startup](#minimal-emacsd---vanilla-emacs-configuration-with-better-defaults-and-optimized-startup)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
-    - [Installation minimal-emacs.d into ~/.emacs.d](#installation-minimal-emacsd-into-emacsd)
+    - [Install minimal-emacs.d into ~/.emacs.d](#install-minimal-emacsd-into-emacsd)
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
   - [Customizations](#customizations)
@@ -57,7 +57,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 - **Important:** Ensure that the *~/.emacs* and *~/.emacs.el* files do not exist. These files takes precedence over *init.el*, causing Emacs to ignore the *init.el* and/or *early-init.el* in the *~/.emacs.d/* directory or any directory specified with the *--init-directory* Emacs command-line argument. This behavior is due to the way Emacs searches for initialization files ([more information](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init)). **Simply delete the *~/.emacs* and *~/.emacs.el* avoid this issue.**
 - Prerequisite: git
 
-### Installation minimal-emacs.d into ~/.emacs.d
+### Install minimal-emacs.d into ~/.emacs.d
 
 Execute the following command install this repository into `~/.emacs.d`:
 ```
