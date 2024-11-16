@@ -22,7 +22,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
   - [Customizations](#customizations)
-    - [How to customize early-init.el and init.el?](#how-to-customize-early-initel-and-initel)
+    - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
@@ -87,7 +87,7 @@ git -C ~/.emacs.d pull
 
 ## Customizations
 
-### How to customize early-init.el and init.el?
+### Never modify init.el and early-init.el. Modify these instead...
 **The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
 The minimal-emacs.d init files support additional customization files that are loaded at different stages of the Emacs startup process. These files allow you to further customize the initialization sequence:
