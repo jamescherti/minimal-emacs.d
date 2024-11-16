@@ -54,7 +54,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Install minimal-emacs.d
 
-**IMPORTANT:** Make sure that the ~/.emacs file does not exist. If the `~/.emacs` file exists, it takes precedence over init.el. This is due to how Emacs searches for initialization files.
+**Important:** Ensure that the `~/.emacs` file does not exist. If the `~/.emacs` file is present, it takes precedence over `init.el`, causing Emacs to ignore the `init.el` and/or `early-init.el` in the `~/.emacs.d/` directory or any directory specified with the `--init-directory` Emacs command-line argument. This behavior is due to the way Emacs searches for initialization files. **Simply delete the `~/.emacs` avoid this issue.**
 
 ### Installation into ~/.emacs.d
 
