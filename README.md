@@ -88,7 +88,7 @@ git -C ~/.emacs.d pull
 ## Customizations
 
 ### How to customize early-init.el and init.el?
-The `init.el` and `early-init.el` files should never be modified directly because they are intended to be managed by Git during an update.
+**The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
 The minimal-emacs.d init files support additional customization files that are loaded at different stages of the Emacs startup process. These files allow you to further customize the initialization sequence:
 
