@@ -54,6 +54,8 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 
 ## Install minimal-emacs.d
 
+**IMPORTANT:** Make sure that the ~/.emacs file does not exist. If the `~/.emacs` file exists, it takes precedence over init.el. This is due to how Emacs searches for initialization files.
+
 ### Installation into ~/.emacs.d
 
 Execute the following command to clone this repository into `~/.emacs.d`:
