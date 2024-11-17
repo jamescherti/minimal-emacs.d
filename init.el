@@ -117,6 +117,11 @@
 ;; multiple sources provide it. It concatenates the results.
 (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
 
+;; For some reason, `abbrev_defs` is located in ~/.emacs.d/abbrev_defs, even
+;; when `user-emacs-directory` is modified. This ensures the abbrev file is
+;; correctly located based on the updated `user-emacs-directory`.
+(setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
+
 ;;; Files
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
