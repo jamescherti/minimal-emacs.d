@@ -24,6 +24,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
   - [Customizations](#customizations)
     - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
+    - [Compile-Angel - Speed up Emacs by Automatically Byte-compiling and Native-compiling all .el files](#compile-angel---speed-up-emacs-by-automatically-byte-compiling-and-native-compiling-all-el-files)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Optimization: Native Compilation](#optimization-native-compilation)
@@ -118,6 +119,36 @@ To customize your Emacs setup to include various user interface elements, you ca
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
+### Compile-Angel - Speed up Emacs by Automatically Byte-compiling and Native-compiling all .el files
+
+The [compile-angel.el](https://github.com/jamescherti/compile-angel.el) package automatically byte-compiles and native-compiles Emacs Lisp libraries. It offers:
+- `(compile-angel-on-load-mode)`: A global mode that compiles .el files before they are loaded.
+- `(compile-angel-on-save-local-mode)`: A local mode that compiles .el files whenever the user saves them.
+
+The *compile-angel* modes **speed up Emacs by ensuring all libraries are byte-compiled and native-compiled**. Byte-compilation reduces the overhead of loading Emacs Lisp code at runtime, while native compilation optimizes performance by generating machine code specific to your system.
+
+To install compile-angel, add the following code **at the very beginning of your ~/.emacs.d/post-init.el init.el file, before all other packages**:
+```emacs-lisp
+(use-package compile-angel
+  :ensure t
+  :demand t
+  :config
+  (compile-angel-on-load-mode)
+  (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
+```
+
+It is also highly recommended to set the following variables **at the very beginning of your post-init.el**:
+
+``` emacs-lisp
+;; Ensure Emacs loads the most recent byte-compiled files.
+(setq load-prefer-newer t)
+
+;; Ensure JIT compilation is enabled for improved performance by
+;; native-compiling loaded .elc files asynchronously
+(setq native-comp-jit-compilation t)
+(setq native-comp-deferred-compilation t) ; Deprecated in Emacs > 29.1
+```
 
 ### Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`
 
