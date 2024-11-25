@@ -258,6 +258,12 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; directly from the completion interface.
   :ensure t
   :defer t
+  :commands (embark-act
+             embark-dwim
+             embark-export
+             embark-collect
+             embark-bindings
+             embark-prefix-help-command)
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
