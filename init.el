@@ -387,6 +387,7 @@
 ;;; Dired
 
 (setq dired-free-space nil
+      dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-clean-confirm-killing-deleted-buffers nil
       dired-recursive-deletes 'top
