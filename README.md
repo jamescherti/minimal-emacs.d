@@ -800,7 +800,10 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 ### Are there any comments from users?
 
-A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to *minimal-emacs.d*, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project. Please [send me](https://www.jamescherti.com/contact/) your feedback and I'll add it to this README.md file.
+- A [user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to *minimal-emacs.d*, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project.
+- [Another user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lrsfd64/?%24deep_link=true&%243p=e_as), highlighting how a minimal-emacs.d significantly enhanced their Emacs performance. They reported substantial startup time reductions on both their main machine (from ~2.25 to ~0.95 seconds) and an older laptop (from ~2.95 to ~1.27 seconds) while also experiencing a generally snappier performance within Emacs. The user expressed gratitude for the project, calling it fantastic.
+
+Please [send me](https://www.jamescherti.com/contact/) your feedback and I'll add it to this README.md file.
 
 ## Features
 
