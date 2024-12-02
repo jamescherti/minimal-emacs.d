@@ -659,7 +659,8 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   :config
   (which-key-mode))
 
-(pixel-scroll-precision-mode)
+(setq pixel-scroll-precision-use-momentum nil)
+(pixel-scroll-precision-mode 1)
 
 (display-time-mode)
 (show-paren-mode +1)  ; Paren match highlighting
