@@ -37,7 +37,8 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to configure elpaca (package manager)](#how-to-configure-elpaca-package-manager)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Frequently asked questions](#frequently-asked-questions)
-    - [How to load a local lisp file for machine-specific customizations?](#how-to-load-a-local-lisp-file-for-machine-specific-customizations)
+    - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
+    - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
     - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
@@ -663,6 +664,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 (display-time-mode)
 (show-paren-mode +1)  ; Paren match highlighting
 (winner-mode 1)
+(delete-selection-mode 1)  ; Replace selected text with typed text
 (pixel-scroll-precision-mode 1)
 
 ;; Configure Emacs to ask for confirmation before exiting
@@ -689,7 +691,7 @@ It is also recommended to read the following articles:
 
 ## Frequently asked questions
 
-### How to load a local lisp file for machine-specific customizations?
+### How to load a local lisp file for machine-specific configurations?
 
 Add the following line to the end of your `post-init.el` file:
 ```lisp
@@ -699,6 +701,14 @@ Add the following line to the end of your `post-init.el` file:
 This allows `local.el` to load, enabling custom configurations specific to the machine.
 
 (Ensure that `local.el` is in the same directory as `post-init.el`.)
+
+### How to load Emacs customizations?
+
+To load customizations saved by Emacs (`M-x customize`), add the following code snippet to the `post-init.el` file. This ensures that the custom file, typically set to a separate file for user preferences, is loaded without errors or messages during startup:
+
+```elisp
+(load custom-file 'noerror 'nomessage)
+```
 
 ### How to increase gc-cons-threshold?
 
