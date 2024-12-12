@@ -309,10 +309,7 @@
 
 ;; Ensure window-start is never invisible. This enhances user experience when
 ;; folding/unfolding code (outline, org-mode, outline-minor-mode...)
-;;
-;; The following is commented out to resolve:
-;; https://github.com/jamescherti/minimal-emacs.d/issues/20
-;; (setq-default make-window-start-visible t)
+(setq-default make-window-start-visible t)
 
 ;;; Indent and formatting
 (setq-default left-fringe-width  8)
