@@ -307,10 +307,6 @@
 ;; after each deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
 
-;; Ensure window-start is never invisible. This enhances user experience when
-;; folding/unfolding code (outline, org-mode, outline-minor-mode...)
-(setq-default make-window-start-visible t)
-
 ;;; Indent and formatting
 (setq-default left-fringe-width  8)
 (setq-default right-fringe-width 8)
