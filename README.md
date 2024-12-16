@@ -772,6 +772,8 @@ To ensure the *minimal-emacs.d* configuration loads `post-early-init.el`, `pre-i
 
 This will ensure that the *minimal-emacs.d* configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/minimal-emacs.d/`.
 
+Keep in mind that if you change the `minimal-emacs-user-directory`, *minimal-emacs.d* will attempt to load the rest of the configuration from that directory (e.g., `~/.config/minimal-emacs/pre-init.el` and `~/.config/minimal-emacs/post-init.el`, etc.).
+
 ### How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?
 
 To install and load packages during the early-init phase, add the following to `post-early-init.el`:
