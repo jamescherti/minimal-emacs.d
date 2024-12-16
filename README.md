@@ -750,12 +750,12 @@ Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are no
 The menu bar is disabled by default in *minimal-emacs.d* to provide a minimal, distraction-free environment, which many experienced users prefer.
 
 The menu bar can be re-enabled by adding the following configuration to `~/.emacs.d/pre-early-init.el`:
-```
+```elisp
 (setq minimal-emacs-ui-features '(menu-bar))
 ```
 
 Other UI features can also be enabled by adding the following to `~/.emacs.d/pre-early-init.el`:
-```
+```elisp
 (setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
 ```
 
