@@ -598,7 +598,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ### How to configure elpaca (package manager)
 
 [Add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
-``` elisp
+```elisp
 (setq package-enable-at-startup nil)
 
 (defvar elpaca-installer-version 0.8)
@@ -650,7 +650,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 1. Read the following article from the same author: [Essential Emacs Packages for Efficient Software Development and Text Editing](https://www.jamescherti.com/essential-emacs-packages/)
 
 2. You can also add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
+```emacs-lisp
 ;; Hide warnings and display only errors
 (setq warning-minimum-level :error)
 
@@ -714,7 +714,7 @@ To load customizations saved by Emacs (`M-x customize`), add the following code 
 ### How to increase gc-cons-threshold?
 
 Add the following to `~/.emacs.d/pre-early-init.el` to ensure that *minimal-emacs.d* restores the specified amount after startup:
-``` emacs-lisp
+```emacs-lisp
 (setq minimal-emacs-gc-cons-threshold (* 64 1024 1024))
 ```
 
