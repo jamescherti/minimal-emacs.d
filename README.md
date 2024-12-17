@@ -599,7 +599,8 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 [Add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
 ```elisp
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup nil
+      minimal-emacs-package-initialize-and-refresh nil)
 
 (defvar elpaca-installer-version 0.8)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
