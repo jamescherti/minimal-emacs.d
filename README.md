@@ -597,11 +597,18 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 ### How to configure elpaca (package manager)
 
-[Add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
+Add to `~/.emacs.d/pre-early-init.el`:
 ```elisp
-(setq package-enable-at-startup nil
-      minimal-emacs-package-initialize-and-refresh nil)
+;; By default, minimal-emacs-package-initialize-and-refresh is set to t, which
+;; makes minimal-emacs.d call the built-in package manager. Since Elpaca will
+;; replace the package manager, there is no need to call it.
+(setq minimal-emacs-package-initialize-and-refresh nil)
+```
 
+(According to arthsmn, a *minimal-emacs.d* user, the change above also improves startup time. [In this user's case](https://github.com/jamescherti/minimal-emacs.d/pull/22), the startup time decreased from 1.06 seconds to 0.56 seconds.)
+
+And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
+```elisp
 (defvar elpaca-installer-version 0.8)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
