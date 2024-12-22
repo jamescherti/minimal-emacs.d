@@ -1,4 +1,4 @@
-# Minimal ~/.emacs.d - Vanilla Emacs Configuration with Better Defaults and Optimized Startup
+# minimal-emacs.d - Emacs Configuration with Better Defaults and Optimized Startup
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
@@ -16,7 +16,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
-- [Minimal ~/.emacs.d - Vanilla Emacs Configuration with Better Defaults and Optimized Startup](#minimal-emacsd---vanilla-emacs-configuration-with-better-defaults-and-optimized-startup)
+- [minimal-emacs.d - Emacs Configuration with Better Defaults and Optimized Startup](#minimal-emacsd---emacs-configuration-with-better-defaults-and-optimized-startup)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
