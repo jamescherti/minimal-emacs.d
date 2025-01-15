@@ -1,3 +1,4 @@
+/autosave/
 /auto-save-list/
 /custom.el
 /easysession
@@ -13,6 +14,12 @@
 /pre-early-init*.el
 /pre-init.el
 /projectile-bookmarks.eld
+/racket-mode/
+/bookmarks
+/easysession
+/transient
+/custom.el
+/history
 /recentf
 /saveplace
 /tramp
