@@ -1,3 +1,9 @@
+#
+# If you encounter too many files to blacklist in this .gitignore file, I
+# recommend placing all the files in the ~/.emacs.d/var/ directory instead.
+# For more information, visit:
+# https://github.com/jamescherti/minimal-emacs.d?tab=readme-ov-file#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar
+#
 /autosave/
 /auto-save-list/
 /custom.el
