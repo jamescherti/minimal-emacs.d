@@ -1,42 +1,4 @@
-#
-# If you encounter too many files to blacklist in this .gitignore file, I
-# recommend placing all the files in the ~/.emacs.d/var/ directory instead.
-# For more information, visit:
-# https://github.com/jamescherti/minimal-emacs.d?tab=readme-ov-file#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar
-#
-/autosave/
-/auto-save-list/
-/custom.el
-/easysession
-/eln-cache/
-/elpa/
-/elpaca/
-/etc/
-/history
-/ielm-history.eld
-/lisp/
-/post-early-init*.el
-/post-init.el
-/pre-early-init*.el
-/pre-init.el
-/projectile-bookmarks.eld
-/racket-mode/
-/bookmarks
-/easysession
-/transient
-/custom.el
-/history
-/recentf
-/saveplace
-/tramp
-/straight/
-/themes/
-/transient/
-/tree-sitter/
-/undo-fu-session/
-/var/
-/bookmarks
-/bookmarks
-/ido.last
-/autosave/
-/url/
+*
+!README.md
+!early-init.el
+!init.el
