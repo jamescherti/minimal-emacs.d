@@ -26,6 +26,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
     - [Compile-Angel - Speed up Emacs by Automatically Byte-compiling and Native-compiling all .el files](#compile-angel---speed-up-emacs-by-automatically-byte-compiling-and-native-compiling-all-el-files)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
+    - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to configure vterm](#how-to-configure-vterm)
@@ -152,6 +153,8 @@ However, an alternative lightweight approach is to simply change the default `~/
 (setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
 (setq user-emacs-directory minimal-emacs-var-dir)
 ```
+
+### How to prevent minimal-emacs.d from saving custom.el?
 
 To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device`:
 ``` emacs-lisp
