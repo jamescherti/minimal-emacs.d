@@ -101,8 +101,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
          nil
        (list (rassq 'jka-compr-handler old-value))))
     ;; Ensure the new value persists through any current let-binding.
-    (set-default-toplevel-value 'file-name-handler-alist
-                                file-name-handler-alist)
+    (put 'file-name-handler-alist 'initial-value old-value)
     ;; Remember the old value to reset it as needed.
     (add-hook 'emacs-startup-hook
               (lambda ()
