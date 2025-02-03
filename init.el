@@ -437,6 +437,7 @@
 
 ;; ls-lisp
 (setq ls-lisp-verbosity nil)
+(setq ls-lisp-dirs-first t)
 
 ;;; Font / Text scale
 
