@@ -212,15 +212,13 @@
 ;; recently.
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
-(setq recentf-auto-cleanup 'never)
-
+(setq recentf-auto-cleanup (if (daemonp) 300 'never))
 (defun minimal-emacs--cleanup-hook ()
   "Run `recentf-cleanup' if `recentf' is loaded and `recentf-mode' is enabled."
   (when (and (featurep 'recentf)
              recentf-mode
              (fboundp 'recentf-cleanup))
     (recentf-cleanup)))
-
 (add-hook 'kill-emacs-hook #'minimal-emacs--cleanup-hook)
 
 ;;; saveplace
