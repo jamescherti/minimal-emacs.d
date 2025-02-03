@@ -78,9 +78,6 @@
 
 ;;; Misc
 
-;; switch-to-buffer runs pop-to-buffer-same-window instead
-(setq switch-to-buffer-obey-display-actions t)
-
 (setq show-paren-delay 0.1
       show-paren-highlight-openparen t
       show-paren-when-point-inside-paren t
@@ -97,9 +94,6 @@
 ;; Can be activated with `display-line-numbers-mode'
 (setq-default display-line-numbers-width 3)
 (setq-default display-line-numbers-widen t)
-
-(setq comint-prompt-read-only t)
-(setq comint-buffer-maximum-size 2048)
 
 (setq compilation-always-kill t
       compilation-ask-about-save nil
@@ -137,11 +131,6 @@
 (setq find-file-visit-truename t
       vc-follow-symlinks t)
 
-;; Skip confirmation prompts when creating a new file or buffer
-(setq confirm-nonexistent-file-or-buffer nil)
-
-(setq uniquify-buffer-name-style 'forward)
-
 (setq mouse-yank-at-point t)
 
 ;; Prefer vertical splits over horizontal ones
@@ -153,6 +142,19 @@
 (setq window-divider-default-bottom-width 1
       window-divider-default-places t
       window-divider-default-right-width 1)
+
+;;; Buffers
+
+;; switch-to-buffer runs pop-to-buffer-same-window instead
+(setq switch-to-buffer-obey-display-actions t)
+
+(setq uniquify-buffer-name-style 'forward)
+
+(setq comint-prompt-read-only t)
+(setq comint-buffer-maximum-size 2048)
+
+;; Skip confirmation prompts when creating a new file or buffer
+(setq confirm-nonexistent-file-or-buffer nil)
 
 ;;; Backup files
 
@@ -286,10 +288,10 @@
 (setq hscroll-margin 2
       hscroll-step 1)
 
+;;; Mouse
+
 (setq mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
       mouse-wheel-scroll-amount-horizontal 2)
-
-;;; Mouse Scroll
 
 ;; Emacs 29
 (when (memq 'context-menu minimal-emacs-ui-features)
