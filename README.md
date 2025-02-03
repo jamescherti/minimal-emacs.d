@@ -852,6 +852,7 @@ Please [send me](https://www.jamescherti.com/contact/) your feedback and I'll ad
 10. **Miscellaneous**
     - Configure recentf, savehist, and auto-save
     - Configure Ediff to use a single frame and split windows horizontally
+    - Optimize Eglot
 
 ## Author and license
 

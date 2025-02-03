@@ -23,6 +23,7 @@
 (setq ffap-machine-p-known 'reject)
 
 ;;; package.el
+
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
@@ -431,7 +432,25 @@
 ;; increasing their usefulness.
 (setq apropos-do-all t)
 
-;;; Load post-init.el
+;;; Eglot
+
+(setq eglot-sync-connect 1
+      eglot-autoshutdown t)
+
+;; Activate Eglot in cross-referenced non-project files
+(setq eglot-extend-to-xref t)
+
+;; Eglot optimization
+(setq jsonrpc-event-hook nil)
+(setq eglot-events-buffer-size 0)
+(setq eglot-report-progress nil)  ; Prevent Eglot minibuffer spam
+
+;; Eglot optimization: Disable `eglot-events-buffer' to maintain consistent
+;; performance in long-running Emacs sessions. By default, it retains 2,000,000
+;; lines, and each new event triggers pretty-printing of the entire buffer,
+;; leading to a gradual performance decline.
+(setq eglot-events-buffer-config '(:size 0 :format full))
+
 (minimal-emacs-load-user-init "post-init.el")
 
 (provide 'init)
