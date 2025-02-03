@@ -54,7 +54,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
          (expand-file-name filename
                            minimal-emacs-user-directory)))
     (when (file-exists-p user-init-file)
-      (load user-init-file nil t))))
+      (load user-init-file nil t t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 
