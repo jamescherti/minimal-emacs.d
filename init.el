@@ -113,6 +113,10 @@
 ;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 512 1024))  ; 512kb
 
+;; Improve Emacs' responsiveness by delaying syntax highlighting during input
+;; but may reduce visual feedback.
+(setq redisplay-skip-fontification-on-input t)
+
 ;; Collects and displays all available documentation immediately, even if
 ;; multiple sources provide it. It concatenates the results.
 (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
@@ -273,6 +277,9 @@
 ;; Horizontal scrolling
 (setq hscroll-margin 2
       hscroll-step 1)
+
+(setq mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
+      mouse-wheel-scroll-amount-horizontal 2)
 
 ;;; Mouse Scroll
 
