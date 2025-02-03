@@ -359,6 +359,9 @@
 ;; Enable indentation and completion using the TAB key
 (setq-default tab-always-indent nil)
 
+;; Perf: Reduce command completion overhead.
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+
 ;; Enable multi-line commenting which ensures that `comment-indent-new-line'
 ;; properly continues comments onto new lines, which is useful for writing
 ;; longer comments or docstrings that span multiple lines.
@@ -452,8 +455,7 @@
 
 ;;; Help
 
-;; Enhance `apropos' and related functions to perform more extensive searches,
-;; increasing their usefulness.
+;; Enhance `apropos' and related functions to perform more extensive searches
 (setq apropos-do-all t)
 
 ;; Fixes #11: Prevents help command completion from triggering autoload.
