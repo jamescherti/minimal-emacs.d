@@ -166,6 +166,10 @@
 (setq version-control t)  ; Use version numbers for backup files
 (setq kept-new-versions 5)
 (setq kept-old-versions 5)
+
+;;; VC
+
+(setq vc-git-print-log-follow t)
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
 
 ;;; Auto save
@@ -400,6 +404,12 @@
 ;; Configure Ediff to use a single frame and split windows horizontally
 (setq ediff-window-setup-function #'ediff-setup-windows-plain
       ediff-split-window-function #'split-window-horizontally)
+
+;;; Help
+
+;; Enhance `apropos' and related functions to perform more extensive searches,
+;; increasing their usefulness.
+(setq apropos-do-all t)
 
 ;;; Load post-init.el
 (minimal-emacs-load-user-init "post-init.el")

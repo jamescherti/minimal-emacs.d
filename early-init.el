@@ -90,16 +90,16 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 (unless (daemonp)
   (let ((old-value (default-toplevel-value 'file-name-handler-alist)))
-    (set-default-toplevel-value
-     'file-name-handler-alist
-     ;; Determine the state of bundled libraries using calc-loaddefs.el.
-     ;; If compressed, retain the gzip handler in `file-name-handler-alist`.
-     ;; If compiled or neither, omit the gzip handler during startup for
-     ;; improved startup and package load time.
-     (if (eval-when-compile
-           (locate-file-internal "calc-loaddefs.el" load-path))
-         nil
-       (list (rassq 'jka-compr-handler old-value))))
+    ;; Determine the state of bundled libraries using calc-loaddefs.el.
+    ;; If compressed, retain the gzip handler in `file-name-handler-alist`.
+    ;; If compiled or neither, omit the gzip handler during startup for
+    ;; improved startup and package load time.
+    (set-default-toplevel-value 'file-name-handler-alist
+                                (if (eval-when-compile
+                                      (locate-file-internal "calc-loaddefs.el"
+                                                            load-path))
+                                    nil
+                                  (list (rassq 'jka-compr-handler old-value))))
     ;; Ensure the new value persists through any current let-binding.
     (put 'file-name-handler-alist 'initial-value old-value)
     ;; Emacs processes command-line files very early in startup. These files may
@@ -146,9 +146,8 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
         "Advice for startup--load-user-init-file to reset mode-line-format."
         (unwind-protect
-            (progn
-              ;; Start up as normal
-              (apply fn args))
+            ;; Start up as normal
+            (apply fn args)
           ;; If we don't undo inhibit-{message, redisplay} and there's an
           ;; error, we'll see nothing but a blank Emacs frame.
           (setq-default inhibit-message nil)
