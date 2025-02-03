@@ -456,6 +456,14 @@
 ;; increasing their usefulness.
 (setq apropos-do-all t)
 
+;; Fixes #11: Prevents help command completion from triggering autoload.
+;; (e.g., apropos-command, apropos-variable, apropos...)
+;; Loading additional files for completion can slow down help commands
+;; and may unintentionally execute initialization code from some libraries.
+(setq help-enable-completion-autoload nil)
+(setq help-enable-autoload nil)
+(setq help-enable-symbol-autoload nil)
+
 ;;; Eglot
 
 (setq eglot-sync-connect 1
