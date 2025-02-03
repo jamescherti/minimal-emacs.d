@@ -408,12 +408,33 @@
 ;;; Dired
 
 (setq dired-free-space nil
+      dired-dwim-target t  ; Propose a target for intelligent moving or copying.
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
-      dired-clean-confirm-killing-deleted-buffers nil
       dired-recursive-deletes 'top
       dired-recursive-copies  'always
-      dired-create-destination-dirs 'ask)
+      dired-create-destination-dirs 'ask
+      ;; Revert the Dired buffer without prompting.
+      dired-auto-revert-buffer #'dired-buffer-stale-p
+      image-dired-thumb-size 150)
+
+;; Disable the prompt about killing the Dired buffer for a deleted directory.
+(setq dired-clean-confirm-killing-deleted-buffers nil)
+
+;; Dired-omit
+(setq dired-omit-verbose nil)
+(setq dired-omit-files (concat "\\`[.]?#\\|\\`[.][.]?\\'"
+                               "\\|\\(?:\\.js\\)?\\.meta\\'"
+                               "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
+                               "\\|^\\.DS_Store\\'"
+                               "\\|^\\.\\(?:svn\\|git\\)\\'"
+                               "\\|^\\.ccls-cache\\'"
+                               "\\|^\\.project\\(?:ile\\)?\\'"
+                               "\\|^flycheck_.*"
+                               "\\|^flymake_.*"))
+
+;; ls-lisp
+(setq ls-lisp-verbosity nil)
 
 ;;; Font / Text scale
 
