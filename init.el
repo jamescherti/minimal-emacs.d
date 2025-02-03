@@ -220,6 +220,16 @@
     (recentf-cleanup)))
 (add-hook 'kill-emacs-hook #'minimal-emacs--cleanup-hook)
 
+;; Update recentf-exclude
+(setq recentf-exclude nil)
+(dolist (item (list "^/\\(?:ssh\\|su\\|sudo\\)?:"
+                    (concat "^"
+                            (regexp-quote
+                             (abbreviate-file-name
+                              minimal-emacs-user-directory)))))
+  (when item
+    (push item recentf-exclude)))
+
 ;;; saveplace
 
 ;; `save-place-mode' enables Emacs to remember the last location within a file
