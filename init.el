@@ -46,16 +46,8 @@
 
 (setq warning-suppress-types '((lexical-binding)))
 
-;; Some features that are not represented as packages can be found in
-;; `features', but this can be inconsistent. The following enforce consistency:
-(if (fboundp #'json-parse-string)
-    (push 'jansson features))
-(if (string-match-p "HARFBUZZ" system-configuration-features) ; no alternative
-    (push 'harfbuzz features))
-(if (bound-and-true-p module-file-suffix)
-    (push 'dynamic-modules features))
-
 ;;; Minibuffer
+
 ;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)
 
@@ -76,12 +68,20 @@
   (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
-;;; Misc
+;;; Show-paren
 
 (setq show-paren-delay 0.1
       show-paren-highlight-openparen t
       show-paren-when-point-inside-paren t
       show-paren-when-point-in-periphery t)
+
+;;; Compilation
+
+(setq compilation-always-kill t
+      compilation-ask-about-save nil
+      compilation-scroll-output 'first-error)
+
+;;; Misc
 
 (setq whitespace-line-column nil)  ; whitespace-mode
 
@@ -95,14 +95,7 @@
 (setq-default display-line-numbers-width 3)
 (setq-default display-line-numbers-widen t)
 
-(setq compilation-always-kill t
-      compilation-ask-about-save nil
-      compilation-scroll-output 'first-error)
-
 (setq truncate-string-ellipsis "…")
-
-;; Delete by moving to trash in interactive mode
-(setq delete-by-moving-to-trash (not noninteractive))
 
 ;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 512 1024))  ; 512kb
@@ -122,6 +115,9 @@
 
 ;;; Files
 
+;; Delete by moving to trash in interactive mode
+(setq delete-by-moving-to-trash (not noninteractive))
+
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
 ;; acceptable since it will redirect you to the existing buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
@@ -130,8 +126,6 @@
 ;; from the file's true directory (like `find-file').
 (setq find-file-visit-truename t
       vc-follow-symlinks t)
-
-(setq mouse-yank-at-point t)
 
 ;; Prefer vertical splits over horizontal ones
 (setq split-width-threshold 170
@@ -179,6 +173,7 @@
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
 
 ;;; Auto save
+
 ;; Enable auto-save to safeguard against crashes or data loss. The
 ;; `recover-file' or `recover-session' functions can be used to restore
 ;; auto-saved data.
@@ -209,6 +204,7 @@
 (setq global-auto-revert-non-file-buffers t)
 
 ;;; recentf
+
 ;; `recentf' is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
@@ -224,14 +220,16 @@
 (add-hook 'kill-emacs-hook #'minimal-emacs--cleanup-hook)
 
 ;;; saveplace
-;; `save-place-mode` enables Emacs to remember the last location within a file
+
+;; `save-place-mode' enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 
 ;;; savehist
-;; `savehist` is an Emacs feature that preserves the minibuffer history between
+
+;; `savehist' is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
 ;; search strings, and other prompts, to a file. This allows users to retain
 ;; their minibuffer history across Emacs restarts.
@@ -251,6 +249,7 @@
 (setq resize-mini-windows 'grow-only)
 
 ;;; Scrolling
+
 ;; Enables faster scrolling through unfontified regions. This may result in
 ;; brief periods of inaccurate syntax highlighting immediately after scrolling,
 ;; which should quickly self-correct.
@@ -290,6 +289,8 @@
 
 ;;; Mouse
 
+(setq mouse-yank-at-point nil)
+
 (setq mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
       mouse-wheel-scroll-amount-horizontal 2)
 
@@ -299,6 +300,7 @@
     (add-hook 'after-init-hook #'context-menu-mode)))
 
 ;;; Cursor
+
 ;; The blinking cursor is distracting and interferes with cursor settings in
 ;; some minor modes that try to change it buffer-locally (e.g., Treemacs).
 ;; Additionally, it can cause freezing, especially on macOS, for users with
@@ -329,6 +331,7 @@
 (setq delete-pair-blink-delay 0.03)
 
 ;;; Indent and formatting
+
 (setq-default left-fringe-width  8)
 (setq-default right-fringe-width 8)
 
@@ -384,7 +387,7 @@
 ;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
 
-;;; Mode line
+;;; Modeline
 
 ;; Setting `display-time-default-load-average' to nil makes Emacs omit the load
 ;; average information from the mode line.
