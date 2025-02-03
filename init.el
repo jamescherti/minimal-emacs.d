@@ -422,13 +422,15 @@
 (setq dired-clean-confirm-killing-deleted-buffers nil)
 
 ;; Dired-omit
+
 (setq dired-omit-verbose nil)
 (setq dired-omit-files (concat "\\`[.]?#\\|\\`[.][.]?\\'"
                                "\\|\\(?:\\.js\\)?\\.meta\\'"
-                               "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
+                               "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                                "\\|^\\.DS_Store\\'"
                                "\\|^\\.\\(?:svn\\|git\\)\\'"
                                "\\|^\\.ccls-cache\\'"
+                               "\\|^__pycache__\\'"
                                "\\|^\\.project\\(?:ile\\)?\\'"
                                "\\|^flycheck_.*"
                                "\\|^flymake_.*"))
