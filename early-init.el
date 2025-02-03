@@ -102,6 +102,13 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
        (list (rassq 'jka-compr-handler old-value))))
     ;; Ensure the new value persists through any current let-binding.
     (put 'file-name-handler-alist 'initial-value old-value)
+    ;; Emacs processes command-line files very early in startup. These files may
+    ;; include special paths like TRAMP paths, so restore
+    ;; `file-name-handler-alist' for this stage of initialization.
+    (define-advice command-line-1 (:around (fn args-left) respect-file-handlers)
+      (let ((file-name-handler-alist
+             (if args-left old-value file-name-handler-alist)))
+        (funcall fn args-left)))
     ;; Remember the old value to reset it as needed.
     (add-hook 'emacs-startup-hook
               (lambda ()
