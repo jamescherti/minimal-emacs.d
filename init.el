@@ -221,14 +221,7 @@
 (add-hook 'kill-emacs-hook #'minimal-emacs--cleanup-hook)
 
 ;; Update recentf-exclude
-(setq recentf-exclude nil)
-(dolist (item (list "^/\\(?:ssh\\|su\\|sudo\\)?:"
-                    (concat "^"
-                            (regexp-quote
-                             (abbreviate-file-name
-                              minimal-emacs-user-directory)))))
-  (when item
-    (push item recentf-exclude)))
+(setq recentf-exclude (list "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
 ;;; saveplace
 
