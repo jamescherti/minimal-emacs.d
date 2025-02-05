@@ -4,9 +4,17 @@
 
 The **minimal-emacs.d** project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for a vanilla Emacs configuration.
 
+Here’s what the **minimal-emacs.d** configuration provides:
+- Optimizations to speed up both startup and overall usage of Emacs,
+- Improved default Emacs settings, including user experience enhancements, UI element management, optimized garbage collection, better configurations for built-in packages, etc.,
+- You have full control over selecting the major and minor modes you need (i.e., **minimal-emacs.d** doesn’t enable any modes by default, allowing users to choose which modes to enable),
+- This README.md, which offers extensive recommendations for customizing your Emacs configuration.
+
+*(More information about the features can be found here: [Features](#features))*
+
 Creating *minimal-emacs.d* `init.el` and `early-init.el` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind *minimal-emacs.d* is to provide a clean, bloat-free, fast base.
 
-By default, only essential features are enabled, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
+The **minimal-emacs.d** only enables features, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
