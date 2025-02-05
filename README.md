@@ -152,9 +152,9 @@ To install compile-angel, add the following code **at the very beginning of your
 
 Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
 
-One common solution to this issue is the installation of the no-littering package, which reduces clutter in the `~/.emacs.d` directory.
+A common solution to this issue is installing the no-littering package; however, this package is not essential.
 
-However, an alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
+An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ``` emacs-lisp
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
 (setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
