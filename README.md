@@ -52,7 +52,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [How to change the outline-mode or outline-minor-mode Ellipsis (...) to (▼)?](#how-to-change-the-outline-mode-or-outline-minor-mode-ellipsis--to-)
     - [How to make minimal-emacs.d use an environment variable to change ~/.emacs.d to another directory?](#how-to-make-minimal-emacsd-use-an-environment-variable-to-change-emacsd-to-another-directory)
     - [Are post-early-init.el and pre-init.el the same file in terms of the logic?](#are-post-early-initel-and-pre-initel-the-same-file-in-terms-of-the-logic)
-    - [Why the reflexive disabling of the menu bar?](#why-the-reflexive-disabling-of-the-menu-bar)
+    - [Why is the menu bar disabled by default?](#why-is-the-menu-bar-disabled-by-default)
     - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
     - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
     - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
@@ -746,7 +746,7 @@ During the execution of `early-init.el` (and `pre-early-init.el` and  `post-earl
 
 Thus, `post-early-init.el` and `pre-init.el` serve different purposes and are not the same.
 
-### Why the reflexive disabling of the menu bar?
+### Why is the menu bar disabled by default?
 
 The menu bar is disabled by default in *minimal-emacs.d* to provide a minimal, distraction-free environment, which many experienced users prefer.
 
