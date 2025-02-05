@@ -488,15 +488,7 @@ To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
              eglot-rename
              eglot-ensure
              eglot-rename
-             eglot-format-buffer)
-
-  :custom
-  (eglot-report-progress nil)  ; Prevent minibuffer spam
-
-  :config
-  ;; Optimizations
-  (fset #'jsonrpc--log-event #'ignore)
-  (setq jsonrpc-event-hook nil))
+             eglot-format-buffer))
 ```
 
 Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
