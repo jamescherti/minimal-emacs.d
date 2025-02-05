@@ -16,7 +16,7 @@ Creating *minimal-emacs.d* `init.el` and `early-init.el` involved extensive rese
 
 The **minimal-emacs.d** only enables features, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
 
-The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages and his Emacs configuration starts in 0.22 seconds:
+The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages ([Here are some of the packages the author is using](https://www.jamescherti.com/essential-emacs-packages/)) and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
 (The optimizations in *minimal-emacs.d* significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and using [compile-angel](https://github.com/jamescherti/compile-angel.el) to ensure all `.el` files are byte-compiled and native-compiled. The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance)
