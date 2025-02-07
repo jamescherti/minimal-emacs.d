@@ -471,7 +471,8 @@
 
 ;;; Eglot
 
-(setq eglot-sync-connect 1)
+(setq eglot-sync-connect 1
+      eglot-autoshutdown t)
 
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
