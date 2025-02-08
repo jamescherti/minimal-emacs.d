@@ -503,4 +503,11 @@
 ;; Disable wrapping around when navigating Flymake errors.
 (setq flymake-wrap-around nil)
 
+;;; hl-line-mode
+
+;; Restrict `hl-line-mode' highlighting to the current window, reducing visual
+;; clutter and slightly improving `hl-line-mode' performance.
+(setq hl-line-sticky-flag nil)
+(setq global-hl-line-sticky-flag nil)
+
 ;;; init.el ends here
