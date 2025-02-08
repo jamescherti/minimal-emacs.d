@@ -662,7 +662,6 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (show-paren-mode +1)  ; Paren match highlighting
 (winner-mode 1)
 (delete-selection-mode 1)  ; Replace selected text with typed text
-(pixel-scroll-precision-mode 1)
 
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
