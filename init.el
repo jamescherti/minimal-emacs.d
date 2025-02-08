@@ -424,6 +424,8 @@
       dired-auto-revert-buffer #'dired-buffer-stale-p
       image-dired-thumb-size 150)
 
+(setq dired-vc-rename-file t)
+
 ;; Disable the prompt about killing the Dired buffer for a deleted directory.
 (setq dired-clean-confirm-killing-deleted-buffers nil)
 
