@@ -132,16 +132,7 @@
 (setq split-width-threshold 170
       split-height-threshold nil)
 
-;; The native border "uses" a pixel of the fringe on the rightmost
-;; splits, whereas `window-divider` does not.
-(setq window-divider-default-bottom-width 1
-      window-divider-default-places t
-      window-divider-default-right-width 1)
-
 ;;; Buffers
-
-;; switch-to-buffer runs pop-to-buffer-same-window instead
-(setq switch-to-buffer-obey-display-actions t)
 
 (setq uniquify-buffer-name-style 'forward)
 
@@ -212,6 +203,7 @@
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup (if (daemonp) 300 'never))
+
 (defun minimal-emacs--cleanup-hook ()
   "Run `recentf-cleanup' if `recentf' is loaded and `recentf-mode' is enabled."
   (when (and (featurep 'recentf)
@@ -233,10 +225,10 @@
 
 ;;; savehist
 
-;; `savehist' is an Emacs feature that preserves the minibuffer history between
-;; sessions. It saves the history of inputs in the minibuffer, such as commands,
-;; search strings, and other prompts, to a file. This allows users to retain
-;; their minibuffer history across Emacs restarts.
+;; `savehist-mode' is an Emacs feature that preserves the minibuffer history
+;; between sessions. It saves the history of inputs in the minibuffer, such as
+;; commands, search strings, and other prompts, to a file. This allows users to
+;; retain their minibuffer history across Emacs restarts.
 (setq history-length 300)
 (setq savehist-save-minibuffer-history t)  ;; Default
 
@@ -251,6 +243,14 @@
 (setq window-resize-pixelwise nil)
 
 (setq resize-mini-windows 'grow-only)
+
+;; The native border "uses" a pixel of the fringe on the rightmost
+;; splits, whereas `window-divider-mode' does not.
+(setq window-divider-default-bottom-width 1
+      window-divider-default-places t
+      window-divider-default-right-width 1)
+
+(add-hook 'after-init-hook #'window-divider-mode)
 
 ;;; Scrolling
 
@@ -418,7 +418,7 @@
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-recursive-deletes 'top
-      dired-recursive-copies  'always
+      dired-recursive-copies 'always
       dired-create-destination-dirs 'ask
       ;; Revert the Dired buffer without prompting.
       dired-auto-revert-buffer #'dired-buffer-stale-p
