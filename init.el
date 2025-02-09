@@ -54,8 +54,7 @@
 
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
-      '(read-only t intangible t cursor-intangible t face
-                  minibuffer-prompt))
+      '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;; User interface
@@ -511,5 +510,11 @@
 ;; clutter and slightly improving `hl-line-mode' performance.
 (setq hl-line-sticky-flag nil)
 (setq global-hl-line-sticky-flag nil)
+
+;;; icomplete
+
+;; Do not delay displaying completion candidates in `fido-mode' or
+;; `fido-vertical-mode'
+(setq icomplete-compute-delay 0.01)
 
 ;;; init.el ends here

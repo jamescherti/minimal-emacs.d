@@ -7,7 +7,7 @@ The **minimal-emacs.d** project is a customizable Emacs base that provides **bet
 Here’s what the **minimal-emacs.d** configuration provides:
 - Optimizations to speed up both startup and overall usage of Emacs,
 - Improved default Emacs settings, including user experience enhancements, UI element management, optimized garbage collection, better configurations for built-in packages, etc.,
-- Provides the user with complete control over selecting major and minor modes (*minimal-emacs.d* does not enable any modes by default, allowing users to choose which modes to activate).
+- Provides the user with complete control over selecting major and minor modes (*minimal-emacs.d* does not enable modes by default, allowing users to choose which modes to activate).
 - This README.md, which offers extensive recommendations for customizing your Emacs configuration.
 
 *(More information about the features can be found here: [Features](#features))*
