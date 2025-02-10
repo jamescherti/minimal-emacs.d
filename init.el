@@ -108,14 +108,9 @@
 ;; multiple sources provide it. It concatenates the results.
 (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
 
-;; For some reason, `abbrev_defs` is located in ~/.emacs.d/abbrev_defs, even
-;; when `user-emacs-directory` is modified. This ensures the abbrev file is
-;; correctly located based on the updated `user-emacs-directory`.
-(setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
-
 ;; Disable truncation of printed s-expressions in the message buffer
 (setq eval-expression-print-length nil
-      eval-expression-print-level  nil)
+      eval-expression-print-level nil)
 
 ;;; Files
 
@@ -533,5 +528,14 @@
 ;; Enable completion in the minibuffer instead of the definitions buffer
 (setq xref-show-definitions-function #'xref-show-definitions-completing-read
       xref-show-xrefs-function #'xref-show-definitions-completing-read)
+
+;;; abbrev
+
+;; Ensure `abbrev_defs` is stored in the correct location when
+;; `user-emacs-directory` is modified, as it defaults to ~/.emacs.d/abbrev_defs
+;; regardless of the change.
+(setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
+
+(setq save-abbrevs 'silently)
 
 ;;; init.el ends here
