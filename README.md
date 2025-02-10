@@ -734,6 +734,9 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ;; Hide warnings and display only errors
 (setq warning-minimum-level :error)
 
+;; Display of line numbers in the buffer:
+;; (display-line-numbers-mode 1)
+
 (use-package which-key
   :ensure nil ; builtin
   :defer t

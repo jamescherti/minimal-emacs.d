@@ -469,6 +469,7 @@
 (setq help-enable-completion-autoload nil)
 (setq help-enable-autoload nil)
 (setq help-enable-symbol-autoload nil)
+(setq help-window-select t)
 
 ;;; Eglot
 
