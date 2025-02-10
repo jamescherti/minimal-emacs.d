@@ -731,9 +731,15 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (setq warning-minimum-level :error)
 
 (use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
+  :ensure nil ; builtin
+  :defer t
+  :commands which-key-mode
+  :hook (after-init . which-key-mode)
+  :custom
+  (which-key-idle-delay 1.5)
+  (which-key-idle-secondary-delay 0.25)
+  (which-key-add-column-padding 1)
+  (which-key-max-description-length 40))
 
 ;; Disable momentum-based scrolling for precise control and enable smoother scrolling.
 (setq pixel-scroll-precision-use-momentum nil)
