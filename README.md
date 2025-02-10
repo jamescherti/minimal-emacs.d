@@ -627,9 +627,9 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 The **inhibit-mouse** package disables mouse input in Emacs.
 
-This package is useful for users who do not need the mouse:
-- To prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
-- To reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
+This package is useful for users who want to disable the mouse to:
+- Prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
+- Reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
 
 To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
@@ -638,6 +638,8 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
   :config
   (inhibit-mouse-mode))
 ```
+
+NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
 
 ### How to configure straight.el?
 
