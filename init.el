@@ -112,6 +112,9 @@
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
+;; Position underlines at the descent line instead of the baseline.
+(setq x-underline-at-descent-line t)
+
 ;;; Files
 
 ;; Delete by moving to trash in interactive mode
