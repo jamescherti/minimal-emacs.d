@@ -113,6 +113,10 @@
 ;; correctly located based on the updated `user-emacs-directory`.
 (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
 
+;; Disable truncation of printed s-expressions in the message buffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level  nil)
+
 ;;; Files
 
 ;; Delete by moving to trash in interactive mode
