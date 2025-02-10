@@ -373,6 +373,18 @@ The **outline-indent** Emacs package provides a minor mode that enables code fol
 ```elisp
 (use-package outline-indent
   :ensure t
+  :defer t
+  :commands outline-indent-minor-mode
+
+  :init
+  ;; The minor mode can also be automatically activated for a certain modes.
+  ;; For example for Python and YAML:
+  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+
+  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+
   :custom
   (outline-indent-ellipsis " ▼ "))
 ```
@@ -545,18 +557,25 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package easysession
   :ensure t
+  :defer t
+  :commands (easysession-switch-to
+             easysession-save-as
+             easysession-save-mode
+             easysession-load-including-geometry)
+
   :custom
+  (easysession-mode-line-misc-info t)  ; Display the session in the modeline
+  (easysession-save-interval (* 10 60))  ; Save every 10 minutes
+
   :init
-  ;; Interval between automatic session saves
-  (setq easysession-save-interval (* 10 60))
+  ;; Key mappings:
+  ;; C-c l for switching sessions
+  ;; and C-c s for saving the current session
+  (global-set-key (kbd "C-c l") 'easysession-switch-to)
+  (global-set-key (kbd "C-c s") 'easysession-save-as)
+
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
-
-;; Key mappings:
-;; C-c l for switching sessions
-;; and C-c s for saving the current session
-(global-set-key (kbd "C-c l") 'easysession-switch-to)
-(global-set-key (kbd "C-c s") 'easysession-save-as)
 ```
 
 ### Code completion with corfu
