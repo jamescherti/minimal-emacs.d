@@ -39,9 +39,12 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to configure vterm](#how-to-configure-vterm)
     - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
+    - [Code Folding](#code-folding)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
+    - [Session Management](#session-management)
     - [Code completion with corfu](#code-completion-with-corfu)
+    - [Inhibit the mouse](#inhibit-the-mouse)
     - [How to configure straight.el?](#how-to-configure-straightel)
     - [How to configure elpaca (package manager)](#how-to-configure-elpaca-package-manager)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
@@ -364,6 +367,20 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   (setq consult-narrow-key "<"))
 ```
 
+### Code Folding
+
+The **outline-indent** Emacs package provides a minor mode that enables code folding based on indentation levels:
+```elisp
+(use-package outline-indent
+  :ensure t
+  :custom
+  (outline-indent-ellipsis " ▼ "))
+```
+
+In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
+
+![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.screenshot2.png)
+
 ### How to configure Vim keybindings using Evil?
 
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
@@ -520,6 +537,28 @@ Here is an example of how to configure Eglot to enable or disable certain option
 (add-hook 'python-ts-mode-hook #'eglot)
 ```
 
+### Session Management
+
+The `easysession.el` Emacs package is a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
+
+To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(use-package easysession
+  :ensure t
+  :custom
+  :init
+  ;; Interval between automatic session saves
+  (setq easysession-save-interval (* 10 60))
+  (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
+  (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
+
+;; Key mappings:
+;; C-c l for switching sessions
+;; and C-c s for saving the current session
+(global-set-key (kbd "C-c l") 'easysession-switch-to)
+(global-set-key (kbd "C-c s") 'easysession-save-as)
+```
+
 ### Code completion with corfu
 
 Corfu enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
@@ -559,6 +598,22 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
+```
+
+### Inhibit the mouse
+
+The **inhibit-mouse** package disables mouse input in Emacs.
+
+This package is useful for users who do not need the mouse:
+- To prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
+- To reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
+
+To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+(use-package inhibit-mouse
+  :ensure t
+  :config
+  (inhibit-mouse-mode))
 ```
 
 ### How to configure straight.el?
