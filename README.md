@@ -745,19 +745,28 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (setq pixel-scroll-precision-use-momentum nil)
 (pixel-scroll-precision-mode 1)
 
-;; Note: If you're using the pre-built `emacs-mac` (version <= 29.1), pixel-based smooth scrolling
-;; is handled by the Mac port code instead of `pixel-scroll-precision-mode`. In this case, use the
-;; following line instead of the two lines above:
+;; Pixel Scroll Precision Mode on Emacs for macOS: If you're using a pre-built
+;; emacs-mac (version <= 29.1), smooth scrolling is handled by the Mac port
+;; code, which overrides `pixel-scroll-precision-mode'. In this case, use the
+;; following line instead of enabling `pixel-scroll-precision-mode':
 ;;
 ;; (pixel-scroll-mode 1)
 ;;
 ;; For more details, see:
 ;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
 
-(display-time-mode)
-(show-paren-mode +1)  ; Paren match highlighting
+;; Display the time in the modeline
+(display-time-mode 1)
+
+;; Paren match highlighting
+(show-paren-mode 1)
+
+;; Track changes in the window configuration, allowing undoing actions such as
+;; closing windows.
 (winner-mode 1)
-(delete-selection-mode 1)  ; Replace selected text with typed text
+
+;; Replace selected text with typed text
+(delete-selection-mode 1)
 
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
