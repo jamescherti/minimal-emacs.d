@@ -249,8 +249,6 @@
       window-divider-default-places t
       window-divider-default-right-width 1)
 
-(add-hook 'after-init-hook #'window-divider-mode)
-
 ;;; Scrolling
 
 ;; Enables faster scrolling through unfontified regions. This may result in

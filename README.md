@@ -744,6 +744,7 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ;; Disable momentum-based scrolling for precise control and enable smoother scrolling.
 (setq pixel-scroll-precision-use-momentum nil)
 (pixel-scroll-precision-mode 1)
+
 ;; Note: If you're using the pre-built `emacs-mac` (version <= 29.1), pixel-based smooth scrolling
 ;; is handled by the Mac port code instead of `pixel-scroll-precision-mode`. In this case, use the
 ;; following line instead of the two lines above:
@@ -752,7 +753,6 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ;;
 ;; For more details, see:
 ;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
-
 
 (display-time-mode)
 (show-paren-mode +1)  ; Paren match highlighting
