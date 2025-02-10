@@ -147,6 +147,10 @@ To install compile-angel, add the following code **at the very beginning of your
   :ensure t
   :demand t
   :config
+  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
+  ;; Drawback: The minibuffer will not display compile-angel's actions.
+  (setq compile-angel-verbose t)
+
   (compile-angel-on-load-mode)
   (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
 ```
