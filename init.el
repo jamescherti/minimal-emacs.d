@@ -524,4 +524,10 @@
 				      " " (mode 18 18 :left :elide) " " filename-and-process)
 	      (mark " " (name 16 -1) " " filename)))
 
+;;; xref
+
+;; Enable completion in the minibuffer instead of the definitions buffer
+(setq xref-show-definitions-function #'xref-show-definitions-completing-read
+      xref-show-xrefs-function #'xref-show-definitions-completing-read)
+
 ;;; init.el ends here
