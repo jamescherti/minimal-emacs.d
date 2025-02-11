@@ -750,6 +750,9 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 
 (unless (and (eq window-system 'mac)
              (bound-and-true-p mac-carbon-version-string))
+  ;; Enables `pixel-scroll-precision-mode' on all operating systems and Emacs
+  ;; versions, except for emacs-mac.
+  ;;
   ;; Enabling `pixel-scroll-precision-mode' is unnecessary with emacs-mac, as
   ;; this version of Emacs natively supports smooth scrolling.
   ;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
