@@ -748,19 +748,13 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
   (which-key-add-column-padding 1)
   (which-key-max-description-length 40))
 
-;; Disable momentum-based scrolling for precise control and enable smoother scrolling.
-(setq pixel-scroll-precision-use-momentum nil)
-(pixel-scroll-precision-mode 1)
-
-;; Pixel Scroll Precision Mode on Emacs for macOS: If you're using a pre-built
-;; emacs-mac (version <= 29.1), smooth scrolling is handled by the Mac port
-;; code, which overrides `pixel-scroll-precision-mode'. In this case, use the
-;; following line instead of enabling `pixel-scroll-precision-mode':
-;;
-;; (pixel-scroll-mode 1)
-;;
-;; For more details, see:
-;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
+(unless (and (eq window-system 'mac)
+             (bound-and-true-p mac-carbon-version-string))
+  ;; Enabling `pixel-scroll-precision-mode' is unnecessary with emacs-mac, as
+  ;; this version of Emacs natively supports smooth scrolling.
+  ;; https://bitbucket.org/mituharu/emacs-mac/commits/65c6c96f27afa446df6f9d8eff63f9cc012cc738
+  (setq pixel-scroll-precision-use-momentum nil) ; Precise/smoother scrolling
+  (pixel-scroll-precision-mode 1))
 
 ;; Display the time in the modeline
 (display-time-mode 1)
