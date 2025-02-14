@@ -63,6 +63,7 @@
 (setq idle-update-delay 1.0)
 
 ;; Allow for shorter responses: "y" for yes and "n" for no.
+(setq read-answer-short t)
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (advice-add #'yes-or-no-p :override #'y-or-n-p))
