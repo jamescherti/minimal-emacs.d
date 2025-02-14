@@ -549,6 +549,7 @@
 
 ;;; dabbrev
 
+(setq dabbrev-upcase-means-case-search t)
 (setq dabbrev-ignored-buffer-modes
       '(archive-mode image-mode docview-mode tags-table-mode pdf-view-mode))
 
