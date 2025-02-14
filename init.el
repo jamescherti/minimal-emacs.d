@@ -519,6 +519,10 @@
 ;; `fido-vertical-mode'
 (setq icomplete-compute-delay 0.01)
 
+;; In Emacs 30 and newer, disable Ispell completion to avoid annotation errors
+;; when no `ispell' dictionary is set.
+(setq text-mode-ispell-word-completion nil)
+
 ;;; ibuffer
 
 (setq ibuffer-formats
@@ -542,5 +546,10 @@
 (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
 
 (setq save-abbrevs 'silently)
+
+;;; dabbrev
+
+(setq dabbrev-ignored-buffer-modes
+      '(archive-mode image-mode docview-mode tags-table-mode pdf-view-mode))
 
 ;;; init.el ends here
