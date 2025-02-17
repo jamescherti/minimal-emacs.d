@@ -491,10 +491,6 @@
 ;; leading to a gradual performance decline.
 (setq eglot-events-buffer-config '(:size 0 :format full))
 
-(minimal-emacs-load-user-init "post-init.el")
-
-(provide 'init)
-
 ;;; Flymake
 
 (setq flymake-fringe-indicator-position 'left-fringe)
@@ -553,4 +549,8 @@
 (setq dabbrev-ignored-buffer-modes
       '(archive-mode image-mode docview-mode tags-table-mode pdf-view-mode))
 
+;;; Load post init
+(minimal-emacs-load-user-init "post-init.el")
+
+(provide 'init)
 ;;; init.el ends here
