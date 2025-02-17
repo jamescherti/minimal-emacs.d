@@ -99,7 +99,7 @@
 (setq truncate-string-ellipsis "…")
 
 ;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 512 1024))  ; 512kb
+(setq read-process-output-max (* 1024 1024))  ; 1024kb
 
 ;; Improve Emacs' responsiveness by delaying syntax highlighting during input
 ;; but may reduce visual feedback.
