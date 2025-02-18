@@ -286,8 +286,6 @@ minimalistic appearance during startup.")
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
 (setq scroll-bar-mode nil)
-(when (fboundp 'horizontal-scroll-bar-mode)
-  (horizontal-scroll-bar-mode -1))
 
 (unless (memq 'tooltips minimal-emacs-ui-features)
   (when (bound-and-true-p tooltip-mode)
