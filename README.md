@@ -188,7 +188,9 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
-(add-hook 'after-init-hook #'recentf-mode)
+(add-hook 'after-init-hook #'(lambda()
+                               (let ((inhibit-message t))
+                                 (recentf-mode 1))))
 (add-hook 'kill-emacs-hook #'recentf-cleanup)
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
