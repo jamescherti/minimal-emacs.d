@@ -151,22 +151,22 @@ This enhances performance and provide a minimalistic appearance.")
         (setq-default mode-line-format nil)
         (dolist (buf (buffer-list))
           (with-current-buffer buf
-            (setq mode-line-format nil))))
+            (setq mode-line-format nil)))
 
-      (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
-        "Advice for startup--load-user-init-file to reset mode-line-format."
-        (unwind-protect
-            ;; Start up as normal
-            (apply fn args)
-          ;; If we don't undo inhibit-{message, redisplay} and there's an
-          ;; error, we'll see nothing but a blank Emacs frame.
-          (setq-default inhibit-message nil)
-          (unless (default-toplevel-value 'mode-line-format)
-            (setq-default mode-line-format
-                          (get 'mode-line-format 'initial-value)))))
+        (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
+          "Advice for startup--load-user-init-file to reset mode-line-format."
+          (unwind-protect
+              ;; Start up as normal
+              (apply fn args)
+            ;; If we don't undo inhibit-{message, redisplay} and there's an
+            ;; error, we'll see nothing but a blank Emacs frame.
+            (setq-default inhibit-message nil)
+            (unless (default-toplevel-value 'mode-line-format)
+              (setq-default mode-line-format
+                            (get 'mode-line-format 'initial-value)))))
 
-      (advice-add 'startup--load-user-init-file :around
-                  #'minimal-emacs--startup-load-user-init-file))
+        (advice-add 'startup--load-user-init-file :around
+                    #'minimal-emacs--startup-load-user-init-file)))
 
     ;; Without this, Emacs will try to resize itself to a specific column size
     (setq frame-inhibit-implied-resize t)
