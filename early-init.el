@@ -48,6 +48,9 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 ;;; Load pre-early-init.el
 
+;; Prefer loading newer compiled files
+(setq load-prefer-newer t)
+
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((user-init-file
@@ -80,9 +83,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (setq default-input-method nil)
 
 ;;; Performance
-
-;; Prefer loading newer compiled files
-(setq load-prefer-newer t)
 
 ;; Font compacting can be very resource-intensive, especially when rendering
 ;; icon fonts on Windows. This will increase memory usage.
@@ -273,9 +273,17 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
   (setq use-dialog-box nil))
 
 ;;; package.el
-(setq package-enable-at-startup nil)
-(setq package-quickstart nil)
+(setq use-package-compute-statistics minimal-emacs-debug)
+
+;; Setting use-package-expand-minimally to (t) results in a more compact output
+;; that emphasizes performance over clarity.
+(setq use-package-expand-minimally (not noninteractive))
+
+(setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
+(setq use-package-verbose minimal-emacs-debug)
+(setq package-enable-at-startup nil)  ; Let the init.el file handle this
 (setq use-package-always-ensure t)
+(setq use-package-enable-imenu-support t)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")
