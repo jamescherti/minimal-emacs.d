@@ -76,11 +76,6 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
-;; This controls how long Emacs will blink to show the deleted pairs with
-;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
-;; after each deletion, disrupting the flow of editing.
-(setq delete-pair-blink-delay 0.03)
-
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -332,7 +327,15 @@
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
-;;; Indent and formatting
+;;; Text editing, indent, font, and formatting
+
+;; Avoid automatic frame resizing when adjusting settings.
+(setq global-text-scale-adjust-resizes-frames nil)
+
+;; This controls how long Emacs will blink to show the deleted pairs with
+;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
+;; after each deletion, disrupting the flow of editing.
+(setq delete-pair-blink-delay 0.03)
 
 (setq-default left-fringe-width  8)
 (setq-default right-fringe-width 8)
@@ -443,11 +446,6 @@
 ;; ls-lisp
 (setq ls-lisp-verbosity nil)
 (setq ls-lisp-dirs-first t)
-
-;;; Font / Text scale
-
-;; Avoid automatic frame resizing when adjusting settings.
-(setq global-text-scale-adjust-resizes-frames nil)
 
 ;;; Ediff
 
