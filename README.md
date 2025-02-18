@@ -789,9 +789,11 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Dividers.html
 (add-hook 'after-init-hook #'window-divider-mode)
 
-;; Automatically hide file details (permissions, size, modification date, etc.)
-;; in Dired buffers for a cleaner display.
+;; Dired buffers: Automatically hide file details (permissions, size,
+;; modification date, etc.) and all the files in the `dired-omit-files' regular
+;; expression for a cleaner display.
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(add-hook 'dired-mode-hook #'dired-omit-mode)
 ```
 
 It is also recommended to read the following articles:

@@ -429,10 +429,9 @@
 ;; Disable the prompt about killing the Dired buffer for a deleted directory.
 (setq dired-clean-confirm-killing-deleted-buffers nil)
 
-;; Dired-omit
-
+;; dired-omit-mode
 (setq dired-omit-verbose nil)
-(setq dired-omit-files (concat "\\`[.]?#\\|\\`[.][.]?\\'"
+(setq dired-omit-files (concat "\\`[.]\\'"
                                "\\|\\(?:\\.js\\)?\\.meta\\'"
                                "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                                "\\|^\\.DS_Store\\'"
