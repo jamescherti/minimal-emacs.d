@@ -72,6 +72,15 @@
   (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
+;; No beeping or blinking
+(setq visible-bell nil)
+(setq ring-bell-function #'ignore)
+
+;; This controls how long Emacs will blink to show the deleted pairs with
+;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
+;; after each deletion, disrupting the flow of editing.
+(setq delete-pair-blink-delay 0.03)
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -322,17 +331,6 @@
 ;; non-focused windows.
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
-
-;;; Annoyances
-
-;; No beeping or blinking
-(setq visible-bell nil)
-(setq ring-bell-function #'ignore)
-
-;; This controls how long Emacs will blink to show the deleted pairs with
-;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
-;; after each deletion, disrupting the flow of editing.
-(setq delete-pair-blink-delay 0.03)
 
 ;;; Indent and formatting
 
