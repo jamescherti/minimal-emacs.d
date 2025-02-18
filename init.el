@@ -17,7 +17,10 @@
 ;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
 
-;;; Networking
+;;; Before package
+
+;; Increase how much is read from processes in a single chunk
+(setq read-process-output-max (* 1024 1024))  ; 1024kb
 
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
@@ -97,9 +100,6 @@
 (setq-default display-line-numbers-widen t)
 
 (setq truncate-string-ellipsis "…")
-
-;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 1024 1024))  ; 1024kb
 
 ;; Improve Emacs' responsiveness by delaying syntax highlighting during input
 ;; but may reduce visual feedback.
