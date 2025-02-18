@@ -43,6 +43,14 @@ turned on.")
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
+(defvar minimal-emacs-inhibit-messages-during-startup nil
+  "Suppress startup messages.
+This provides a cleaner startup experience and improve startup performance.")
+
+(defvar minimal-emacs-disable-mode-line-during-startup nil
+  "Disable the mode line during startup.
+This enhances performance and provide a minimalistic appearance.")
+
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 
@@ -124,24 +132,26 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       ;; Suppress redisplay and redraw during startup to avoid delays and
       ;; prevent flashing an unstyled Emacs frame.
       ;; (setq-default inhibit-redisplay t) ; Can cause artifacts
-      (setq-default inhibit-message t)
+      (when minimal-emacs-inhibit-messages-during-startup
+        (setq-default inhibit-message t)
 
-      ;; Reset the above variables to prevent Emacs from appearing frozen or
-      ;; visually corrupted after startup or if a startup error occurs.
-      (defun minimal-emacs--reset-inhibited-vars-h ()
-        ;; (setq-default inhibit-redisplay nil) ; Can cause artifacts
-        (setq-default inhibit-message nil)
-        (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibited-vars-h))
+        ;; Reset the above variables to prevent Emacs from appearing frozen or
+        ;; visually corrupted after startup or if a startup error occurs.
+        (defun minimal-emacs--reset-inhibit-message ()
+          ;; (setq-default inhibit-redisplay nil) ; Can cause artifacts
+          (setq-default inhibit-message nil)
+          (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message))
 
-      (add-hook 'post-command-hook
-                #'minimal-emacs--reset-inhibited-vars-h -100)
+        (add-hook 'post-command-hook
+                  #'minimal-emacs--reset-inhibit-message -100))
 
-      (put 'mode-line-format 'initial-value
-           (default-toplevel-value 'mode-line-format))
-      (setq-default mode-line-format nil)
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (setq mode-line-format nil)))
+      (when minimal-emacs-disable-mode-line-during-startup
+        (put 'mode-line-format 'initial-value
+             (default-toplevel-value 'mode-line-format))
+        (setq-default mode-line-format nil)
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (setq mode-line-format nil))))
 
       (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
         "Advice for startup--load-user-init-file to reset mode-line-format."
