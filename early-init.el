@@ -150,10 +150,7 @@ minimalistic appearance during startup.")
         (add-hook 'post-command-hook #'minimal-emacs--reset-inhibit-redisplay -100))
 
       (when minimal-emacs-inhibit-message-during-startup
-        ;; Reset the above variables to prevent Emacs from appearing frozen or
-        ;; visually corrupted after startup or if a startup error occurs.
         (defun minimal-emacs--reset-inhibit-message ()
-          ;; (setq-default inhibit-redisplay nil) ; Can cause artifacts
           (setq-default inhibit-message nil)
           (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message))
 
