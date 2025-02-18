@@ -43,13 +43,23 @@ turned on.")
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
-(defvar minimal-emacs-inhibit-messages-during-startup nil
-  "Suppress startup messages.
-This provides a cleaner startup experience and improve startup performance.")
+(defvar minimal-emacs-inhibit-redisplay-during-startup nil
+  "Suppress redisplay during startup to improve performance.
+This prevents visual updates while Emacs initializes, leading to a cleaner and
+faster startup. The tradeoff is that you won't see the progress or activities
+during the startup process.")
+
+(defvar minimal-emacs-inhibit-message-during-startup nil
+  "Suppress startup messages for a cleaner experience.
+By disabling startup messages, this slightly enhances performance and provides a
+cleaner startup. The tradeoff is that you won't be informed of the progress or
+any relevant activities during startup.")
 
 (defvar minimal-emacs-disable-mode-line-during-startup nil
-  "Disable the mode line during startup.
-This enhances performance and provide a minimalistic appearance.")
+  "Disable the mode line during startup to improve performance.
+This reduces visual clutter and slightly enhances startup performance. The
+tradeoff is that the mode line is hidden during the startup phase, giving a more
+minimalistic appearance during startup.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
@@ -129,12 +139,17 @@ This enhances performance and provide a minimalistic appearance.")
 
   (unless noninteractive
     (unless minimal-emacs-debug
-      ;; Suppress redisplay and redraw during startup to avoid delays and
-      ;; prevent flashing an unstyled Emacs frame.
-      ;; (setq-default inhibit-redisplay t) ; Can cause artifacts
-      (when minimal-emacs-inhibit-messages-during-startup
-        (setq-default inhibit-message t)
+      (when minimal-emacs-inhibit-redisplay-during-startup
+        ;; Suppress redisplay and redraw during startup to avoid delays and
+        ;; prevent flashing an unstyled Emacs frame.
+        (defun minimal-emacs--reset-inhibit-redisplay ()
+          (setq-default inhibit-redisplay nil)
+          (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-redisplay))
 
+        (setq-default inhibit-redisplay t)
+        (add-hook 'post-command-hook #'minimal-emacs--reset-inhibit-redisplay -100))
+
+      (when minimal-emacs-inhibit-message-during-startup
         ;; Reset the above variables to prevent Emacs from appearing frozen or
         ;; visually corrupted after startup or if a startup error occurs.
         (defun minimal-emacs--reset-inhibit-message ()
@@ -142,31 +157,36 @@ This enhances performance and provide a minimalistic appearance.")
           (setq-default inhibit-message nil)
           (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message))
 
-        (add-hook 'post-command-hook
-                  #'minimal-emacs--reset-inhibit-message -100))
+        (setq-default inhibit-message t)
+        (add-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message -100))
 
+      (put 'mode-line-format
+           'initial-value (default-toplevel-value 'mode-line-format))
       (when minimal-emacs-disable-mode-line-during-startup
-        (put 'mode-line-format 'initial-value
-             (default-toplevel-value 'mode-line-format))
         (setq-default mode-line-format nil)
         (dolist (buf (buffer-list))
           (with-current-buffer buf
-            (setq mode-line-format nil)))
+            (setq mode-line-format nil))))
 
-        (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
-          "Advice for startup--load-user-init-file to reset mode-line-format."
-          (unwind-protect
-              ;; Start up as normal
-              (apply fn args)
-            ;; If we don't undo inhibit-{message, redisplay} and there's an
-            ;; error, we'll see nothing but a blank Emacs frame.
-            (setq-default inhibit-message nil)
+      (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
+        "Advice for startup--load-user-init-file to reset mode-line-format."
+        (unwind-protect
+            ;; Start up as normal
+            (apply fn args)
+          ;; If we don't undo inhibit-{message, redisplay} and there's an
+          ;; error, we'll see nothing but a blank Emacs frame.
+          (when minimal-emacs-inhibit-message-during-startup
+            (setq-default inhibit-message nil))
+          (when minimal-emacs-inhibit-redisplay-during-startup
+            (setq-default inhibit-redisplay nil))
+          ;; Restore the mode-line
+          (when minimal-emacs-disable-mode-line-during-startup
             (unless (default-toplevel-value 'mode-line-format)
-              (setq-default mode-line-format
-                            (get 'mode-line-format 'initial-value)))))
+              (setq-default mode-line-format (get 'mode-line-format
+                                                  'initial-value))))))
 
-        (advice-add 'startup--load-user-init-file :around
-                    #'minimal-emacs--startup-load-user-init-file)))
+      (advice-add 'startup--load-user-init-file :around
+                  #'minimal-emacs--startup-load-user-init-file))
 
     ;; Without this, Emacs will try to resize itself to a specific column size
     (setq frame-inhibit-implied-resize t)
