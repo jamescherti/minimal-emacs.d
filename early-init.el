@@ -89,9 +89,10 @@ minimalistic appearance during startup.")
 
 (setq gc-cons-threshold most-positive-fixnum)
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
+(defun minimal-emacs--restore-gc-cons-threshold ()
+  "Restore `minimal-emacs-gc-cons-threshold'."
+  (setq gc-cons-threshold minimal-emacs-gc-cons-threshold))
+(add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105)
 
 ;;; Misc
 
@@ -127,15 +128,17 @@ minimalistic appearance during startup.")
       (let ((file-name-handler-alist
              (if args-left old-value file-name-handler-alist)))
         (funcall fn args-left)))
-    ;; Remember the old value to reset it as needed.
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                (set-default-toplevel-value
-                 'file-name-handler-alist
-                 ;; Merge instead of overwrite to preserve any changes made
-                 ;; since startup.
-                 (delete-dups (append file-name-handler-alist old-value))))
-              101))
+
+    ;; Restore the old value to reset it as needed.
+    (defun minimal-emacs--restore-file-name-handler-alist ()
+      "Restore `file-name-handler-alist'."
+      (set-default-toplevel-value
+       'file-name-handler-alist
+       ;; Merge instead of overwrite to preserve any changes made since startup.
+       (delete-dups (append file-name-handler-alist old-value))))
+
+    (add-hook
+     'emacs-startup-hook #'minimal-emacs--restore-file-name-handler-alist 101))
 
   (unless noninteractive
     (unless minimal-emacs-debug
