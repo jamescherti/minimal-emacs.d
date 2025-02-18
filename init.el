@@ -507,9 +507,21 @@
 ;; `fido-vertical-mode'
 (setq icomplete-compute-delay 0.01)
 
+;;; flyspell
+
+(setq flyspell-issue-welcome-flag nil)
+
+;; Greatly improves flyspell performance by preventing messages from being
+;; displayed for each word when checking the entire buffer.
+(setq flyspell-issue-message-flag nil)
+
+;;; ispell
+
 ;; In Emacs 30 and newer, disable Ispell completion to avoid annotation errors
 ;; when no `ispell' dictionary is set.
 (setq text-mode-ispell-word-completion nil)
+
+(setq ispell-silently-savep t)
 
 ;;; ibuffer
 
