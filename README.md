@@ -189,6 +189,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
 (add-hook 'after-init-hook #'recentf-mode)
+(add-hook 'kill-emacs-hook #'recentf-cleanup)
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
