@@ -299,9 +299,6 @@
 
 (setq mouse-yank-at-point nil)
 
-(setq mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
-      mouse-wheel-scroll-amount-horizontal 2)
-
 ;; Emacs 29
 (when (memq 'context-menu minimal-emacs-ui-features)
   (when (and (display-graphic-p) (fboundp 'context-menu-mode))
