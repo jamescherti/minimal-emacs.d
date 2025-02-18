@@ -795,7 +795,7 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
-;; Toggle on-the-fly spell checking (Flyspell mode).
+;; Enable on-the-fly spell checking (Flyspell mode).
 (add-hook text-mode-hook #'flyspell-mode)
 ```
 
