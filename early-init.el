@@ -38,6 +38,11 @@ turned on.")
 (defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
   "The value of `gc-cons-threshold' after Emacs startup.")
 
+(defvar minimal-emacs-optimize-startup-gc t
+  "If non-nil, increase `gc-cons-threshold' during startup to reduce pauses.
+After Emacs finishes loading, `gc-cons-threshold' is restored to the value
+stored in `minimal-emacs--restore-gc-cons-threshold'.")
+
 (defvar minimal-emacs-package-initialize-and-refresh t
   "Whether to automatically initialize and refresh packages.
 When set to non-nil, Emacs will automatically call `package-initialize' and
@@ -87,12 +92,13 @@ minimalistic appearance during startup.")
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
 
-(setq gc-cons-threshold most-positive-fixnum)
+(when minimal-emacs-optimize-startup-gc
+  (setq gc-cons-threshold most-positive-fixnum)
 
-(defun minimal-emacs--restore-gc-cons-threshold ()
-  "Restore `minimal-emacs-gc-cons-threshold'."
-  (setq gc-cons-threshold minimal-emacs-gc-cons-threshold))
-(add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105)
+  (defun minimal-emacs--restore-gc-cons-threshold ()
+    "Restore `minimal-emacs-gc-cons-threshold'."
+    (setq gc-cons-threshold minimal-emacs-gc-cons-threshold))
+  (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105))
 
 ;;; Misc
 
