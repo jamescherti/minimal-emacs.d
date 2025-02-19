@@ -925,6 +925,7 @@ A drawback of using the early-init phase instead of init is that if a package fa
 - [Cyneox commented on Reddit](https://www.reddit.com/r/emacs/comments/1gh687a/comment/lwdv18t/), expressing gratitude for the resource and sharing their experience. They mentioned it was their fourth attempt to set up a vanilla configuration and highlighted that they had been using the repository as a foundation for their customizations over the past few days. They appreciated the absence of unexplained behavior and the clear instructions on where to place files. The user reported successful testing on both Linux and macOS, noting that everything functioned smoothly, including in the terminal.
 - [rrajath](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb0ja8k/) has been using the minimal-emacs.d config for the past several months and loves it. His previous setup used to take around 4 seconds to load, but with minimal-emacs.d, it now loads in just 1 second.
 - [LionyxML](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/) considers that *minimal-emacs.d* contains one of the best README files he has ever read. The author of *minimal-emacs.d* found his comment encouraging. Reading this README.md is highly recommended for anyone looking to start customizing their *minimal-emacs.d* configuration.
+- [cyneox](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mdnzgqx/): "Still using it and loving it! Thanks for the regular updates."
 
 ## Features
 
