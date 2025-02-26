@@ -324,7 +324,7 @@ minimalistic appearance during startup.")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
                                                       ("nongnu" . 80)
-                                                      ("stable" . 70)
+                                                      ("melpa-stable" . 70)
                                                       ("melpa"  . 0)))
 
 ;;; Load post-early-init.el
