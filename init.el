@@ -25,6 +25,14 @@
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
+;;; Undo/redo
+
+;; Increase undo limits to prevent early garbage collection from aggressively
+;; truncating undo history
+(setq undo-limit (* 13 160000)
+      undo-strong-limit (* 13 240000)
+      undo-outer-limit (* 13 24000000))
+
 ;;; package.el
 
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
@@ -543,6 +551,15 @@
 (setq dabbrev-upcase-means-case-search t)
 (setq dabbrev-ignored-buffer-modes
       '(archive-mode image-mode docview-mode tags-table-mode pdf-view-mode))
+
+;;; Remove warnings from narrow-to-region, upcase-region...
+
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(put 'scroll-left 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
 
 ;;; Load post init
 (minimal-emacs-load-user-init "post-init.el")
