@@ -25,6 +25,14 @@
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
+;;; Undo/redo
+
+;; Increase undo limits to prevent early garbage collection from aggressively
+;; truncating undo history
+(setq undo-limit (* 13 160000)
+      undo-strong-limit (* 13 240000)
+      undo-outer-limit (* 13 24000000))
+
 ;;; package.el
 
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
