@@ -428,11 +428,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
-             undo-fu-disable-checkpoint)
-  :custom
-  ;; 3 times the default values
-  (undo-limit (* 3 160000))
-  (undo-strong-limit (* 3 240000)))
+             undo-fu-disable-checkpoint))
 
 (use-package undo-fu-session
   :ensure t
