@@ -234,6 +234,11 @@
 ;; between sessions.
 (setq history-length 300)
 (setq savehist-save-minibuffer-history t)  ;; Default
+(setq savehist-additional-variables
+      '(kill-ring                        ; clipboard
+        register-alist                   ; macros
+        mark-ring global-mark-ring       ; marks
+        search-ring regexp-search-ring)) ; searches
 
 ;;; Frames and windows
 
