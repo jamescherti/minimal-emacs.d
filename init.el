@@ -20,15 +20,15 @@
 ;;; Before package
 
 ;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 1024 1024))  ; 1024kb
+(setq read-process-output-max (* 2 1024 1024))  ; 1024kb
+
+(setq process-adaptive-read-buffering nil)
 
 ;; Don't ping things that look like domain names.
 (setq ffap-machine-p-known 'reject)
 
 ;;; Undo/redo
 
-;; Increase undo limits to prevent early garbage collection from aggressively
-;; truncating undo history
 (setq undo-limit (* 13 160000)
       undo-strong-limit (* 13 240000)
       undo-outer-limit (* 13 24000000))
@@ -115,8 +115,7 @@
 ;; but may reduce visual feedback.
 (setq redisplay-skip-fontification-on-input t)
 
-;; Collects and displays all available documentation immediately, even if
-;; multiple sources provide it. It concatenates the results.
+;; Collects and displays all available documentation immediately
 (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
 
 ;; Disable truncation of printed s-expressions in the message buffer
@@ -232,9 +231,7 @@
 ;;; savehist
 
 ;; `savehist-mode' is an Emacs feature that preserves the minibuffer history
-;; between sessions. It saves the history of inputs in the minibuffer, such as
-;; commands, search strings, and other prompts, to a file. This allows users to
-;; retain their minibuffer history across Emacs restarts.
+;; between sessions.
 (setq history-length 300)
 (setq savehist-save-minibuffer-history t)  ;; Default
 
@@ -277,7 +274,7 @@
 ;; window is never automatically recentered. The default value of 0 triggers
 ;; recentering too aggressively. Setting it to 10 reduces excessive recentering
 ;; and only recenters the window when scrolling significantly off-screen.
-(setq scroll-conservatively 10)
+(setq scroll-conservatively 101)
 
 ;; Enables smooth scrolling by making Emacs scroll the window by 1 line whenever
 ;; the cursor moves off the visible screen.
