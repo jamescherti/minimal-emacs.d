@@ -431,16 +431,6 @@
 
 ;; dired-omit-mode
 (setq dired-omit-verbose nil)
-(setq dired-omit-files (concat "\\`[.]\\'"
-                               "\\|\\(?:\\.js\\)?\\.meta\\'"
-                               "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
-                               "\\|^\\.DS_Store\\'"
-                               "\\|^\\.\\(?:svn\\|git\\)\\'"
-                               "\\|^\\.ccls-cache\\'"
-                               "\\|^__pycache__\\'"
-                               "\\|^\\.project\\(?:ile\\)?\\'"
-                               "\\|^flycheck_.*"
-                               "\\|^flymake_.*"))
 
 ;; ls-lisp
 (setq ls-lisp-verbosity nil)

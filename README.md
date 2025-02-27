@@ -787,6 +787,18 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ;; modification date, etc.) and all the files in the `dired-omit-files' regular
 ;; expression for a cleaner display.
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+
+;; Hide files from dired
+(setq dired-omit-files (concat "\\`[.]\\'"
+                               "\\|\\(?:\\.js\\)?\\.meta\\'"
+                               "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                               "\\|^\\.DS_Store\\'"
+                               "\\|^\\.\\(?:svn\\|git\\)\\'"
+                               "\\|^\\.ccls-cache\\'"
+                               "\\|^__pycache__\\'"
+                               "\\|^\\.project\\(?:ile\\)?\\'"
+                               "\\|^flycheck_.*"
+                               "\\|^flymake_.*"))
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
 ;; Enable on-the-fly spell checking (Flyspell mode).
