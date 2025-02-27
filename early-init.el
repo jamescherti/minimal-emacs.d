@@ -107,6 +107,8 @@ minimalistic appearance during startup.")
 ;; Set-language-environment sets default-input-method, which is unwanted.
 (setq default-input-method nil)
 
+(setq warning-minimum-level (if minimal-emacs-debug :warning :error))
+
 ;;; Performance
 
 ;; Font compacting can be very resource-intensive, especially when rendering
@@ -251,6 +253,9 @@ minimalistic appearance during startup.")
 ;; Suppress compiler warnings and don't inundate users with their popups.
 (setq native-comp-async-report-warnings-errors
       (or minimal-emacs-debug 'silent))
+(setq native-comp-verbose (if minimal-emacs-debug 1 0)
+      native-comp-debug (if minimal-emacs-debug 1 0))
+(setq native-comp-jit-compilation t)
 (setq native-comp-warning-on-missing-source minimal-emacs-debug)
 
 (setq debug-on-error minimal-emacs-debug
