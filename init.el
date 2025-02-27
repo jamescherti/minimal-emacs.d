@@ -431,6 +431,7 @@
 
 ;; dired-omit-mode
 (setq dired-omit-verbose nil)
+(setq dired-omit-files (concat "\\`[.]\\'"))
 
 ;; ls-lisp
 (setq ls-lisp-verbosity nil)
