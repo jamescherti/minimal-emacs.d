@@ -1,6 +1,5 @@
 # minimal-emacs.d - Emacs Configuration with Better Defaults and Optimized Startup
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![](https://raw.githubusercontent.com/jamescherti/minimal-emacs.d/main/.images/made-for-gnu-emacs.svg)
 
 The **minimal-emacs.d** project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for a vanilla Emacs configuration.
 
@@ -12,9 +11,7 @@ Here’s what the **minimal-emacs.d** configuration provides:
 
 *(More information about the features can be found here: [Features](#features))*
 
-Creating *minimal-emacs.d* `init.el` and `early-init.el` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind *minimal-emacs.d* is to provide a clean, bloat-free, fast base.
-
-The **minimal-emacs.d** only enables features, providing a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
+Creating *minimal-emacs.d* `init.el` and `early-init.el` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind *minimal-emacs.d* is to provide a clean, bloat-free, fast base. The **minimal-emacs.d** provides a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
 
 The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages ([Here are some of the packages the author is using](https://www.jamescherti.com/essential-emacs-packages/)) and his Emacs configuration starts in 0.22 seconds:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
