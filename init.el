@@ -130,6 +130,7 @@
 
 ;; Delete by moving to trash in interactive mode
 (setq delete-by-moving-to-trash (not noninteractive))
+(setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 
 ;; Disable the warning "X and Y are the same file". Ignoring this warning is
 ;; acceptable since it will redirect you to the existing buffer regardless.
