@@ -548,6 +548,7 @@
 
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
+(put 'list-timers 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
