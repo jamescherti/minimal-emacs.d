@@ -163,6 +163,7 @@ A common solution to this issue is installing the no-littering package; however,
 An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ``` emacs-lisp
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
+;; IMPORTANT: This part should be in the pre-early-init.el file
 (setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
 (setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
 (setq user-emacs-directory minimal-emacs-var-dir)
