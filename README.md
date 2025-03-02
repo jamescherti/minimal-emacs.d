@@ -171,7 +171,7 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 
 ### How to prevent minimal-emacs.d from saving custom.el?
 
-To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device`:
+To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device` by adding to the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (setq custom-file null-device)
 ```
