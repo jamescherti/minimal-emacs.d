@@ -30,7 +30,6 @@
 ;; Ask the user whether to terminate asynchronous compilations on exit.
 ;; This prevents native compilation from leaving temporary files in /tmp.
 (setq native-comp-async-query-on-exit t)
-(setq confirm-kill-processes t)  ; Required for `native-comp-async-query-on-exit'
 
 ;;; Undo/redo
 
