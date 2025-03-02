@@ -145,7 +145,7 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 (setq user-emacs-directory minimal-emacs-var-dir)
 ```
 
-IMPORTANT: The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
+**IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
 ### How to prevent minimal-emacs.d from saving custom.el?
 
