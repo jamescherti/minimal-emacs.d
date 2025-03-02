@@ -687,7 +687,7 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
   :hook
   (emacs-lisp-mode . highlight-defined-mode))
 
-;; Enables structured editing of S-expressions in Lisp-like languages
+;; Prevent parenthesis imbalance
 (use-package paredit
   :ensure t
   :defer t
