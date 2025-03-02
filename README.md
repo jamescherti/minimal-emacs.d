@@ -42,6 +42,8 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
     - [Session Management](#session-management)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Inhibit the mouse](#inhibit-the-mouse)
+    - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
+    - [Enhance the Elisp development experience](#enhance-the-elisp-development-experience)
     - [How to configure straight.el?](#how-to-configure-straightel)
     - [How to configure elpaca (package manager)](#how-to-configure-elpaca-package-manager)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
@@ -640,6 +642,110 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ```
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
+
+### A better Emacs *help* buffer
+
+Helpful is an alternative to the built-in Emacs help that provides much more contextual information.
+
+To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+(use-package helpful
+  :defer t
+  :commands (helpful-callable
+             helpful-variable
+             helpful-key
+             helpful-command
+             helpful-at-point
+             helpful-function)
+  :bind
+  ([remap describe-command] . helpful-command)
+  ([remap describe-function] . helpful-callable)
+  ([remap describe-key] . helpful-key)
+  ([remap describe-symbol] . helpful-symbol)
+  ([remap describe-variable] . helpful-variable)
+  :custom
+  (helpful-max-buffers 7))
+```
+
+### Enhance the Elisp development experience
+
+To enhance the Elisp development experience, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+;; Enables automatic indentation of code while typing
+(use-package aggressive-indent
+  :ensure t
+  :defer t
+  :commands aggressive-indent-mode
+  :hook
+  (emacs-lisp-mode . aggressive-indent-mode))
+
+;; Highlights function and variable definitions in Emacs Lisp mode
+(use-package highlight-defined
+  :ensure t
+  :defer t
+  :commands highlight-defined-mode
+  :hook
+  (emacs-lisp-mode . highlight-defined-mode))
+
+;; Enables structured editing of S-expressions in Lisp-like languages
+(use-package paredit
+  :ensure t
+  :defer t
+  :commands paredit-mode
+  :hook
+  (emacs-lisp-mode . paredit-mode)
+  :config
+  (define-key paredit-mode-map (kbd "RET") nil))
+
+;; For paredit+Evil mode users: enhances paredit with Evil mode compatibility
+;; --------------------------------------------------------------------------
+;; (use-package enhanced-evil-paredit
+;;   :ensure t
+;;   :defer t
+;;   :commands enhanced-evil-paredit-mode
+;;   :hook
+;;   (paredit-mode . enhanced-evil-paredit-mode))
+
+```
+
+Other optional packages that may be useful include:
+```emacs-lisp
+;; Displays visible indicators for page breaks
+(use-package page-break-lines
+  :ensure t
+  :defer t
+  :commands (page-break-lines-mode
+             global-page-break-lines-mode)
+  :hook
+  (emacs-lisp-mode . page-break-lines-mode))
+
+;; Highlights escape sequences in strings for better visibility
+(use-package easy-escape
+  :ensure t
+  :defer t
+  :commands easy-escape-minor-mode
+  :config
+  (set-face-attribute 'easy-escape-face nil :foreground "red"))
+
+;; Provides automatic formatting for Emacs Lisp code
+(use-package elisp-autofmt
+  :ensure t
+  :defer t
+  :commands (elisp-autofmt-mode
+             elisp-autofmt-buffer
+             elisp-autofmt-region))
+
+;; Provides functions to find references to functions, macros, variables,
+;; special forms, and symbols in Emacs Lisp
+(use-package elisp-refs
+  :ensure t
+  :defer t
+  :commands (elisp-refs-function
+             elisp-refs-macro
+             elisp-refs-variable
+             elisp-refs-special
+             elisp-refs-symbol))
+```
 
 ### How to configure straight.el?
 
