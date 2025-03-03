@@ -1,22 +1,27 @@
 # minimal-emacs.d - A Customizable Emacs Base that Provides Better Defaults and Optimized Startup
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-The **minimal-emacs.d** project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for a vanilla Emacs configuration.
+The **minimal-emacs.d** project is a lightweight, bloat-free Emacs base that gives you full control over your configuration (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own Emacs setup.
 
-Here’s what the **minimal-emacs.d** configuration provides:
-- Optimizations to speed up both startup and overall usage of Emacs,
-- Improved default Emacs settings, including user experience enhancements, UI element management, optimized garbage collection, better configurations for built-in packages, etc.,
-- Provides the user with complete control over selecting major and minor modes (*minimal-emacs.d* does not enable modes by default, allowing users to choose which modes to activate).
-- This README.md, which offers extensive recommendations for customizing your Emacs configuration.
+Why minimal-emacs.d?
+- **Minimal yet powerful:** No unnecessary abstractions, just a solid starting point.
+- **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
+- **No forced modes:** Unlike larger frameworks, minimal-emacs.d doesn’t preconfigure your environment. YOU decide the modes to enable.
+- **Customizable foundation:** Designed to be extended, not replaced. (This README.md offers extensive recommendations for customizing your minimal-emacs.d configuration.)
 
 *(More information about the features can be found here: [Features](#features))*
 
-Creating *minimal-emacs.d* `init.el` and `early-init.el` involved extensive research and testing to find the best parameters and optimizations for an Emacs init file. The concept behind *minimal-emacs.d* is to provide a clean, bloat-free, fast base. The **minimal-emacs.d** provides a minimal base that is optimized. From there, users are encouraged to consult this README.md to customize and extend the configuration based on their specific needs. (Read: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
+Building *minimal-emacs.d*’s `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs init file. The goal? A **clean, bloat-free, and highly efficient** base that **prioritizes speed and flexibility** without unnecessary overhead.
 
-The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`. He is using 146 packages ([Here are some of the packages the author is using](https://www.jamescherti.com/essential-emacs-packages/)) and his Emacs configuration starts in 0.22 seconds:
+With *minimal-emacs.d*, you start with a **minimal yet optimized** foundation, designed to be extended. Instead of battling preconfigured complexity, you’re free to adapt it to your needs. **(Reminder: [Never modify `init.el` or `early-init.el`—customize these files instead.](#never-modify-initel-and-early-initel-modify-these-instead))**
+
+The author uses **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`, alongside **146 packages** ([See some of them here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
-(The optimizations in *minimal-emacs.d* significantly contribute to speeding up Emacs startup. Additional factors include deferring package loading when not necessary on startup by using `:defer t` with `use-package`, and using [compile-angel](https://github.com/jamescherti/compile-angel.el) to ensure all `.el` files are byte-compiled and native-compiled. The author also regularly uses `M-x list-timers` and `M-x describe-mode` for each file type to ensure only essential modes and timers are active, which helps optimize Emacs' performance)
+The optimizations in *minimal-emacs.d* play a key role in **drastically improving startup time**, but additional techniques contribute as well:
+- **Defer package loading** – Using `:defer t` in `use-package` ensures unnecessary packages don’t load at startup.
+- **Byte and native compilation** – [compile-angel](https://github.com/jamescherti/compile-angel.el) keeps `.el` files optimized for performance.
+- **Aggressive runtime trimming** – Regular use of `M-x list-timers` and `M-x describe-mode` ensures that only **essential timers and modes** remain active.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
