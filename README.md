@@ -9,7 +9,7 @@ Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **ext
 - **Minimal yet powerful:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
 - **No forced modes:** Unlike larger frameworks, *minimal-emacs.d* doesn't enable modes. YOU decide the global/minor modes to enable.
-- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
 
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 
