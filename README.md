@@ -587,6 +587,8 @@ Corfu enhances in-buffer completion by displaying a compact popup with current c
 
 Cape, or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
+![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
+
 To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package corfu
