@@ -3,25 +3,18 @@
 
 The **minimal-emacs.d** project is a lightweight, bloat-free Emacs base that gives you full control over your configuration (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own Emacs setup.
 
+Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs init file.
+
 **Why minimal-emacs.d?**
 - **Minimal yet powerful:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
-- **No forced modes:** Unlike larger frameworks, *minimal-emacs.d* doesn’t preconfigure your environment. YOU decide the global/minor modes to enable.
-- **Customizable foundation:** Designed to be extended, not replaced. (This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration.)
+- **No forced modes:** Unlike larger frameworks, *minimal-emacs.d* doesn't enable modes. YOU decide the global/minor modes to enable.
+- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
 
 *(More information about the features can be found here: [Features](#features))*
 
-Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs init file. The goal? A **clean, bloat-free, and highly efficient** base that **prioritizes speed and flexibility** without unnecessary overhead.
-
-With *minimal-emacs.d*, you start with a **minimal yet optimized** foundation, designed to be extended. Instead of battling preconfigured complexity, you’re free to adapt it to your needs. **(Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))**
-
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
-
-The optimizations in *minimal-emacs.d* play a key role in **drastically improving startup time**, but additional techniques contribute as well:
-- **Defer package loading** – Using `:defer t` in `use-package` ensures unnecessary packages don’t load at startup.
-- **Byte and native compilation** – [compile-angel](https://github.com/jamescherti/compile-angel.el) keeps `.el` files optimized for performance.
-- **Aggressive runtime trimming** – Regular use of `M-x list-timers` and `M-x describe-mode` ensures that only **essential timers and modes** remain active.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
@@ -520,7 +513,7 @@ Evil-snipe provides 2-character motions for quickly jumping around text compared
 
 ### Configuring LSP Servers with Eglot (built-in)
 
-To set up Language Server Protocol (LSP) servers using Eglot, you can configure it in your Emacs setup as follows. This configuration ensures minimal disruption from Eglot’s progress reporting and optimizes performance by disabling unnecessary logging.
+To set up Language Server Protocol (LSP) servers using Eglot, you can configure it in your Emacs setup as follows. This configuration ensures minimal disruption from Eglot's progress reporting and optimizes performance by disabling unnecessary logging.
 
 To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
@@ -1108,7 +1101,7 @@ Other Emacs packages by the same author:
 - [compile-angel.el](https://github.com/jamescherti/compile-angel.el): **Speed up Emacs!** This package guarantees that all .el files are both byte-compiled and native-compiled, which significantly speeds up Emacs.
 - [outline-indent.el](https://github.com/jamescherti/outline-indent.el): An Emacs package that provides a minor mode that enables code folding and outlining based on indentation levels for various indentation-based text files, such as YAML, Python, and other indented text files.
 - [easysession.el](https://github.com/jamescherti/easysession.el): Easysession is lightweight Emacs session manager that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, the tab-bar, and the Emacs frames (with or without the Emacs frames size, width, and height).
-- [vim-tab-bar.el](https://github.com/jamescherti/vim-tab-bar.el): Make the Emacs tab-bar Look Like Vim’s Tab Bar.
+- [vim-tab-bar.el](https://github.com/jamescherti/vim-tab-bar.el): Make the Emacs tab-bar Look Like Vim's Tab Bar.
 - [elispcomp](https://github.com/jamescherti/elispcomp): A command line tool that allows compiling Elisp code directly from the terminal or from a shell script. It facilitates the generation of optimized .elc (byte-compiled) and .eln (native-compiled) files.
 - [tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el): The Tomorrow Night Deepblue Emacs theme is a beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette that is pleasing to the eyes. It features a deep blue background color that creates a calming atmosphere. The theme is also a great choice for those who miss the blue themes that were trendy a few years ago.
 - [Ultyas](https://github.com/jamescherti/ultyas/): A command-line tool designed to simplify the process of converting code snippets from UltiSnips to YASnippet format.
