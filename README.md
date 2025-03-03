@@ -14,6 +14,7 @@ Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **ext
 *(More information about the features can be found here: [Features](#features))*
 
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
+
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
