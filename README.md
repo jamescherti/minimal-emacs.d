@@ -28,8 +28,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
-    - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Optimization: Native Compilation](#optimization-native-compilation)
+    - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
     - [Code Folding](#code-folding)
@@ -150,6 +150,29 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 (setq custom-file null-device)
 ```
 
+### Optimization: Native Compilation
+
+Native compilation enhances Emacs performance by converting Elisp code into native machine code, resulting in faster execution and improved responsiveness.
+
+1. To check if native compilation is enabled, evaluate `(native-comp-available-p)` in Emacs. A non-nil result indicates that native compilation is active.
+
+2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages:
+```emacs-lisp
+(use-package compile-angel
+  :ensure t
+  :demand t
+  :config
+  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
+  ;; Drawback: The minibuffer will not display compile-angel's actions.
+  (setq compile-angel-verbose t)
+
+  ;; A local mode that compiles .el files whenever the user saves them.
+  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
+
+  ;; A global mode that compiles .el files before they are loaded.
+  (compile-angel-on-load-mode))
+```
+
 ### How to activate recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by *minimal-emacs.d*. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
@@ -177,29 +200,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (add-hook 'after-init-hook #'save-place-mode)
-```
-
-### Optimization: Native Compilation
-
-Native compilation enhances Emacs performance by converting Elisp code into native machine code, resulting in faster execution and improved responsiveness.
-
-1. To check if native compilation is enabled, evaluate `(native-comp-available-p)` in Emacs. A non-nil result indicates that native compilation is active.
-
-2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages:
-```emacs-lisp
-(use-package compile-angel
-  :ensure t
-  :demand t
-  :config
-  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
-  ;; Drawback: The minibuffer will not display compile-angel's actions.
-  (setq compile-angel-verbose t)
-
-  ;; A local mode that compiles .el files whenever the user saves them.
-  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
-
-  ;; A global mode that compiles .el files before they are loaded.
-  (compile-angel-on-load-mode))
 ```
 
 ### Code completion with corfu
