@@ -1,4 +1,4 @@
-# minimal-emacs.d - Emacs Configuration with Better Defaults and Optimized Startup
+# minimal-emacs.d - A Customizable Emacs Base that Provides Better Defaults and Optimized Startup
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 The **minimal-emacs.d** project is a customizable Emacs base that provides **better Emacs defaults and optimized startup**, intended to serve as a solid foundation for a vanilla Emacs configuration.
@@ -21,7 +21,7 @@ The author is using **[minimal-emacs.d](https://github.com/jamescherti/minimal-e
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
-- [minimal-emacs.d - Emacs Configuration with Better Defaults and Optimized Startup](#minimal-emacsd---emacs-configuration-with-better-defaults-and-optimized-startup)
+- [minimal-emacs.d - A Customizable Emacs Base that Provides Better Defaults and Optimized Startup](#minimal-emacsd---a-customizable-emacs-base-that-provides-better-defaults-and-optimized-startup)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
