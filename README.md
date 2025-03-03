@@ -131,13 +131,9 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ### Compile-Angel - Speed up Emacs by Automatically Byte-compiling and Native-compiling all .el files
 
-The [compile-angel.el](https://github.com/jamescherti/compile-angel.el) package automatically byte-compiles and native-compiles Emacs Lisp libraries. It offers:
-- `(compile-angel-on-load-mode)`: A global mode that compiles .el files before they are loaded.
-- `(compile-angel-on-save-local-mode)`: A local mode that compiles .el files whenever the user saves them.
+The [compile-angel.el](https://github.com/jamescherti/compile-angel.el) ensures all libraries are byte-compiled and native-compiled**. Byte-compilation reduces the overhead of loading Emacs Lisp code at runtime, while native compilation optimizes performance by generating machine code specific to your system.
 
-The *compile-angel* modes **speed up Emacs by ensuring all libraries are byte-compiled and native-compiled**. Byte-compilation reduces the overhead of loading Emacs Lisp code at runtime, while native compilation optimizes performance by generating machine code specific to your system.
-
-To install compile-angel, add the following code **at the very beginning of your ~/.emacs.d/post-init.el init.el file, before all other packages**:
+To install compile-angel, add the following code **at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages**:
 ```emacs-lisp
 (use-package compile-angel
   :ensure t
@@ -147,8 +143,11 @@ To install compile-angel, add the following code **at the very beginning of your
   ;; Drawback: The minibuffer will not display compile-angel's actions.
   (setq compile-angel-verbose t)
 
-  (compile-angel-on-load-mode)
-  (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
+  ;; A local mode that compiles .el files whenever the user saves them.
+  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
+
+  ;; A global mode that compiles .el files before they are loaded.
+  (compile-angel-on-load-mode))
 ```
 
 ### Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`
