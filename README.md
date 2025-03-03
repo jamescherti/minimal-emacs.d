@@ -3,19 +3,19 @@
 
 The **minimal-emacs.d** project is a lightweight, bloat-free Emacs base that gives you full control over your configuration (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own Emacs setup.
 
-Why minimal-emacs.d?
-- **Minimal yet powerful:** No unnecessary abstractions, just a solid starting point.
+**Why minimal-emacs.d?**
+- **Minimal yet powerful:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
-- **No forced modes:** Unlike larger frameworks, minimal-emacs.d doesn’t preconfigure your environment. YOU decide the modes to enable.
-- **Customizable foundation:** Designed to be extended, not replaced. (This README.md offers extensive recommendations for customizing your minimal-emacs.d configuration.)
+- **No forced modes:** Unlike larger frameworks, *minimal-emacs.d* doesn’t preconfigure your environment. YOU decide the global/minor modes to enable.
+- **Customizable foundation:** Designed to be extended, not replaced. (This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration.)
 
 *(More information about the features can be found here: [Features](#features))*
 
-Building *minimal-emacs.d*’s `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs init file. The goal? A **clean, bloat-free, and highly efficient** base that **prioritizes speed and flexibility** without unnecessary overhead.
+Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs init file. The goal? A **clean, bloat-free, and highly efficient** base that **prioritizes speed and flexibility** without unnecessary overhead.
 
-With *minimal-emacs.d*, you start with a **minimal yet optimized** foundation, designed to be extended. Instead of battling preconfigured complexity, you’re free to adapt it to your needs. **(Reminder: [Never modify `init.el` or `early-init.el`—customize these files instead.](#never-modify-initel-and-early-initel-modify-these-instead))**
+With *minimal-emacs.d*, you start with a **minimal yet optimized** foundation, designed to be extended. Instead of battling preconfigured complexity, you’re free to adapt it to your needs. **(Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))**
 
-The author uses **[minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)** as his `early-init.el` and `init.el`, alongside **146 packages** ([See some of them here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
+The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
 The optimizations in *minimal-emacs.d* play a key role in **drastically improving startup time**, but additional techniques contribute as well:
