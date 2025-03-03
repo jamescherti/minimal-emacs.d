@@ -64,8 +64,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 
 ## Install minimal-emacs.d
 
-- **Important:** Ensure that the *~/.emacs* and *~/.emacs.el* files do not exist. These files takes precedence over *init.el*, causing Emacs to ignore the *init.el* file that is in the *~/.emacs.d/* directory or any other directory specified with the *--init-directory* Emacs command-line argument. This behavior is due to the way Emacs searches for initialization files ([more information](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init)). **Simply delete the *~/.emacs* and *~/.emacs.el* files avoid this issue.**
-- Prerequisite: git
+- **Important:** Ensure that the `~/.emacs` and `~/.emacs.el` files do not exist. These files cause Emacs to ignore `~/.emacs.d/init.el`. This behavior is due to the way Emacs searches for initialization files ([more information](https://www.gnu.org/software/emcs/manual/html_node/emacs/Find-Init.html#Find-Init)). **Simply delete the *~/.emacs* and *~/.emacs.el* files avoid this issue.**
+- **Prerequisite:** git
 
 ### Install minimal-emacs.d into `~/.emacs.d`
 
