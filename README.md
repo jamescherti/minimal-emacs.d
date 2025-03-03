@@ -31,13 +31,13 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Optimization: Native Compilation](#optimization-native-compilation)
-    - [How to configure vterm](#how-to-configure-vterm)
+    - [Code completion with corfu](#code-completion-with-corfu)
     - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
     - [Code Folding](#code-folding)
+    - [How to configure vterm](#how-to-configure-vterm)
     - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Session Management](#session-management)
-    - [Code completion with corfu](#code-completion-with-corfu)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhance the Elisp development experience](#enhance-the-elisp-development-experience)
@@ -207,22 +207,48 @@ Check if native compilation is enabled by evaluating `(native-comp-available-p)`
 
 Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness.
 
-### How to configure vterm
+### Code completion with corfu
 
-The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
+Corfu enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
 
-To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
+Cape, or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
+
+![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
+
+To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
-(use-package vterm
+(use-package corfu
   :ensure t
   :defer t
-  :commands vterm
-  :config
-  ;; Speed up vterm
-  (setq vterm-timer-delay 0.01))
-```
+  :commands (corfu-mode global-corfu-mode)
 
-(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
+
+  :custom
+  ;; Hide commands in M-x which do not apply to the current mode.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Disable Ispell completion function. As an alternative try `cape-dict'.
+  (text-mode-ispell-word-completion nil)
+  (tab-always-indent 'complete)
+
+  ;; Enable Corfu
+  :config
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :defer t
+  :commands (cape-dabbrev cape-file cape-elisp-block)
+  :bind ("C-c p" . cape-prefix-map)
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+```
 
 ### How to configure Vertico, Consult, and Embark
 
@@ -397,6 +423,23 @@ The **outline-indent** Emacs package provides a minor mode that enables code fol
 In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.screenshot2.png)
+
+### How to configure vterm
+
+The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
+
+To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(use-package vterm
+  :ensure t
+  :defer t
+  :commands vterm
+  :config
+  ;; Speed up vterm
+  (setq vterm-timer-delay 0.01))
+```
+
+(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
 ### How to configure Vim keybindings using Evil?
 
@@ -581,49 +624,6 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   ;; `file-name-handler-alist` at depth 101 during `emacs-startup-hook`.)
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
-```
-
-### Code completion with corfu
-
-Corfu enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
-
-Cape, or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
-
-![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
-
-To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-(use-package corfu
-  :ensure t
-  :defer t
-  :commands (corfu-mode global-corfu-mode)
-
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode))
-
-  :custom
-  ;; Hide commands in M-x which do not apply to the current mode.
-  (read-extended-command-predicate #'command-completion-default-include-p)
-  ;; Disable Ispell completion function. As an alternative try `cape-dict'.
-  (text-mode-ispell-word-completion nil)
-  (tab-always-indent 'complete)
-
-  ;; Enable Corfu
-  :config
-  (global-corfu-mode))
-
-(use-package cape
-  :ensure t
-  :defer t
-  :commands (cape-dabbrev cape-file cape-elisp-block)
-  :bind ("C-c p" . cape-prefix-map)
-  :init
-  ;; Add to the global default value of `completion-at-point-functions' which is
-  ;; used by `completion-at-point'.
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
 
 ### Inhibit the mouse
