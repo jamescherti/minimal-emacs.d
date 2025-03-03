@@ -158,6 +158,8 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 
 2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages:
 ```emacs-lisp
+;; Ensure adding the following compile-angel code at the very beginning
+;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
   :ensure t
   :demand t
