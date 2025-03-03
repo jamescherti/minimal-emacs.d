@@ -181,11 +181,9 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 
 ### Optimization: Native Compilation
 
-Native compilation can greatly enhance performance by translating Emacs Lisp code into native machine code, leading to faster execution and improved responsiveness. Check if native compilation is enabled by evaluating `(native-comp-available-p)` in Emacs. If the result is non-nil, it indicates that native compilation is active.
+1. Native compilation enhances Emacs performance by converting Elisp code into native machine code, resulting in faster execution and improved responsiveness. To check if native compilation is enabled, evaluate `(native-comp-available-p)` in Emacs. A non-nil result indicates that native compilation is active.
 
-Also, ensures all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el).
-
-To install compile-angel, add the following code **at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages**:
+2. **Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el).** To install compile-angel, add the following code **at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages**:
 ```emacs-lisp
 (use-package compile-angel
   :ensure t
