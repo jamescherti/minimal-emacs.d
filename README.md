@@ -228,6 +228,8 @@ To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
 
 Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities. Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed). Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
 
+![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
+
 Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and Embark:
 ``` emacs-lisp
 (use-package vertico
