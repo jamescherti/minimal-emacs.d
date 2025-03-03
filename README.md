@@ -31,17 +31,18 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Code completion with corfu](#code-completion-with-corfu)
-    - [How to configure Vertico, Consult, and Embark](#how-to-configure-vertico-consult-and-embark)
+    - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code Folding](#code-folding)
-    - [How to configure vterm](#how-to-configure-vterm)
-    - [How to configure Vim keybindings using Evil?](#how-to-configure-vim-keybindings-using-evil)
+    - [Configuring vterm](#configuring-vterm)
+    - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Session Management](#session-management)
+    - [Configuring org-mode](#configuring-org-mode)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
-    - [Enhance the Elisp development experience](#enhance-the-elisp-development-experience)
-    - [How to configure straight.el?](#how-to-configure-straightel)
-    - [How to configure elpaca (package manager)](#how-to-configure-elpaca-package-manager)
+    - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
+    - [Configuring straight.el?](#configuring-straightel)
+    - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Frequently asked questions](#frequently-asked-questions)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
@@ -247,7 +248,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
 
-### How to configure Vertico, Consult, and Embark
+### Configuring Vertico, Consult, and Embark
 
 Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities. Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed). Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
 
@@ -421,7 +422,7 @@ In addition to code folding, *outline-indent* also allows: moving indented block
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.screenshot2.png)
 
-### How to configure vterm
+### Configuring vterm
 
 The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
 
@@ -438,7 +439,7 @@ To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
 
 (Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
-### How to configure Vim keybindings using Evil?
+### Configuring Vim keybindings using Evil?
 
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
 
@@ -623,6 +624,28 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
 ```
 
+### Configuring org-mode
+
+To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package org
+  :ensure t
+  :defer t
+  :commands (org-mode org-version)
+  :mode
+  ("\\.org\\'" . org-mode)
+  :custom
+  (org-hide-leading-stars t)
+  (org-startup-indented t)
+  (org-adapt-indentation nil)
+  (org-edit-src-content-indentation 0)
+  (org-startup-truncated nil)
+  (org-fontify-done-headline t)
+  (org-fontify-todo-headline t)
+  (org-fontify-whole-heading-line t)
+  (org-fontify-quote-and-verse-blocks t))
+```
+
 ### Inhibit the mouse
 
 The **inhibit-mouse** package disables mouse input in Emacs.
@@ -665,7 +688,7 @@ To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
   (helpful-max-buffers 7))
 ```
 
-### Enhance the Elisp development experience
+### Enhancing the Elisp development experience
 
 To enhance the Elisp development experience, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
@@ -745,7 +768,7 @@ Other optional packages that may be useful include:
              elisp-refs-symbol))
 ```
 
-### How to configure straight.el?
+### Configuring straight.el?
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
 ``` emacs-lisp
@@ -767,7 +790,7 @@ Other optional packages that may be useful include:
   (load bootstrap-file nil 'nomessage))
 ```
 
-### How to configure elpaca (package manager)
+### Configuring elpaca (package manager)
 
 Add to `~/.emacs.d/pre-early-init.el`:
 ```elisp
