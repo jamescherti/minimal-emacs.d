@@ -116,7 +116,6 @@
 (setq truncate-string-ellipsis "…")
 
 ;; Improve Emacs' responsiveness by delaying syntax highlighting during input
-;; but may reduce visual feedback.
 (setq redisplay-skip-fontification-on-input t)
 
 ;; Collects and displays all available documentation immediately
@@ -135,12 +134,10 @@
 (setq delete-by-moving-to-trash (not noninteractive))
 (setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 
-;; Disable the warning "X and Y are the same file". Ignoring this warning is
-;; acceptable since it will redirect you to the existing buffer regardless.
+;; Ignoring this is acceptable since it will redirect to the buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
 
-;; Resolve symlinks when opening files, so that any operations are conducted
-;; from the file's true directory (like `find-file').
+;; Resolve symlinks so that operations are conducted from the file's directory
 (setq find-file-visit-truename t
       vc-follow-symlinks t)
 
@@ -160,8 +157,7 @@
 
 ;;; Backup files
 
-;; Avoid generating backups or lockfiles to prevent creating world-readable
-;; copies of files.
+;; Avoid backups or lockfiles to prevent creating world-readable copies of files
 (setq create-lockfiles nil)
 (setq make-backup-files nil)
 
@@ -200,10 +196,12 @@
 ;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
+;; Remove duplicates from the kill ring to reduce clutter
+(setq kill-do-not-save-duplicates t)
+
 ;;; Auto revert
-;; Auto-revert in Emacs is a feature that automatically updates the
-;; contents of a buffer to reflect changes made to the underlying file
-;; on disk.
+;; Auto-revert in Emacs is a feature that automatically updates the contents of
+;; a buffer to reflect changes made to the underlying file.
 (setq revert-without-query (list ".")  ; Do not prompt
       auto-revert-stop-on-user-input nil
       auto-revert-verbose t)
@@ -214,9 +212,8 @@
 
 ;;; recentf
 
-;; `recentf' is an Emacs package that maintains a list of recently
-;; accessed files, making it easier to reopen files you have worked on
-;; recently.
+;; `recentf' is an that maintains a list of recently accessed files, making it
+;; easier to reopen files you have worked on recently.
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup (if (daemonp) 300 'never))
@@ -227,8 +224,7 @@
 ;;; saveplace
 
 ;; `save-place-mode' enables Emacs to remember the last location within a file
-;; upon reopening. This feature is particularly beneficial for resuming work at
-;; the precise point where you previously left off.
+;; upon reopening.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 
@@ -276,22 +272,19 @@
 ;; window.
 (setq scroll-preserve-screen-position t)
 
-;; Emacs spends excessive time recentering the screen when the cursor moves more
-;; than N lines past the window edges (where N is the value of
-;; `scroll-conservatively`). This can be particularly slow in larger files
-;; during extensive scrolling. If `scroll-conservatively` is set above 100, the
-;; window is never automatically recentered. The default value of 0 triggers
-;; recentering too aggressively. Setting it to 10 reduces excessive recentering
-;; and only recenters the window when scrolling significantly off-screen.
+;; Emacs spends excessive time recentering when the cursor moves more than N
+;; lines past the window edges (N is the value of `scroll-conservatively'). This
+;; can be slow in larger files. If `scroll-conservatively' is set above 100, the
+;; window is never automatically recentered.
 (setq scroll-conservatively 101)
 
 ;; Enables smooth scrolling by making Emacs scroll the window by 1 line whenever
 ;; the cursor moves off the visible screen.
 (setq scroll-step 1)
 
-;; Reduce cursor lag by :
-;; 1. Prevent automatic adjustments to `window-vscroll' for long lines.
-;; 2. Resolve the issue of random half-screen jumps during scrolling.
+;; Reduce cursor lag by:
+;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
+;; 2. Resolving the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
 
 ;; Number of lines of margin at the top and bottom of a window.
@@ -314,8 +307,6 @@
 
 ;; The blinking cursor is distracting and interferes with cursor settings in
 ;; some minor modes that try to change it buffer-locally (e.g., Treemacs).
-;; Additionally, it can cause freezing, especially on macOS, for users with
-;; customized and colored cursors.
 (blink-cursor-mode -1)
 
 ;; Don't blink the paren matching the one at point, it's too distracting.
@@ -370,38 +361,30 @@
 (setq read-extended-command-predicate #'command-completion-default-include-p)
 
 ;; Enable multi-line commenting which ensures that `comment-indent-new-line'
-;; properly continues comments onto new lines, which is useful for writing
-;; longer comments or docstrings that span multiple lines.
+;; properly continues comments onto new lines.
 (setq comment-multi-line t)
+
+;; Ensures that empty lines within the commented region are also commented out.
+;; This prevents unintended visual gaps and maintains a consistent appearance.
+(setq comment-empty-lines t)
 
 ;; We often split terminals and editor windows or place them side-by-side,
 ;; making use of the additional horizontal space.
 (setq-default fill-column 80)
 
-;; Disable the obsolete practice of end-of-line spacing from the
-;; typewriter era.
+;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
 (setq sentence-end-double-space nil)
 
-;; According to the POSIX, a line is defined as "a sequence of zero or
-;; more non-newline characters followed by a terminating newline".
+;; According to the POSIX, a line is defined as "a sequence of zero or more
+;; non-newline characters followed by a terminating newline".
 (setq require-final-newline t)
-
-;; Remove duplicates from the kill ring to reduce clutter
-(setq kill-do-not-save-duplicates t)
-
-;; Ensures that empty lines within the commented region are also commented out.
-;; This prevents unintended visual gaps and maintains a consistent appearance,
-;; ensuring that comments apply uniformly to all lines, including those that are
-;; otherwise empty.
-(setq comment-empty-lines t)
 
 ;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
 
 ;;; Modeline
 
-;; Setting `display-time-default-load-average' to nil makes Emacs omit the load
-;; average information from the mode line.
+;; Makes Emacs omit the load average information from the mode line.
 (setq display-time-default-load-average nil)
 
 ;; Display the current line and column numbers in the mode line
@@ -552,13 +535,9 @@
 
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
-(put 'list-timers 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
-(put 'scroll-left 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
+(dolist (cmd '(list-timers narrow-to-region upcase-region downcase-region
+                           erase-buffer scroll-left dired-find-alternate-file))
+  (put cmd 'disabled nil))
 
 ;;; Load post init
 (minimal-emacs-load-user-init "post-init.el")
