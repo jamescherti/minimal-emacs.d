@@ -182,6 +182,7 @@
 ;; `recover-file' or `recover-session' functions can be used to restore
 ;; auto-saved data.
 (setq auto-save-default t)
+(setq auto-save-no-message t)
 
 ;; Do not auto-disable auto-save after deleting large chunks of
 ;; text. The purpose of auto-save is to provide a failsafe, and
