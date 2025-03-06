@@ -9,7 +9,7 @@ Building *minimal-emacs.d* `init.el` and `early-init.el` was the result of **ext
 - **Minimal yet powerful:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
 - **No forced modes:** Unlike larger frameworks, *minimal-emacs.d* doesn't enable modes. YOU decide the global/minor modes to enable.
-- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead))
+- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 
@@ -23,10 +23,10 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
-  - [Customizations: post-init.el](#customizations-post-initel)
-    - [Never modify init.el and early-init.el. Modify these instead...](#never-modify-initel-and-early-initel-modify-these-instead)
+  - [Customizations: Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead)
+  - [Customizations: UI](#customizations-ui)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
-    - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
+  - [Customizations: Packages](#customizations-packages)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Activating autosave](#activating-autosave)
@@ -44,6 +44,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
+    - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
@@ -102,9 +103,8 @@ To keep your Emacs configuration up to date, you can pull the latest changes fro
 git -C ~/.emacs.d pull
 ```
 
-## Customizations: post-init.el
 
-### Never modify init.el and early-init.el. Modify these instead...
+## Customizations: Never modify init.el and early-init.el. Modify these instead...
 **The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
 The minimal-emacs.d init files support additional customization files that are loaded at different stages of the Emacs startup process. These files allow you to further customize the initialization sequence:
@@ -124,6 +124,8 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
 
+## Customizations: UI
+
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
 **Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
@@ -136,12 +138,7 @@ To customize your Emacs setup to include various user interface elements, you ca
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
-### How to prevent minimal-emacs.d from saving custom.el?
-
-To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device` by adding to the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-(setq custom-file null-device)
-```
+## Customizations: Packages
 
 ### Optimization: Native Compilation
 
@@ -844,6 +841,13 @@ Other optional packages that may be useful include:
              elisp-refs-variable
              elisp-refs-special
              elisp-refs-symbol))
+```
+
+### Preventing Emacs from saving custom.el
+
+To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device` by adding to the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(setq custom-file null-device)
 ```
 
 ### Which other customizations can be interesting to add?
