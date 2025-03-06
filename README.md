@@ -1234,9 +1234,9 @@ A drawback of using the early-init phase instead of init is that if a package fa
    - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
 
 10. **Miscellaneous**
-    - Configure recentf, savehist, and auto-save
+    - Verifies that the Emacs configuration has loaded successfully and issues a warning if there are any issues.
+    - Configure and optimize settings for Eglot, recentf, savehist, auto-save, and others without enabling the modes themselves. This modifies the behavior and preferences to improve performance and usability.
     - Configure Ediff to use a single frame and split windows horizontally
-    - Optimize Eglot
 
 ## Author and license
 
