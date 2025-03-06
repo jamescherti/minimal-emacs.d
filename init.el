@@ -280,10 +280,6 @@
 ;; window is never automatically recentered.
 (setq scroll-conservatively 101)
 
-;; Enables smooth scrolling by making Emacs scroll the window by 1 line whenever
-;; the cursor moves off the visible screen.
-(setq scroll-step 1)
-
 ;; Reduce cursor lag by:
 ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
