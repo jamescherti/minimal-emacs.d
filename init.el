@@ -16,6 +16,7 @@
 
 ;;; Load pre-init.el
 (minimal-emacs-load-user-init "pre-init.el")
+(setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 
@@ -542,6 +543,7 @@
 
 ;;; Load post init
 (minimal-emacs-load-user-init "post-init.el")
+(setq minimal-emacs--success t)
 
 (provide 'init)
 ;;; init.el ends here

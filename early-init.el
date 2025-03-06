@@ -71,18 +71,29 @@ minimalistic appearance during startup.")
 
 ;;; Load pre-early-init.el
 
+(defvar minimal-emacs--success nil)
+(defvar minimal-emacs--stage "early-init.el")
+(defun minimal-emacs--check-success ()
+  "Verify that the Emacs configuration has loaded successfully."
+  (unless minimal-emacs--success
+    (error (concat "Configuration error in: '%s'. Debug by starting Emacs "
+                   "with: emacs --debug-init")
+           minimal-emacs--stage)))
+(add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
+
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
-  (let ((user-init-file
-         (expand-file-name filename
-                           minimal-emacs-user-directory)))
-    (when (file-exists-p user-init-file)
-      (load user-init-file nil t t))))
+  (let ((init-file (expand-file-name filename
+                                     minimal-emacs-user-directory)))
+    (when (file-exists-p init-file)
+      (setq minimal-emacs--stage init-file)
+      (load init-file nil t t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
+(setq minimal-emacs--stage "early-init.el")
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
