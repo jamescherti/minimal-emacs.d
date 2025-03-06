@@ -425,7 +425,7 @@ For example, to enable `outline-minor-mode` in Emacs Lisp:
 (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
 ```
 
-For folding based on indentation levels, the **[outline-indent @GitHub](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
+For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
 (use-package outline-indent
   :ensure t
