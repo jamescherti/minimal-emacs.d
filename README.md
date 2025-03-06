@@ -31,6 +31,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Activating autosave](#activating-autosave)
+      - [auto-save-mode (Prevent data loss in case of crashes)](#auto-save-mode-prevent-data-loss-in-case-of-crashes)
+      - [auto-save-visited-mode (Save file buffers after a few seconds of inactivity)](#auto-save-visited-mode-save-file-buffers-after-a-few-seconds-of-inactivity)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code folding](#code-folding)
@@ -211,14 +213,30 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 
 ### Activating autosave
 
-Auto-save helps prevent data loss in case of crashes. You can restore auto-saved data using the `recover-file` or `recover-session` functions.
+#### auto-save-mode (Prevent data loss in case of crashes)
+
+Enabling `auto-save-mode` mitigates the risk of data loss in the event of a crash. Auto-saved data can be recovered using the `recover-file` or `recover-session` functions.
 
 To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 
 ```emacs-lisp
-;; Enable auto-save to prevent data loss. Use `recover-file` or
-;; `recover-session` to restore unsaved changes.
+;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
+;; `recover-session' to restore unsaved changes.
 (setq auto-save-default t)
+
+(setq auto-save-interval 300)
+(setq auto-save-timeout 30)
+```
+
+#### auto-save-visited-mode (Save file buffers after a few seconds of inactivity)
+
+When `auto-save-visited-mode` is enabled, Emacs will auto-save file-visiting buffers after a certain amount of idle time if the user forgets to save it with `save-buffer` or `C-x s` for example.
+
+This is different from `auto-save-mode`: `auto-save-mode` periodically saves all modified buffers, creating backup files, including those not associated with a file, while `auto-save-visited-mode` only saves file-visiting buffers after a period of idle time, directly saving to the file itself without creating backup files.
+
+``` emacs-lisp
+(setq auto-save-visited-interval 5)   ; Save after 5 seconds if inactivity
+(auto-save-visited-mode 1)
 ```
 
 ### Code completion with corfu
