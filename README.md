@@ -30,9 +30,12 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
+    - [Activating autosave](#activating-autosave)
+      - [auto-save-mode (Prevent data loss in case of crashes)](#auto-save-mode-prevent-data-loss-in-case-of-crashes)
+      - [auto-save-visited-mode (Save file buffers after a few seconds of inactivity)](#auto-save-visited-mode-save-file-buffers-after-a-few-seconds-of-inactivity)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
-    - [Code Folding](#code-folding)
+    - [Code folding](#code-folding)
     - [Configuring vterm](#configuring-vterm)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
@@ -206,6 +209,34 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (add-hook 'after-init-hook #'save-place-mode)
+```
+
+### Activating autosave
+
+#### auto-save-mode (Prevent data loss in case of crashes)
+
+Enabling `auto-save-mode` mitigates the risk of data loss in the event of a crash. Auto-saved data can be recovered using the `recover-file` or `recover-session` functions.
+
+To enable autosave, add the following to `~/.emacs.d/post-init.el`:
+
+```emacs-lisp
+;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
+;; `recover-session' to restore unsaved changes.
+(setq auto-save-default t)
+
+(setq auto-save-interval 300)
+(setq auto-save-timeout 30)
+```
+
+#### auto-save-visited-mode (Save file buffers after a few seconds of inactivity)
+
+When `auto-save-visited-mode` is enabled, Emacs will auto-save file-visiting buffers after a certain amount of idle time if the user forgets to save it with `save-buffer` or `C-x s` for example.
+
+This is different from `auto-save-mode`: `auto-save-mode` periodically saves all modified buffers, creating backup files, including those not associated with a file, while `auto-save-visited-mode` only saves file-visiting buffers after a period of idle time, directly saving to the file itself without creating backup files.
+
+``` emacs-lisp
+(setq auto-save-visited-interval 5)   ; Save after 5 seconds if inactivity
+(auto-save-visited-mode 1)
 ```
 
 ### Code completion with corfu
@@ -399,26 +430,35 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   (setq consult-narrow-key "<"))
 ```
 
-### Code Folding
+### Code folding
 
-The **outline-indent** Emacs package provides a minor mode that enables code folding based on indentation levels:
+The built-in `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
+
+Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
+
+For example, to enable `outline-minor-mode` in Emacs Lisp:
+
+``` emacs-lisp
+(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+```
+
+For folding based on indentation levels, the **[outline-indent @GitHub](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
 (use-package outline-indent
   :ensure t
   :defer t
   :commands outline-indent-minor-mode
 
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+
   :init
   ;; The minor mode can also be automatically activated for a certain modes.
-  ;; For example for Python and YAML:
   (add-hook 'python-mode-hook #'outline-indent-minor-mode)
   (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
 
   (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
-
-  :custom
-  (outline-indent-ellipsis " ▼ "))
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
 In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
