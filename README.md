@@ -984,6 +984,8 @@ It is also recommended to read the following articles:
 
 ### How to give more priority to MELPA over MELPA stable?
 
+**Warning:** MELPA Stable is generally more reliable and thoroughly tested, as it contains stable versions of packages. On the other hand, MELPA provides bleeding-edge versions, which often include new features but may also introduce changes that could potentially break functionality. The author of *minimal-emacs.d* uses MELPA over MELPA Stable without encountering issues, but this is provided as a caution to allow you to make an informed decision based on your stability versus feature needs.
+
 By default, the *minimal-emacs.d* configuration assigns specific priorities to various package archives, which determines the order in which packages are fetched from these archives. The default priorities are as follows:
 
 ```elisp
