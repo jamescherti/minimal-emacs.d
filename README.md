@@ -33,7 +33,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Activating autosave](#activating-autosave)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
-    - [Code Folding](#code-folding)
+    - [Code folding](#code-folding)
     - [Configuring vterm](#configuring-vterm)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
@@ -412,26 +412,35 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   (setq consult-narrow-key "<"))
 ```
 
-### Code Folding
+### Code folding
 
-The **outline-indent** Emacs package provides a minor mode that enables code folding based on indentation levels:
+The built-in `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
+
+Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
+
+For example, to enable `outline-minor-mode` in Emacs Lisp:
+
+``` emacs-lisp
+(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+```
+
+For folding based on indentation levels, the **[outline-indent @GitHub](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
 (use-package outline-indent
   :ensure t
   :defer t
   :commands outline-indent-minor-mode
 
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+
   :init
   ;; The minor mode can also be automatically activated for a certain modes.
-  ;; For example for Python and YAML:
   (add-hook 'python-mode-hook #'outline-indent-minor-mode)
   (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
 
   (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
-
-  :custom
-  (outline-indent-ellipsis " ▼ "))
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
 In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
