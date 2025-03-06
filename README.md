@@ -931,7 +931,7 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
 ;; Enable on-the-fly spell checking (Flyspell mode).
-(add-hook text-mode-hook #'flyspell-mode)
+(add-hook 'text-mode-hook #'flyspell-mode)
 ```
 
 It is also recommended to read the following articles:
