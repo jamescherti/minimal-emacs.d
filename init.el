@@ -288,6 +288,9 @@
 ;; Number of lines of margin at the top and bottom of a window.
 (setq scroll-margin 0)
 
+;; Number of lines of continuity when scrolling by screenfuls.
+(setq next-screen-context-lines 0)
+
 ;; Horizontal scrolling
 (setq hscroll-margin 2
       hscroll-step 1)
