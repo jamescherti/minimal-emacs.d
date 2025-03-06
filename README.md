@@ -36,6 +36,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code folding](#code-folding)
+    - [Doom themes](#doom-themes)
     - [Configuring vterm](#configuring-vterm)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
@@ -465,6 +466,55 @@ For folding based on indentation levels, the **[outline-indent @GitHub](https://
 In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.screenshot2.png)
+
+### Doom themes
+
+The `doom-themes` package is an extensive collection of high-quality, visually appealing themes for Emacs, designed to offer a sleek and modern aesthetic, while drawing inspiration from popular community themes. It provides a wide range of color schemes suitable for various work environments and personal preferences, ensuring that users can enhance their Emacs experience with ease.
+
+To install and configure the `doom-themes` package, add the following configuration to the `~/.emacs.d/post-init.el` file, ensuring that the themes are available for use as soon as Emacs starts:
+
+```emacs-lisp
+(use-package doom-themes
+  :ensure t
+  :custom
+  (doom-themes-enable-bold t) ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+  :config
+  ;; Default theme:
+  (load-theme 'doom-one t)
+
+  ;; Alternative themes:
+  ;; -------------------
+  ;; (load-theme 'doom-gruvbox-light t)
+  ;; (load-theme 'doom-one t)
+  ;; (load-theme 'doom-1337 t)
+  ;; (load-theme 'doom-gruvbox t)
+  ;; (load-theme 'doom-solarized-light t)
+  ;; (load-theme 'doom-tomorrow-night t)
+  ;; (load-theme 'doom-tomorrow-day t)
+  ;; (load-theme 'doom-snazzy t)
+  ;; (load-theme 'doom-ir-black t)
+  ;; (load-theme 'doom-ayu-dark t)
+  ;; (load-theme 'doom-acario-light t)
+
+  ;; Enable custom neotree theme (nerd-icons must be installed):
+  ;; -----------------------------------------------------------
+  ;; (doom-themes-neotree-config)
+
+  ;; Treemacs users (use "doom-colors" for less minimal icon theme):
+  ;; ---------------------------------------------------------------
+  ;; (setq doom-themes-treemacs-theme "doom-atom")
+  ;; (doom-themes-treemacs-config)
+
+  ;; Enable flashing mode-line on errors:
+  ;; ------------------------------------
+  (doom-themes-visual-bell-config)
+
+  ;; Improves org-mode's native fontification:
+  ;; -----------------------------------------
+  (doom-themes-org-config))
+```
 
 ### Configuring vterm
 
