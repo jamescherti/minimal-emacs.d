@@ -30,6 +30,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [How to prevent minimal-emacs.d from saving custom.el?](#how-to-prevent-minimal-emacsd-from-saving-customel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
+    - [Activating autosave](#activating-autosave)
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code Folding](#code-folding)
@@ -206,6 +207,18 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (add-hook 'after-init-hook #'save-place-mode)
+```
+
+### Activating autosave
+
+Auto-save helps prevent data loss in case of crashes. You can restore auto-saved data using the `recover-file` or `recover-session` functions.
+
+To enable autosave, add the following to `~/.emacs.d/post-init.el`:
+
+```emacs-lisp
+;; Enable auto-save to prevent data loss. Use `recover-file` or
+;; `recover-session` to restore unsaved changes.
+(setq auto-save-default t)
 ```
 
 ### Code completion with corfu
