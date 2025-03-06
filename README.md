@@ -48,6 +48,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Frequently asked questions](#frequently-asked-questions)
+    - [How to give more priority to MELPA over MELPA stable?](#how-to-give-more-priority-to-melpa-over-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
     - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
@@ -980,6 +981,31 @@ It is also recommended to read the following articles:
 - [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
 
 ## Frequently asked questions
+
+### How to give more priority to MELPA over MELPA stable?
+
+By default, the *minimal-emacs.d* configuration assigns specific priorities to various package archives, which determines the order in which packages are fetched from these archives. The default priorities are as follows:
+
+```elisp
+(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
+                                                      ("nongnu" . 80)
+                                                      ("melpa-stable" . 70)
+                                                      ("melpa"  . 0)))
+```
+
+In this configuration, the GNU, Nongnu, and MELPA Stable archives (which contain stable versions of MELPA packages) are assigned higher priorities than MELPA (which contains the latest versions of packages). As a result, packages will be fetched from MELPA Stable before MELPA.
+
+To prioritize MELPA over MELPA Stable, to access bleeding-edge package versions, you can adjust the `package-archive-priorities` variable accordingly:
+
+```elisp
+(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
+                                                      ("nongnu" . 80)
+                                                      ("melpa-stable" . 70)
+                                                      ;; MELPA priority has been changed to 75
+                                                      ("melpa"  . 75)))
+```
+
+This change increases MELPA's priority to 75, above MELPA Stable's priority of 70, ensuring that MELPA is preferred for package installations over MELPA Stable.
 
 ### How to load a local lisp file for machine-specific configurations?
 
