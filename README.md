@@ -932,6 +932,22 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 
 ;; Enable on-the-fly spell checking (Flyspell mode).
 (add-hook 'text-mode-hook #'flyspell-mode)
+
+;; Configures Aspell's suggestion mode to "ultra", which provides more
+;; aggressive and detailed suggestions for misspelled words. The language
+;; is set to "en_US" for US English, which can be replaced with your desired
+;; language code (e.g., "en_GB" for British English, "de_DE" for German).
+(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+
+;; Configure Emacs to ask for confirmation before exiting
+(setq confirm-kill-emacs 'y-or-n-p)
+
+;; Enabled backups save your changes to a file intermittently
+(setq make-backup-files t)
+(setq vc-make-backup-files t)
+(setq kept-old-versions 10)
+(setq kept-new-versions 10)
 ```
 
 It is also recommended to read the following articles:
