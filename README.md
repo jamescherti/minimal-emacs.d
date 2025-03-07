@@ -450,12 +450,14 @@ In addition to code folding, *outline-indent* also allows: moving indented block
 
 ### Changing the default theme
 
-For instance, to switch to a darker theme, add the following to the `~/.emacs.d/post-init.el` file:
+For instance, to switch to a another theme than the default one, add the following to the `~/.emacs.d/post-init.el` file:
 
 ```emacs-lisp
 (mapc #'disable-theme custom-enabled-themes)  ; Disable all active themes
-(load-theme 'tango-dark t)  ; Load the built-in tango-dark theme
+(load-theme 'modus-operandi t)  ; Load the built-in theme
 ```
+
+(If you prefer dark themes, replace `modus-operandi` with `modus-vivendi`.)
 
 Emacs includes several built-in themes that you can use without installing additional packages:
 
