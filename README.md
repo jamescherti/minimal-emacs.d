@@ -17,6 +17,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 
 *(The theme shown in the screenshot above is the *[tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el)*, available on MELPA.)*
 
+In addition to *minimal-emacs.d*, startup speed is influenced by your computer's processing power and disk speed. To establish a baseline, start Emacs with only *minimal-emacs.d* and no additional configurations, then run `M-x emacs-init-time`. Incrementally modify your init files and observe the impact on startup time. For consistent comparisons, always test on the same computer and Emacs version. It's also important to ensure that all packages are deferred using `:defer t` and `:commands`, which makes Emacs load them only when needed (see additional examples in this README.md).
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
@@ -53,6 +55,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Configuring straight.el?](#configuring-straightel)
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
+    - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
     - [How to give more priority to MELPA over MELPA stable?](#how-to-give-more-priority-to-melpa-over-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
     - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
@@ -1060,6 +1063,23 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ```
 
 ## Frequently asked questions
+
+### How to display Emacs startup duration?
+
+To measure and display the time taken for Emacs to start, you can use the following Emacs Lisp function. This function will report both the startup duration and the number of garbage collections that occurred during initialization.
+
+Add the following to your `~/.emacs.d/pre-early-init.el` file:
+```emacs-lisp
+(defun display-startup-time ()
+  "Display the startup duration and number of garbage collections."
+  (message "Emacs loaded in %.2f seconds with %d garbage collections."
+           (time-to-seconds (time-since before-init-time))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'display-startup-time 100)
+```
+
+(Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration.)
 
 ### How to give more priority to MELPA over MELPA stable?
 
