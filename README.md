@@ -26,9 +26,9 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
   - [Customizations: Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead)
-  - [Customizations: UI](#customizations-ui)
+  - [Customizations: UI (pre-early-init.el)](#customizations-ui-pre-early-initel)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
-  - [Customizations: Packages](#customizations-packages)
+  - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Activating autosave](#activating-autosave)
@@ -126,7 +126,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
 
-## Customizations: UI
+## Customizations: UI (pre-early-init.el)
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
@@ -140,7 +140,7 @@ To customize your Emacs setup to include various user interface elements, you ca
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
-## Customizations: Packages
+## Customizations: Packages (post-init.el)
 
 ### Optimization: Native Compilation
 
