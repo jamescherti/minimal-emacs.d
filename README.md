@@ -15,6 +15,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
+*(The theme shown in the screenshot above is the *[tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el)*, available on MELPA.)*
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
@@ -461,8 +463,8 @@ For instance, to switch to a another theme than the default one, add the followi
 
 Emacs includes several built-in themes that you can use without installing additional packages:
 
-- `tango-dark`: Face colors using the Tango palette (dark background).
-- `tango`: Face colors using the Tango palette (light background).
+- `tango-dark` (Face colors using the Tango palette. Dark background.)
+- `tango` (Face colors using the Tango palette. Light background.)
 - `modus-operandi`
 - `modus-operandi-deuteranopia`
 - `modus-operandi-tinted`
@@ -471,19 +473,19 @@ Emacs includes several built-in themes that you can use without installing addit
 - `modus-vivendi-deuteranopia`
 - `modus-vivendi-tinted`
 - `modus-vivendi-tritanopia`
-- `tsdh-dark`: A dark theme used and created by Tassilo Horn.
-- `tsdh-light`: A light Emacs theme.
-- `adwaita`: Face colors similar to the default theme of Gnome 3 (Adwaita).
-- `deeper-blue`: Face colors using a deep blue background.
-- `dichromacy`: Face colors suitable for red/green color-blind users.
-- `leuven-dark`: Face colors with a dark background.
-- `leuven`: Face colors with a light background.
-- `light-blue`: Face colors utilizing a light blue background.
-- `manoj-dark`: Very high contrast faces with a black background.
-- `misterioso`: Predominantly blue/cyan faces on a dark cyan background.
-- `wheatgrass`: High-contrast green/blue/brown faces on a black background.
-- `whiteboard`: Face colors similar to markers on a whiteboard.
-- `wombat`: Medium-contrast faces with a dark gray background.
+- `tsdh-dark` (A dark theme used and created by Tassilo Horn.)
+- `tsdh-light` (A light Emacs theme.)
+- `adwaita` (Face colors similar to the default theme of Gnome 3 / Adwaita.)
+- `deeper-blue` (Face colors using a deep blue background.)
+- `dichromacy` (Face colors suitable for red/green color-blind users.)
+- `leuven-dark` (Face colors with a dark background.)
+- `leuven` (Face colors with a light background.)
+- `light-blue` (Face colors utilizing a light blue background.)
+- `manoj-dark` (Very high contrast faces with a black background.)
+- `misterioso` (Predominantly blue/cyan faces on a dark cyan background.)
+- `wheatgrass` (High-contrast green/blue/brown faces on a black background.)
+- `whiteboard` (Face colors similar to markers on a whiteboard.)
+- `wombat` (Medium-contrast faces with a dark gray background.)
 
 (To experiment with different themes, use `M-x customize-themes`.)
 
