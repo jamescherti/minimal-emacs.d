@@ -408,8 +408,6 @@
       dired-recursive-deletes 'top
       dired-recursive-copies 'always
       dired-create-destination-dirs 'ask
-      ;; Revert the Dired buffer without prompting.
-      dired-auto-revert-buffer #'dired-buffer-stale-p
       image-dired-thumb-size 150)
 
 (setq dired-vc-rename-file t)
