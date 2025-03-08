@@ -333,7 +333,7 @@ minimalistic appearance during startup.")
 
 ;; Setting use-package-expand-minimally to (t) results in a more compact output
 ;; that emphasizes performance over clarity.
-(setq use-package-expand-minimally (not noninteractive))
+(setq use-package-expand-minimally (not minimal-emacs-debug))
 
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
