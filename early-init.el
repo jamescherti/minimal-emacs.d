@@ -73,6 +73,7 @@ minimalistic appearance during startup.")
 
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
+(setq debug-on-error minimal-emacs-debug)
 
 (defvar minimal-emacs--success nil)
 (defvar minimal-emacs--stage "early-init.el")
@@ -276,7 +277,6 @@ minimalistic appearance during startup.")
       native-comp-verbose (if minimal-emacs-debug 1 0)
       native-comp-debug (if minimal-emacs-debug 1 0))
 
-(setq debug-on-error minimal-emacs-debug)
 (setq jka-compr-verbose minimal-emacs-debug)
 (setq byte-compile-warnings minimal-emacs-debug
       byte-compile-verbose minimal-emacs-debug)
