@@ -73,6 +73,7 @@ minimalistic appearance during startup.")
 
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
+(setq debug-on-error minimal-emacs-debug)
 
 (defvar minimal-emacs--success nil)
 (defvar minimal-emacs--stage "early-init.el")
@@ -266,24 +267,19 @@ minimalistic appearance during startup.")
          (native-comp-available-p))
     ;; Activate `native-compile'
     (setq native-comp-jit-compilation t
-          native-comp-deferred-compilation t  ; Obsolete since Emacs 29.1
+          native-comp-deferred-compilation t
           package-native-compile t)
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
-;; Suppress compiler warnings and don't inundate users with their popups.
-(setq native-comp-async-report-warnings-errors
-      (or minimal-emacs-debug 'silent))
-(setq native-comp-verbose (if minimal-emacs-debug 1 0)
+(setq native-comp-warning-on-missing-source minimal-emacs-debug
+      native-comp-async-report-warnings-errors (or minimal-emacs-debug 'silent)
+      native-comp-verbose (if minimal-emacs-debug 1 0)
       native-comp-debug (if minimal-emacs-debug 1 0))
-(setq native-comp-jit-compilation t)
-(setq native-comp-warning-on-missing-source minimal-emacs-debug)
 
-(setq debug-on-error minimal-emacs-debug
-      jka-compr-verbose minimal-emacs-debug)
-
-(setq byte-compile-warnings minimal-emacs-debug)
-(setq byte-compile-verbose minimal-emacs-debug)
+(setq jka-compr-verbose minimal-emacs-debug)
+(setq byte-compile-warnings minimal-emacs-debug
+      byte-compile-verbose minimal-emacs-debug)
 
 ;;; UI elements
 
@@ -337,7 +333,7 @@ minimalistic appearance during startup.")
 
 ;; Setting use-package-expand-minimally to (t) results in a more compact output
 ;; that emphasizes performance over clarity.
-(setq use-package-expand-minimally (not noninteractive))
+(setq use-package-expand-minimally (not minimal-emacs-debug))
 
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
