@@ -1079,7 +1079,7 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 (add-hook 'emacs-startup-hook #'display-startup-time 100)
 ```
 
-(Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration.)
+(Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
 
 ### How to give more priority to MELPA over MELPA stable?
 
