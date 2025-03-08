@@ -1095,9 +1095,10 @@ To measure and display the time taken for Emacs to start, you can use the follow
 Add the following to your `~/.emacs.d/pre-early-init.el` file:
 ```emacs-lisp
 (defun display-startup-time ()
-  "Display the startup duration and number of garbage collections."
-  (message "Emacs loaded in %.2f seconds with %d garbage collections."
+  "Display the startup time and number of garbage collections."
+  (message "Emacs loaded in %.2f seconds (Init only: %.2fs) with %d garbage collections."
            (time-to-seconds (time-since before-init-time))
+           (float-time (time-subtract after-init-time before-init-time))
            gcs-done))
 
 (add-hook 'emacs-startup-hook #'display-startup-time 100)
