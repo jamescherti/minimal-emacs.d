@@ -15,6 +15,7 @@
 ;;; Code:
 
 ;;; Load pre-init.el
+(setq minimal-emacs--stage "init.el")
 (minimal-emacs-load-user-init "pre-init.el")
 (setq minimal-emacs--stage "init.el")
 

@@ -32,7 +32,7 @@ turned on.")
 (defvar minimal-emacs-frame-title-format "%b – Emacs"
   "Template for displaying the title bar of visible and iconified frame.")
 
-(defvar minimal-emacs-debug nil
+(defvar minimal-emacs-debug (bound-and-true-p init-file-debug)
   "Non-nil to enable debug.")
 
 (defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
@@ -71,25 +71,35 @@ minimalistic appearance during startup.")
 
 ;;; Load pre-early-init.el
 
+;; Prefer loading newer compiled files
+(setq load-prefer-newer t)
+
 (defvar minimal-emacs--success nil)
 (defvar minimal-emacs--stage "early-init.el")
 (defun minimal-emacs--check-success ()
   "Verify that the Emacs configuration has loaded successfully."
   (unless minimal-emacs--success
-    (error (concat "Configuration error in: '%s'. Debug by starting Emacs "
-                   "with: emacs --debug-init")
-           minimal-emacs--stage)))
-(add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
+    (cond
+     ((let ((user-init-basename (file-name-nondirectory user-init-file)))
+        (and (not (string= user-init-basename "init.el"))
+             (not (string= user-init-basename "early-init.el"))))
+      (error (concat "Emacs ignored loading 'init.el'. Please ensure "
+                     "that files such as ~/.emacs or ~/.emacs.el do not exist, "
+                     "as they may be preventing Emacs from loading the"
+                     " 'init.el' file.")
+             (expand-file-name "init.el" minimal-emacs-user-directory)))
 
-;; Prefer loading newer compiled files
-(setq load-prefer-newer t)
+     (error (concat "Configuration error in: '%s'. Debug by starting Emacs "
+                    "with: emacs --debug-init")
+            minimal-emacs--stage))))
+(add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
     (when (file-exists-p init-file)
-      (setq minimal-emacs--stage init-file)
+      (setq minimal-emacs--stage (file-name-nondirectory init-file))
       (load init-file nil t t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
