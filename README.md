@@ -41,6 +41,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Code folding](#code-folding)
     - [Changing the default theme](#changing-the-default-theme)
     - [Configuring vterm](#configuring-vterm)
+    - [Enhancing undo/redo](#enhancing-undoredo)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Session Management](#session-management)
@@ -522,6 +523,38 @@ To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
 
 (Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
+### Enhancing undo/redo
+
+The undo-fu package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The undo-fu-session package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
+
+The default undo system in Emacs has two main issues that undo-fu fixes:
+
+1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
+2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
+
+To install and configure these packages, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
+;; system, providing more convenient undo/redo functionality.
+(use-package undo-fu
+  :defer t
+  :commands (undo-fu-only-undo
+             undo-fu-only-redo
+             undo-fu-only-redo-all
+             undo-fu-disable-checkpoint)
+  :config
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z") 'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+;; The undo-fu-session package complements undo-fu by enabling the saving
+;; and restoration of undo history across Emacs sessions, even after restarting.
+(use-package undo-fu-session
+  :defer t
+  :commands undo-fu-session-global-mode
+  :hook (after-init . undo-fu-session-global-mode))
+```
+
 ### Configuring Vim keybindings using Evil?
 
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
@@ -530,10 +563,12 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 ;; evil-want-keybinding must be declared before Evil and Evil Collection
 (setq evil-want-keybinding nil)
 
+;; Vim emulation
 (use-package evil
   :ensure t
   :init
-  (setq evil-undo-system 'undo-fu)
+  ;; Uncomment the following if you are using undo-fu
+  ;; (setq evil-undo-system 'undo-fu)
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :custom
@@ -548,22 +583,11 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :config
   (evil-collection-init))
 
-(use-package undo-fu
-  :ensure t
-  :commands (undo-fu-only-undo
-             undo-fu-only-redo
-             undo-fu-only-redo-all
-             undo-fu-disable-checkpoint))
-
-(use-package undo-fu-session
-  :ensure t
-  :config
-  (undo-fu-session-global-mode))
-
 ```
 
 You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) Emacs package to `~/.emacs.d/post-init.el` to give the built-in Emacs tab-bar a style similar to Vim's tabbed browsing interface:
 ``` emacs-lisp
+;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
   :ensure t
   :commands vim-tab-bar-mode
