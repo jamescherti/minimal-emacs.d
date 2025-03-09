@@ -40,7 +40,6 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code folding](#code-folding)
     - [Changing the default theme](#changing-the-default-theme)
-    - [Configuring vterm](#configuring-vterm)
     - [Enhancing undo/redo](#enhancing-undoredo)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
@@ -501,27 +500,6 @@ If you're interested in exploring third-party Emacs themes, consider the followi
 - `ef-themes` (available on MELPA): A collection of light and dark themes for GNU Emacs, designed to offer colorful yet highly legible options. They are aimed at users seeking something with more visual flair compared to the more minimalist *modus-themes*.
 - `doom-themes` (available on MELPA): An extensive collection of high-quality, visually appealing themes for Emacs, designed to offer a sleek and modern aesthetic, while drawing inspiration from popular community themes.
 - `tomorrow-night-deepblue-theme` (available on MELPA): A beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette. It features a deep blue background color that creates a calming atmosphere. This theme is a great choice for those who miss the blue themes that were trendy a few years ago. (The theme was inspired by classic text editors such as QuickBASIC, RHIDE, and Turbo Pascal, as well as tools such as Midnight Commander.)
-
-### Configuring vterm
-
-The `emacs-libvterm` package is a terminal emulator integrated into GNU Emacs. Built on libvterm, a C library, it offers superior performance compared to Elisp-based alternatives. This compiled code approach enables `emacs-libvterm` to handle large outputs efficiently, providing a fast and feature-complete terminal experience within Emacs.
-
-To configure `emacs-vterm`, add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-(use-package vterm
-  :ensure t
-  :defer t
-  :commands vterm
-  :custom
-  ;; Important: Ensure the following dependencies are installed:
-  ;; A 'C' compiler, cmake, libtool-bin, and libvterm
-  (vterm-always-compile-module t)  ; Auto-compile libvterm
-  :config
-  ;; Speed up vterm
-  (setq vterm-timer-delay 0.01))
-```
-
-(Note that the `emacs-vterm` Emacs package requires compilation of its C components, which includes the gcc compiler and the `libvterm` library. On Debian or Ubuntu systems, the necessary packages can be installed with: `sudo apt-get install build-essential libvterm-dev libtool-bin cmake`)
 
 ### Enhancing undo/redo
 
