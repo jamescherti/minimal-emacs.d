@@ -572,21 +572,6 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
   :hook (after-init . vim-tab-bar-mode))
 ```
 
-You can also add `vdiff`, a package that provides Vimdiff-like functionality to Emacs:
-``` emacs-lisp
-(use-package vdiff
-  :ensure t
-  :defer t
-  :commands (vdiff-buffers
-             vdiff-buffers3
-             vdiff-quit
-             vdiff-files
-             vdiff-files3)
-  :custom
-  (vdiff-auto-refine t)
-  (vdiff-only-highlight-refinements t))
-```
-
 The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
 ``` emacs-lisp
 (use-package evil-surround
