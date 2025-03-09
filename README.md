@@ -538,15 +538,14 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
 
 ``` emacs-lisp
-;; Vim emulation
-(eval-when-compile
-  ;; Required by evil-collection
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil))
+;; Required by evil-collection
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
 
 ;; Uncomment the following if you are using undo-fu
 ;; (setq evil-undo-system 'undo-fu)
 
+;; Vim emulation
 (use-package evil
   :ensure t
   :defer t
