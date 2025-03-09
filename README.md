@@ -538,29 +538,25 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
 
 ``` emacs-lisp
-;; evil-want-keybinding must be declared before Evil and Evil Collection
-(setq evil-want-keybinding nil)
-
 ;; Vim emulation
 (use-package evil
   :ensure t
+  :defer t
+  :commands (evil-mode evil-define-key)
+  :hook (after-init . evil-mode)
   :init
   ;; Uncomment the following if you are using undo-fu
   ;; (setq evil-undo-system 'undo-fu)
+
+  ;; Required by evil-collection
   (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  :custom
-  (evil-want-Y-yank-to-eol t)
-  :config
-  (evil-select-search-module 'evil-search-module 'evil-search)
-  (evil-mode 1))
+  (setq evil-want-keybinding nil))
 
 (use-package evil-collection
   :after evil
   :ensure t
   :config
   (evil-collection-init))
-
 ```
 
 You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) Emacs package to `~/.emacs.d/post-init.el` to give the built-in Emacs tab-bar a style similar to Vim's tabbed browsing interface:
@@ -602,14 +598,6 @@ You can also add the following code to enable commenting and uncommenting by pre
     (interactive "<r>")
     (comment-or-uncomment-region beg end))
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
-```
-
-Evil-snipe provides 2-character motions for quickly jumping around text compared to Evil's built-in f/F/t/T motions, incrementally highlighting candidate targets as you type. By default, snipe only binds s (forward) and S (backward) to evil-snipe-s and evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X (exclusive):
-``` emacs-lisp
-(use-package evil-snipe
-  :defer t
-  :commands evil-snipe-mode
-  :hook (after-init . evil-snipe-mode))
 ```
 
 ### Configuring LSP Servers with Eglot (built-in)
