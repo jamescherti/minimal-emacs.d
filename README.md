@@ -825,14 +825,6 @@ Other optional packages that may be useful include:
   :hook
   (emacs-lisp-mode . page-break-lines-mode))
 
-;; Highlights escape sequences in strings for better visibility
-(use-package easy-escape
-  :ensure t
-  :defer t
-  :commands easy-escape-minor-mode
-  :config
-  (set-face-attribute 'easy-escape-face nil :foreground "red"))
-
 ;; Provides automatic formatting for Emacs Lisp code
 (use-package elisp-autofmt
   :ensure t
