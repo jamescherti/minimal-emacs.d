@@ -1,4 +1,4 @@
-;;; early-init.el --- Early Init -*- lexical-binding: t -*-
+;;; early-init.el --- Early Init -*- lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d

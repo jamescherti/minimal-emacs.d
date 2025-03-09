@@ -1,4 +1,4 @@
-;;; init.el --- Init -*- lexical-binding: t -*-
+;;; init.el --- Init -*- lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
