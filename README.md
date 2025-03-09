@@ -825,14 +825,6 @@ Other optional packages that may be useful include:
   :hook
   (emacs-lisp-mode . page-break-lines-mode))
 
-;; Provides automatic formatting for Emacs Lisp code
-(use-package elisp-autofmt
-  :ensure t
-  :defer t
-  :commands (elisp-autofmt-mode
-             elisp-autofmt-buffer
-             elisp-autofmt-region))
-
 ;; Provides functions to find references to functions, macros, variables,
 ;; special forms, and symbols in Emacs Lisp
 (use-package elisp-refs
