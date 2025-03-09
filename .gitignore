@@ -3,4 +3,5 @@
 !early-init.el
 !init.el
 !.images/
+!.github/
 !.LICENSE
