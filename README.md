@@ -539,18 +539,19 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 ``` emacs-lisp
 ;; Vim emulation
+(eval-when-compile
+  ;; Required by evil-collection
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil))
+
+;; Uncomment the following if you are using undo-fu
+;; (setq evil-undo-system 'undo-fu)
+
 (use-package evil
   :ensure t
   :defer t
   :commands (evil-mode evil-define-key)
-  :hook (after-init . evil-mode)
-  :init
-  ;; Uncomment the following if you are using undo-fu
-  ;; (setq evil-undo-system 'undo-fu)
-
-  ;; Required by evil-collection
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil))
+  :hook (after-init . evil-mode))
 
 (use-package evil-collection
   :after evil
