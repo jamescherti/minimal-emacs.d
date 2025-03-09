@@ -587,16 +587,6 @@ You can also add `vdiff`, a package that provides Vimdiff-like functionality to 
   (vdiff-only-highlight-refinements t))
 ```
 
-The `evil-visualstar` package allows using `*` or `#` search from the visual selection:
-``` emacs-lisp
-(use-package evil-visualstar
-  :after evil
-  :ensure t
-  :defer t
-  :commands global-evil-visualstar-mode
-  :hook (after-init . global-evil-visualstar-mode))
-```
-
 The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
 ``` emacs-lisp
 (use-package evil-surround
