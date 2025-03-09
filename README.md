@@ -792,7 +792,10 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
   :commands highlight-defined-mode
   :hook
   (emacs-lisp-mode . highlight-defined-mode))
+```
 
+Other optional packages that may be useful include:
+```emacs-lisp
 ;; Prevent parenthesis imbalance
 (use-package paredit
   :ensure t
@@ -812,10 +815,6 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
 ;;   :hook
 ;;   (paredit-mode . enhanced-evil-paredit-mode))
 
-```
-
-Other optional packages that may be useful include:
-```emacs-lisp
 ;; Displays visible indicators for page breaks
 (use-package page-break-lines
   :ensure t
