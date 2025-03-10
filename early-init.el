@@ -81,18 +81,9 @@ minimalistic appearance during startup.")
   "Verify that the Emacs configuration has loaded successfully."
   (unless minimal-emacs--success
     (cond
-     ((let ((user-init-basename (file-name-nondirectory user-init-file)))
-        (and (not (string= user-init-basename "init.el"))
-             (not (string= user-init-basename "early-init.el"))))
-      (error (concat "Emacs ignored loading 'init.el'. Please ensure "
-                     "that files such as ~/.emacs or ~/.emacs.el do not exist, "
-                     "as they may be preventing Emacs from loading the"
-                     " 'init.el' file.")
-             (expand-file-name "init.el" minimal-emacs-user-directory)))
-
-     (error (concat "Configuration error in: '%s'. Debug by starting Emacs "
-                    "with: emacs --debug-init")
-            minimal-emacs--stage))))
+     (t (error (concat "Configuration error in: '%s'. Debug by starting Emacs "
+                       "with: emacs --debug-init")
+               minimal-emacs--stage)))))
 (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
 
 (defun minimal-emacs-load-user-init (filename)
