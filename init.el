@@ -1,4 +1,4 @@
-;;; init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; init.el --- Init -*- lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
@@ -16,22 +16,22 @@
 
 ;;; Load pre-init.el
 (setq minimal-emacs--stage "init.el")
-(minimal-emacs-load-user-init "pre-init.el")
+(if (fboundp 'minimal-emacs-load-user-init)
+    (minimal-emacs-load-user-init "pre-init.el")
+  (error "The early-init.el file failed to loaded"))
 (setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 
-;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 2 1024 1024))  ; 1024kb
-
-(setq process-adaptive-read-buffering nil)
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
 ;; Ask the user whether to terminate asynchronous compilations on exit.
 ;; This prevents native compilation from leaving temporary files in /tmp.
 (setq native-comp-async-query-on-exit t)
+
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(setq read-answer-short t)
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
 ;;; Undo/redo
 
@@ -44,25 +44,21 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless package-archive-contents
+  (unless (seq-empty-p package-archive-contents)
     (package-refresh-contents))
 
   ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
 
-  ;; Ensure use-package is available at compile time
+  ;; Ensure use-package is available
   (eval-when-compile
     (require 'use-package)))
-
-;; Ensure the 'use-package' package is installed and loaded
 
 ;;; Features, warnings, and errors
 
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
-
-(setq warning-suppress-types '((lexical-binding)))
 
 ;;; Minibuffer
 
@@ -79,11 +75,6 @@
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq idle-update-delay 1.0)
 
-;; Allow for shorter responses: "y" for yes and "n" for no.
-(setq read-answer-short t)
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;; No beeping or blinking
@@ -427,8 +418,8 @@
 ;;; Ediff
 
 ;; Configure Ediff to use a single frame and split windows horizontally
-(setq ediff-window-setup-function #'ediff-setup-windows-plain
-      ediff-split-window-function #'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
 
 ;;; Help
 
@@ -515,8 +506,8 @@
 ;;; xref
 
 ;; Enable completion in the minibuffer instead of the definitions buffer
-(setq xref-show-definitions-function #'xref-show-definitions-completing-read
-      xref-show-xrefs-function #'xref-show-definitions-completing-read)
+(setq xref-show-definitions-function 'xref-show-definitions-completing-read
+      xref-show-xrefs-function 'xref-show-definitions-completing-read)
 
 ;;; abbrev
 
@@ -540,8 +531,14 @@
   (put cmd 'disabled nil))
 
 ;;; Load post init
-(minimal-emacs-load-user-init "post-init.el")
+(when (fboundp 'minimal-emacs-load-user-init)
+  (minimal-emacs-load-user-init "post-init.el"))
 (setq minimal-emacs--success t)
 
 (provide 'init)
+
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; init.el ends here
