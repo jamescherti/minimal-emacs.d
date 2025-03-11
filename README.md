@@ -46,6 +46,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Session Management](#session-management)
     - [Configuring org-mode](#configuring-org-mode)
     - [Inhibit the mouse](#inhibit-the-mouse)
+    - [Spell checker](#spell-checker)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
@@ -712,6 +713,43 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
 
+### Spell checker
+
+The `flyspell` package is a built-in Emacs minor mode that provides on-the-fly spell checking. It highlights misspelled words as you type, offering interactive corrections. In text modes, it checks the entire buffer, while in programming modes, it typically checks only comments and strings. It integrates with external spell checkers like `aspell`, `hunspell`, or `ispell` to provide suggestions and corrections.
+
+To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+(use-package ispell
+  :ensure nil
+  :defer t
+  :commands (ispell ispell-minor-mode)
+  :custom
+  ;; Set the ispell program name to aspell
+  (ispell-program-name "aspell")
+
+  ;; Configures Aspell's suggestion mode to "ultra", which provides more
+  ;; aggressive and detailed suggestions for misspelled words. The language
+  ;; is set to "en_US" for US English, which can be replaced with your desired
+  ;; language code (e.g., "en_GB" for British English, "de_DE" for German).
+  (ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
+
+(use-package flyspell
+  :ensure nil
+  :defer t
+  :commands flyspell-mode
+  :hook
+  ((text-mode . flyspell-mode)
+   (prog-mode . flyspell-prog-mode))
+  :config
+  ;; Remove strings from Flyspell
+  (setq flyspell-prog-text-faces (delq 'font-lock-string-face
+                                       flyspell-prog-text-faces))
+
+  ;; Remove docstrings from Flyspell
+  (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
+                                       flyspell-prog-text-faces)))
+```
+
 ### A better Emacs *help* buffer
 
 Helpful is an alternative to the built-in Emacs help that provides much more contextual information.
@@ -888,13 +926,6 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 
 ;; Enable on-the-fly spell checking (Flyspell mode).
 (add-hook 'text-mode-hook #'flyspell-mode)
-
-;; Configures Aspell's suggestion mode to "ultra", which provides more
-;; aggressive and detailed suggestions for misspelled words. The language
-;; is set to "en_US" for US English, which can be replaced with your desired
-;; language code (e.g., "en_GB" for British English, "de_DE" for German).
-(setq ispell-program-name "aspell")
-(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
 
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
