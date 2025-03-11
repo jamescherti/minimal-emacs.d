@@ -1,4 +1,4 @@
-;;; init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
+;;; init.el --- Init -*- lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
@@ -16,22 +16,22 @@
 
 ;;; Load pre-init.el
 (setq minimal-emacs--stage "init.el")
-(minimal-emacs-load-user-init "pre-init.el")
+(if (fboundp 'minimal-emacs-load-user-init)
+    (minimal-emacs-load-user-init "pre-init.el")
+  (error "The early-init.el file failed to loaded"))
 (setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 
-;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 2 1024 1024))  ; 1024kb
-
-(setq process-adaptive-read-buffering nil)
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
 ;; Ask the user whether to terminate asynchronous compilations on exit.
 ;; This prevents native compilation from leaving temporary files in /tmp.
 (setq native-comp-async-query-on-exit t)
+
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(setq read-answer-short t)
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
 ;;; Undo/redo
 
@@ -44,25 +44,21 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless package-archive-contents
+  (unless (seq-empty-p package-archive-contents)
     (package-refresh-contents))
 
   ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
 
-  ;; Ensure use-package is available at compile time
+  ;; Ensure use-package is available
   (eval-when-compile
     (require 'use-package)))
-
-;; Ensure the 'use-package' package is installed and loaded
 
 ;;; Features, warnings, and errors
 
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
-
-(setq warning-suppress-types '((lexical-binding)))
 
 ;;; Minibuffer
 
@@ -79,11 +75,6 @@
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq idle-update-delay 1.0)
 
-;; Allow for shorter responses: "y" for yes and "n" for no.
-(setq read-answer-short t)
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
 ;; No beeping or blinking
@@ -187,8 +178,7 @@
 (setq auto-save-no-message t)
 
 ;; Do not auto-disable auto-save after deleting large chunks of
-;; text. The purpose of auto-save is to provide a failsafe, and
-;; disabling it contradicts this objective.
+;; text.
 (setq auto-save-include-big-deletions t)
 
 (setq auto-save-list-file-prefix
@@ -215,8 +205,7 @@
 
 ;;; recentf
 
-;; `recentf' is an that maintains a list of recently accessed files, making it
-;; easier to reopen files you have worked on recently.
+;; `recentf' is an that maintains a list of recently accessed files.
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup (if (daemonp) 300 'never))
@@ -226,8 +215,7 @@
 
 ;;; saveplace
 
-;; `save-place-mode' enables Emacs to remember the last location within a file
-;; upon reopening.
+;; Enables Emacs to remember the last location within a file upon reopening.
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 
@@ -263,25 +251,20 @@
 
 ;;; Scrolling
 
-;; Enables faster scrolling through unfontified regions. This may result in
-;; brief periods of inaccurate syntax highlighting immediately after scrolling,
-;; which should quickly self-correct.
+;; Enables faster scrolling. This may result in brief periods of inaccurate
+;; syntax highlighting, which should quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
 
 ;; Move point to top/bottom of buffer before signaling a scrolling error.
 (setq scroll-error-top-bottom t)
 
-;; Keeps screen position if the scroll command moved it vertically out of the
-;; window.
+;; Keep screen position if scroll command moved it vertically out of the window.
 (setq scroll-preserve-screen-position t)
 
-;; Emacs spends excessive time recentering when the cursor moves more than N
-;; lines past the window edges (N is the value of `scroll-conservatively'). This
-;; can be slow in larger files. If `scroll-conservatively' is set above 100, the
-;; window is never automatically recentered.
+;; If `scroll-conservatively' is set above 100, the window is never
+;; automatically recentered, which decreases the time spend recentering.
 (setq scroll-conservatively 101)
 
-;; Reduce cursor lag by:
 ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
@@ -328,9 +311,8 @@
 ;; Avoid automatic frame resizing when adjusting settings.
 (setq global-text-scale-adjust-resizes-frames nil)
 
-;; This controls how long Emacs will blink to show the deleted pairs with
-;; `delete-pair'. A longer delay can be annoying as it causes a noticeable pause
-;; after each deletion, disrupting the flow of editing.
+;; A longer delay can be annoying as it causes a noticeable pause after each
+;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
 
 (setq-default left-fringe-width  8)
@@ -427,8 +409,8 @@
 ;;; Ediff
 
 ;; Configure Ediff to use a single frame and split windows horizontally
-(setq ediff-window-setup-function #'ediff-setup-windows-plain
-      ediff-split-window-function #'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
 
 ;;; Help
 
@@ -436,9 +418,8 @@
 (setq apropos-do-all t)
 
 ;; Fixes #11: Prevents help command completion from triggering autoload.
-;; (e.g., apropos-command, apropos-variable, apropos...)
-;; Loading additional files for completion can slow down help commands
-;; and may unintentionally execute initialization code from some libraries.
+;; Loading additional files for completion can slow down help commands and may
+;; unintentionally execute initialization code from some libraries.
 (setq help-enable-completion-autoload nil)
 (setq help-enable-autoload nil)
 (setq help-enable-symbol-autoload nil)
@@ -458,9 +439,7 @@
 (setq eglot-report-progress nil)  ; Prevent Eglot minibuffer spam
 
 ;; Eglot optimization: Disable `eglot-events-buffer' to maintain consistent
-;; performance in long-running Emacs sessions. By default, it retains 2,000,000
-;; lines, and each new event triggers pretty-printing of the entire buffer,
-;; leading to a gradual performance decline.
+;; performance in long-running Emacs sessions.
 (setq eglot-events-buffer-config '(:size 0 :format full))
 
 ;;; Flymake
@@ -515,8 +494,8 @@
 ;;; xref
 
 ;; Enable completion in the minibuffer instead of the definitions buffer
-(setq xref-show-definitions-function #'xref-show-definitions-completing-read
-      xref-show-xrefs-function #'xref-show-definitions-completing-read)
+(setq xref-show-definitions-function 'xref-show-definitions-completing-read
+      xref-show-xrefs-function 'xref-show-definitions-completing-read)
 
 ;;; abbrev
 
@@ -540,8 +519,14 @@
   (put cmd 'disabled nil))
 
 ;;; Load post init
-(minimal-emacs-load-user-init "post-init.el")
+(when (fboundp 'minimal-emacs-load-user-init)
+  (minimal-emacs-load-user-init "post-init.el"))
 (setq minimal-emacs--success t)
 
 (provide 'init)
+
+;; Local variables:
+;; byte-compile-warnings: (not obsolete free-vars)
+;; End:
+
 ;;; init.el ends here

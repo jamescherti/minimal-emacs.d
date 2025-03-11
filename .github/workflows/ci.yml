@@ -1,0 +1,42 @@
+---
+#
+# This file is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        emacs-version:
+          - 29.1
+          - 29.4
+          - 30.1
+        python-version:
+          - 3.11
+    steps:
+      # Cask
+      - uses: actions/checkout@v2
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs-version }}
+
+      - name: Compile
+        run: |
+          LISP_ERR_ON_WARN="(setq byte-compile-error-on-warn t) (setq byte-compile-warnings '(not obsolete free-vars))"
+          emacs -batch -L . --eval "(progn $LISP_ERR_ON_WARN )"  -f batch-byte-compile early-init.el
+          emacs -batch -L . --eval "(progn $LISP_ERR_ON_WARN (load \"early-init.el\" nil t t) )" -f batch-byte-compile init.el
