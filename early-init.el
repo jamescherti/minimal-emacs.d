@@ -19,11 +19,11 @@
 (defvar minimal-emacs-ui-features '()
   "List of user interface features to disable in minimal Emacs setup.
 This variable holds a list Emacs UI features that can be enabled:
-- `context-menu`: Enables the context menu in graphical environments.
-- `tool-bar`: Enables the tool bar in graphical environments.
-- `menu-bar`: Enables the menu bar in graphical environments.
-- `dialogs`: Enables both file dialogs and dialog boxes.
-- `tooltips`: Enables tooltips.")
+- context-menu (Enables the context menu in graphical environments.)
+- tool-bar (Enables the tool bar in graphical environments.)
+- menu-bar (Enables the menu bar in graphical environments.)
+- dialogs (Enables both file dialogs and dialog boxes.)
+- tooltips (Enables tooltips.)")
 
 (defvar minimal-emacs-frame-title-format "%b – Emacs"
   "Template for displaying the title bar of visible and iconified frame.")
@@ -31,38 +31,39 @@ This variable holds a list Emacs UI features that can be enabled:
 (defvar minimal-emacs-debug (bound-and-true-p init-file-debug)
   "Non-nil to enable debug.")
 
-(defvar minimal-emacs-gc-cons-threshold (* 16 1024 1024)
-  "The value of `gc-cons-threshold' after Emacs startup.")
+(defvar minimal-emacs-gc-cons-threshold (* 32 1024 1024)
+  "Value to set `gc-cons-threshold' to after Emacs startup.
+Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
 (defvar minimal-emacs-optimize-startup-gc t
   "If non-nil, increase `gc-cons-threshold' during startup to reduce pauses.
 After Emacs finishes loading, `gc-cons-threshold' is restored to the value
 stored in `minimal-emacs--restore-gc-cons-threshold'.")
 
+(defvar minimal-emacs-inhibit-redisplay-during-startup nil
+  "Suppress redisplay during startup to improve performance.
+This prevents visual updates while Emacs initializes. The tradeoff is that you
+won't see the progress or activities during the startup process.")
+
+(defvar minimal-emacs-inhibit-message-during-startup nil
+  "Suppress startup messages for a cleaner experience.
+This slightly enhances performance. The tradeoff is that you won't be informed
+of the progress or any relevant activities during startup.")
+
+(defvar minimal-emacs-optimize-file-name-handler-alist t
+  "Enable optimization of `file-name-handler-alist'.
+When non-nil, this variable activates optimizations to reduce file name handler
+lookups during Emacs startup.")
+
+(defvar minimal-emacs-disable-mode-line-during-startup t
+  "Disable the mode line during startup.
+This reduces visual clutter and slightly enhances startup performance. The
+tradeoff is that the mode line is hidden during the startup phase.")
+
 (defvar minimal-emacs-package-initialize-and-refresh t
   "Whether to automatically initialize and refresh packages.
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
-
-(defvar minimal-emacs-inhibit-redisplay-during-startup nil
-  "Suppress redisplay during startup to improve performance.
-This prevents visual updates while Emacs initializes, leading to a cleaner and
-faster startup. The tradeoff is that you won't see the progress or activities
-during the startup process.")
-
-(defvar minimal-emacs-inhibit-message-during-startup nil
-  "Suppress startup messages for a cleaner experience.
-By disabling startup messages, this slightly enhances performance and provides a
-cleaner startup. The tradeoff is that you won't be informed of the progress or
-any relevant activities during startup.")
-
-(defvar minimal-emacs-optimize-file-name-handler-alist t)
-
-(defvar minimal-emacs-disable-mode-line-during-startup t
-  "Disable the mode line during startup to improve performance.
-This reduces visual clutter and slightly enhances startup performance. The
-tradeoff is that the mode line is hidden during the startup phase, giving a more
-minimalistic appearance during startup.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
@@ -289,6 +290,19 @@ this stage of initialization."
 
 ;;; Performance: Disable mode-line during startup
 
+(when (and minimal-emacs-disable-mode-line-during-startup
+           (not (daemonp))
+           (not noninteractive)
+           (not minimal-emacs-debug))
+  (put 'mode-line-format
+       'initial-value (default-toplevel-value 'mode-line-format))
+  (setq-default mode-line-format nil)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (setq mode-line-format nil))))
+
+;;; Restore values
+
 (defun minimal-emacs--startup-load-user-init-file (fn &rest args)
   "Advice to reset `mode-line-format'. FN and ARGS are the function and args."
   (unwind-protect
@@ -306,18 +320,8 @@ this stage of initialization."
         (setq-default mode-line-format (get 'mode-line-format
                                             'initial-value))))))
 
-(when (and minimal-emacs-disable-mode-line-during-startup
-           (not (daemonp))
-           (not noninteractive)
-           (not minimal-emacs-debug))
-  (put 'mode-line-format
-       'initial-value (default-toplevel-value 'mode-line-format))
-  (setq-default mode-line-format nil)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (setq mode-line-format nil)))
-  (advice-add 'startup--load-user-init-file :around
-              #'minimal-emacs--startup-load-user-init-file))
+(advice-add 'startup--load-user-init-file :around
+            #'minimal-emacs--startup-load-user-init-file)
 
 ;;; UI elements
 
@@ -344,15 +348,16 @@ this stage of initialization."
     (when (bound-and-true-p tool-bar-mode)
       (funcall 'tool-bar-setup))))
 
-(unless (daemonp)
-  (unless noninteractive
-    (when (fboundp 'tool-bar-setup)
-      ;; Temporarily override the tool-bar-setup function to prevent it from
-      ;; running during the initial stages of startup
-      (advice-add 'tool-bar-setup :override #'ignore)
+(when (and (not (daemonp))
+           (not noninteractive))
+  (when (fboundp 'tool-bar-setup)
+    ;; Temporarily override the tool-bar-setup function to prevent it from
+    ;; running during the initial stages of startup
+    (advice-add 'tool-bar-setup :override #'ignore)
 
-      (advice-add 'startup--load-user-init-file :after
-                  #'minimal-emacs--setup-toolbar))))
+    (advice-add 'startup--load-user-init-file :after
+                #'minimal-emacs--setup-toolbar)))
+
 (unless (memq 'tool-bar minimal-emacs-ui-features)
   (push '(tool-bar-lines . 0) default-frame-alist)
   (setq tool-bar-mode nil))
