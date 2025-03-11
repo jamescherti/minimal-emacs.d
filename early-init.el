@@ -56,7 +56,7 @@ By disabling startup messages, this slightly enhances performance and provides a
 cleaner startup. The tradeoff is that you won't be informed of the progress or
 any relevant activities during startup.")
 
-(defvar minimal-emacs--optimize-file-name-handler-alist t)
+(defvar minimal-emacs-optimize-file-name-handler-alist t)
 
 (defvar minimal-emacs-disable-mode-line-during-startup t
   "Disable the mode line during startup to improve performance.
@@ -232,7 +232,7 @@ this stage of initialization."
    (delete-dups (append file-name-handler-alist
                         minimal-emacs--old-file-name-handler-alist))))
 
-(when (and minimal-emacs--optimize-file-name-handler-alist
+(when (and minimal-emacs-optimize-file-name-handler-alist
            (not (daemonp))
            (not minimal-emacs-debug))
   ;; Determine the state of bundled libraries using calc-loaddefs.el. If
