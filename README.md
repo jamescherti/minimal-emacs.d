@@ -738,14 +738,19 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   :defer t
   :commands flyspell-mode
   :hook
-  ((text-mode . flyspell-mode)
-   (prog-mode . flyspell-prog-mode))
+  ((prog-mode . flyspell-prog-mode)
+   (text-mode . (lambda()
+                  (if (or (derived-mode-p 'yaml-mode)
+                          (derived-mode-p 'yaml-ts-mode)
+                          (derived-mode-p 'ansible-mode))
+                      (flyspell-prog-mode)
+                    (flyspell-mode 1)))))
   :config
   ;; Remove strings from Flyspell
   (setq flyspell-prog-text-faces (delq 'font-lock-string-face
                                        flyspell-prog-text-faces))
 
-  ;; Remove docstrings from Flyspell
+  ;; Remove doc from Flyspell
   (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
                                        flyspell-prog-text-faces)))
 ```
@@ -923,9 +928,6 @@ To prevent Emacs from saving customization information to a custom file, set `cu
                                "\\|^flycheck_.*"
                                "\\|^flymake_.*"))
 (add-hook 'dired-mode-hook #'dired-omit-mode)
-
-;; Enable on-the-fly spell checking (Flyspell mode).
-(add-hook 'text-mode-hook #'flyspell-mode)
 
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
