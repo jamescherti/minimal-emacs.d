@@ -1,4 +1,4 @@
-;;; init.el --- Init -*- lexical-binding: t; -*-
+;;; init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
@@ -17,7 +17,7 @@
 ;;; Load pre-init.el
 (setq minimal-emacs--stage "init.el")
 (if (fboundp 'minimal-emacs-load-user-init)
-    (minimal-emacs-load-user-init "pre-init.el")
+    (minimal-emacs-load-user-init "pre-init")
   (error "The early-init.el file failed to loaded"))
 (setq minimal-emacs--stage "init.el")
 
@@ -518,7 +518,7 @@
 
 ;;; Load post init
 (when (fboundp 'minimal-emacs-load-user-init)
-  (minimal-emacs-load-user-init "post-init.el"))
+  (minimal-emacs-load-user-init "post-init"))
 (setq minimal-emacs--success t)
 
 (provide 'init)

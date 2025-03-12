@@ -1107,7 +1107,7 @@ To prioritize MELPA over MELPA Stable, to access bleeding-edge package versions,
 
 Add the following line to the end of your `post-init.el` file:
 ```lisp
-(minimal-emacs-load-user-init "local.el")
+(minimal-emacs-load-user-init "local")
 ```
 
 This allows `local.el` to load, enabling custom configurations specific to the machine.
@@ -1147,7 +1147,7 @@ Add the following to the top of the `~/.emacs.d/pre-early-init.el` file to make 
   (unless (string= minimal-emacs-user-directory
                    previous-minimal-emacs-user-directory)
     ;; Load pre-early-init.el from the new directory
-    (minimal-emacs-load-user-init "pre-early-init.el")))
+    (minimal-emacs-load-user-init "pre-early-init")))
 ```
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?

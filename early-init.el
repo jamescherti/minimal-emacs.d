@@ -100,7 +100,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       (setq minimal-emacs--stage (file-name-nondirectory init-file))
       (load init-file nil t))))
 
-(minimal-emacs-load-user-init "pre-early-init.el")
+(minimal-emacs-load-user-init "pre-early-init")
 (setq minimal-emacs--stage "early-init.el")
 
 (setq custom-theme-directory
@@ -398,7 +398,7 @@ this stage of initialization."
                                                       ("melpa"  . 0)))
 
 ;;; Load post-early-init.el
-(minimal-emacs-load-user-init "post-early-init.el")
+(minimal-emacs-load-user-init "post-early-init")
 
 (provide 'early-init)
 
