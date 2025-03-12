@@ -132,6 +132,8 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
 
+*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
+
 ## Customizations: UI (pre-early-init.el)
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
@@ -171,9 +173,12 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   (compile-angel-verbose t)
 
   :config
-  ;; The following directive prevents compile-angel from compiling your init files.
-  ;; (If you choose to compile your pre/post init files, make sure you
-  ;; understand the implications and thoroughly test your code.)
+  ;; The following directive prevents compile-angel from compiling your init
+  ;; files. If you choose to remove this push to `compile-angel-excluded-files`
+  ;; and compile your pre/post-init files, ensure you understand the
+  ;; implications and thoroughly test your code. For example, if you're using
+  ;; `use-package`, you'll need to explicitly require `use-package` at the top
+  ;; of your init file.
   (push "/pre-init.el" compile-angel-excluded-files)
   (push "/post-init.el" compile-angel-excluded-files)
   (push "/pre-early-init.el" compile-angel-excluded-files)
