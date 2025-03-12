@@ -165,17 +165,19 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 (use-package compile-angel
   :ensure t
   :demand t
+  :custom
+  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
+  ;; Drawback: The minibuffer will not display compile-angel's actions.
+  (compile-angel-verbose t)
+
   :config
-  ;; If you choose to compile your pre/post-init files, make sure you
-  ;; understand the implications and thoroughly test your code.
+  ;; The following directive prevents compile-angel from compiling your init files.
+  ;; (If you choose to compile your pre/post init files, make sure you
+  ;; understand the implications and thoroughly test your code.)
   (push "/pre-init.el" compile-angel-excluded-files)
   (push "/post-init.el" compile-angel-excluded-files)
   (push "/pre-early-init.el" compile-angel-excluded-files)
   (push "/post-early-init.el" compile-angel-excluded-files)
-
-  ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
-  ;; Drawback: The minibuffer will not display compile-angel's actions.
-  (setq compile-angel-verbose t)
 
   ;; A local mode that compiles .el files whenever the user saves them.
   ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
