@@ -50,8 +50,7 @@
     (package-install 'use-package))
 
   ;; Ensure use-package is available
-  (eval-when-compile
-    (require 'use-package)))
+  (require 'use-package))
 
 ;;; Features, warnings, and errors
 
