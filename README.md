@@ -1075,7 +1075,10 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 To add MELPA Stable for accessing stable package versions, you can adjust the `package-archive-priorities` variable in your `~/.emacs.d/post-early-init.el` file.
 
 ```elisp
-(push '("melpa-stable" . "https://stable.melpa.org/packages/") package-archives)
+(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
+                                                      ("nongnu" . 80)
+                                                      ("melpa-stable" . 70)
+                                                      ("melpa"  . 0)))
 ```
 
 However, the packages can sometimes be outdated.
