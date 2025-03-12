@@ -858,6 +858,10 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 2. You can also add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
 
+;; Display the current line and column numbers in the mode line
+(setq line-number-mode t)
+(setq column-number-mode t)
+
 ;; Display of line numbers in the buffer:
 ;; (display-line-numbers-mode 1)
 
