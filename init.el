@@ -371,10 +371,6 @@
 ;; Makes Emacs omit the load average information from the mode line.
 (setq display-time-default-load-average nil)
 
-;; Display the current line and column numbers in the mode line
-(setq line-number-mode t)
-(setq column-number-mode t)
-
 ;;; Filetype
 
 ;; Do not notify the user each time Python tries to guess the indentation offset
