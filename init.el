@@ -102,10 +102,6 @@
 
 (setq whitespace-line-column nil)  ; whitespace-mode
 
-;; I reduced the default value of 9 to simplify the font-lock keyword,
-;; aiming to improve performance.
-(setq rainbow-delimiters-max-face-count 5)
-
 ;; Can be activated with `display-line-numbers-mode'
 (setq-default display-line-numbers-width 3)
 (setq-default display-line-numbers-widen t)
