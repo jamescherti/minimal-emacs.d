@@ -130,7 +130,9 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 ;;; FILENAME.el --- DESCRIPTION -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
 
-(Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
+Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
+
+*(If you remove `no-byte-compile: t;` from your headers, Emacs will compile them. However, if you choose to compile them, you may need to include `(require 'use-package)` at the top of `post-init.el` to ensure that all required `use-package` variables and functions are loaded.)*
 
 ## Customizations: UI (pre-early-init.el)
 
