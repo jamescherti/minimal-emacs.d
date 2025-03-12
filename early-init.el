@@ -94,11 +94,9 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
-  (let ((init-file (expand-file-name filename
-                                     minimal-emacs-user-directory)))
-    (when (file-exists-p init-file)
-      (setq minimal-emacs--stage (file-name-nondirectory init-file))
-      (load init-file nil t))))
+  (let* ((init-file (expand-file-name filename
+                                      minimal-emacs-user-directory)))
+    (load init-file :no-error :no-message)))
 
 (minimal-emacs-load-user-init "pre-early-init")
 (setq minimal-emacs--stage "early-init.el")
