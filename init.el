@@ -42,11 +42,10 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless (seq-empty-p package-archive-contents)
-    (package-refresh-contents))
-
   ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
+    (unless (seq-empty-p package-archive-contents)
+      (package-refresh-contents))
     (package-install 'use-package))
 
   ;; Ensure use-package is available
