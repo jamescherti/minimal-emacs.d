@@ -132,7 +132,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
 
-*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files will allow Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add `(require 'use-package)` at the top of `post-init.el` to ensure that all necessary `use-package` variables and functions are loaded.)*
+*(Only if you know what you're doing: Removing `no-byte-compile: t; ` from your init files will allow Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add `(require 'use-package)` at the top of `post-init.el` to ensure that all necessary `use-package` variables and functions are loaded.)*
 
 ## Customizations: UI (pre-early-init.el)
 
