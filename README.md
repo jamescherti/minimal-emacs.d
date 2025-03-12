@@ -166,6 +166,13 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   :ensure t
   :demand t
   :config
+  ;; If you choose to compile your pre/post-init files, make sure you
+  ;; understand the implications and thoroughly test your code.
+  (push "/pre-init.el" compile-angel-excluded-files)
+  (push "/post-init.el" compile-angel-excluded-files)
+  (push "/pre-early-init.el" compile-angel-excluded-files)
+  (push "/post-early-init.el" compile-angel-excluded-files)
+
   ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
   ;; Drawback: The minibuffer will not display compile-angel's actions.
   (setq compile-angel-verbose t)
