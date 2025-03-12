@@ -98,7 +98,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
                                      minimal-emacs-user-directory)))
     (when (file-exists-p init-file)
       (setq minimal-emacs--stage (file-name-nondirectory init-file))
-      (load init-file nil t))))
+      (load init-file nil t t))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 (setq minimal-emacs--stage "early-init.el")
