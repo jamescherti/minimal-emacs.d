@@ -1,4 +1,4 @@
-;;; init.el --- Init -*- lexical-binding: t; -*-
+;;; init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; Author: James Cherti
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
@@ -15,11 +15,9 @@
 ;;; Code:
 
 ;;; Load pre-init.el
-(setq minimal-emacs--stage "init.el")
 (if (fboundp 'minimal-emacs-load-user-init)
-    (minimal-emacs-load-user-init "pre-init.el")
+    (minimal-emacs-load-user-init "pre-init")
   (error "The early-init.el file failed to loaded"))
-(setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 
@@ -44,16 +42,14 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless (seq-empty-p package-archive-contents)
-    (package-refresh-contents))
-
   ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
+    (unless (seq-empty-p package-archive-contents)
+      (package-refresh-contents))
     (package-install 'use-package))
 
   ;; Ensure use-package is available
-  (eval-when-compile
-    (require 'use-package)))
+  (require 'use-package))
 
 ;;; Features, warnings, and errors
 
@@ -518,7 +514,7 @@
 
 ;;; Load post init
 (when (fboundp 'minimal-emacs-load-user-init)
-  (minimal-emacs-load-user-init "post-init.el"))
+  (minimal-emacs-load-user-init "post-init"))
 (setq minimal-emacs--success t)
 
 (provide 'init)

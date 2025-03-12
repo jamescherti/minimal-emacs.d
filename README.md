@@ -59,7 +59,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
-    - [How to give more priority to MELPA over MELPA stable?](#how-to-give-more-priority-to-melpa-over-melpa-stable)
+    - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
     - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
     - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
@@ -1070,44 +1070,21 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 (Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
 
-### How to give more priority to MELPA over MELPA stable?
+### How to use MELPA stable?
 
-**Warning:** MELPA Stable is generally more reliable and thoroughly tested, as it contains stable versions of packages. On the other hand, MELPA provides bleeding-edge versions, which often include new features but may also introduce changes that could potentially break functionality. The author of *minimal-emacs.d* uses MELPA over MELPA Stable without encountering issues, but this is provided as a caution to allow you to make an informed decision based on your stability versus feature needs.
-
-By default, the *minimal-emacs.d* configuration assigns specific priorities to various package archives, which determines the order in which packages are fetched from these archives. The default priorities are as follows:
+To add MELPA Stable for accessing stable package versions, you can adjust the `package-archive-priorities` variable in your `~/.emacs.d/post-early-init.el` file.
 
 ```elisp
-(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
-                                                      ("nongnu" . 80)
-                                                      ("melpa-stable" . 70)
-                                                      ("melpa"  . 0)))
+(push '("melpa-stable" . "https://stable.melpa.org/packages/") package-archives)
 ```
 
-In this configuration, the GNU, Nongnu, and MELPA Stable archives (which contain stable versions of MELPA packages) are assigned higher priorities than MELPA (which contains the latest versions of packages). As a result, packages will be fetched from MELPA Stable before MELPA.
-
-To prioritize MELPA over MELPA Stable, to access bleeding-edge package versions, you can adjust the `package-archive-priorities` variable accordingly:
-
-```elisp
-;; This change increases MELPA's priority to 75, above MELPA Stable's
-;; priority of 70, ensuring that MELPA is preferred for package installations
-;; over MELPA Stable.
-;;
-;; MELPA Stable offers reliable, tested versions, while MELPA provides newer
-;; features at the risk of potential instability; for your information,
-;; the author of minimal-emacs.d has been using MELPA (and not MELPA stable)
-;; for years without any major issues.
-(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
-                                                      ("nongnu" . 80)
-                                                      ("melpa-stable" . 70)
-                                                      ;; MELPA priority has been changed to 75
-                                                      ("melpa"  . 75)))
-```
+However, the packages can sometimes be outdated.
 
 ### How to load a local lisp file for machine-specific configurations?
 
 Add the following line to the end of your `post-init.el` file:
 ```lisp
-(minimal-emacs-load-user-init "local.el")
+(minimal-emacs-load-user-init "local")
 ```
 
 This allows `local.el` to load, enabling custom configurations specific to the machine.
@@ -1147,7 +1124,7 @@ Add the following to the top of the `~/.emacs.d/pre-early-init.el` file to make 
   (unless (string= minimal-emacs-user-directory
                    previous-minimal-emacs-user-directory)
     ;; Load pre-early-init.el from the new directory
-    (minimal-emacs-load-user-init "pre-early-init.el")))
+    (minimal-emacs-load-user-init "pre-early-init")))
 ```
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?
