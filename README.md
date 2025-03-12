@@ -174,11 +174,11 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 
   :config
   ;; The following directive prevents compile-angel from compiling your init
-  ;; files. If you choose to remove this push to `compile-angel-excluded-files`
+  ;; files. If you choose to remove this push to `compile-angel-excluded-files'
   ;; and compile your pre/post-init files, ensure you understand the
   ;; implications and thoroughly test your code. For example, if you're using
-  ;; `use-package`, you'll need to explicitly require `use-package` at the top
-  ;; of your init file.
+  ;; `use-package', you'll need to explicitly add `(require 'use-package)` at
+  ;; the top of your init file.
   (push "/pre-init.el" compile-angel-excluded-files)
   (push "/post-init.el" compile-angel-excluded-files)
   (push "/pre-early-init.el" compile-angel-excluded-files)
