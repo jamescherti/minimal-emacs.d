@@ -861,6 +861,7 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 ;; Display the current line and column numbers in the mode line
 (setq line-number-mode t)
 (setq column-number-mode t)
+(setq mode-line-position-column-line-format '("%l:%C"))
 
 ;; Display of line numbers in the buffer:
 ;; (display-line-numbers-mode 1)
