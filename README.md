@@ -127,7 +127,7 @@ The minimal-emacs.d init files support additional customization files that are l
 
 Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-early-init.el` files with the following header to prevent them from being byte-compiled and to activate lexical binding:
 ```elisp
-;;; FILENAME.el --- DESCRIPTION -*- lexical-binding: t; -*-
+;;; FILENAME.el --- DESCRIPTION -*- no-byte-compile: t; lexical-binding: t; -*-
 ```
 
 (Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.)
