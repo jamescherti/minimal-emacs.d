@@ -1072,16 +1072,19 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to use MELPA stable?
 
-To add MELPA Stable for accessing stable package versions, you can adjust the `package-archive-priorities` variable in your `~/.emacs.d/post-early-init.el` file.
+**IMPORTANT: Many of the MELPA stable packages are outdated.**
+
+Add the following configuration to `~/.emacs.d/post-early-init.el` to give MELPA Stable a higher priority than MELPA, ensuring that packages are fetched from MELPA Stable first:
 
 ```elisp
+;; This change increases MELPA Stable priority to 70, above MELPA,
+;; ensuring that MELPA is preferred for package installations
+;; over MELPA Stable.
 (customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
                                                       ("nongnu" . 80)
                                                       ("melpa-stable" . 70)
                                                       ("melpa"  . 0)))
 ```
-
-However, the packages can sometimes be outdated.
 
 ### How to load a local lisp file for machine-specific configurations?
 
