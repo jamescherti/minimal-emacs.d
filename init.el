@@ -15,11 +15,9 @@
 ;;; Code:
 
 ;;; Load pre-init.el
-(setq minimal-emacs--stage "init.el")
 (if (fboundp 'minimal-emacs-load-user-init)
     (minimal-emacs-load-user-init "pre-init")
   (error "The early-init.el file failed to loaded"))
-(setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 

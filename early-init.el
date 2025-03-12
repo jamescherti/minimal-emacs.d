@@ -75,21 +75,16 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (setq debug-on-error minimal-emacs-debug)
 
 (defvar minimal-emacs--success nil)
-(defvar minimal-emacs--stage "early-init.el")
 (defun minimal-emacs--check-success ()
   "Verify that the Emacs configuration has loaded successfully."
   (unless minimal-emacs--success
     (cond
-     ((and (or (string= minimal-emacs--stage "pre-early-init.el")
-               (string= minimal-emacs--stage "early-init.el")
-               (string= minimal-emacs--stage "post-early-init.el"))
-           (or (file-exists-p (expand-file-name "~/.emacs.el"))
-               (file-exists-p (expand-file-name "~/.emacs"))))
+     ((or (file-exists-p (expand-file-name "~/.emacs.el"))
+          (file-exists-p (expand-file-name "~/.emacs")))
       (error "Emacs ignored loading 'init.el'. Please ensure that files such as ~/.emacs or ~/.emacs.el do not exist, as they may be preventing Emacs from loading the 'init.el' file"))
 
      (t
-      (error "Configuration error in: '%s'. Debug by starting Emacs with: emacs --debug-init"
-             minimal-emacs--stage)))))
+      (error "Configuration error. Debug by starting Emacs with: emacs --debug-init")))))
 (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
 
 (defun minimal-emacs-load-user-init (filename)
@@ -99,7 +94,6 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
     (load init-file :no-error :no-message)))
 
 (minimal-emacs-load-user-init "pre-early-init")
-(setq minimal-emacs--stage "early-init.el")
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
