@@ -1087,9 +1087,9 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 Here are the key differences between **MELPA** (the default repository used in minimal-emacs.d) and **MELPA Stable**:
 - **MELPA** is a rolling release repository for Emacs packages, where packages are continuously updated with the latest commits from their respective development branches, providing the most current features and bug fixes.
-- In contrast, **MELPA Stable** is a repository that hosts versioned, tagged releases of packages, offering more stability by ensuring that the packages have reached a certain level of completeness before being released. However, MELPA Stable does not guarantee more reliability than MELPA, as its tagged versions may still suffer from issues like uncoordinated dependencies or incomplete testing, and updates are less frequent, often based on developer discretion rather than every new commit.
+- In contrast, **MELPA Stable** is a repository that hosts versioned, tagged releases of packages. However, MELPA Stable does not guarantee more reliability than MELPA, as its tagged versions may still suffer from issues like uncoordinated dependencies or incomplete testing, and updates are less frequent, often based on developer discretion rather than every new commit.
 
-By default, minimal-emacs uses MELPA, GNU, and Nongnu repositories. If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize it. To ensure packages are fetched from MELPA Stable first, add the following configuration to `~/.emacs.d/post-early-init.el`:
+By default, minimal-emacs.d uses MELPA, GNU, and Nongnu repositories. If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize it. To ensure packages are fetched from MELPA Stable first, add the following configuration to `~/.emacs.d/post-early-init.el`:
 
 ```elisp
 ;; Add melpa-stable to `package-archives'
@@ -1108,7 +1108,7 @@ By default, minimal-emacs uses MELPA, GNU, and Nongnu repositories. If you prefe
 
 Add the following line to the end of your `post-init.el` file:
 ```lisp
-(minimal-emacs-load-user-init "local")
+(minimal-emacs-load-user-init "local.el")
 ```
 
 This allows `local.el` to load, enabling custom configurations specific to the machine.
@@ -1148,7 +1148,7 @@ Add the following to the top of the `~/.emacs.d/pre-early-init.el` file to make 
   (unless (string= minimal-emacs-user-directory
                    previous-minimal-emacs-user-directory)
     ;; Load pre-early-init.el from the new directory
-    (minimal-emacs-load-user-init "pre-early-init")))
+    (minimal-emacs-load-user-init "pre-early-init.el")))
 ```
 
 ### Are post-early-init.el and pre-init.el the same file in terms of the logic?
