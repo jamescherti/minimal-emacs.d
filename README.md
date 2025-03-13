@@ -871,7 +871,6 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 
 2. You can also add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
-
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
