@@ -1088,6 +1088,9 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 To prioritize MELPA Stable over MELPA (the latest package version), add the following configuration to `~/.emacs.d/post-early-init.el` to ensure packages are fetched from MELPA Stable first:
 
 ```elisp
+;; Add melpa-stable to `package-archives'
+(push '("melpa-stable" . "https://stable.melpa.org/packages/") package-archives)
+
 ;; This change increases MELPA Stable priority to 70, above MELPA,
 ;; ensuring that MELPA is preferred for package installations
 ;; over MELPA Stable.
