@@ -16,7 +16,7 @@
 
 ;;; Load pre-init.el
 (if (fboundp 'minimal-emacs-load-user-init)
-    (minimal-emacs-load-user-init "pre-init")
+    (minimal-emacs-load-user-init "pre-init.el")
   (error "The early-init.el file failed to loaded"))
 
 ;;; Before package
@@ -514,7 +514,7 @@
 
 ;;; Load post init
 (when (fboundp 'minimal-emacs-load-user-init)
-  (minimal-emacs-load-user-init "post-init"))
+  (minimal-emacs-load-user-init "post-init.el"))
 (setq minimal-emacs--success t)
 
 (provide 'init)

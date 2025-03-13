@@ -89,11 +89,12 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
-  (let* ((init-file (expand-file-name filename
-                                      minimal-emacs-user-directory)))
-    (load init-file :no-error :no-message)))
+  (let ((init-file (expand-file-name filename
+                                     minimal-emacs-user-directory)))
+    (when (file-exists-p init-file)
+      (load init-file nil :no-message))))
 
-(minimal-emacs-load-user-init "pre-early-init")
+(minimal-emacs-load-user-init "pre-early-init.el")
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
@@ -390,7 +391,7 @@ this stage of initialization."
                                                       ("melpa-stable" . 0)))
 
 ;;; Load post-early-init.el
-(minimal-emacs-load-user-init "post-early-init")
+(minimal-emacs-load-user-init "post-early-init.el")
 
 (provide 'early-init)
 
