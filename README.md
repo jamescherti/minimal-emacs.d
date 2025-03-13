@@ -1083,9 +1083,13 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to use MELPA stable?
 
-**IMPORTANT: Some of the MELPA stable packages are outdated.**
+**IMPORTANT: Some MELPA Stable packages are outdated and lack important features.** Here is an [interesting discussion about MELPA stable](https://github.com/melpa/melpa/issues/6656).
 
-To prioritize MELPA Stable over MELPA (the latest package version), add the following configuration to `~/.emacs.d/post-early-init.el` to ensure packages are fetched from MELPA Stable first:
+Here are the key differences between **MELPA** (the default repository used in minimal-emacs.d) and **MELPA Stable**:
+- **MELPA** is a rolling release repository for Emacs packages, where packages are continuously updated with the latest commits from their respective development branches, providing the most current features and bug fixes.
+- In contrast, **MELPA Stable** is a repository that hosts versioned, tagged releases of packages, offering more stability by ensuring that the packages have reached a certain level of completeness before being released. However, MELPA Stable does not guarantee more reliability than MELPA, as its tagged versions may still suffer from issues like uncoordinated dependencies or incomplete testing, and updates are less frequent, often based on developer discretion rather than every new commit.
+
+By default, minimal-emacs uses MELPA, GNU, and Nongnu repositories. If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize it. To ensure packages are fetched from MELPA Stable first, add the following configuration to `~/.emacs.d/post-early-init.el`:
 
 ```elisp
 ;; Add melpa-stable to `package-archives'

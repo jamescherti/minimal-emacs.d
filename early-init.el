@@ -386,8 +386,7 @@ this stage of initialization."
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
                                                       ("nongnu" . 80)
-                                                      ("melpa"  . 70)
-                                                      ("melpa-stable" . 0)))
+                                                      ("melpa"  . 70)))
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
