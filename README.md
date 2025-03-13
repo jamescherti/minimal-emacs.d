@@ -1083,9 +1083,9 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to use MELPA stable?
 
-**IMPORTANT: Many of the MELPA stable packages are outdated.**
+**IMPORTANT: Some of the MELPA stable packages are outdated.**
 
-Add the following configuration to `~/.emacs.d/post-early-init.el` to give MELPA Stable a higher priority than MELPA, ensuring that packages are fetched from MELPA Stable first:
+To prioritize MELPA Stable over MELPA (the latest package version), add the following configuration to `~/.emacs.d/post-early-init.el` to ensure packages are fetched from MELPA Stable first:
 
 ```elisp
 ;; This change increases MELPA Stable priority to 70, above MELPA,
