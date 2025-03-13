@@ -872,6 +872,9 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 2. You can also add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
 
+;; Allow Emacs to upgrade built-in packages, such as Org mode
+(setq package-install-upgrade-built-in t)
+
 ;; Display the current line and column numbers in the mode line
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -1083,7 +1086,7 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to use MELPA stable?
 
-By default, *minimal-emacs.d* uses MELPA instead of MELPA Stable. If you prefer to use MELPA Stable, you can follow the instructions below. However, please note the following important warning:
+By default, *minimal-emacs.d* uses [MELPA](https://melpa.org/) instead of [MELPA Stable](https://stable.melpa.org/). If you prefer to use MELPA Stable, you can follow the instructions below. However, please note the following important warning:
 
 **IMPORTANT: Some MELPA Stable packages are outdated and lack important features.** Here is an [interesting discussion about MELPA stable](https://github.com/melpa/melpa/issues/6656).
 
