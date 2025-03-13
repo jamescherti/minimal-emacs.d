@@ -913,10 +913,7 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 (winner-mode 1)
 
 ;; Replace selected text with typed text
-(delete-selection-mode 1)
-
-;; Configure Emacs to ask for confirmation before exiting
-(setq confirm-kill-emacs 'y-or-n-p)
+;; (delete-selection-mode 1)
 
 (use-package uniquify
   :ensure nil
