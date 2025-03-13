@@ -905,14 +905,14 @@ To prevent Emacs from saving customization information to a custom file, set `cu
   (pixel-scroll-precision-mode 1))
 
 ;; Display the time in the modeline
-(display-time-mode 1)
+(add-hook 'after-init-hook 'display-time-mode)
 
 ;; Paren match highlighting
-(show-paren-mode 1)
+(add-hook 'after-init-hook 'show-paren-mode)
 
 ;; Track changes in the window configuration, allowing undoing actions such as
 ;; closing windows.
-(winner-mode 1)
+(add-hook 'after-init-hook 'winner-mode)
 
 ;; Replace selected text with typed text
 ;; (delete-selection-mode 1)
