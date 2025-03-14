@@ -30,6 +30,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
   - [Customizations: Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead)
+  - [Debug on error](#debug-on-error)
   - [Customizations: UI (pre-early-init.el)](#customizations-ui-pre-early-initel)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
@@ -134,6 +135,16 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
 
 *(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
+
+## Debug on error
+
+During the development of your init files, the author strongly recommends adding the following line at the very beginning of your `~/.emacs.d/pre-early-init.el` file:
+
+```elisp
+(setq debug-on-error t)
+```
+
+This setting ensures that Emacs enters the debugger whenever an error occurs during initialization. Since `pre-early-init.el` is loaded before `early-init.el`, enabling `debug-on-error` at this stage allows you to catch errors that might otherwise cause Emacs to fail silently or behave unpredictably.
 
 ## Customizations: UI (pre-early-init.el)
 
