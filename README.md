@@ -144,7 +144,7 @@ During the development of your init files, the author strongly recommends adding
 (setq debug-on-error t)
 ```
 
-This setting ensures that Emacs enters the debugger whenever an error occurs during initialization. Since `pre-early-init.el` is loaded before `early-init.el`, enabling `debug-on-error` at this stage allows you to catch errors that might otherwise cause Emacs to fail silently or behave unpredictably.
+Enabling `debug-on-error` at this stage allows you to catch errors that might otherwise cause Emacs to fail silently or behave unpredictably.
 
 ## Customizations: UI (pre-early-init.el)
 
