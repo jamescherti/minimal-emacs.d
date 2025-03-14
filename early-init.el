@@ -128,8 +128,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 (setq native-comp-warning-on-missing-source minimal-emacs-debug
       native-comp-async-report-warnings-errors (or minimal-emacs-debug 'silent)
-      native-comp-verbose (if minimal-emacs-debug 1 0)
-      native-comp-debug (if minimal-emacs-debug 1 0))
+      native-comp-verbose (if minimal-emacs-debug 1 0))
 
 (setq jka-compr-verbose minimal-emacs-debug)
 (setq byte-compile-warnings minimal-emacs-debug
