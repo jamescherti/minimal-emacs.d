@@ -87,12 +87,33 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
       (error "Configuration error. Debug by starting Emacs with: emacs --debug-init")))))
 (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
 
+(defvar minimal-emacs-load-compiled-init-files nil
+  "If non-nil, attempt to load byte-compiled .elc for init files.
+This will enable minimal-emacs to load byte-compiled or possibly native-compiled
+init files for the following initialization files: pre-init.el, post-init.el,
+pre-early-init.el, and post-early-init.el.")
+
+(defun minimal-emacs--remove-el-file-suffix (filename)
+  "Remove the Elisp file suffix from FILENAME and return it (.el, .el.gz...)."
+  (let ((suffixes (mapcar (lambda (ext) (concat ".el" ext))
+                          load-file-rep-suffixes)))
+    (catch 'done
+      (dolist (suffix suffixes filename)
+        (when (string-suffix-p suffix filename)
+          (setq filename (substring filename 0 (- (length suffix))))
+          (throw 'done t))))
+    filename))
+
 (defun minimal-emacs-load-user-init (filename)
   "Execute a file of Lisp code named FILENAME."
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
-    (when (file-exists-p init-file)
-      (load init-file nil :no-message))))
+    (if (not minimal-emacs-load-compiled-init-files)
+        (load init-file :no-error :no-message :nosuffix)
+      ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
+      ;; select between .el and .elc files.
+      (setq init-file (minimal-emacs--remove-el-file-suffix init-file))
+      (load init-file :no-error :no-message))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 
