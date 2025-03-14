@@ -736,7 +736,9 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 (use-package inhibit-mouse
   :ensure t
   :config
-  (inhibit-mouse-mode))
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
+    (inhibit-mouse-mode 1)))
 ```
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
