@@ -406,8 +406,6 @@
 
 ;;; Help
 
-(setq help-window-select t)  ;; Focus new help windows when opened
-
 ;; Enhance `apropos' and related functions to perform more extensive searches
 (setq apropos-do-all t)
 
@@ -417,7 +415,7 @@
 (setq help-enable-completion-autoload nil)
 (setq help-enable-autoload nil)
 (setq help-enable-symbol-autoload nil)
-(setq help-window-select t)
+(setq help-window-select t)  ;; Focus new help windows when opened
 
 ;;; Eglot
 
