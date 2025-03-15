@@ -389,6 +389,9 @@ this stage of initialization."
   (setq use-file-dialog nil)
   (setq use-dialog-box nil))
 
+;;; Security
+(setq gnutls-min-prime-bits 3072)
+
 ;;; package.el
 (setq use-package-compute-statistics minimal-emacs-debug)
 
