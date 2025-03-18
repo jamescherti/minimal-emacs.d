@@ -390,7 +390,9 @@ this stage of initialization."
   (setq use-dialog-box nil))
 
 ;;; Security
-(setq gnutls-min-prime-bits 3072)
+(setq gnutls-verify-error t)  ; Prompts user if there are certificate issues
+(setq tls-checktrust t)  ; Ensure SSL/TLS connections undergo trust verification
+(setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
 ;;; package.el
 (setq use-package-compute-statistics minimal-emacs-debug)
