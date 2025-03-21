@@ -1035,11 +1035,9 @@ Add to `~/.emacs.d/pre-early-init.el`:
 (setq minimal-emacs-package-initialize-and-refresh nil)
 ```
 
-(According to arthsmn, a *minimal-emacs.d* user, the change above also improves startup time. [In this user's case](https://github.com/jamescherti/minimal-emacs.d/pull/22), the startup time decreased from 1.06 seconds to 0.56 seconds.)
-
 And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
 ```elisp
-(defvar elpaca-installer-version 0.9)
+(defvar elpaca-installer-version 0.10)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -1054,7 +1052,7 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
   (add-to-list 'load-path (if (file-exists-p build) build repo))
   (unless (file-exists-p repo)
     (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
+    (when (<= emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
         (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
                   ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
@@ -1077,10 +1075,6 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
-
-;; Optional: Install use-package support
-(elpaca elpaca-use-package
-  (elpaca-use-package-mode))
 ```
 
 ## Frequently asked questions
