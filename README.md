@@ -152,7 +152,7 @@ Enabling `debug-on-error` at this stage allows you to catch errors that might ot
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
-**Note:** Enabling the tool-bar, menu-bar, and similar UI elements may slightly increase your startup time.
+**Note:** Enabling the tool-bar or menu-bar may slightly increase your startup time.
 
 To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
 
