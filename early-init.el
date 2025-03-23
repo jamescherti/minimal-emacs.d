@@ -17,7 +17,7 @@
 ;;; Variables
 
 (defvar minimal-emacs-ui-features '()
-  "List of user interface features to disable in minimal Emacs setup.
+  "List of user interface features to enable in minimal Emacs setup.
 This variable holds a list Emacs UI features that can be enabled:
 - context-menu (Enables the context menu in graphical environments.)
 - tool-bar (Enables the tool bar in graphical environments.)
