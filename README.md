@@ -73,6 +73,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
     - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
     - [Comments from users](#comments-from-users)
+    - [Minimal-emacs.d configurations from users](#minimal-emacsd-configurations-from-users)
   - [Features](#features)
   - [Author and license](#author-and-license)
   - [Links](#links)
@@ -1260,6 +1261,14 @@ A drawback of using the early-init phase instead of init is that if a package fa
 - [rrajath](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb0ja8k/) has been using the minimal-emacs.d config for the past several months and loves it. His previous setup used to take around 4 seconds to load, but with minimal-emacs.d, it now loads in just 1 second.
 - [LionyxML](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/) considers that *minimal-emacs.d* contains one of the best README files he has ever read. The author of *minimal-emacs.d* found his comment encouraging. Reading this README.md is highly recommended for anyone looking to start customizing their *minimal-emacs.d* configuration.
 - [cyneox](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mdnzgqx/): "Still using it and loving it! Thanks for the regular updates."
+
+### Minimal-emacs.d configurations from users
+
+- [Victor Dorneanu's minimal-emacs.d configuration](https://github.com/dorneanu/dotfiles/blob/master/minimal-emacs/config.org)
+
+- [Mark Norton's minimal-emacs.d configuration](https://github.com/Remillard/minimal-emacs.d/tree/develop)
+
+Please share your configuration. It could serve as inspiration for other users.
 
 ## Features
 
