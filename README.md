@@ -50,6 +50,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring org-mode](#configuring-org-mode)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [Spell checker](#spell-checker)
+    - [Code formatter](#code-formatter)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
@@ -792,6 +793,24 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   ;; Remove doc from Flyspell
   (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
                                        flyspell-prog-text-faces)))
+```
+
+### Code formatter
+
+Apheleia is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+
+Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
+
+To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
+
+To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package apheleia
+  :ensure t
+  :defer t
+  :commands (apheleia-mode
+             apheleia-global-mode)
+  :hook ((prog-mode . apheleia-mode)))
 ```
 
 ### A better Emacs *help* buffer
