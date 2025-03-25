@@ -1080,8 +1080,8 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (elpaca `(,@elpaca-order))
 
 ;; Optional: Install use-package support
-;; If you enable elpaca-use-package, some packages, such as Vertico,
-;; may require modifications. See the following discussion for details:
+;; If you enable elpaca-use-package, some use-package definitions, such as
+;; Vertico's, may need modifications. See the following discussion for details:
 ;; https://github.com/jamescherti/minimal-emacs.d/issues/54
 ;;
 ;; (elpaca elpaca-use-package
