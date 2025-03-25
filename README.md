@@ -50,7 +50,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring org-mode](#configuring-org-mode)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [Spell checker](#spell-checker)
-    - [Code formatter](#code-formatter)
+    - [Asynchronous code formatting without cursor disruption (Apheleia)](#asynchronous-code-formatting-without-cursor-disruption-apheleia)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
@@ -795,7 +795,7 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
                                        flyspell-prog-text-faces)))
 ```
 
-### Code formatter
+### Asynchronous code formatting without cursor disruption (Apheleia)
 
 Apheleia is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
 
