@@ -267,7 +267,7 @@ This is different from `auto-save-mode`: `auto-save-mode` periodically saves all
 
 ### Code completion with corfu
 
-Corfu enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
+[Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
 
 Cape, or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
@@ -310,7 +310,13 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 ### Configuring Vertico, Consult, and Embark
 
-Vertico, Consult, and Embark collectively enhance Emacs' completion and navigation capabilities. Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed). Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks. Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
+[Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
+
+Vertico provides a vertical completion interface, making it easier to navigate and select from completion candidates (e.g., when `M-x` is pressed).
+
+Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks.
+
+Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
@@ -569,7 +575,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 
 ### Configuring Vim keybindings using Evil?
 
-Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up Evil mode:
+Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up [Evil mode](https://github.com/emacs-evil/evil):
 
 ``` emacs-lisp
 ;; Required by evil-collection
@@ -681,7 +687,7 @@ Here is an example of how to configure Eglot to enable or disable certain option
 
 ### Session Management
 
-The `easysession.el` Emacs package is a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
+The [easysession](https://github.com/jamescherti/easysession.el) Emacs package is a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
 
 To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
@@ -736,7 +742,7 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
 
 ### Inhibit the mouse
 
-The **inhibit-mouse** package disables mouse input in Emacs.
+The [inhibit-mouse](https://github.com/jamescherti/inhibit-mouse.el) package disables mouse input in Emacs.
 
 This package is useful for users who want to disable the mouse to:
 - Prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
@@ -798,7 +804,7 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
 
 ### Asynchronous code formatting without cursor disruption
 
-Apheleia is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+[Apheleia](https://github.com/radian-software/apheleia) is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
 
 Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
 
@@ -1137,9 +1143,9 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to use MELPA stable?
 
-By default, *minimal-emacs.d* uses [MELPA](https://melpa.org/) instead of [MELPA Stable](https://stable.melpa.org/). If you prefer to use MELPA Stable, you can follow the instructions below. However, please note the following important warning:
+**Note: The minimal-emacs.d author does not recommend using MELPA Stable. Use MELPA instead, which is enabled by default in the minimal-emacs.d configuration.
 
-**IMPORTANT: Some MELPA Stable packages are outdated and lack important features.**
+By default, *minimal-emacs.d* uses [MELPA](https://melpa.org/) instead of [MELPA Stable](https://stable.melpa.org/) because MELPA Stable offers outdated packages that lack essential features. If you prefer to use MELPA Stable, you may follow the instructions below.
 
 Here are the key differences between [MELPA](https://melpa.org/) (the default repository used in minimal-emacs.d) and [MELPA Stable](https://stable.melpa.org/):
 - **MELPA** is a rolling release repository for Emacs packages, where packages are continuously updated with the latest commits from their respective development branches, delivering the most current features and bug fixes. While MELPA features the latest changes, most Emacs package developers have learned to maintain a relatively stable master branch, which contributes to MELPA’s overall stability. Furthermore, MELPA includes a broader selection of packages.
