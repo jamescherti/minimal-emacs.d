@@ -53,6 +53,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
+    - [Showing the tab-bar](#showing-the-tab-bar)
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
@@ -900,6 +901,13 @@ Other optional packages that may be useful include:
              elisp-refs-symbol))
 ```
 
+### Showing the tab-bar
+
+Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively when multiple tabs are open:
+```elisp
+(setopt tab-bar-show 1)
+```
+
 ### Preventing Emacs from saving custom.el
 
 To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device` by adding to the following to `~/.emacs.d/post-init.el`:
@@ -1285,7 +1293,9 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [Victor Dorneanu's minimal-emacs.d configuration](https://github.com/dorneanu/dotfiles/blob/master/minimal-emacs/config.org)
 
-- [flowfx emacs.d](https://codeberg.org/flowfx/emacs.d)
+- [Flowfx emacs.d](https://codeberg.org/flowfx/emacs.d)
+
+- [John B. Sigman: A literate Emacs configuration inspired by minimal-emacs.d](https://www.johnsigman.com/projects/emacs_config/)
 
 - [Mark Norton's minimal-emacs.d configuration](https://github.com/Remillard/minimal-emacs.d/tree/develop)
 
