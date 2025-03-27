@@ -1295,7 +1295,7 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [Flowfx emacs.d](https://codeberg.org/flowfx/emacs.d)
 
-- [John B. Sigman: A literate Emacs configuration inspired by minimal-emacs.d](https://www.johnsigman.com/projects/emacs_config/)
+- [John B. Sigman: A literate Emacs configuration with some parts inspired by minimal-emacs.d](https://www.johnsigman.com/projects/emacs_config/)
 
 - [Mark Norton's minimal-emacs.d configuration](https://github.com/Remillard/minimal-emacs.d/tree/develop)
 
