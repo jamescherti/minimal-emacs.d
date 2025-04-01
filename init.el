@@ -107,9 +107,6 @@
 ;; Improve Emacs' responsiveness by delaying syntax highlighting during input
 (setq redisplay-skip-fontification-on-input t)
 
-;; Collects and displays all available documentation immediately
-(setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-
 ;; Disable truncation of printed s-expressions in the message buffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
