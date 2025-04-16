@@ -1147,7 +1147,7 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 By default, *minimal-emacs.d* uses [MELPA](https://melpa.org/) instead of [MELPA Stable](https://stable.melpa.org/) because MELPA Stable offers outdated packages that lack essential features. If you prefer to use MELPA Stable, you may follow the instructions below.
 
-Here are the key differences between [MELPA](https://melpa.org/) (the default repository used in minimal-emacs.d) and [MELPA Stable](https://stable.melpa.org/):
+Here are the key differences between **MELPA** (the default repository used in minimal-emacs.d) and **MELPA Stable**:
 - **MELPA** (preferred) is a rolling release repository for Emacs packages, where packages are continuously updated with the latest commits from their respective development branches, delivering the most current features and bug fixes. While MELPA features the latest changes, most Emacs package developers have learned to maintain a relatively stable master branch, which contributes to MELPA’s overall stability. Furthermore, MELPA includes a broader selection of packages.
 - In contrast, **MELPA Stable** is a repository that hosts versioned, tagged releases of packages. However, **MELPA Stable does not guarantee more reliability than MELPA, as its tagged versions may still suffer from issues** like uncoordinated dependencies or incomplete testing, and updates are less frequent, often based on developer discretion rather than every new commit.
 
