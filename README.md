@@ -1185,6 +1185,8 @@ To load customizations saved by Emacs (`M-x customize`), add the following code 
 (load custom-file 'noerror 'nomessage)
 ```
 
+However, rather than relying on customizations loaded with the code above, the author recommends configuring Emacs through init files (just as you are doing by reading this README.md and customizing packages using `use-package` with the `:custom` keyword).
+
 ### How to increase gc-cons-threshold?
 
 Add the following to `~/.emacs.d/pre-early-init.el` to ensure that *minimal-emacs.d* restores the specified amount after startup:
