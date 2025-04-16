@@ -733,7 +733,7 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
   (org-startup-indented t)
   (org-adapt-indentation nil)
   (org-edit-src-content-indentation 0)
-  (org-startup-truncated nil)
+  (org-startup-truncated t)
   (org-fontify-done-headline t)
   (org-fontify-todo-headline t)
   (org-fontify-whole-heading-line t)
