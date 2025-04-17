@@ -180,6 +180,9 @@ pre-early-init.el, and post-early-init.el.")
 (setq warning-minimum-level (if minimal-emacs-debug :warning :error))
 (setq warning-suppress-types '((lexical-binding)))
 
+(when minimal-emacs-debug
+  (setq message-log-max 16384))
+
 ;;; Performance: Miscellaneous options
 
 ;; Font compacting can be very resource-intensive, especially when rendering
