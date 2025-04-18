@@ -114,6 +114,10 @@
 ;; Position underlines at the descent line instead of the baseline.
 (setq x-underline-at-descent-line t)
 
+(setq tramp-verbose 1)
+(setq tramp-completion-reread-directory-timeout 50)
+(setq remote-file-name-inhibit-cache 50)
+
 ;;; Files
 
 ;; Delete by moving to trash in interactive mode
