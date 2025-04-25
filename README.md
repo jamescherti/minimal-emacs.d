@@ -16,16 +16,17 @@ If you're looking for the **ideal starter kit to customize Emacs, you've found i
 - **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
+*(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
+*(The theme shown in the screenshot above is doom-one, which is part of the doom-themes collection available on MELPA.)*
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
+*(The theme shown in the screenshot above is the *[tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el)*, available on MELPA.)*
 
 ### Startup
 
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
-
-*(The theme shown in the screenshot above is the *[tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el)*, available on MELPA.)*
 
 In addition to *minimal-emacs.d*, startup speed is influenced by your computer's processing power and disk speed. To establish a baseline, start Emacs with only *minimal-emacs.d* and no additional configurations, then run `M-x emacs-init-time`. Incrementally modify your init files and observe the impact on startup time. For consistent comparisons, always test on the same computer and Emacs version. It's also important to ensure that all packages are deferred using `:defer t` and `:commands`, which makes Emacs load them only when needed (see additional examples in this README.md). While startup time is important, other factors, like native compilation, are even more important. Although native compilation may introduce some brief initial and negligible initial delay, it is beneficial in the long run as it significantly speeds up Emacs.
 
