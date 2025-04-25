@@ -17,6 +17,7 @@ If you're looking for the **ideal starter kit to customize Emacs, you've found i
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
+![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 
 ### Startup
 
