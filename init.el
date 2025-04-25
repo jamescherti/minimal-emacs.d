@@ -427,13 +427,8 @@
 (setq eglot-extend-to-xref t)
 
 ;; Eglot optimization
-(setq jsonrpc-event-hook nil)
 (setq eglot-events-buffer-size 0)
 (setq eglot-report-progress nil)  ; Prevent Eglot minibuffer spam
-
-;; Eglot optimization: Disable `eglot-events-buffer' to maintain consistent
-;; performance in long-running Emacs sessions.
-(setq eglot-events-buffer-config '(:size 0 :format full))
 
 ;;; Flymake
 
