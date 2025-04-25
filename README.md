@@ -15,6 +15,8 @@ If you're looking for the **ideal starter kit to customize Emacs, you've found i
 - **0 packages loaded / No forced modes:** Unlike other frameworks or starter kits, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable and which packages to load with `require`.
 - **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
+Here are the instructions for installing minimal-emacs.d: [Install minimal-emacs.d](#install-minimal-emacsd)
+
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
