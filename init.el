@@ -104,9 +104,6 @@
 
 (setq truncate-string-ellipsis "…")
 
-;; Improve Emacs' responsiveness by delaying syntax highlighting during input
-(setq redisplay-skip-fontification-on-input t)
-
 ;; Disable truncation of printed s-expressions in the message buffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
