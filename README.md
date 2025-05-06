@@ -129,7 +129,6 @@ To keep your Emacs configuration up to date, you can pull the latest changes fro
 git -C ~/.emacs.d pull
 ```
 
-
 ## Customizations: Never modify init.el and early-init.el. Modify these instead...
 **The `init.el` and `early-init.el` files should never be modified directly** because they are intended to be managed by Git during an update.
 
