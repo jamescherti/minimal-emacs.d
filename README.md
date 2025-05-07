@@ -179,6 +179,8 @@ These settings control the visibility of dialogs, context menus, toolbars, menu 
 
 ## Customizations: Packages (post-init.el)
 
+This README.md provides guidance on installing optional external packages. While Emacs is fully functional without them, the recommended packages can enhance your experience and introduce additional features, which is why they are suggested.
+
 ### Optimization: Native Compilation
 
 Native compilation enhances Emacs performance by converting Elisp code into native machine code, resulting in faster execution and improved responsiveness.
