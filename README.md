@@ -17,6 +17,11 @@ If you're looking for the **ideal starter kit to customize Emacs, you've found i
 
 **Here are the instructions for installing minimal-emacs.d:** [Install minimal-emacs.d](#install-minimal-emacsd).
 
+For those new to Emacs wondering what `init.el` or `early-init.el` are:
+
+- The `early-init.el` file is an initialization file that is loaded very early in the startup process, before the Emacs graphical interface is initialized. It was introduced in Emacs 27 to allow users to configure aspects of Emacs that affect startup performance and GUI elements that need to be set before the packages load.
+- The `init.el` file is the main user configuration file that Emacs loads after initializing the package system and basic runtime environment. It contains user customizations, such as setting variables, loading packages, configuring modes, and defining keybindings.
+
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
