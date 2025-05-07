@@ -77,6 +77,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring straight.el?](#configuring-straightel)
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
+    - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
     - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
@@ -1144,6 +1145,32 @@ And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ```
 
 ## Frequently asked questions
+
+### Customizing Scroll Recentering
+
+By default, minimal-emacs.d sets `scroll-conservatively` to `101`:
+
+```emacs-lisp
+(setq scroll-conservatively 101)  ; Default minimal-emacs.d value
+```
+
+A value of `101` minimizes screen movement and maintains point visibility with minimal adjustment, which many users find optimal for rapid navigation.
+
+You can override this in your `post-init.el` file. Setting it to `0` forces Emacs to recenter the point aggressively, typically positioning it in the middle of the window:
+
+```emacs-lisp
+(setq scroll-conservatively 0)  ; NOT RECOMMENDED. SET IT TO 101 INSTEAD.
+```
+
+Although this offers more surrounding context, it results in frequent and pronounced screen movement, which can disrupt navigation. A value of `0` is generally discouraged unless this behavior is explicitly desired.
+
+Most users prefer `101`. Some select `10` as a compromise:
+
+```emacs-lisp
+(setq scroll-conservatively 10)  ; Note: You might prefer 101 over 10.
+```
+
+A value of `10` permits occasional recentering for additional context but introduces more movement than `101`.
 
 ### How to display Emacs startup duration?
 
