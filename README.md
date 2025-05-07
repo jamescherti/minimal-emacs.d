@@ -1,5 +1,5 @@
 # *minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup
-![](https://raw.githubusercontent.com/jamescherti/easysession.el/main/.images/made-for-gnu-emacs.svg)
+![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 ![Build Status](https://github.com/jamescherti/minimal-emacs.d/actions/workflows/ci.yml/badge.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -9,18 +9,15 @@ The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
-If you're looking for the **ideal starter kit to customize Emacs, you've found it**. The *minimal-emacs.d* project is:
+## Looking for the ideal starter kit to customize Emacs? You have found it.
+
+The *minimal-emacs.d* project is:
 - **Minimal yet effective:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
 - **0 packages loaded / No forced modes:** Unlike other frameworks or starter kits, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable and which packages to load with `require`.
 - **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
 **Here are the instructions for installing minimal-emacs.d:** [Install minimal-emacs.d](#install-minimal-emacsd).
-
-For those new to Emacs wondering what `init.el` or `early-init.el` are:
-
-- The `early-init.el` file is an initialization file that is loaded very early in the startup process, before the Emacs graphical interface is initialized. It was introduced in Emacs 27 to allow users to configure aspects of Emacs that affect startup performance and GUI elements that need to be set before the packages load.
-- The `init.el` file is the main user configuration file that Emacs loads after initializing the package system and basic runtime environment. It contains user customizations, such as setting variables, loading packages, configuring modes, and defining keybindings.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
@@ -42,6 +39,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 
 - [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-that-provides-better-defaults-and-faster-startup)
   - [Introduction](#introduction)
+  - [Looking for the ideal starter kit to customize Emacs? You have found it.](#looking-for-the-ideal-starter-kit-to-customize-emacs-you-have-found-it)
     - [Startup](#startup)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
