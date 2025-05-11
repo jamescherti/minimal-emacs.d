@@ -291,8 +291,7 @@
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
 
-;; Don't stretch the cursor to fit wide characters, it is disorienting,
-;; especially for tabs.
+;; Do not extend the cursor to fit wide characters
 (setq x-stretch-cursor nil)
 
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
