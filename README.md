@@ -73,7 +73,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
-    - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
+    - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [Configuring straight.el?](#configuring-straightel)
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
@@ -1045,7 +1045,7 @@ It is also recommended to read the following articles:
 
 ## Customizations: pre-early-init.el
 
-### Reducing clutter in `~/.emacs.d` by redirecting files to `~/emacs.d/var/`
+### Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`
 
 Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
 
@@ -1053,7 +1053,7 @@ A common solution to this issue is installing the no-littering package; however,
 
 An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ``` emacs-lisp
-;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
+;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
 ;; IMPORTANT: This part should be in the pre-early-init.el file
 (setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
 (setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
