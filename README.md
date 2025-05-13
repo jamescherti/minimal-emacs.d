@@ -51,6 +51,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
   - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
+    - [Automatic removal of trailing whitespace on save](#automatic-removal-of-trailing-whitespace-on-save)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
     - [Activating autosave](#activating-autosave)
       - [auto-save-mode (Prevent data loss in case of crashes)](#auto-save-mode-prevent-data-loss-in-case-of-crashes)
@@ -224,6 +225,38 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 
   ;; A global mode that compiles .el files before they are loaded.
   (compile-angel-on-load-mode))
+```
+
+### Automatic removal of trailing whitespace on save
+
+**Trailing whitespace** refers to any spaces or tabs that appear after the last non-whitespace character on a line. These characters have no semantic value and can lead to unnecessary diffs in version control, inconsistent formatting, or visual clutter. Removing them improves code clarity and consistency.
+
+The **stripspace** Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package stripspace
+  :ensure t
+
+  ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
+  :hook ((prog-mode . stripspace-local-mode)
+         (text-mode . stripspace-local-mode)
+         (conf-mode . stripspace-local-mode))
+
+  :custom
+  ;; The `stripspace-only-if-initially-clean' option:
+  ;; - nil to always delete trailing whitespace.
+  ;; - Non-nil to only delete whitespace when the buffer is clean initially.
+  ;; (The initial cleanliness check is performed when `stripspace-local-mode'
+  ;; is enabled.)
+  (stripspace-only-if-initially-clean nil)
+
+  ;; Enabling `stripspace-restore-column' preserves the cursor's column position
+  ;; even after stripping spaces. This is useful in scenarios where you add
+  ;; extra spaces and then save the file. Although the spaces are removed in the
+  ;; saved file, the cursor remains in the same position, ensuring a consistent
+  ;; editing experience without affecting cursor placement.
+  (stripspace-restore-column t))
 ```
 
 ### How to activate recentf, savehist, saveplace, and auto-revert?
