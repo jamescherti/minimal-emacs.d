@@ -237,6 +237,8 @@ To enable **stripspace** and automatically delete trailing whitespace, add the f
 ```elisp
 (use-package stripspace
   :ensure t
+  :defer t
+  :commands stripspace-local-mode
 
   ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
   :hook ((prog-mode . stripspace-local-mode)
