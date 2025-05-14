@@ -9,11 +9,11 @@ The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
-The minimal-emacs.d project includes two initialization files:
+The *minimal-emacs.d* project includes two initialization files:
 
-- `early-init.el`: An init file that is loaded by Emacs early in the startup process, before the Emacs graphical interface is initialized. Introduced in Emacs 27, it allows configuration of settings that affect startup performance and GUI elements that must be set before any packages are loaded.
+- `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
 
-- `init.el`: An init file that is loaded by Emacs after the graphical interface is initialized. It contains user customizations, such as setting variables, loading packages, configuring modes, and defining keybindings.
+- `init.el`: Loaded after the graphical interface is initialized. This file contains user customizations, including variable settings, package loading, mode configurations, and keybindings.
 
 ## Looking for the ideal starter kit to customize Emacs? You have found it.
 
