@@ -17,8 +17,8 @@
 ;; extensive research and testing to fine-tune the best parameters and
 ;; optimizations for an Emacs configuration.
 ;;
-;; *Do not* modify this file; modify pre-early-init.el or post-early-init.el
-;; instead.
+;; Do not modify this file; instead, modify pre-early-init.el or
+;; post-early-init.el.
 
 ;;; Code:
 
