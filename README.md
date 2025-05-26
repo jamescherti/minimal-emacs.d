@@ -989,7 +989,7 @@ To customize the default font, add the following expression to your `~/.emacs.d/
 
 ```elisp
 (set-face-attribute 'default nil
-                    :height 130 :weight 'light :family "DejaVu Sans Mono")
+                    :height 130 :weight 'normal :family "DejaVu Sans Mono")
 ```
 
 - Modify the `:family` value to specify a different font, according to your preference. You can replace it with, for example, "Iosevka Mono", "Iosevka Term", "Inconsolata", "JetBrains Mono", "Source Code Pro", "Hack". (The authors preferred font is "Iosevka Mono", medium weight.)
