@@ -1158,6 +1158,7 @@ Add to `~/.emacs.d/pre-early-init.el`:
 
 And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
 ```elisp
+;; Elpaca bootstrap
 (defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
