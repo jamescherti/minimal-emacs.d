@@ -78,6 +78,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Preventing Emacs from saving custom.el](#preventing-emacs-from-saving-customel)
+    - [Changing the Default Font](#changing-the-default-font)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
@@ -981,6 +982,19 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 ``` emacs-lisp
 (setq custom-file null-device)
 ```
+
+### Changing the Default Font
+
+To customize the default font, add the following expression to your `~/.emacs.d/post-init.el`:
+
+```elisp
+(set-face-attribute 'default nil
+                    :height 130 :weight 'light :family "DejaVu Sans Mono")
+```
+
+- Modify the `:family` value to specify a different font, according to your preference. You can replace it with, for example, "Iosevka Mono", "Iosevka Term", "Inconsolata", "JetBrains Mono", "Source Code Pro", "Hack". (The authors preferred font is "Iosevka Mono", medium weight.)
+- Modify the `':weight`' value to control the font thickness/boldness. It must be one of the following symbols: `'ultra-heavy`, `'heavy` (a.k.a. `'black`), `'ultra-bold` (a.k.a. `'extra-bold`), `'bold`, `'semi-bold` (a.k.a. `'demi-bold`), `'medium`, `'normal` (a.k.a. `'regular`, a.k.a. `'book`), `'semi-light` (a.k.a. `'demi-light`), `'light`, `'extra-light` (a.k.a. `'ultra-light`), or `'thin`.
+- Modify the :height value to set the font size, where 100 corresponds to 10 pt, 130 to 13 pt, and so on.
 
 ### Which other customizations can be interesting to add?
 
