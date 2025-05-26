@@ -992,7 +992,7 @@ To customize the default font, add the following expression to your `~/.emacs.d/
                     :height 130 :weight 'normal :family "DejaVu Sans Mono")
 ```
 
-- Modify the `:family` value to specify a different font, according to your preference. You can replace it with, for example, "Iosevka Term", "Inconsolata", "JetBrains Mono", "Source Code Pro", "Hack". (The authors preferred font is "Iosevka Mono", medium weight.)
+- Modify the `:family` value to specify a different font, according to your preference. You can replace it with, for example, "Iosevka Term", "Inconsolata", "JetBrains Mono", "Source Code Pro", "Hack". (The authors preferred font is "Iosevka Term", medium weight.)
 - Modify the `':weight`' value to control the font thickness/boldness. It must be one of the following symbols: `'ultra-heavy`, `'heavy` (a.k.a. `'black`), `'ultra-bold` (a.k.a. `'extra-bold`), `'bold`, `'semi-bold` (a.k.a. `'demi-bold`), `'medium`, `'normal` (a.k.a. `'regular`, a.k.a. `'book`), `'semi-light` (a.k.a. `'demi-light`), `'light`, `'extra-light` (a.k.a. `'ultra-light`), or `'thin`.
 - Modify the :height value to set the font size, where 100 corresponds to 10 pt, 130 to 13 pt, and so on.
 
