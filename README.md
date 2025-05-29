@@ -1420,6 +1420,8 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [Mark Norton's minimal-emacs.d configuration](https://github.com/Remillard/minimal-emacs.d/tree/develop)
 
+- [smahm006 minimal-emacs.d configuration](https://github.com/smahm006/minimal-emacs.d)
+
 Please share your configuration. It could serve as inspiration for other users.
 
 ## Features
