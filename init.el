@@ -43,6 +43,12 @@
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
 
+;;; Undo/redo
+
+(setq undo-limit (* 13 160000)
+      undo-strong-limit (* 13 240000)
+      undo-outer-limit (* 13 24000000))
+
 ;;; package.el
 
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
@@ -56,12 +62,6 @@
 
   ;; Ensure use-package is available
   (require 'use-package))
-
-;;; Undo/redo
-
-(setq undo-limit (* 13 160000)
-      undo-strong-limit (* 13 240000)
-      undo-outer-limit (* 13 24000000))
 
 ;;; Minibuffer
 
@@ -462,8 +462,8 @@
 
 (setq flyspell-issue-welcome-flag nil)
 
-;; Greatly improves flyspell performance by preventing messages from being
-;; displayed for each word when checking the entire buffer.
+;; Improves flyspell performance by preventing messages from being displayed for
+;; each word when checking the entire buffer.
 (setq flyspell-issue-message-flag nil)
 
 ;;; ispell
