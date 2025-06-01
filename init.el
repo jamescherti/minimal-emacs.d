@@ -38,11 +38,10 @@
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
-;;; Undo/redo
+;;; Features, warnings, and errors
 
-(setq undo-limit (* 13 160000)
-      undo-strong-limit (* 13 240000)
-      undo-outer-limit (* 13 24000000))
+;; Disable warnings from the legacy advice API. They aren't useful.
+(setq ad-redefinition-action 'accept)
 
 ;;; package.el
 
@@ -58,10 +57,11 @@
   ;; Ensure use-package is available
   (require 'use-package))
 
-;;; Features, warnings, and errors
+;;; Undo/redo
 
-;; Disable warnings from the legacy advice API. They aren't useful.
-(setq ad-redefinition-action 'accept)
+(setq undo-limit (* 13 160000)
+      undo-strong-limit (* 13 240000)
+      undo-outer-limit (* 13 24000000))
 
 ;;; Minibuffer
 
@@ -76,7 +76,8 @@
 ;;; User interface
 
 ;; By default, Emacs "updates" its ui more often than it needs to
-(setq idle-update-delay 1.0)
+(setq which-func-update-delay 1.0)
+(setq idle-update-delay which-func-update-delay)  ;; Obsolete in >= 30.1
 
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
