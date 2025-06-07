@@ -305,7 +305,6 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package corfu
   :ensure t
-  :defer t
   :commands (corfu-mode global-corfu-mode)
 
   :hook ((prog-mode . corfu-mode)
@@ -325,7 +324,6 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 (use-package cape
   :ensure t
-  :defer t
   :commands (cape-dabbrev cape-file cape-elisp-block)
   :bind ("C-c p" . cape-prefix-map)
   :init
@@ -371,7 +369,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; In addition to that, Marginalia also enhances Vertico by adding rich
   ;; annotations to the completion candidates displayed in Vertico's interface.
   :ensure t
-  :defer t
   :commands (marginalia-mode marginalia-cycle)
   :hook (after-init . marginalia-mode))
 
@@ -380,7 +377,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; users to perform context-sensitive actions on selected items
   ;; directly from the completion interface.
   :ensure t
-  :defer t
   :commands (embark-act
              embark-dwim
              embark-export
@@ -505,7 +501,6 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ```elisp
 (use-package outline-indent
   :ensure t
-  :defer t
   :commands outline-indent-minor-mode
 
   :custom
@@ -578,7 +573,6 @@ To enable **stripspace** and automatically delete trailing whitespace, add the f
 ```elisp
 (use-package stripspace
   :ensure t
-  :defer t
   :commands stripspace-local-mode
 
   ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
@@ -616,7 +610,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
 ;; system, providing more convenient undo/redo functionality.
 (use-package undo-fu
-  :defer t
+  :ensure t
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
@@ -629,7 +623,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu-session package complements undo-fu by enabling the saving
 ;; and restoration of undo history across Emacs sessions, even after restarting.
 (use-package undo-fu-session
-  :defer t
+  :ensure t
   :commands undo-fu-session-global-mode
   :hook (after-init . undo-fu-session-global-mode))
 ```
@@ -651,7 +645,6 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 ;; Vim emulation
 (use-package evil
   :ensure t
-  :defer t
   :commands (evil-mode evil-define-key)
   :hook (after-init . evil-mode))
 
@@ -680,7 +673,6 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 (use-package evil-surround
   :after evil
   :ensure t
-  :defer t
   :commands global-evil-surround-mode
   :custom
   (evil-surround-pairs-alist
@@ -715,7 +707,6 @@ To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package eglot
   :ensure nil
-  :defer t
   :commands (eglot
              eglot-ensure
              eglot-rename
@@ -754,7 +745,6 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package easysession
   :ensure t
-  :defer t
   :commands (easysession-switch-to
              easysession-save-as
              easysession-save-mode
@@ -785,7 +775,6 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package org
   :ensure t
-  :defer t
   :commands (org-mode org-version)
   :mode
   ("\\.org\\'" . org-mode)
@@ -829,7 +818,6 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package ispell
   :ensure nil
-  :defer t
   :commands (ispell ispell-minor-mode)
   :custom
   ;; Set the ispell program name to aspell
@@ -843,7 +831,6 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
 
 (use-package flyspell
   :ensure nil
-  :defer t
   :commands flyspell-mode
   :hook
   ((prog-mode . flyspell-prog-mode)
@@ -875,7 +862,6 @@ To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package apheleia
   :ensure t
-  :defer t
   :commands (apheleia-mode
              apheleia-global-mode)
   :hook ((prog-mode . apheleia-mode)))
@@ -888,7 +874,7 @@ Helpful is an alternative to the built-in Emacs help that provides much more con
 To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
 (use-package helpful
-  :defer t
+  :ensure t
   :commands (helpful-callable
              helpful-variable
              helpful-key
@@ -912,7 +898,6 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
 ;; Enables automatic indentation of code while typing
 (use-package aggressive-indent
   :ensure t
-  :defer t
   :commands aggressive-indent-mode
   :hook
   (emacs-lisp-mode . aggressive-indent-mode))
@@ -920,7 +905,6 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
 ;; Highlights function and variable definitions in Emacs Lisp mode
 (use-package highlight-defined
   :ensure t
-  :defer t
   :commands highlight-defined-mode
   :hook
   (emacs-lisp-mode . highlight-defined-mode))
@@ -931,7 +915,6 @@ Other optional packages that may be useful include:
 ;; Prevent parenthesis imbalance
 (use-package paredit
   :ensure t
-  :defer t
   :commands paredit-mode
   :hook
   (emacs-lisp-mode . paredit-mode)
@@ -942,7 +925,6 @@ Other optional packages that may be useful include:
 ;; --------------------------------------------------------------------------
 ;; (use-package enhanced-evil-paredit
 ;;   :ensure t
-;;   :defer t
 ;;   :commands enhanced-evil-paredit-mode
 ;;   :hook
 ;;   (paredit-mode . enhanced-evil-paredit-mode))
@@ -950,7 +932,6 @@ Other optional packages that may be useful include:
 ;; Displays visible indicators for page breaks
 (use-package page-break-lines
   :ensure t
-  :defer t
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :hook
@@ -960,7 +941,6 @@ Other optional packages that may be useful include:
 ;; special forms, and symbols in Emacs Lisp
 (use-package elisp-refs
   :ensure t
-  :defer t
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable
@@ -1019,7 +999,6 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 
 (use-package which-key
   :ensure nil ; builtin
-  :defer t
   :commands which-key-mode
   :hook (after-init . which-key-mode)
   :custom
