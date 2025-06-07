@@ -207,6 +207,10 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 
 2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages:
 ```emacs-lisp
+;; Native compilation enhances Emacs performance by converting Elisp code into
+;; native machine code, resulting in faster execution and improved
+;; responsiveness.
+;;
 ;; Ensure adding the following compile-angel code at the very beginning
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
@@ -293,6 +297,15 @@ When `auto-save-visited-mode` is enabled, Emacs will auto-save file-visiting buf
 This is different from `auto-save-mode`: `auto-save-mode` periodically saves all modified buffers, creating backup files, including those not associated with a file, while `auto-save-visited-mode` only saves file-visiting buffers after a period of idle time, directly saving to the file itself without creating backup files.
 
 ``` emacs-lisp
+;; When auto-save-visited-mode is enabled, Emacs will auto-save file-visiting
+;; buffers after a certain amount of idle time if the user forgets to save it
+;; with save-buffer or C-x s for example.
+;;
+;; This is different from auto-save-mode: auto-save-mode periodically saves
+;; all modified buffers, creating backup files, including those not associated
+;; with a file, while auto-save-visited-mode only saves file-visiting buffers
+;; after a period of idle time, directly saving to the file itself without
+;; creating backup files.
 (setq auto-save-visited-interval 5)   ; Save after 5 seconds if inactivity
 (auto-save-visited-mode 1)
 ```
@@ -307,6 +320,9 @@ Cape, or Completion At Point Extensions, extends the capabilities of in-buffer c
 
 To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
+;; Corfu enhances in-buffer completion by displaying a compact popup with
+;; current candidates, positioned either below or above the point. Candidates
+;; can be selected by navigating up or down.
 (use-package corfu
   :ensure t
   :commands (corfu-mode global-corfu-mode)
@@ -326,6 +342,9 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   :config
   (global-corfu-mode))
 
+;; Cape, or Completion At Point Extensions, extends the capabilities of
+;; in-buffer completion. It integrates with Corfu or the default completion UI,
+;; by providing additional backends through completion-at-point-functions.
 (use-package cape
   :ensure t
   :commands (cape-dabbrev cape-file cape-elisp-block)
@@ -352,30 +371,36 @@ Embark integrates with these tools to provide context-sensitive actions and quic
 
 Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and Embark:
 ``` emacs-lisp
+;; Vertico provides a vertical completion interface, making it easier to
+;; navigate and select from completion candidates (e.g., when `M-x` is pressed).
 (use-package vertico
   ;; (Note: It is recommended to also enable the savehist package.)
   :ensure t
   :config
   (vertico-mode))
 
+;; Vertico leverages Orderless' flexible matching capabilities, allowing users
+;; to input multiple patterns separated by spaces, which Orderless then
+;; matches in any order against the candidates.
 (use-package orderless
-  ;; Vertico leverages Orderless' flexible matching capabilities, allowing users
-  ;; to input multiple patterns separated by spaces, which Orderless then
-  ;; matches in any order against the candidates.
   :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
+;; Marginalia allows Embark to offer you preconfigured actions in more contexts.
+;; In addition to that, Marginalia also enhances Vertico by adding rich
+;; annotations to the completion candidates displayed in Vertico's interface.
 (use-package marginalia
-  ;; Marginalia allows Embark to offer you preconfigured actions in more contexts.
-  ;; In addition to that, Marginalia also enhances Vertico by adding rich
-  ;; annotations to the completion candidates displayed in Vertico's interface.
   :ensure t
   :commands (marginalia-mode marginalia-cycle)
   :hook (after-init . marginalia-mode))
 
+;; Embark integrates with Consult and Vertico to provide context-sensitive
+;; actions and quick access to commands based on the current selection, further
+;; improving user efficiency and workflow within Emacs. Together, they create a
+;; cohesive and powerful environment for managing completions and interactions.
 (use-package embark
   ;; Embark is an Emacs package that acts like a context menu, allowing
   ;; users to perform context-sensitive actions on selected items
@@ -407,6 +432,8 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+;; Consult offers a suite of commands for efficient searching, previewing, and
+;; interacting with buffers, file contents, and more, improving various tasks.
 (use-package consult
   :ensure t
   :bind (;; C-c bindings in `mode-specific-map'
@@ -503,6 +530,10 @@ For example, to enable `outline-minor-mode` in Emacs Lisp:
 
 For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
+;; The built-in outline-minor-mode provides structured code folding in modes
+;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
+;; based on headings or indentation levels. This feature enhances navigation and
+;; improves the management of large files with hierarchical structures.
 (use-package outline-indent
   :ensure t
   :commands outline-indent-minor-mode
@@ -575,6 +606,9 @@ The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package pro
 
 To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
 ```elisp
+;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
+;; that automatically removes trailing whitespace and blank lines at the end of
+;; the buffer when saving.
 (use-package stripspace
   :ensure t
   :commands stripspace-local-mode
@@ -674,6 +708,11 @@ You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el
 
 The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
 ``` emacs-lisp
+;; The evil-surround package simplifies handling surrounding characters, such as
+;; parentheses, brackets, quotes, etc. It provides key bindings to easily add,
+;; change, or delete these surrounding characters in pairs. For instance, you
+;; can surround the currently selected text with double quotes in visual state
+;; using S" or gS".
 (use-package evil-surround
   :after evil
   :ensure t
@@ -695,6 +734,8 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 
 You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
 ``` emacs-lisp
+;; The following code enables commenting and uncommenting by pressing gcc in
+;; normal mode and gc in visual mode.
 (with-eval-after-load "evil"
   (evil-define-operator my-evil-comment-or-uncomment (beg end)
     "Toggle comment for the region between BEG and END."
@@ -705,10 +746,9 @@ You can also add the following code to enable commenting and uncommenting by pre
 
 ### Configuring LSP Servers with Eglot (built-in)
 
-To set up Language Server Protocol (LSP) servers using Eglot, you can configure it in your Emacs setup as follows. This configuration ensures minimal disruption from Eglot's progress reporting and optimizes performance by disabling unnecessary logging.
-
-To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
+To set up Language Server Protocol (LSP) servers using Eglot, you can configure it, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
+;; Set up the Language Server Protocol (LSP) servers using Eglot.
 (use-package eglot
   :ensure nil
   :commands (eglot-ensure
@@ -719,6 +759,11 @@ To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
 Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
 
 ``` emacs-lisp
+;; Configure Eglot to enable or disable certain options for the pylsp server
+;; in Python development. (Note that a third-party tool,
+;; https://github.com/python-lsp/python-lsp-server, must be installed),
+(add-hook 'python-mode-hook #'eglot-ensure)
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
 (setq-default eglot-workspace-configuration
               `(:pylsp (:plugins
                         (;; Fix imports and syntax using `eglot-format-buffer`
@@ -735,9 +780,6 @@ Here is an example of how to configure Eglot to enable or disable certain option
 
                          :yapf (:enabled :json-false)
                          :rope_autoimport (:enabled :json-false)))))
-
-(add-hook 'python-mode-hook #'eglot-ensure)
-(add-hook 'python-ts-mode-hook #'eglot-ensure)
 ```
 
 ### Session Management
@@ -746,6 +788,12 @@ The [easysession](https://github.com/jamescherti/easysession.el) Emacs package i
 
 To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
+;; The easysession Emacs package is a session manager for Emacs that can persist
+;; and restore file editing buffers, indirect buffers/clones, Dired buffers,
+;; windows/splits, the built-in tab-bar (including tabs, their buffers, and
+;; windows), and Emacs frames. It offers a convenient and effortless way to
+;; manage Emacs editing sessions and utilizes built-in Emacs functions to
+;; persist and restore frames.
 (use-package easysession
   :ensure t
   :commands (easysession-switch-to
@@ -778,6 +826,11 @@ Org mode is a major mode designed for organizing notes, planning, task managemen
 
 To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
+;; Org mode is a major mode designed for organizing notes, planning, task
+;; management, and authoring documents using plain text with a simple and
+;; expressive markup syntax. It supports hierarchical outlines, TODO lists,
+;; scheduling, deadlines, time tracking, and exporting to multiple formats
+;; including HTML, LaTeX, PDF, and Markdown.
 (use-package org
   :ensure t
   :commands (org-mode org-version)
@@ -801,6 +854,10 @@ The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides 
 
 To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
+;; The markdown-mode package provides a major mode for Emacs for syntax
+;; highlighting, editing commands, and preview support for Markdown documents.
+;; It supports core Markdown syntax as well as extensions like GitHub Flavored
+;; Markdown (GFM).
 (use-package markdown-mode
   :commands (gfm-mode
              gfm-view-mode
@@ -828,6 +885,11 @@ The configuration below enables Tree-sitter support using the [treesit-auto](htt
 To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
 
 ```elisp
+;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
+;; that provides precise, high-performance syntax highlighting. It supports a
+;; broad set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, Markdown, and many others.
 (use-package treesit-auto
   :ensure t
   :custom
@@ -847,6 +909,11 @@ This package is useful for users who want to disable the mouse to:
 
 To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
+;; This package is useful for users who want to disable the mouse to:
+;; - Prevent accidental clicks or cursor movements that may unexpectedly change
+;;   the cursor position.
+;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
+;;   for navigation.
 (use-package inhibit-mouse
   :ensure t
   :config
@@ -876,6 +943,9 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   ;; language code (e.g., "en_GB" for British English, "de_DE" for German).
   (ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
 
+;; The flyspell package is a built-in Emacs minor mode that provides
+;; on-the-fly spell checking. It highlights misspelled words as you type,
+;; offering interactive corrections.
 (use-package flyspell
   :ensure nil
   :commands flyspell-mode
@@ -907,6 +977,8 @@ To maintain cursor stability, Apheleia generates an RCS patch, applies it select
 
 To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
+;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
+;; Black and Prettier) asynchronously without disrupting the cursor position.
 (use-package apheleia
   :ensure t
   :commands (apheleia-mode
@@ -920,6 +992,8 @@ Helpful is an alternative to the built-in Emacs help that provides much more con
 
 To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
+;; Helpful is an alternative to the built-in Emacs help that provides much more
+;; contextual information.
 (use-package helpful
   :ensure t
   :commands (helpful-callable
@@ -999,6 +1073,8 @@ Other optional packages that may be useful include:
 
 Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively when multiple tabs are open:
 ```elisp
+;; Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively
+;; when multiple tabs are open:
 (setopt tab-bar-show 1)
 ```
 
@@ -1006,6 +1082,7 @@ Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively wh
 
 To prevent Emacs from saving customization information to a custom file, set `custom-file` to `null-device` by adding to the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
+;; Prevent Emacs from saving customization information to a custom file
 (setq custom-file null-device)
 ```
 
@@ -1014,6 +1091,7 @@ To prevent Emacs from saving customization information to a custom file, set `cu
 To customize the default font, add the following expression to your `~/.emacs.d/post-init.el`:
 
 ```elisp
+;; Set the default font to DejaVu Sans Mono with specific size and weight
 (set-face-attribute 'default nil
                     :height 130 :weight 'normal :family "DejaVu Sans Mono")
 ```
