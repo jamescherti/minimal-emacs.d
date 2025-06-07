@@ -353,9 +353,8 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 (use-package vertico
   ;; (Note: It is recommended to also enable the savehist package.)
   :ensure t
-  :defer t
-  :commands vertico-mode
-  :hook (after-init . vertico-mode))
+  :config
+  (vertico-mode))
 
 (use-package orderless
   ;; Vertico leverages Orderless' flexible matching capabilities, allowing users
