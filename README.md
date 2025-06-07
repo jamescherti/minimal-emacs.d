@@ -71,6 +71,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Session Management](#session-management)
     - [Configuring org-mode](#configuring-org-mode)
+    - [Configuring `markdown-mode` (e.g., README.md syntax)](#configuring-markdown-mode-eg-readmemd-syntax)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [Spell checker](#spell-checker)
     - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
@@ -773,6 +774,8 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 
 ### Configuring org-mode
 
+Org mode is a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
+
 To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package org
@@ -791,6 +794,30 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
   (org-fontify-whole-heading-line t)
   (org-fontify-quote-and-verse-blocks t))
 ```
+
+### Configuring `markdown-mode` (e.g., README.md syntax)
+
+The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
+
+To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package markdown-mode
+  :commands (gfm-mode
+             gfm-view-mode
+             markdown-mode
+             markdown-view-mode)
+  :mode (("\\.markdown\\'" . markdown-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("README\\.md\\'" . gfm-mode))
+  :init
+  (setq markdown-command "multimarkdown")
+
+  :bind
+  (:map markdown-mode-map
+        ("C-c C-e" . markdown-do)))
+```
+
+This configuration sets up `markdown-mode` with deferred loading to improve startup performance. The `:commands` and `:mode` keywords ensure that the mode is loaded only when needed—for example, when opening `.md`, `.markdown`, or `README.md` files. Files named `README.md` are specifically associated with `gfm-mode`, which is for GitHub Flavored Markdown syntax. The `markdown-command` variable is set to `"multimarkdown"` to specify the Markdown processor used for previews and exports. Additionally, a keybinding (`C-c C-e`) is defined in `markdown-mode-map` to invoke `markdown-do`, which can be customized to perform common Markdown-related actions.
 
 ### Inhibit the mouse
 
