@@ -82,7 +82,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
-    - [Configuring straight.el?](#configuring-straightel)
+    - [Configuring straight.el](#configuring-straightel)
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
@@ -251,7 +251,9 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'(lambda()
                                (let ((inhibit-message t))
                                  (recentf-mode 1))))
-(add-hook 'kill-emacs-hook #'recentf-cleanup)
+
+(with-eval-after-load "recentf"
+  (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
@@ -1102,7 +1104,9 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 
 **IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
-### Configuring straight.el?
+### Configuring straight.el
+
+The `straight.el` package is a declarative package manager for Emacs that aims to replace traditional systems like `package.el` by providing more precise control over package installation and management. Unlike `package.el`, which relies on downloading pre-built packages from ELPA archives, `straight.el` clones packages directly from their source repositories (typically Git), enabling reproducible and fully source-controlled package configurations.
 
 [Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
 ``` emacs-lisp
@@ -1125,6 +1129,8 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 ```
 
 ### Configuring elpaca (package manager)
+
+Elpaca is a modern, asynchronous package manager for Emacs designed to be a drop-in replacement for `package.el` and `straight.el`, with enhanced performance and flexibility. Unlike traditional Emacs package managers, Elpaca installs packages asynchronously, allowing Emacs to remain responsive during installation and updates.
 
 Add to `~/.emacs.d/pre-early-init.el`:
 ```elisp
