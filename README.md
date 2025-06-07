@@ -711,8 +711,7 @@ To configure `eglot`, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
 (use-package eglot
   :ensure nil
-  :commands (eglot
-             eglot-ensure
+  :commands (eglot-ensure
              eglot-rename
              eglot-format-buffer))
 ```
@@ -737,8 +736,8 @@ Here is an example of how to configure Eglot to enable or disable certain option
                          :yapf (:enabled :json-false)
                          :rope_autoimport (:enabled :json-false)))))
 
-(add-hook 'python-mode-hook #'eglot)
-(add-hook 'python-ts-mode-hook #'eglot)
+(add-hook 'python-mode-hook #'eglot-ensure)
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
 ```
 
 ### Session Management
