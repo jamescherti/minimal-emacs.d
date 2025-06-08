@@ -1381,10 +1381,10 @@ If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize i
 ;; This change increases MELPA Stable priority to 70, above MELPA,
 ;; ensuring that MELPA is preferred for package installations
 ;; over MELPA Stable.
-(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
-                                                      ("nongnu" . 80)
-                                                      ("melpa-stable" . 70)
-                                                      ("melpa"  . 0)))
+(setq package-archive-priorities '(("gnu"    . 99)
+                                   ("nongnu" . 80)
+                                   ("melpa-stable" . 70)
+                                   ("melpa"  . 0)))
 ```
 
 ### How to load a local lisp file for machine-specific configurations?

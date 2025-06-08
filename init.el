@@ -104,7 +104,7 @@
 
 ;;; Misc
 
-(setq whitespace-line-column nil)  ; whitespace-mode
+(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
 
 ;; Can be activated with `display-line-numbers-mode'
 (setq-default display-line-numbers-width 3)
@@ -479,9 +479,9 @@
 (setq ibuffer-formats
       '((mark modified read-only locked
               " " (name 40 40 :left :elide)
-				      " " (size 8 -1 :right)
-				      " " (mode 18 18 :left :elide) " " filename-and-process)
-	      (mark " " (name 16 -1) " " filename)))
+              " " (size 8 -1 :right)
+              " " (mode 18 18 :left :elide) " " filename-and-process)
+        (mark " " (name 16 -1) " " filename)))
 
 ;;; xref
 

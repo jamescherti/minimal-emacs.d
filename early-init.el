@@ -26,7 +26,7 @@
 
 (defvar minimal-emacs-ui-features '()
   "List of user interface features to enable in minimal Emacs setup.
-This variable holds a list Emacs UI features that can be enabled:
+This variable holds a list of Emacs UI features that can be enabled:
 - context-menu (Enables the context menu in graphical environments.)
 - tool-bar (Enables the tool bar in graphical environments.)
 - menu-bar (Enables the menu bar in graphical environments.)
@@ -39,14 +39,14 @@ This variable holds a list Emacs UI features that can be enabled:
 (defvar minimal-emacs-debug (bound-and-true-p init-file-debug)
   "Non-nil to enable debug.")
 
-(defvar minimal-emacs-gc-cons-threshold (* 32 1024 1024)
-  "Value to set `gc-cons-threshold' to after Emacs startup.
-Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
-
 (defvar minimal-emacs-optimize-startup-gc t
   "If non-nil, increase `gc-cons-threshold' during startup to reduce pauses.
 After Emacs finishes loading, `gc-cons-threshold' is restored to the value
 stored in `minimal-emacs--restore-gc-cons-threshold'.")
+
+(defvar minimal-emacs-gc-cons-threshold (* 32 1024 1024)
+  "Value to which `gc-cons-threshold' is set after Emacs startup.
+Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
 (defvar minimal-emacs-inhibit-redisplay-during-startup nil
   "Suppress redisplay during startup to improve performance.
@@ -432,9 +432,9 @@ this stage of initialization."
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
-                                                      ("nongnu" . 80)
-                                                      ("melpa"  . 70)))
+(setq package-archive-priorities '(("gnu"    . 99)
+                                   ("nongnu" . 80)
+                                   ("melpa"  . 70)))
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
