@@ -227,8 +227,13 @@ pre-early-init.el, and post-early-init.el.")
   ;; `inhibit-startup-screen', but it would still initialize anyway.
   (advice-add 'display-startup-screen :override #'ignore)
 
-  ;; Shave seconds off startup time by starting the scratch buffer in
-  ;; `fundamental-mode'
+  ;; The initial buffer is created during startup even in non-interactive
+  ;; sessions, and its major mode is fully initialized. Modes like `text-mode',
+  ;; `org-mode', or even the default `lisp-interaction-mode' load extra packages
+  ;; and run hooks, which can slow down startup.
+  ;;
+  ;; Using `fundamental-mode' for the initial buffer to avoid unnecessary
+  ;; startup overhead.
   (setq initial-major-mode 'fundamental-mode
         initial-scratch-message nil)
 
