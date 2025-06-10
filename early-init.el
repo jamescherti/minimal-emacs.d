@@ -74,11 +74,14 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
 (defvar minimal-emacs-setup-native-compilation t
-  "If non-nil, enable and configure native compilation.
-When enabled, this variable sets the following:
+  "Controls whether native compilation settings are enabled during setup.
+When non-nil, the following variables are set to non-nil to enable
+native compilation features:
 - `native-comp-deferred-compilation'
 - `native-comp-jit-compilation'
-- `package-native-compile'")
+- `package-native-compile'
+If nil, these variables are left at their default values and are not
+modified during setup.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
@@ -155,10 +158,11 @@ pre-early-init.el, and post-early-init.el.")
 (if (and (featurep 'native-compile)
          (fboundp 'native-comp-available-p)
          (native-comp-available-p))
-    ;; Activate `native-compile'
-    (setq native-comp-deferred-compilation minimal-emacs-setup-native-compilation
-          native-comp-jit-compilation minimal-emacs-setup-native-compilation
-          package-native-compile minimal-emacs-setup-native-compilation)
+    (when minimal-emacs-setup-native-compilation
+      ;; Activate `native-compile'
+      (setq native-comp-deferred-compilation t
+            native-comp-jit-compilation t
+            package-native-compile t))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
