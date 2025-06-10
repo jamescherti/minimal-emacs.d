@@ -909,7 +909,12 @@ The [treemacs](https://github.com/Alexander-Miller/treemacs) package is a file a
 
 To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
+;; A file and project explorer for Emacs that displays a structured tree
+;; layout, similar to file browsers in modern IDEs. It functions as a sidebar
+;; in the left window, providing a persistent view of files, projects, and
+;; other elements.
 (use-package treemacs
+  :ensure t
   :commands (treemacs
              treemacs-select-window
              treemacs-delete-other-windows
@@ -1007,31 +1012,18 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
 
   (treemacs-hide-gitignored-files-mode nil))
 
-;;(use-package treemacs-evil
-;;  :after (treemacs evil)
-;;  :ensure t)
-;;
-;; (use-package treemacs-projectile
-;;   :after (treemacs projectile)
+;; (use-package treemacs-evil
+;;   :after (treemacs evil)
 ;;   :ensure t)
 ;;
 ;; (use-package treemacs-icons-dired
 ;;   :hook (dired-mode . treemacs-icons-dired-enable-once)
 ;;   :ensure t)
 ;;
-;; (use-package treemacs-magit
-;;   :after (treemacs magit)
-;;   :ensure t)
-;;
-;; (use-package treemacs-persp  ; treemacs-perspective if you use perspective.el vs. persp-mode
-;;   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+;; (use-package treemacs-tab-bar  ; treemacs-tab-bar if you use tab-bar-mode
+;;   :after (treemacs)
 ;;   :ensure t
-;;   :config (treemacs-set-scope-type 'Perspectives))
-;;
-;;(use-package treemacs-tab-bar  ; treemacs-tab-bar if you use tab-bar-mode
-;;  :after (treemacs)
-;;  :ensure t
-;;  :config (treemacs-set-scope-type 'Tabs))
+;;   :config (treemacs-set-scope-type 'Tabs))
 ;;
 ;; (treemacs-start-on-boot)
 ```
