@@ -22,6 +22,13 @@
 
 ;;; Code:
 
+;;; Internal variables
+
+(defvar minimal-emacs--backup-gc-cons-threshold gc-cons-threshold
+  "Backup of the original value of `gc-cons-threshold' before startup.")
+
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;;; Variables
 
 (defvar minimal-emacs-ui-features '()
@@ -47,6 +54,9 @@ stored in `minimal-emacs--restore-gc-cons-threshold'.")
 (defvar minimal-emacs-gc-cons-threshold (* 32 1024 1024)
   "Value to which `gc-cons-threshold' is set after Emacs startup.
 Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
+
+(defvar minimal-emacs-gc-cons-threshold-restore-delay nil
+  "Number of seconds to wait before restoring `gc-cons-threshold'.")
 
 (defvar minimal-emacs-inhibit-redisplay-during-startup nil
   "Suppress redisplay during startup to improve performance.
@@ -146,12 +156,18 @@ pre-early-init.el, and post-early-init.el.")
 (setq garbage-collection-messages minimal-emacs-debug)
 
 (defun minimal-emacs--restore-gc-cons-threshold ()
-  "Restore `minimal-emacs-gc-cons-threshold'."
-  (setq gc-cons-threshold minimal-emacs-gc-cons-threshold))
+  "Restore `gc-cons-threshold' to `minimal-emacs-gc-cons-threshold'."
+  (if (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+      ;; Defer garbage collection during initialization to avoid 2 collections.
+      (run-at-time
+       minimal-emacs-gc-cons-threshold-restore-delay nil
+       (lambda () (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
+    (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
 
-(when minimal-emacs-optimize-startup-gc
-  (setq gc-cons-threshold most-positive-fixnum)
-  (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105))
+(if minimal-emacs-optimize-startup-gc
+    (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105)
+  ;; The user chose not to modify `gc-cons-threshold'.
+  (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold))
 
 ;;; Native compilation and Byte compilation
 
