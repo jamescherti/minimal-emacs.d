@@ -424,15 +424,26 @@
 
 ;;; Eglot
 
-(setq eglot-sync-connect 1
-      eglot-autoshutdown t)
+;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
+;; Emacs to remain fully responsive, although LSP features will only become
+;; available once the connection is established in the background.
+(setq eglot-sync-connect 0)
+
+(setq eglot-autoshutdown t)  ; Shut down server after killing last managed buffer
 
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
 
 ;; Eglot optimization
-(setq eglot-events-buffer-size 0)
-(setq eglot-report-progress nil)  ; Prevent Eglot minibuffer spam
+(if minimal-emacs-debug
+    (setq eglot-events-buffer-config '(:size 2000000 :format full))
+  ;; This reduces log clutter to improves performance.
+  (setq jsonrpc-event-hook nil)
+  ;; Reduce memory usage and avoid cluttering *EGLOT events* buffer
+  (setq eglot-events-buffer-size 0)  ; Deprecated
+  (setq eglot-events-buffer-config '(:size 0 :format short)))
+
+(setq eglot-report-progress minimal-emacs-debug)  ; Prevent minibuffer spam
 
 ;;; Flymake
 
