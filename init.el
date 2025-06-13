@@ -447,11 +447,7 @@
 
 ;;; Flymake
 
-(setq flymake-fringe-indicator-position 'left-fringe)
 (setq flymake-show-diagnostics-at-end-of-line nil)
-
-;; Suppress the display of Flymake error counters when there are no errors.
-(setq flymake-suppress-zero-counters t)
 
 ;; Disable wrapping around when navigating Flymake errors.
 (setq flymake-wrap-around nil)
