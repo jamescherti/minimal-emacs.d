@@ -508,8 +508,16 @@
 ;;; dabbrev
 
 (setq dabbrev-upcase-means-case-search t)
+
 (setq dabbrev-ignored-buffer-modes
       '(archive-mode image-mode docview-mode tags-table-mode pdf-view-mode))
+
+(setq dabbrev-ignored-buffer-regexps
+      '(;; - Buffers starting with a space (internal or temporary buffers)
+        "\\` "
+        ;; Tags files such as ETAGS, GTAGS, RTAGS, TAGS, e?tags, and GPATH,
+        ;; including versions with numeric extensions like <123>
+        "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?"))
 
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
