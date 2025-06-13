@@ -98,11 +98,9 @@
       compilation-ask-about-save nil
       compilation-scroll-output 'first-error)
 
-;; Recenter to the middle of the window for `compile-goto-error', which is also
-;; used by `wgrep' and `embark-export'.
-(setq next-error-recenter '(4))
-
 ;;; Misc
+
+(setq custom-buffer-done-kill t)
 
 (setq whitespace-line-column nil)  ; Use the value of `fill-column'.
 
