@@ -233,10 +233,6 @@
 
 ;;; Frames and windows
 
-;; Resizing the Emacs frame can be costly when changing the font. Disable this
-;; to improve startup times with fonts larger than the system default.
-(setq frame-resize-pixelwise t)
-
 ;; However, do not resize windows pixelwise, as this can cause crashes in some
 ;; cases when resizing too many windows at once or rapidly.
 (setq window-resize-pixelwise nil)

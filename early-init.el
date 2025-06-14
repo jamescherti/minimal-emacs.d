@@ -218,6 +218,10 @@ pre-early-init.el, and post-early-init.el.")
 (setq inhibit-compacting-font-caches t)
 
 (when (and (not (daemonp)) (not noninteractive))
+  ;; Resizing the Emacs frame can be costly when changing the font. Disable this
+  ;; to improve startup times with fonts larger than the system default.
+  (setq frame-resize-pixelwise t)
+
   ;; Without this, Emacs will try to resize itself to a specific column size
   (setq frame-inhibit-implied-resize t)
 
