@@ -168,6 +168,7 @@
 
 (setq vc-git-print-log-follow t)
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
+(setq vc-git-diff-switches '("--histogram"))  ; Faster algorithm for diffing.
 
 ;;; Auto save
 
