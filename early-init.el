@@ -49,7 +49,7 @@ This variable holds a list of Emacs UI features that can be enabled:
 (defvar minimal-emacs-optimize-startup-gc t
   "If non-nil, increase `gc-cons-threshold' during startup to reduce pauses.
 After Emacs finishes loading, `gc-cons-threshold' is restored to the value
-stored in `minimal-emacs--restore-gc-cons-threshold'.")
+stored in `minimal-emacs-gc-cons-threshold'.")
 
 (defvar minimal-emacs-gc-cons-threshold (* 32 1024 1024)
   "Value to which `gc-cons-threshold' is set after Emacs startup.
@@ -165,9 +165,13 @@ pre-early-init.el, and post-early-init.el.")
     (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)))
 
 (if minimal-emacs-optimize-startup-gc
+    ;; `gc-cons-threshold' is managed by minimal-emacs.d
     (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc-cons-threshold 105)
-  ;; The user chose not to modify `gc-cons-threshold'.
-  (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold))
+  ;; gc-cons-threshold is not managed by minimal-emacs.d.
+  ;; If it is equal to `most-positive-fixnum', this indicates that the user has
+  ;; not overridden the value in their `pre-early-init.el' configuration.
+  (when (= gc-cons-threshold most-positive-fixnum)
+    (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold)))
 
 ;;; Native compilation and Byte compilation
 
