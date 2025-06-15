@@ -904,7 +904,6 @@ To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
 
 The [treemacs](https://github.com/Alexander-Miller/treemacs) package is a file and project explorer for Emacs that provides a visually structured tree layout similar to file browsers in modern IDEs. It integrates well with various Emacs packages such as `projectile`, `lsp-mode`, and `magit`, allowing users to navigate their project structure efficiently.
 
-[[file:]]
 ![](https://raw.githubusercontent.com/Alexander-Miller/treemacs/refs/heads/master/screenshots/screenshot.png)
 
 To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
