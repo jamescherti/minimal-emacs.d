@@ -509,6 +509,9 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; high-performance systems.) Note: Minad, the author of Consult, does not
   ;; recommend aggressive values.
   ;; Read: https://github.com/minad/consult/discussions/951
+  ;;
+  ;; However, the author of minimal-emacs.d uses these parameters to achieve
+  ;; immediate feedback from Consult.
   ;; (setq consult-async-input-debounce 0.02
   ;;       consult-async-input-throttle 0.05
   ;;       consult-async-refresh-delay 0.02)
