@@ -505,6 +505,14 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
+  ;; Aggressive asynchronous that yield instantaneous results. (suitable for
+  ;; high-performance systems.) Note: Minad, the author of Consult, does not
+  ;; recommend aggressive values.
+  ;; Read: https://github.com/minad/consult/discussions/951
+  ;; (setq consult-async-input-debounce 0.02
+  ;;       consult-async-input-throttle 0.05
+  ;;       consult-async-refresh-delay 0.02)
+
   :config
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
