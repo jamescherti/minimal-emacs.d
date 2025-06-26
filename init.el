@@ -121,6 +121,13 @@
 (setq tramp-completion-reread-directory-timeout 50)
 (setq remote-file-name-inhibit-cache 50)
 
+;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
+;; This ensures the index reflects recent edits.
+(setq imenu-auto-rescan t)
+
+;; Prevent truncation of long function names in `imenu' listings
+(setq imenu-max-item-length 160)
+
 ;;; Files
 
 ;; Delete by moving to trash in interactive mode
