@@ -485,7 +485,7 @@
 
 (setq ibuffer-formats
       '((mark modified read-only locked
-              " " (name 40 40 :left :elide)
+              " " (name 55 55 :left :elide)
               " " (size 8 -1 :right)
               " " (mode 18 18 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
