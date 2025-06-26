@@ -85,6 +85,11 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
+;; In PGTK, this timeout introduces latency. Reducing it from the default 0.1
+;; improves responsiveness of childframes and related packages.
+(when (boundp 'pgtk-wait-for-event-timeout)
+  (setq pgtk-wait-for-event-timeout 0.001))
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -127,6 +132,9 @@
 
 ;; Prevent truncation of long function names in `imenu' listings
 (setq imenu-max-item-length 160)
+
+;; Disable auto-adding a new line at the bottom when scrolling.
+(setq next-line-add-newlines nil)
 
 ;;; Files
 
