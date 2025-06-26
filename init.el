@@ -329,6 +329,10 @@
 ;; when the window is narrower than `truncate-partial-width-windows' characters.
 (setq truncate-partial-width-windows nil)
 
+;; Configure automatic indentation to be triggered exclusively by newline and
+;; DEL (backspace) characters.
+(setq-default electric-indent-chars '(?\n ?\^?))
+
 ;; Prefer spaces over tabs. Spaces offer a more consistent default compared to
 ;; 8-space tabs. This setting can be adjusted on a per-mode basis as needed.
 (setq-default indent-tabs-mode nil
