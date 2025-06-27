@@ -394,7 +394,7 @@
 
 (setq sh-indent-after-continuation 'always)
 
-;;; Dired
+;;; Dired and ls-lisp
 
 (with-eval-after-load 'dired
   (setq dired-free-space nil
@@ -418,18 +418,26 @@
 
   ;; dired-omit-mode
   (setq dired-omit-verbose nil)
-  (setq dired-omit-files (concat "\\`[.]\\'")))
+  (setq dired-omit-files (concat "\\`[.]\\'"))
 
-;; ls-lisp
+  ;; Group directories first
+  (let ((args (list "--group-directories-first" "-ahlv")))
+    (when (featurep :system 'bsd)
+      (if-let* ((gls (executable-find "gls")))
+          (setq insert-directory-program gls)
+        (setq args (list (car args)))))
+    (setq dired-listing-switches (string-join args " "))))
+
 (with-eval-after-load 'ls-lisp
   (setq ls-lisp-verbosity nil)
   (setq ls-lisp-dirs-first t))
 
 ;;; Ediff
 
-;; Configure Ediff to use a single frame and split windows horizontally
-(setq ediff-window-setup-function 'ediff-setup-windows-plain
-      ediff-split-window-function 'split-window-horizontally)
+(with-eval-after-load 'ediff
+  ;; Configure Ediff to use a single frame and split windows horizontally
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally))
 
 ;;; Help
 
