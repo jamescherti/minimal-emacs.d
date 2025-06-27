@@ -396,48 +396,46 @@
 
 ;;; Dired and ls-lisp
 
-(with-eval-after-load 'dired
-  (setq dired-free-space nil
-        dired-dwim-target t  ; Propose a target for intelligent moving/copying
-        dired-deletion-confirmer 'y-or-n-p
-        dired-filter-verbose nil
-        dired-recursive-deletes 'top
-        dired-recursive-copies 'always
-        dired-create-destination-dirs 'ask)
+(setq dired-free-space nil
+      dired-dwim-target t  ; Propose a target for intelligent moving/copying
+      dired-deletion-confirmer 'y-or-n-p
+      dired-filter-verbose nil
+      dired-recursive-deletes 'top
+      dired-recursive-copies 'always
+      dired-create-destination-dirs 'ask)
 
-  ;; This is a higher-level predicate that wraps `dired-directory-changed-p'
-  ;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
-  ;; files, wdired, unreadable dirs, and delegates to dired-directory-changed-p
-  ;; for modification checks.
-  (setq dired-auto-revert-buffer 'dired-buffer-stale-p)
+;; This is a higher-level predicate that wraps `dired-directory-changed-p'
+;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
+;; files, wdired, unreadable dirs, and delegates to dired-directory-changed-p
+;; for modification checks.
+(setq dired-auto-revert-buffer 'dired-buffer-stale-p)
 
-  (setq dired-vc-rename-file t)
+(setq dired-vc-rename-file t)
 
-  ;; Disable the prompt about killing the Dired buffer for a deleted directory.
-  (setq dired-clean-confirm-killing-deleted-buffers nil)
+;; Disable the prompt about killing the Dired buffer for a deleted directory.
+(setq dired-clean-confirm-killing-deleted-buffers nil)
 
-  ;; dired-omit-mode
-  (setq dired-omit-verbose nil)
-  (setq dired-omit-files (concat "\\`[.]\\'"))
+;; dired-omit-mode
+(setq dired-omit-verbose nil)
+(setq dired-omit-files (concat "\\`[.]\\'"))
 
-  ;; Group directories first
-  (let ((args (list "--group-directories-first" "-ahlv")))
-    (when (featurep :system 'bsd)
-      (if-let* ((gls (executable-find "gls")))
-          (setq insert-directory-program gls)
-        (setq args (list (car args)))))
-    (setq dired-listing-switches (string-join args " "))))
+;; Group directories first
+(let ((args "--group-directories-first -ahlv"))
+  (when (featurep :system 'bsd)
+    (if-let* ((gls (executable-find "gls")))
+        (setq insert-directory-program gls)
+      (setq args nil)))
+  (when args
+    (setq dired-listing-switches args)))
 
-(with-eval-after-load 'ls-lisp
-  (setq ls-lisp-verbosity nil)
-  (setq ls-lisp-dirs-first t))
+(setq ls-lisp-verbosity nil)
+(setq ls-lisp-dirs-first t)
 
 ;;; Ediff
 
-(with-eval-after-load 'ediff
-  ;; Configure Ediff to use a single frame and split windows horizontally
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain
-        ediff-split-window-function 'split-window-horizontally))
+;; Configure Ediff to use a single frame and split windows horizontally
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
 
 ;;; Help
 
