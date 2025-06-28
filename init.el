@@ -408,7 +408,7 @@
 ;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
 ;; files, wdired, unreadable dirs, and delegates to dired-directory-changed-p
 ;; for modification checks.
-(defvar auto-revert-remote-files)
+(setq auto-revert-remote-files nil)
 (setq dired-auto-revert-buffer 'dired-buffer-stale-p)
 
 (setq dired-vc-rename-file t)
