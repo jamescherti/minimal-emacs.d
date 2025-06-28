@@ -252,7 +252,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; on disk.
 (add-hook 'after-init-hook #'global-auto-revert-mode)
 
-
 ;; recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
