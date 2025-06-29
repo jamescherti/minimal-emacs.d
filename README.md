@@ -720,7 +720,7 @@ You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-ba
 
 ![](https://raw.githubusercontent.com/jamescherti/vim-tab-bar.el/main/.screenshots/emacs-tab-like-vim.png)
 
-*(The screenshot above showcases how vim-tab-bar modifies the built-in Emacs interface.)*
+*(The screenshot above showcases how vim-tab-bar modifies the built-in Emacs tab-bar.)*
 
 The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
 ``` emacs-lisp
