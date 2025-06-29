@@ -709,7 +709,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   (evil-collection-init))
 ```
 
-You can also use the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) Emacs package to `~/.emacs.d/post-init.el` to give the built-in Emacs tab-bar a style similar to Vim's tabbed browsing interface:
+You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) package to enhance the built-in Emacs tab-bar with a minimalist, Vim-inspired design that automatically adapts to the active Emacs theme. Beyond its Vim-inspired design, the *vim-tab-bar* package is valued by users who prioritize theme consistency, as it integrates the Emacs tab-bar with any Emacs theme, producing a visually coherent and polished interface:
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
