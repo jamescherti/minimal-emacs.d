@@ -537,21 +537,44 @@ Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by c
 For example, to enable `outline-minor-mode` in Emacs Lisp:
 
 ``` emacs-lisp
-(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
-```
-
-For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
-```elisp
 ;; The built-in outline-minor-mode provides structured code folding in modes
 ;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
 ;; based on headings or indentation levels. This feature enhances navigation and
 ;; improves the management of large files with hierarchical structures.
+(use-package outline
+  :ensure nil
+  :commands outline-minor-mode
+  :hook
+  ((emacs-lisp-mode . outline-minor-mode)
+   ;; Use " ▼" instead of the default ellipsis "..." for folded text to make
+   ;; folds more visually distinctive and readable.
+   (outline-minor-mode
+    .
+    (lambda()
+      (let* ((display-table (or buffer-display-table (make-display-table)))
+             (face-offset (* (face-id 'shadow) (ash 1 22)))
+             (value (vconcat (mapcar (lambda (c) (+ face-offset c)) " ▼"))))
+        (set-display-table-slot display-table 'selective-display value)
+        (setq buffer-display-table display-table))))))
+```
+
+For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
+```elisp
+;; The outline-indent Emacs package provides a minor mode that enables code
+;; folding based on indentation levels.
+;;
+;; In addition to code folding, *outline-indent* allows:
+;; - Moving indented blocks up and down
+;; - Indenting/unindenting to adjust indentation levels
+;; - Inserting a new line with the same indentation level as the current line
+;; - Move backward/forward to the indentation level of the current line
+;; - and other features.
 (use-package outline-indent
   :ensure t
   :commands outline-indent-minor-mode
 
   :custom
-  (outline-indent-ellipsis " ▼ ")
+  (outline-indent-ellipsis " ▼")
 
   :init
   ;; The minor mode can also be automatically activated for a certain modes.
@@ -562,9 +585,7 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
   (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 ```
 
-In addition to code folding, *outline-indent* also allows: moving indented blocks up and down, indenting/unindenting to adjust indentation levels, inserting a new line with the same indentation level as the current line, Move backward/forward to the indentation level of the current line, and more.
-
-![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.screenshot2.png)
+![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
 
 ### Changing the default theme
 
@@ -683,12 +704,6 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up [Evil mode](https://github.com/emacs-evil/evil):
 
 ``` emacs-lisp
-;; Required by evil-collection
-(eval-when-compile
-  ;; It has to be defined before evil
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil))
-
 ;; Uncomment the following if you are using undo-fu
 ;; (setq evil-undo-system 'undo-fu)
 
@@ -696,15 +711,49 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 (use-package evil
   :ensure t
   :commands (evil-mode evil-define-key)
-  :hook (after-init . evil-mode))
+  :hook (after-init . evil-mode)
 
-(eval-when-compile
-  ;; It has to be defined before evil-colllection
-  (setq evil-collection-setup-minibuffer t))
+  :init
+  ;; It has to be defined before evil
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+
+  :custom
+  ;; Make :s in visual mode operate only on the actual visual selection
+  ;; (character or block), instead of the full lines covered by the selection
+  (evil-ex-visual-char-range t)
+  ;; Use Vim-style regular expressions in search and substitute commands,
+  ;; allowing features like \v (very magic), \zs, and \ze for precise matches
+  (evil-ex-search-vim-style-regexp t)
+  ;; Enable automatic horizontal split below
+  (evil-split-window-below t)
+  ;; Enable automatic vertical split to the right
+  (evil-vsplit-window-right t)
+  ;; Disable echoing Evil state to avoid replacing eldoc
+  (evil-echo-state nil)
+  ;; Do not move cursor back when exiting insert state
+  (evil-move-cursor-back nil)
+  ;; Make `v$` exclude the final newline
+  (evil-v$-excludes-newline t)
+  ;; Allow C-h to delete in insert state
+  (evil-want-C-h-delete t)
+  ;; Enable C-u to delete back to indentation in insert state
+  (evil-want-C-u-delete t)
+  ;; Enable fine-grained undo behavior
+  (evil-want-fine-undo t)
+  ;; Allow moving cursor beyond end-of-line in visual block mode
+  (evil-move-beyond-eol t)
+  ;; Disable wrapping of search around buffer
+  (evil-search-wrap nil)
+  ;; Whether Y yanks to the end of the line
+  (evil-want-Y-yank-to-eol t))
 
 (use-package evil-collection
   :after evil
   :ensure t
+  :init
+  ;; It has to be defined before evil-colllection
+  (setq evil-collection-setup-minibuffer t)
   :config
   (evil-collection-init))
 ```
