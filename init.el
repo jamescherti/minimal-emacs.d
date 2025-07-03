@@ -551,7 +551,8 @@
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
 (dolist (cmd '(list-timers narrow-to-region upcase-region downcase-region
-                           erase-buffer scroll-left dired-find-alternate-file))
+                           list-threads erase-buffer scroll-left
+                           dired-find-alternate-file))
   (put cmd 'disabled nil))
 
 ;;; Load post init
