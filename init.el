@@ -261,6 +261,12 @@
       window-divider-default-places t
       window-divider-default-right-width 1)
 
+;;; Fontification
+
+;; Disable fontification during user input to reduce lag in large buffers.
+;; Also helps marginally with scrolling performance.
+(setq redisplay-skip-fontification-on-input t)
+
 ;;; Scrolling
 
 ;; Enables faster scrolling. This may result in brief periods of inaccurate

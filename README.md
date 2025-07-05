@@ -1400,11 +1400,6 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 (setq vc-make-backup-files t)
 (setq kept-old-versions 10)
 (setq kept-new-versions 10)
-
-;; Improve Emacs responsiveness by deferring fontification during input
-;;
-;; NOTE: This may cause delayed syntax highlighting in certain cases
-(setq redisplay-skip-fontification-on-input t)
 ```
 
 It is also recommended to read the following articles:
