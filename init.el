@@ -422,7 +422,8 @@
 
 ;; Group directories first
 (let ((args "--group-directories-first -ahlv"))
-  (when (featurep :system 'bsd)
+  (when (or (eq system-type 'darwin)
+            (eq system-type 'berkeley-unix))
     (if-let* ((gls (executable-find "gls")))
         (setq insert-directory-program gls)
       (setq args nil)))
