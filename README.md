@@ -75,6 +75,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Configuring org-mode](#configuring-org-mode)
     - [Configuring markdown-mode (e.g., README.md syntax)](#configuring-markdown-mode-eg-readmemd-syntax)
     - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
+    - [Auto upgrade Emacs packages](#auto-upgrade-emacs-packages)
     - [Treemacs, a tree layout file explorer (Sidebar file explorer)](#treemacs-a-tree-layout-file-explorer-sidebar-file-explorer)
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [Spell checker](#spell-checker)
@@ -963,6 +964,50 @@ To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+```
+
+### Auto upgrade Emacs packages
+
+The `auto-package-update` package that automates the process of updating installed packages managed by *package.el*. Instead of requiring users to manually invoke `package-list-packages` and update each package, `auto-package-update` can check for available updates at regular intervals, perform updates in the background, and optionally hide the results buffer or prompt before applying changes.
+
+To configure **auto-package-update**, add the following to `~/.emacs.d/post-init.el`:
+
+```elisp
+;; This automates the process of updating installed packages
+(use-package auto-package-update
+  :ensure t
+  :custom
+  ;; Set the number of days between automatic updates.
+  ;; Here, packages will only be updated if at least 7 days have passed
+  ;; since the last successful update.
+  (auto-package-update-interval 7)
+
+  ;; Suppress display of the *auto-package-update results* buffer after updates.
+  ;; This keeps the user interface clean and avoids unnecessary interruptions.
+  (auto-package-update-hide-results t)
+
+  ;; Automatically delete old package versions after updates to reduce disk
+  ;; usage and keep the package directory clean. This prevents the accumulation
+  ;; of outdated files in Emacs’s package directory, which consume
+  ;; unnecessary disk space over time.
+  (auto-package-update-delete-old-versions t)
+
+  ;; Uncomment the following line to enable a confirmation prompt
+  ;; before applying updates. This can be useful if you want manual control.
+  ;; (auto-package-update-prompt-before-update t)
+
+  :config
+  ;; Run package updates automatically at startup, but only if the configured
+  ;; interval has elapsed.
+  (auto-package-update-maybe)
+
+  ;; Schedule a background update attempt daily at 10:00 AM.
+  ;; This uses Emacs' internal timer system. If Emacs is running at that time,
+  ;; the update will be triggered. Otherwise, the update is skipped for that
+  ;; day. Note that this scheduled update is independent of
+  ;; `auto-package-update-maybe` and can be used as a complementary or
+  ;; alternative mechanism.
+  (auto-package-update-at-time "10:00"))
 ```
 
 ### Treemacs, a tree layout file explorer (Sidebar file explorer)
