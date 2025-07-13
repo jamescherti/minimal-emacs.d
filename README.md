@@ -1446,6 +1446,15 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 (setq vc-make-backup-files t)
 (setq kept-old-versions 10)
 (setq kept-new-versions 10)
+
+;; When tooltip-mode is enabled, certain UI elements (e.g., help text,
+;; mouse-hover hints) will appear as native system tooltips (pop-up windows),
+;; rather than as echo area messages. This is useful in graphical Emacs sessions
+;; where tooltips can appear near the cursor.
+(setq tooltip-hide-delay 20)    ; Time in seconds before a tooltip disappears (default: 10)
+(setq tooltip-delay 0.4)        ; Delay before showing a tooltip after mouse hover (default: 0.7)
+(setq tooltip-short-delay 0.08) ; Delay before showing a short tooltip (Default: 0.1)
+(tooltip-mode 1)
 ```
 
 It is also recommended to read the following articles:
