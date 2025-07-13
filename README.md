@@ -1701,7 +1701,7 @@ The menu bar can be re-enabled by adding the following configuration to `~/.emac
 
 Other UI features can also be enabled by adding the following to `~/.emacs.d/pre-early-init.el`:
 ```elisp
-(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
+(setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips horizontal-scroll-bars vertical-scroll-bars))
 ```
 
 ### Why did the author develop minimal-emacs.d?

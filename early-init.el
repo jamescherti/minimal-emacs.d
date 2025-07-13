@@ -38,7 +38,9 @@ This variable holds a list of Emacs UI features that can be enabled:
 - tool-bar (Enables the tool bar in graphical environments.)
 - menu-bar (Enables the menu bar in graphical environments.)
 - dialogs (Enables both file dialogs and dialog boxes.)
-- tooltips (Enables tooltips.)")
+- tooltips (Enables tooltips.)
+- vertical-scroll-bars (Enables vertical scroll bars.)
+- horizontal-scroll-bars (Enables horizontal scroll bars.)")
 
 (defvar minimal-emacs-frame-title-format "%b – Emacs"
   "Template for displaying the title bar of visible and iconified frame.")
@@ -429,9 +431,19 @@ this stage of initialization."
   (push '(tool-bar-lines . 0) default-frame-alist)
   (setq tool-bar-mode nil))
 
-(push '(vertical-scroll-bars) default-frame-alist)
-(push '(horizontal-scroll-bars) default-frame-alist)
-(setq scroll-bar-mode nil)
+(let ((scroll-bar nil))
+  (if (memq 'vertical-scroll-bars minimal-emacs-ui-features)
+      (push '(vertical-scroll-bars) default-frame-alist)
+    (setq scroll-bar t))
+
+  (if (memq 'horizontal-scroll-bars minimal-emacs-ui-features)
+      (push '(horizontal-scroll-bars) default-frame-alist)
+    (setq scroll-bar t))
+
+  (if scroll-bar
+      (scroll-bar-mode 1)
+    (setq scroll-bar-mode nil)))
+(setq default-frame-scroll-bars 'right)
 
 (unless (memq 'tooltips minimal-emacs-ui-features)
   (when (bound-and-true-p tooltip-mode)
