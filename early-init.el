@@ -218,6 +218,11 @@ pre-early-init.el, and post-early-init.el.")
 (when minimal-emacs-debug
   (setq message-log-max 16384))
 
+;; In PGTK, this timeout introduces latency. Reducing it from the default 0.1
+;; improves responsiveness of childframes and related packages.
+(when (boundp 'pgtk-wait-for-event-timeout)
+  (setq pgtk-wait-for-event-timeout 0.001))
+
 ;;; Performance: Miscellaneous options
 
 ;; Font compacting can be very resource-intensive, especially when rendering
