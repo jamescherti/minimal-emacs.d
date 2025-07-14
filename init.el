@@ -26,6 +26,18 @@
     (minimal-emacs-load-user-init "pre-init.el")
   (error "The early-init.el file failed to loaded"))
 
+;;; Before package
+
+;; Ask the user whether to terminate asynchronous compilations on exit.
+;; This prevents native compilation from leaving temporary files in /tmp.
+(setq native-comp-async-query-on-exit t)
+
+;; Allow for shorter responses: "y" for yes and "n" for no.
+(setq read-answer-short t)
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  (advice-add 'yes-or-no-p :override #'y-or-n-p))
+
 ;;; Undo/redo
 
 (setq undo-limit (* 13 160000)
