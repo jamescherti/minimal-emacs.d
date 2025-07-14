@@ -38,11 +38,6 @@
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
-;;; Features, warnings, and errors
-
-;; Disable warnings from the legacy advice API. They aren't useful.
-(setq ad-redefinition-action 'accept)
-
 ;;; Undo/redo
 
 (setq undo-limit (* 13 160000)

@@ -223,6 +223,9 @@ pre-early-init.el, and post-early-init.el.")
 (when (boundp 'pgtk-wait-for-event-timeout)
   (setq pgtk-wait-for-event-timeout 0.001))
 
+;; Disable warnings from the legacy advice API. They aren't useful.
+(setq ad-redefinition-action 'accept)
+
 ;;; Performance: Miscellaneous options
 
 ;; Font compacting can be very resource-intensive, especially when rendering
