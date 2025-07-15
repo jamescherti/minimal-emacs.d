@@ -1404,9 +1404,6 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 ;; closing windows.
 (add-hook 'after-init-hook #'winner-mode)
 
-;; Replace selected text with typed text
-;; (delete-selection-mode 1)
-
 (use-package uniquify
   :ensure nil
   :custom
