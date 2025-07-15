@@ -29,7 +29,7 @@ The *minimal-emacs.d* project includes two initialization files:
 
 Excluding empty lines, comments, and docstrings, the minimal-emacs.d configuration is approximately 450 lines long. It does not introduce additional functionality beyond offering improved default settings. The user retains full control over which packages to install and which modes to enable.
 
-One of the primary motivations behind *minimal-emacs.d* is to offer alternative defaults that enhance usability and performance, addressing many suboptimal settings in Emacs that persist due to historical constraints and legacy compatibility.
+Emacs comes with many well-designed defaults, but it also retains some less-than-ideal settings, often due to historical constraints or legacy compatibility. The purpose of *minimal-emacs.d* is to offer refined defaults that improve both usability and performance, replacing long-standing Emacs settings that no longer serve modern workflows well.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
