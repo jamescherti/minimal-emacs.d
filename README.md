@@ -947,7 +947,7 @@ To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
 
 This configuration sets up `markdown-mode` with deferred loading to improve startup performance. The `:commands` and `:mode` keywords ensure that the mode is loaded only when needed—for example, when opening `.md`, `.markdown`, or `README.md` files. Files named `README.md` are specifically associated with `gfm-mode`, which is for GitHub Flavored Markdown syntax. The `markdown-command` variable is set to `"multimarkdown"` to specify the Markdown processor used for previews and exports. Additionally, a keybinding (`C-c C-e`) is defined in `markdown-mode-map` to invoke `markdown-do`, which can be customized to perform common Markdown-related actions.
 
-**Table of contents:** To automatically generate a table of contents when editing Markdown files, add the following to your `~/.emacs.d/post-init.el`:
+**Table of contents:** To generate a table of contents when editing Markdown files, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
 ;; Automatically generate a table of contents when editing Markdown files
 (use-package markdown-toc
@@ -962,16 +962,11 @@ This configuration sets up `markdown-mode` with deferred loading to improve star
 
 Once installed:
 
-* To **insert a table of contents** for the first time, run:
-  `M-x markdown-toc-generate-toc`
+- To **insert a table of contents** for the first time, run: `M-x markdown-toc-generate-toc`
+- To **update an existing table of contents**, run: `M-x markdown-toc-generate-or-refresh-toc`
+- To **remove an existing table of contents**, run: `M-x markdown-toc-delete-toc`
 
-* To **update an existing table of contents**, run:
-  `M-x markdown-toc-generate-or-refresh-toc`
-
-* To **remove an existing table of contents**, run:
-  `M-x markdown-toc-delete-toc`
-
-These commands work on any Markdown buffer and rely on properly formatted headers (e.g., `#`, `##`) to build the TOC.
+These commands work on any Markdown buffer and rely on properly formatted headers (e.g., `#`, `##`) to build the table of contents.
 
 The author also recommends reading the following article: [Emacs: Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/).
 
