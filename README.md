@@ -960,6 +960,19 @@ This configuration sets up `markdown-mode` with deferred loading to improve star
   (markdown-toc-header-toc-title "**Table of Contents**"))
 ```
 
+Once installed:
+
+* To **insert a table of contents** for the first time, run:
+  `M-x markdown-toc-generate-toc`
+
+* To **update an existing table of contents**, run:
+  `M-x markdown-toc-generate-or-refresh-toc`
+
+* To **remove an existing table of contents**, run:
+  `M-x markdown-toc-delete-toc`
+
+These commands work on any Markdown buffer and rely on properly formatted headers (e.g., `#`, `##`) to build the TOC.
+
 The author also recommends reading the following article: [Emacs: Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/).
 
 ### Tree-sitter Integration (Better Syntax Highlighting)
