@@ -27,6 +27,8 @@ The *minimal-emacs.d* project includes two initialization files:
 - `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
 - `init.el`: Loaded after the graphical interface is initialized. This file contains user customizations, including variable settings, package loading, mode configurations, and keybindings.
 
+One of the primary motivations behind `minimal-emacs.d` is to offer alternative defaults that enhance usability and performance, addressing many suboptimal settings in Emacs that persist due to historical constraints and legacy compatibility.
+
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-1.png)
