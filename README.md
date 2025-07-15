@@ -937,9 +937,6 @@ To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
   :mode (("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode))
-  :init
-  (setq markdown-command "multimarkdown")
-
   :bind
   (:map markdown-mode-map
         ("C-c C-e" . markdown-do)))
