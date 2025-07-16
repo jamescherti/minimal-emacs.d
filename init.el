@@ -325,7 +325,7 @@
 (setq-default left-fringe-width  8)
 (setq-default right-fringe-width 8)
 
-;; Do not show an arrow at the top/bottomin the fringe and empty lines
+;; Disable visual indicators in the fringe for buffer boundaries and empty lines
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
 
