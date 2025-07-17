@@ -61,6 +61,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
   - [Debug on error](#debug-on-error)
   - [Customizations: UI (pre-early-init.el)](#customizations-ui-pre-early-initel)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
+    - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
   - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
@@ -94,7 +95,6 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Changing the Default Font](#changing-the-default-font)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
-    - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
@@ -200,6 +200,23 @@ To customize your Emacs setup to include various user interface elements, you ca
 ```
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
+
+### Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`
+
+Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
+
+A common solution to this issue is installing the no-littering package; however, this package is not essential.
+
+An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
+``` emacs-lisp
+;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
+;; IMPORTANT: This part should be in the pre-early-init.el file
+(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
+(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
+(setq user-emacs-directory minimal-emacs-var-dir)
+```
+
+**IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
 ## Customizations: Packages (post-init.el)
 
@@ -1584,23 +1601,6 @@ It is also recommended to read the following articles:
 
 
 ## Customizations: pre-early-init.el
-
-### Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`
-
-Emacs, by default, stores various configuration files, caches, backups, and other data in the `~/.emacs.d` directory. Over time, this directory can become cluttered with numerous files, making it difficult to manage and maintain.
-
-A common solution to this issue is installing the no-littering package; however, this package is not essential.
-
-An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
-``` emacs-lisp
-;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
-;; IMPORTANT: This part should be in the pre-early-init.el file
-(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
-(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
-(setq user-emacs-directory minimal-emacs-var-dir)
-```
-
-**IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
 ### Configuring straight.el
 
