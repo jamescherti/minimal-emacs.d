@@ -1301,7 +1301,7 @@ To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
 
 ### Efficient template expansion with snippets
 
-The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. When a user types a short abbreviation, YASnippet automatically expands it into a full template, which can include placeholders, fields, and dynamic content. This reduces repetitive typing and helps maintain consistency in coding or writing.
+The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
 
 The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
 
