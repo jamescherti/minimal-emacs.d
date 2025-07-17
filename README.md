@@ -1577,6 +1577,8 @@ The `straight.el` package is a declarative package manager for Emacs that aims t
 
 ### Configuring elpaca (package manager)
 
+**NOTE:** When using the `:hook` keyword with `use-package`, replace `after-init` and `emacs-startup` with `elpaca-after-init`. Similarly, when using `add-hook`, replace `after-init-hook`, `emacs-startup-hook` with `elpaca-after-init-hook` to ensure they execute only after Elpaca has activated all queued packages.
+
 Elpaca is a modern, asynchronous package manager for Emacs designed to be a drop-in replacement for `package.el` and `straight.el`, with enhanced performance and flexibility. Unlike traditional Emacs package managers, Elpaca installs packages asynchronously, allowing Emacs to remain responsive during installation and updates.
 
 Add to `~/.emacs.d/pre-early-init.el`:
