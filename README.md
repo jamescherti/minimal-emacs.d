@@ -86,6 +86,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Spell checker](#spell-checker)
     - [Efficient jumps for enhanced productivity](#efficient-jumps-for-enhanced-productivity)
     - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
+    - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Showing the tab-bar](#showing-the-tab-bar)
@@ -677,7 +678,7 @@ To enable **stripspace** and automatically delete trailing whitespace, add the f
 
 ### Enhancing undo/redo
 
-The undo-fu package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The undo-fu-session package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
+The [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu) package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session) package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
 
 The default undo system in Emacs has two main issues that undo-fu fixes:
 
@@ -1298,9 +1299,50 @@ To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
   :hook ((prog-mode . apheleia-mode)))
 ```
 
+### Efficient template expansion with snippets
+
+The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. When a user types a short abbreviation, YASnippet automatically expands it into a full template, which can include placeholders, fields, and dynamic content. This reduces repetitive typing and helps maintain consistency in coding or writing.
+
+The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
+
+(NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
+
+
+```elisp
+;; The official collection of snippets for yasnippet.
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
+
+;; YASnippet is a template system designed that enhances text editing by
+;; enabling users to define and use snippets. When a user types a short
+;; abbreviation, YASnippet automatically expands it into a full template, which
+;; can include placeholders, fields, and dynamic content.
+(use-package yasnippet
+  :ensure t
+  :commands (yas-minor-mode
+             yas-global-mode)
+
+  :hook
+  (after-init . yas-global-mode)
+
+  :custom
+  (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
+  (yas-also-indent-empty-lines t)
+  (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
+  (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
+  ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
+  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
+  ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
+
+  :init
+  ;; Suppress verbose messages
+  (setq yas-verbosity 0))
+```
+
 ### A better Emacs *help* buffer
 
-Helpful is an alternative to the built-in Emacs help that provides much more contextual information.
+[Helpful](https://github.com/Wilfred) is an alternative to the built-in Emacs help that provides much more contextual information.
 
 To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
@@ -1525,6 +1567,15 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 (setq tooltip-delay 0.4)        ; Delay before showing a tooltip after mouse hover (default: 0.7)
 (setq tooltip-short-delay 0.08) ; Delay before showing a short tooltip (Default: 0.1)
 (tooltip-mode 1)
+
+;; Configure the built-in Emacs server to start after initialization,
+;; allowing the use of the emacsclient command to open files in the
+;; current session.
+(use-package server
+  :ensure nil
+  :commands server-start
+  :hook
+  (after-init . server-start))
 ```
 
 It is also recommended to read the following articles:
