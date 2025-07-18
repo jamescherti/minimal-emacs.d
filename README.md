@@ -209,11 +209,28 @@ A common solution to this issue is installing the no-littering package; however,
 
 An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
 ``` emacs-lisp
-;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
-;; IMPORTANT: This part should be in the pre-early-init.el file
-(setq minimal-emacs-var-dir (expand-file-name "var/" minimal-emacs-user-directory))
-(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
-(setq user-emacs-directory minimal-emacs-var-dir)
+;;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
+;; NOTE: This must be placed in 'pre-early-init.el'.
+(setq user-emacs-directory (expand-file-name "var/" minimal-emacs-user-directory))
+(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+```
+
+It is also useful to ensure that Emacs consistently utilizes the specified ELN cache directory for native compilation, thereby preventing it from generating or loading .eln files in the default system or user-standard locations. This guarantees that both the loading and writing of native-compiled files occur exclusively within the user-defined cache directory, avoiding permission issues and path inconsistencies. Add the following code to `~/.emacs.d/pre-early-init.el`
+``` emacs-lisp
+;; NOTE: This must be placed in 'pre-early-init.el'.
+(when (featurep 'native-compile)
+  ;; Ensure Emacs consistently uses the specified ELN cache directory for native
+  ;; compilation, preventing it from creating or loading .eln files in the
+  ;; default system or user-standard paths. This guarantees that both loading
+  ;; and writing of native-compiled files happen exclusively in the user-defined
+  ;; cache directory, avoiding permission issues and path inconsistencies.
+  (let ((eln-cache-dir (convert-standard-filename
+                        (expand-file-name "eln-cache" user-emacs-directory))))
+    (when (boundp 'native-comp-eln-load-path)
+      (setcar native-comp-eln-load-path eln-cache-dir))
+    (setq native-compile-target-directory eln-cache-dir)
+    (when (fboundp 'startup-redirect-eln-cache)
+      (startup-redirect-eln-cache eln-cache-dir))))
 ```
 
 **IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
@@ -1628,7 +1645,7 @@ The `straight.el` package is a declarative package manager for Emacs that aims t
 
 ### Configuring Elpaca (package manager)
 
-**NOTE:** If you choose to use the Elpaca package manager, it is recommended to replace `after-init` and `emacs-startup` with `elpaca-after-init` when using the `:hook` keyword in `use-package`. Likewise, when using `add-hook`, substitute `after-init-hook` and `emacs-startup-hook` with `elpaca-after-init-hook` to ensure execution occurs only after Elpaca has initialized all queued packages.
+**NOTE:** When using the `:hook` keyword with `use-package`, replace `after-init` and `emacs-startup` with `elpaca-after-init`. Similarly, when using `add-hook`, replace `after-init-hook`, `emacs-startup-hook` with `elpaca-after-init-hook` to ensure they execute only after Elpaca has activated all queued packages.
 
 Elpaca is a modern, asynchronous package manager for Emacs designed to be a drop-in replacement for `package.el` and `straight.el`, with enhanced performance and flexibility. Unlike traditional Emacs package managers, Elpaca installs packages asynchronously, allowing Emacs to remain responsive during installation and updates.
 
