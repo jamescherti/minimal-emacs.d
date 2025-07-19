@@ -1626,7 +1626,7 @@ The `straight.el` package is a declarative package manager for Emacs that aims t
   (load bootstrap-file nil 'nomessage))
 ```
 
-### Configuring elpaca (package manager)
+### Configuring Elpaca (package manager)
 
 **NOTE:** If you choose to use the Elpaca package manager, it is recommended to replace `after-init` and `emacs-startup` with `elpaca-after-init` when using the `:hook` keyword in `use-package`. Likewise, when using `add-hook`, substitute `after-init-hook` and `emacs-startup-hook` with `elpaca-after-init-hook` to ensure execution occurs only after Elpaca has initialized all queued packages.
 
@@ -1640,7 +1640,7 @@ Add to `~/.emacs.d/pre-early-init.el`:
 (setq minimal-emacs-package-initialize-and-refresh nil)
 ```
 
-And [add the elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
+And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
 ```elisp
 ;; Elpaca bootstrap
 (defvar elpaca-installer-version 0.11)
