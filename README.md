@@ -1359,7 +1359,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 
 ### A better Emacs *help* buffer
 
-[Helpful](https://github.com/Wilfred) is an alternative to the built-in Emacs help that provides much more contextual information.
+[Helpful](https://github.com/Wilfred/helpful) is an alternative to the built-in Emacs help that provides much more contextual information.
 
 To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
