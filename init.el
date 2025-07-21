@@ -173,7 +173,12 @@
 
 (setq vc-git-print-log-follow t)
 (setq vc-make-backup-files nil)  ; Do not backup version controlled files
-(setq vc-git-diff-switches '("--histogram"))  ; Faster algorithm for diffing.
+(setq vc-git-diff-switches
+      '("--histogram"  ;; Faster algorithm for diffing.
+        ;; --textconv ensures that custom diff drivers defined in .gitattributes
+        ;; are correctly invoked, so that vc-diff displays the expected output.
+        ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=79050
+        "--textconv"))
 
 ;;; Auto save
 
