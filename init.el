@@ -177,7 +177,6 @@
       '("--histogram"  ;; Faster algorithm for diffing.
         ;; --textconv ensures that custom diff drivers defined in .gitattributes
         ;; are correctly invoked, so that vc-diff displays the expected output.
-        ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=79050
         "--textconv"))
 
 ;;; Auto save
