@@ -150,6 +150,7 @@ pre-early-init.el, and post-early-init.el.")
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
+
 (setq custom-file (expand-file-name "custom.el" minimal-emacs-user-directory))
 
 ;;; Garbage collection
