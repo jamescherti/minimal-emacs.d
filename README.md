@@ -1492,8 +1492,11 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 To accomplish this, add the following form to your `~/.emacs.d/post-init.el`:
 
 ```elisp
-(when (file-exists-p custom-file)
-  (load custom-file))
+;; In Emacs, customization variables modified via the UI (e.g., M-x customize)
+;; are typically stored in a separate file, commonly named 'custom.el'. To
+;; ensure these settings are loaded during Emacs initialization, it is necessary
+;; to explicitly load this file if it exists.
+(load custom-file 'noerror 'no-message)
 ```
 
 This ensures that any user-defined customizations are applied without interfering with manually maintained configuration files.
