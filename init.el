@@ -87,12 +87,6 @@
       show-paren-when-point-inside-paren t
       show-paren-when-point-in-periphery t)
 
-;;; Compilation
-
-(setq compilation-always-kill t
-      compilation-ask-about-save nil
-      compilation-scroll-output 'first-error)
-
 ;;; Misc
 
 (setq custom-buffer-done-kill t)
@@ -147,8 +141,17 @@
 
 (setq uniquify-buffer-name-style 'forward)
 
-(setq comint-prompt-read-only t)
-(setq comint-buffer-maximum-size 2048)
+;;; comint (general command interpreter in a window)
+
+(setq ansi-color-for-comint-mode t
+      comint-prompt-read-only t
+      comint-buffer-maximum-size 4096)
+
+;;; Compilation
+
+(setq compilation-ask-about-save nil
+      compilation-always-kill t
+      compilation-scroll-output 'first-error)
 
 ;; Skip confirmation prompts when creating a new file or buffer
 (setq confirm-nonexistent-file-or-buffer nil)
@@ -300,7 +303,8 @@
 
 ;; The blinking cursor is distracting and interferes with cursor settings in
 ;; some minor modes that try to change it buffer-locally (e.g., Treemacs).
-(blink-cursor-mode -1)
+(when (bound-and-true-p blink-cursor-mode)
+  (blink-cursor-mode -1))
 
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
