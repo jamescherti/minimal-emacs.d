@@ -416,18 +416,6 @@
 (setq dired-omit-verbose nil)
 (setq dired-omit-files (concat "\\`[.]\\'"))
 
-;; Group directories first
-(when minimal-emacs-dired-group-directories-first
-  (with-eval-after-load 'dired
-    (let ((args "--group-directories-first -ahlv"))
-      (when (or (eq system-type 'darwin)
-                (eq system-type 'berkeley-unix))
-        (if-let* ((gls (executable-find "gls")))
-            (setq insert-directory-program gls)
-          (setq args nil)))
-      (when args
-        (setq dired-listing-switches args)))))
-
 (setq ls-lisp-verbosity nil)
 (setq ls-lisp-dirs-first t)
 

@@ -96,9 +96,6 @@ modified during setup.")
 (defvar minimal-emacs-user-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
 
-(defvar minimal-emacs-dired-group-directories-first nil
-  "If non-nil, group directories first in Dired listings.")
-
 ;;; Load pre-early-init.el
 
 ;; Prefer loading newer compiled files
