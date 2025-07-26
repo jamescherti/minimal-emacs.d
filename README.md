@@ -305,6 +305,15 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (with-eval-after-load "recentf"
   (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
+(setq recentf-exclude
+      (list "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$"
+            "\\.bz$" "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zpaq$"
+            "\\.lz$" "\\.lrz$" "\\.lzo$" "\\.lzma$" "\\.shar$"
+            "\\.kgb$" "\\.zip$" "\\.Z$" "\\.7z$" "\\.rar$"
+            "COMMIT_EDITMSG\\'"
+            "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+            "-autoloads\\.el$" "autoload\\.el$"))
+
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
 ;; search strings, and other prompts, to a file. This allows users to retain
