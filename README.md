@@ -295,24 +295,31 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; on disk.
 (add-hook 'after-init-hook #'global-auto-revert-mode)
 
-;; recentf is an Emacs package that maintains a list of recently
+;; Recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
-(add-hook 'after-init-hook #'(lambda()
-                               (let ((inhibit-message t))
-                                 (recentf-mode 1))))
-(setq recentf-auto-cleanup (if (daemonp) 300 'never))
-(with-eval-after-load "recentf"
-  (add-hook 'kill-emacs-hook #'recentf-cleanup))
+(use-package recentf
+  :ensure nil
+  :commands (recentf-mode recentf-cleanup)
+  :hook
+  (after-init . recentf-mode)
 
-(setq recentf-exclude
-      (list "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$"
-            "\\.bz$" "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zpaq$"
-            "\\.lz$" "\\.lrz$" "\\.lzo$" "\\.lzma$" "\\.shar$"
-            "\\.kgb$" "\\.zip$" "\\.Z$" "\\.7z$" "\\.rar$"
-            "COMMIT_EDITMSG\\'"
-            "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
-            "-autoloads\\.el$" "autoload\\.el$"))
+  :custom
+  (recentf-auto-cleanup (if (daemonp) 300 'never))
+  (recentf-exclude
+   (list "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$"
+         "\\.bz$" "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zip$"
+         "\\.7z$" "\\.rar$"
+         "COMMIT_EDITMSG\\'"
+         "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+         "-autoloads\\.el$" "autoload\\.el$"))
+
+  :config
+  ;; A cleanup depth of -90 ensures that `recentf-cleanup' runs before
+  ;; `recentf-save-list', allowing stale entries to be removed before the list
+  ;; is saved by `recentf-save-list', which is automatically added to
+  ;; `kill-emacs-hook' by `recentf-mode'.
+  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
