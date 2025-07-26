@@ -295,16 +295,14 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; on disk.
 (use-package autorevert
   :ensure nil
-  :commands (auto-revert-mode
-             auto-revert-handler
-             global-auto-revert-mode)
+  :commands (auto-revert-mode global-auto-revert-mode)
   :hook
   (after-init . global-auto-revert-mode)
-  :config
+  :custom
+  (auto-revert-interval 3)
   (auto-revert-remote-files nil)
   (auto-revert-use-notify t)
   (auto-revert-avoid-polling nil)
-  (auto-revert-interval 3)
   (auto-revert-verbose t))
 
 ;; Recentf is an Emacs package that maintains a list of recently
@@ -337,12 +335,24 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
 ;; search strings, and other prompts, to a file. This allows users to retain
 ;; their minibuffer history across Emacs restarts.
-(add-hook 'after-init-hook #'savehist-mode)
+(use-package savehist
+  :ensure nil
+  :commands (savehist-mode savehist-save)
+  :hook
+  (after-init . savehist-mode)
+  :custom
+  (savehist-autosave-interval 600))
 
 ;; save-place-mode enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
-(add-hook 'after-init-hook #'save-place-mode)
+(use-package saveplace
+  :ensure nil
+  :commands (save-place-mode save-place-local-mode)
+  :hook
+  (after-init . save-place-mode)
+  :custom
+  (save-place-limit 400))
 ```
 
 ### Activating autosave
