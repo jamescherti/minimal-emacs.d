@@ -293,7 +293,19 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; Auto-revert in Emacs is a feature that automatically updates the
 ;; contents of a buffer to reflect changes made to the underlying file
 ;; on disk.
-(add-hook 'after-init-hook #'global-auto-revert-mode)
+(use-package autorevert
+  :ensure nil
+  :commands (auto-revert-mode
+             auto-revert-handler
+             global-auto-revert-mode)
+  :hook
+  (after-init . global-auto-revert-mode)
+  :config
+  (auto-revert-remote-files nil)
+  (auto-revert-use-notify t)
+  (auto-revert-avoid-polling nil)
+  (auto-revert-interval 3)
+  (auto-revert-verbose t))
 
 ;; Recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
