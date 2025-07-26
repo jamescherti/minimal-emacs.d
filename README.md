@@ -301,7 +301,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 (add-hook 'after-init-hook #'(lambda()
                                (let ((inhibit-message t))
                                  (recentf-mode 1))))
-
+(setq recentf-auto-cleanup (if (daemonp) 300 'never))
 (with-eval-after-load "recentf"
   (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
