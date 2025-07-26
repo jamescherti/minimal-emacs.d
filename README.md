@@ -20,7 +20,7 @@ Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of *
 The *minimal-emacs.d* project is:
 - **Minimal yet effective:** A solid starting point.
 - **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
-- **0 packages loaded / No forced modes:** Unlike other frameworks or starter kits, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable and which packages to load with `require`.
+- **0 packages loaded / No forced modes:** Unlike other frameworks or starter kits, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable and which packages to load.
 - **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
 The *minimal-emacs.d* project includes two initialization files:
