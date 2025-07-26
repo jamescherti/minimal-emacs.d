@@ -341,7 +341,12 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :hook
   (after-init . savehist-mode)
   :custom
-  (savehist-autosave-interval 600))
+  (savehist-autosave-interval 600)
+  (savehist-additional-variables
+   '(kill-ring                        ; clipboard
+     register-alist                   ; macros
+     mark-ring global-mark-ring       ; marks
+     search-ring regexp-search-ring)))
 
 ;; save-place-mode enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
