@@ -215,24 +215,6 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 ```
 
-It is also useful to ensure that Emacs consistently utilizes the specified ELN cache directory for native compilation, thereby preventing it from generating or loading .eln files in the default system or user-standard locations. This guarantees that both the loading and writing of native-compiled files occur exclusively within the user-defined cache directory, avoiding permission issues and path inconsistencies. Add the following code to `~/.emacs.d/pre-early-init.el`
-``` emacs-lisp
-;; NOTE: This must be placed in 'pre-early-init.el'.
-(when (featurep 'native-compile)
-  ;; Ensure Emacs consistently uses the specified ELN cache directory for native
-  ;; compilation, preventing it from creating or loading .eln files in the
-  ;; default system or user-standard paths. This guarantees that both loading
-  ;; and writing of native-compiled files happen exclusively in the user-defined
-  ;; cache directory, avoiding permission issues and path inconsistencies.
-  (let ((eln-cache-dir (convert-standard-filename
-                        (expand-file-name "eln-cache" user-emacs-directory))))
-    (when (boundp 'native-comp-eln-load-path)
-      (setcar native-comp-eln-load-path eln-cache-dir))
-    (setq native-compile-target-directory eln-cache-dir)
-    (when (fboundp 'startup-redirect-eln-cache)
-      (startup-redirect-eln-cache eln-cache-dir))))
-```
-
 **IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
 ## Customizations: Packages (post-init.el)
