@@ -402,10 +402,11 @@
       dired-filter-verbose nil
       dired-recursive-deletes 'top
       dired-recursive-copies 'always
-      dired-movement-style 'bounded-files
       dired-vc-rename-file t
       dired-create-destination-dirs 'ask
-      ;; Disable the prompt about killing the Dired buffer for a deleted directory.
+      ;; Constrain vertical cursor movement to lines within the buffer
+      dired-movement-style 'bounded-files
+      ;; Suppress Dired buffer kill prompt for deleted dirs
       dired-clean-confirm-killing-deleted-buffers nil)
 
 ;; This is a higher-level predicate that wraps `dired-directory-changed-p'
