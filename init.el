@@ -402,7 +402,11 @@
       dired-filter-verbose nil
       dired-recursive-deletes 'top
       dired-recursive-copies 'always
-      dired-create-destination-dirs 'ask)
+      dired-movement-style 'bounded-files
+      dired-vc-rename-file t
+      dired-create-destination-dirs 'ask
+      ;; Disable the prompt about killing the Dired buffer for a deleted directory.
+      dired-clean-confirm-killing-deleted-buffers nil)
 
 ;; This is a higher-level predicate that wraps `dired-directory-changed-p'
 ;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
@@ -411,14 +415,9 @@
 (setq auto-revert-remote-files nil)
 (setq dired-auto-revert-buffer 'dired-buffer-stale-p)
 
-(setq dired-vc-rename-file t)
-
-;; Disable the prompt about killing the Dired buffer for a deleted directory.
-(setq dired-clean-confirm-killing-deleted-buffers nil)
-
 ;; dired-omit-mode
-(setq dired-omit-verbose nil)
-(setq dired-omit-files (concat "\\`[.]\\'"))
+(setq dired-omit-verbose nil
+      dired-omit-files (concat "\\`[.]\\'"))
 
 (setq ls-lisp-verbosity nil)
 (setq ls-lisp-dirs-first t)
