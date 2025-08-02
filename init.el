@@ -404,8 +404,6 @@
       dired-recursive-copies 'always
       dired-vc-rename-file t
       dired-create-destination-dirs 'ask
-      ;; Constrain vertical cursor movement to lines within the buffer
-      dired-movement-style 'bounded-files
       ;; Suppress Dired buffer kill prompt for deleted dirs
       dired-clean-confirm-killing-deleted-buffers nil)
 

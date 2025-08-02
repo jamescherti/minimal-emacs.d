@@ -1594,6 +1594,9 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Dividers.html
 (add-hook 'after-init-hook #'window-divider-mode)
 
+;; Constrain vertical cursor movement to lines within the buffer
+(setq dired-movement-style 'bounded-files)
+
 ;; Dired buffers: Automatically hide file details (permissions, size,
 ;; modification date, etc.) and all the files in the `dired-omit-files' regular
 ;; expression for a cleaner display.
