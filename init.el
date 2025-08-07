@@ -542,7 +542,7 @@
 
 (dolist (cmd '(list-timers narrow-to-region upcase-region downcase-region
                            list-threads erase-buffer scroll-left
-                           dired-find-alternate-file))
+                           dired-find-alternate-file set-goal-column))
   (put cmd 'disabled nil))
 
 ;;; Load post init
