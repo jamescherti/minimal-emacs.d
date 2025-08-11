@@ -94,7 +94,8 @@ If nil, these variables are left at their default values and are not
 modified during setup.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
-  "The default value of the `user-emacs-directory' variable.")
+  "Directory beneath minimal-emacs.d files are placed.
+Note that this should end with a directory separator.")
 
 ;;; Load pre-early-init.el
 
