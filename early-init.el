@@ -58,16 +58,6 @@ Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 (defvar minimal-emacs-gc-cons-threshold-restore-delay nil
   "Number of seconds to wait before restoring `gc-cons-threshold'.")
 
-(defvar minimal-emacs-inhibit-redisplay-during-startup nil
-  "Suppress redisplay during startup to improve performance.
-This prevents visual updates while Emacs initializes. The tradeoff is that you
-won't see the progress or activities during the startup process.")
-
-(defvar minimal-emacs-inhibit-message-during-startup nil
-  "Suppress startup messages for a cleaner experience.
-This slightly enhances performance. The tradeoff is that you won't be informed
-of the progress or any relevant activities during startup.")
-
 (defvar minimal-emacs-optimize-file-name-handler-alist t
   "Enable optimization of `file-name-handler-alist'.
 When non-nil, this variable activates optimizations to reduce file name handler
@@ -92,6 +82,16 @@ native compilation features:
 - `package-native-compile'
 If nil, these variables are left at their default values and are not
 modified during setup.")
+
+(defvar minimal-emacs-inhibit-redisplay-during-startup nil
+  "Suppress redisplay during startup to improve performance.
+This prevents visual updates while Emacs initializes. The tradeoff is that you
+won't see the progress or activities during the startup process.")
+
+(defvar minimal-emacs-inhibit-message-during-startup nil
+  "Suppress startup messages for a cleaner experience.
+This slightly enhances performance. The tradeoff is that you won't be informed
+of the progress or any relevant activities during startup.")
 
 (defvar minimal-emacs-user-directory user-emacs-directory
   "Directory beneath minimal-emacs.d files are placed.
