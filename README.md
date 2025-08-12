@@ -92,6 +92,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Changing the Default Font](#changing-the-default-font)
+    - [Persist Text Scale](#persist-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
@@ -1518,6 +1519,28 @@ To customize the default font, add the following expression to your `~/.emacs.d/
 On Linux, you can display a comprehensive list of all installed font families by executing the following command:
 ```
 fc-list : family | sed 's/,/\n/g' | sort -u
+```
+
+### Persist Text Scale
+
+The [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) Emacs package provides `persist-text-scale-mode`, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
+
+This package also facilitates grouping buffers into categories, allowing buffers within the same category to share a consistent text scale. This ensures uniform font sizes when adjusting text scaling. By default:
+- Each file-visiting buffer has its own independent text scale.
+- Special buffers, identified by their buffer names, each retain their own text scale setting.
+- All Dired buffers maintain the same font size, treating Dired as a unified "file explorer" where the text scale remains consistent across different buffers.
+
+This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
+
+```elisp
+(use-package persist-text-scale
+  :commands (persist-text-scale-mode
+             persist-text-scale-restore)
+
+  :hook (after-init . persist-text-scale-mode)
+
+  :custom
+  (text-scale-mode-step 1.07))
 ```
 
 ### Loading the custom.el file
