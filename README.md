@@ -383,7 +383,7 @@ This is different from `auto-save-mode`: `auto-save-mode` periodically saves all
 
 [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
 
-Cape, or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
+[Cape](https://github.com/minad/cape), or Completion At Point Extensions, extends the capabilities of in-buffer completion. It integrates with Corfu or the default completion UI, by providing additional backends through completion-at-point-functions.
 
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
