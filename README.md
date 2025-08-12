@@ -1532,6 +1532,7 @@ This package also facilitates grouping buffers into categories, allowing buffers
 
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
+To configure the *persist-text-scale* package, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package persist-text-scale
   :commands (persist-text-scale-mode
