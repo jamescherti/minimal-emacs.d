@@ -404,7 +404,6 @@
       dired-recursive-copies 'always
       dired-vc-rename-file t
       dired-create-destination-dirs 'ask
-      dired-mouse-drag-files t
       ;; Suppress Dired buffer kill prompt for deleted dirs
       dired-clean-confirm-killing-deleted-buffers nil)
 
