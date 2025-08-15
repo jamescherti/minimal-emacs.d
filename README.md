@@ -232,7 +232,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
    ```
    (A non-nil result indicates that native compilation is active.)
 
-2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code at the very beginning of your `~/.emacs.d/post-init.el` file, before all other packages:
+2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code to the `~/.emacs.d/post-init.el` file:
 ```emacs-lisp
 ;; Native compilation enhances Emacs performance by converting Elisp code into
 ;; native machine code, resulting in faster execution and improved
@@ -242,7 +242,6 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
   :ensure t
-  :demand t
   :custom
   ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
   ;; Drawback: The minibuffer will not display compile-angel's actions.
@@ -265,7 +264,9 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   ;; A local mode that compiles .el files whenever the user saves them.
   ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
 
-  ;; A global mode that compiles .el files before they are loaded.
+  ;; A global mode that compiles .el files prior to loading them via `load' or
+  ;; `require'. Additionally, it compiles all packages that were loaded before
+  ;; the mode `compile-angel-on-load-mode' was activated.
   (compile-angel-on-load-mode))
 ```
 
