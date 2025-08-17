@@ -189,8 +189,7 @@ pre-early-init.el, and post-early-init.el.")
   (setq features (delq 'native-compile features)))
 
 (setq native-comp-warning-on-missing-source minimal-emacs-debug
-      native-comp-async-report-warnings-errors (or minimal-emacs-debug 'silent)
-      native-comp-verbose (if minimal-emacs-debug 1 0))
+      native-comp-async-report-warnings-errors (or minimal-emacs-debug 'silent))
 
 (setq jka-compr-verbose minimal-emacs-debug)
 (setq byte-compile-warnings minimal-emacs-debug
