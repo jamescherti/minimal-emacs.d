@@ -272,9 +272,10 @@
 ;; Keep screen position if scroll command moved it vertically out of the window.
 (setq scroll-preserve-screen-position t)
 
-;; If `scroll-conservatively' is set above 100, the window is never
-;; automatically recentered, which decreases the time spend recentering.
-(setq scroll-conservatively 101)
+;; Emacs recenters the window when the cursor moves past `scroll-conservatively'
+;; lines beyond the window edge. A value over 101 disables recentering; the
+;; default (0) is too eager. Here it is set to 10 for a balanced behavior.
+(setq scroll-conservatively 10)
 
 ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
