@@ -138,11 +138,12 @@ pre-early-init.el, and post-early-init.el.")
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
     (if (not minimal-emacs-load-compiled-init-files)
-        (load init-file :no-error :no-message :nosuffix)
+        (load init-file :no-error (not (bound-and-true-p init-file-debug))
+              :nosuffix)
       ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
       ;; select between .el and .elc files.
       (setq init-file (minimal-emacs--remove-el-file-suffix init-file))
-      (load init-file :no-error :no-message))))
+      (load init-file :no-error (not (bound-and-true-p init-file-debug))))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
 
