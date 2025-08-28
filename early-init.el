@@ -30,7 +30,7 @@
 
 ;; Temporarily raise the garbage collection threshold to its maximum value.
 ;; It will be restored later to controlled values.
-(setq gc-cons-threshold (- most-positive-fixnum 1))
+(setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 1.0)
 
 ;;; Variables
@@ -182,7 +182,7 @@ pre-early-init.el, and post-early-init.el.")
     ;; `gc-cons-threshold' is managed by minimal-emacs.d
     (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc 105)
   ;; gc-cons-threshold is not managed by minimal-emacs.d.
-  (when (= gc-cons-threshold (- most-positive-fixnum 1))
+  (when (= gc-cons-threshold most-positive-fixnum)
     (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold)
     (setq gc-cons-percentage minimal-emacs--backup-gc-cons-percentage)))
 
