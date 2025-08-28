@@ -174,8 +174,8 @@ pre-early-init.el, and post-early-init.el.")
   "Restore garbage collection settings."
   (if (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
       ;; Defer garbage collection during initialization to avoid 2 collections.
-      (run-at-time minimal-emacs-gc-cons-threshold-restore-delay nil
-                   #'minimal-emacs--restore-gc-values)
+      (run-with-timer minimal-emacs-gc-cons-threshold-restore-delay nil
+                      #'minimal-emacs--restore-gc-values)
     (minimal-emacs--restore-gc-values)))
 
 (if minimal-emacs-optimize-startup-gc
