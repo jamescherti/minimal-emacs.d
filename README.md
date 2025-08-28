@@ -9,7 +9,7 @@ The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
-If this enhances your workflow, please show your support by **⭐ starring minimal-emacs.d GitHub** to help more users discover its benefits.
+If this enhances your workflow, please show your support by **⭐ starring minimal-emacs.d GitHub** to help more Emacs users discover its benefits.
 
 <p align="center">
 <img src="https://jamescherti.com/misc/minimal-emacs.d.png" width="50%" />
