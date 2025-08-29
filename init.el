@@ -274,8 +274,8 @@
 
 ;; Emacs recenters the window when the cursor moves past `scroll-conservatively'
 ;; lines beyond the window edge. A value over 101 disables recentering; the
-;; default (0) is too eager. Here it is set to 10 for a balanced behavior.
-(setq scroll-conservatively 10)
+;; default (0) is too eager. Here it is set to 20 for a balanced behavior.
+(setq scroll-conservatively 20)
 
 ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
