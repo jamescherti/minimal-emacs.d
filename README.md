@@ -1565,7 +1565,7 @@ To configure the *persist-text-scale* package, add the following to your `~/.ema
 
 ### Loading the custom.el file
 
-**NOTE:** The author advises against loading `custom.el`. To disable it, set `custom-file` to the null device using `(setq custom-file null-device)`. Users are instead encouraged to define their configuration programmatically in files such as `post-init.el`. Maintaining configuration programmatically offers several advantages: it ensures reproducibility and facilitates version control. This makes it easier to understand, audit, and evolve the configuration over time.
+**NOTE:** The author advises against loading `custom.el`. Users are instead encouraged to define their configuration programmatically in files such as `post-init.el`. Maintaining configuration programmatically offers several advantages: it ensures reproducibility and facilitates version control. This makes it easier to understand, audit, and evolve the configuration over time.
 
 In Emacs, customization variables modified via the UI (e.g., `M-x customize`) are typically stored in a separate file, commonly named `custom.el`. To ensure these settings are loaded during Emacs initialization, it is necessary to explicitly load this file if it exists. To accomplish this, add the following form to your `~/.emacs.d/post-init.el`:
 
