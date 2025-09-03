@@ -103,6 +103,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
   - [Frequently asked questions](#frequently-asked-questions)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
+    - [How to get the latest version of all packages?](#how-to-get-the-latest-version-of-all-packages)
     - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
     - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
@@ -1851,6 +1852,40 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 (Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
 
+### How to get the latest version of all packages?
+
+By default, `minimal-emacs.d` is configured to prioritize packages from GNU and NonGNU repositories over MELPA, ensuring greater stability.
+
+If, like the author of `minimal-emacs.d`, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and nongnu repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (`package-lint`) in the author’s configuration experienced a brief disruption, which was quickly resolved.
+
+Benefit:
+
+* Ensures access to the **most recent package versions**, enabling early adoption of new features, performance improvements, and upstream bug fixes.
+* Prioritizing MELPA provides a **broader selection of cutting-edge packages**, including experimental or niche tools that may not yet exist in stable archives.
+
+Drawback:
+
+* Exposure to **potential instability**, as MELPA packages are often built from the latest commits without extensive regression testing.
+* May require **periodic maintenance**, such as resolving dependency conflicts or adapting to API changes in packages that evolve rapidly.
+
+To ensure that Emacs always installs or updates to the newest versions of all packages, add the following configuration to `~/.emacs.d/post-early-init.el`:
+
+```elisp
+(setq package-archive-priorities '(("melpa"        . 90)
+                                   ("gnu"          . 70)
+                                   ("nongnu"       . 60)
+                                   ("melpa-stable" . 50)))
+```
+
+This setup prioritizes **MELPA** over the stable GNU and NonGNU repositories. When multiple archives provide the same package, Emacs will choose the version from the archive with the highest priority. As a result, you will consistently receive the latest available versions from MELPA while still having access to stable GNU and NonGNU packages when MELPA does not provide them.
+
+In the event of a package breakage, you can direct Emacs to install a package from a specific repository. For instance, to ensure that `evil` and `evil-collection` are installed from melpa-stable, add the following configuration to `~/.emacs.d/post-early-init.el`:
+```elisp
+(setq package-pinned-packages
+      '((evil . "melpa-stable")
+        (evil-numbers . "melpa-stable")))
+```
+
 ### How to use MELPA stable?
 
 **Note: The minimal-emacs.d author does not recommend using MELPA Stable. Use MELPA instead, which is enabled by default in the minimal-emacs.d configuration.**
@@ -1864,16 +1899,13 @@ Here are the key differences between **MELPA** (the default repository used in m
 If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize it. To ensure packages are fetched from MELPA Stable first, add the following configuration to `~/.emacs.d/post-early-init.el`:
 
 ```elisp
-;; Add melpa-stable to `package-archives'
-(push '("melpa-stable" . "https://stable.melpa.org/packages/") package-archives)
-
 ;; This change increases MELPA Stable priority to 70, above MELPA,
 ;; ensuring that MELPA is preferred for package installations
 ;; over MELPA Stable.
-(setq package-archive-priorities '(("gnu"    . 99)
-                                   ("nongnu" . 80)
+(setq package-archive-priorities '(("gnu"          . 90)
+                                   ("nongnu"       . 80)
                                    ("melpa-stable" . 70)
-                                   ("melpa"  . 0)))
+                                   ("melpa"        . 60)))
 ```
 
 ### How to load a local lisp file for machine-specific configurations?
