@@ -1854,9 +1854,9 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 ### How to get the latest version of all packages?
 
-By default, `minimal-emacs.d` is configured to prioritize packages from GNU and NonGNU repositories over MELPA, ensuring greater stability.
+By default, minimal-emacs.d is configured to prioritize packages from GNU and NonGNU repositories over MELPA, ensuring greater stability.
 
-If, like the author of `minimal-emacs.d`, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and nongnu repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (`package-lint`) in the author’s configuration experienced a brief disruption, which was quickly resolved.
+If, like the author of *minimal-emacs.d*, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and nongnu repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (`package-lint`) out of 146 packages in the author’s configuration experienced a brief disruption, which was quickly resolved.
 
 Benefit:
 
@@ -1871,6 +1871,11 @@ Drawback:
 To ensure that Emacs always installs or updates to the newest versions of all packages, add the following configuration to `~/.emacs.d/post-early-init.el`:
 
 ```elisp
+;; Obtain the latest packages from MELPA to access new features and
+;; improvements. While MELPA packages are generally regarded as less stable,
+;; actual breakages are uncommon; over the past year, only a single package
+;; (package-lint) out of 146 packages in the minimal-emacs.d author’s
+;; configuration experienced a brief disruption, which was quickly resolved.
 (setq package-archive-priorities '(("melpa"        . 90)
                                    ("gnu"          . 70)
                                    ("nongnu"       . 60)
