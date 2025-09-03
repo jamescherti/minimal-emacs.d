@@ -193,9 +193,7 @@ pre-early-init.el, and post-early-init.el.")
          (native-comp-available-p))
     (when minimal-emacs-setup-native-compilation
       ;; Activate `native-compile'
-      (setq native-comp-deferred-compilation t
-            native-comp-jit-compilation t
-            package-native-compile t))
+      (setq package-native-compile t))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
