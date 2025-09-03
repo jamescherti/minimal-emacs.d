@@ -1856,7 +1856,7 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 By default, minimal-emacs.d is configured to prioritize packages from GNU and NonGNU repositories over MELPA, ensuring greater stability.
 
-If, like the author of *minimal-emacs.d*, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and nongnu repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (`package-lint`) out of 146 packages in the author’s configuration experienced a brief disruption, which was quickly resolved.
+If, like the author of *minimal-emacs.d*, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and NonGNU repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (package-lint) out of 146 packages in the author’s configuration experienced a brief disruption, which was quickly resolved.
 
 Benefit:
 
@@ -1866,7 +1866,7 @@ Benefit:
 Drawback:
 
 * Exposure to **potential instability**, as MELPA packages are often built from the latest commits without extensive regression testing.
-* May require **periodic maintenance**, such as resolving dependency conflicts or adapting to API changes in packages that evolve rapidly.
+* May require **periodic maintenance**, such as resolving dependency conflicts or adapting to API changes in packages that evolve rapidly. (actual breakages are uncommon.)
 
 To ensure that Emacs always installs or updates to the newest versions of all packages, add the following configuration to `~/.emacs.d/post-early-init.el`:
 
