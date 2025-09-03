@@ -1884,7 +1884,7 @@ To ensure that Emacs always installs or updates to the newest versions of all pa
 
 This setup prioritizes **MELPA** over the stable GNU and NonGNU repositories. When multiple archives provide the same package, Emacs will choose the version from the archive with the highest priority. As a result, you will consistently receive the latest available versions from MELPA while still having access to stable GNU and NonGNU packages when MELPA does not provide them.
 
-In the event of a package breakage, you can direct Emacs to install a package from a specific repository. For instance, to ensure that `evil` and `evil-collection` are installed from melpa-stable, add the following configuration to `~/.emacs.d/post-early-init.el`:
+In the event of a package breakage, you can direct Emacs to install a package from a specific repository. For instance, to ensure that *evil* and *evil-collection* are installed from *melpa-stable*, add the following configuration to `~/.emacs.d/post-early-init.el`:
 ```elisp
 (setq package-pinned-packages
       '((evil . "melpa-stable")
