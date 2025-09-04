@@ -103,7 +103,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
   - [Frequently asked questions](#frequently-asked-questions)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
-    - [How to get the latest version of all packages?](#how-to-get-the-latest-version-of-all-packages)
+    - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
     - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
     - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
@@ -1852,11 +1852,11 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 (Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
 
-### How to get the latest version of all packages?
+### How to get the latest version of all packages? (unstable)
 
-By default, minimal-emacs.d is configured to prioritize packages from GNU and NonGNU repositories over MELPA, ensuring greater stability.
+By default, *minimal-emacs.d* is configured to prioritize packages from [GNU ELPA](https://elpa.gnu.org/) and [NonGNU ELPA](https://elpa.nongnu.org/) repositories over [MELPA](https://melpa.org/), ensuring greater stability.
 
-If, like the author of *minimal-emacs.d*, you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and NonGNU repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (package-lint) out of 146 packages in the author’s configuration experienced a brief disruption, which was quickly resolved.
+If you prefer to obtain the latest packages from MELPA to access new features and improvements, you can adjust the priority so that Emacs `use-package` retrieves the newest versions from MELPA before consulting the stable GNU and NonGNU repositories. While MELPA packages are generally regarded as less stable, actual breakages are uncommon; over the past year, only a single package (package-lint) out of 146 packages in the author’s configuration experienced a brief disruption, which was quickly resolved.
 
 Benefit:
 
@@ -1887,8 +1887,85 @@ This setup prioritizes **MELPA** over the stable GNU and NonGNU repositories. Wh
 In the event of a package breakage, you can direct Emacs to install a package from a specific repository. For instance, to ensure that *evil* and *evil-collection* are installed from *melpa-stable*, add the following configuration to `~/.emacs.d/post-early-init.el`:
 ```elisp
 (setq package-pinned-packages
-      '((evil . "melpa-stable")
-        (evil-numbers . "melpa-stable")))
+      '((evil            . "melpa-stable")
+        (evil-collection . "melpa-stable")))
+```
+
+Here is a comprehensive `package-pinned-packages` configuration to guarantee that essential packages, such as **consult** or **corfu**, are retrieved from a stable repository, while all remaining packages are obtained from MELPA according to the `package-archive-priorities' priorities above:
+```elisp
+(setq package-pinned-packages
+      '((org-appear                    . "melpa-stable")
+        (groovy-mode                   . "melpa-stable")
+        (flymake-quickdef              . "melpa-stable")
+        (annalist                      . "melpa-stable")
+        (markdown-toc                  . "melpa-stable")
+        (elisp-refs                    . "melpa-stable")
+        (dumb-jump                     . "melpa-stable")
+        (evil-collection               . "melpa-stable")
+        (consult-dir                   . "melpa-stable")
+        (prescient                     . "melpa-stable")
+        (corfu-prescient               . "melpa-stable")
+        (vertico-prescient             . "melpa-stable")
+        (dtrt-indent                   . "melpa-stable")
+        (f                             . "melpa-stable")
+        (s                             . "melpa-stable")
+        (apheleia                      . "melpa-stable")
+        (package-lint-flymake          . "melpa-stable")
+        (ansible-doc                   . "melpa-stable")
+        (basic-mode                    . "melpa-stable")
+        (tocus                         . "melpa-stable")
+        (highlight-defined             . "melpa-stable")
+        (parent-mode                   . "melpa-stable")
+        (visual-fill-column            . "melpa-stable")
+        (yasnippet-snippets            . "melpa-stable")
+        (php-mode                      . "melpa-stable")
+        (rainbow-mode                  . "gnu")
+        (ztree                         . "gnu")
+        (easy-escape                   . "gnu")
+        (csv-mode                      . "gnu")
+        (aggressive-indent             . "gnu")
+        (yasnippet                     . "gnu")
+        (org                           . "gnu")
+        (embark-consult                . "gnu")
+        (embark                        . "gnu")
+        (compat                        . "gnu")
+        (corfu                         . "gnu")
+        (cape                          . "gnu")
+        (consult                       . "gnu")
+        (orderless                     . "gnu")
+        (vertico                       . "gnu")
+        (indent-bars                   . "gnu")
+        (transient                     . "gnu")
+        (dash                          . "gnu")
+        (modus-themes                  . "gnu")
+        (marginalia                    . "gnu")
+        (avy                           . "gnu")
+        (ace-window                    . "gnu")
+        (expand-region                 . "gnu")
+        (diff-hl                       . "gnu")
+        (diminish                      . "gnu")
+        (rainbow-delimiters            . "nongnu")
+        (with-editor                   . "nongnu")
+        (ws-butler                     . "nongnu")
+        (exec-path-from-shell          . "nongnu")
+        (evil-visualstar               . "nongnu")
+        (yaml-mode                     . "nongnu")
+        (undo-fu                       . "nongnu")
+        (undo-fu-session               . "nongnu")
+        (golden-ratio                  . "nongnu")
+        (paredit                       . "nongnu")
+        (lua-mode                      . "nongnu")
+        (wgrep                         . "nongnu")
+        (popup                         . "nongnu")
+        (eat                           . "nongnu")
+        (goto-chg                      . "nongnu")
+        (git-modes                     . "nongnu")
+        (package-lint                  . "nongnu")
+        (markdown-mode                 . "nongnu")
+        (edit-indirect                 . "nongnu")
+        (page-break-lines              . "nongnu")
+        (magit                         . "nongnu")
+        (gptel                         . "nongnu")))
 ```
 
 ### How to use MELPA stable?
