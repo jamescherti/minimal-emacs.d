@@ -106,6 +106,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
         - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
         - [How to use MELPA stable?](#how-to-use-melpa-stable)
         - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
+        - [How to prevent Emacs from automatically recompiling some Elisp files?](#how-to-prevent-emacs-from-automatically-recompiling-some-elisp-files)
         - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to prevent Emacs from loading .dir-locals.el files?](#how-to-prevent-emacs-from-loading-dir-localsel-files)
@@ -2002,6 +2003,31 @@ Add the following line to the end of your `post-init.el` file:
 This allows `local.el` to load, enabling custom configurations specific to the machine.
 
 (Ensure that `local.el` is in the same directory as `post-init.el`.)
+
+### How to prevent Emacs from automatically recompiling some Elisp files?
+
+In some Emacs configurations, certain files may be repeatedly recompiled during startup or loading:
+```elisp
+Compiling /snap/emacs/current/usr/share/emacs/lisp/org/org-loaddefs.el.gz...
+Compiling /snap/emacs/current/usr/share/emacs/etc/themes/modus-vivendi-theme.el...
+```
+
+This happens because Emacs attempts native compilation on certain Elisp files. In many cases, you may want to prevent native compilation for specific files.
+
+You can configure Emacs to skip native compilation for files matching a list of regular expression patterns by setting `native-comp-jit-compilation-deny-list`. Here is an example:
+```elisp
+(let ((deny-list '("\\(?:[/\\\\]\\.dir-locals\\.el\\(?:\\.gz\\)?$\\)"
+                   "\\(?:[/\\\\]modus-vivendi-theme\\.el\\(?:\\.gz\\)?$\\)"
+                   "\\(?:[/\\\\][^/\\\\]+-loaddefs\\.el\\(?:\\.gz\\)?$\\)"
+                   "\\(?:[/\\\\][^/\\\\]+-autoloads\\.el\\(?:\\.gz\\)?$\\)")))
+  (setq native-comp-jit-compilation-deny-list deny-list)
+  ;; Deprecated
+  (with-no-warnings
+    (setq native-comp-deferred-compilation-deny-list deny-list)
+    (setq comp-deferred-compilation-deny-list deny-list)))
+```
+
+This deny list causes Emacs to skip native compilation for files matching these patterns, avoiding unnecessary or problematic recompilation while allowing all other files to be compiled as usual.
 
 ### How to load Emacs customizations?
 
