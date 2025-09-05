@@ -106,7 +106,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
         - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
         - [How to use MELPA stable?](#how-to-use-melpa-stable)
         - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
-        - [How to prevent Emacs from automatically recompiling some Elisp files?](#how-to-prevent-emacs-from-automatically-recompiling-some-elisp-files)
+        - [How to prevent Emacs from repeatedly recompiling some Elisp files?](#how-to-prevent-emacs-from-repeatedly-recompiling-some-elisp-files)
         - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to prevent Emacs from loading .dir-locals.el files?](#how-to-prevent-emacs-from-loading-dir-localsel-files)
@@ -2004,17 +2004,17 @@ This allows `local.el` to load, enabling custom configurations specific to the m
 
 (Ensure that `local.el` is in the same directory as `post-init.el`.)
 
-### How to prevent Emacs from automatically recompiling some Elisp files?
+### How to prevent Emacs from repeatedly recompiling some Elisp files?
 
-In some Emacs configurations, certain files may be repeatedly recompiled during startup or loading:
+In certain Emacs configurations, specific files may be recompiled repeatedly during startup.
 ```elisp
 Compiling /snap/emacs/current/usr/share/emacs/lisp/org/org-loaddefs.el.gz...
 Compiling /snap/emacs/current/usr/share/emacs/etc/themes/modus-vivendi-theme.el...
 ```
 
-This happens because Emacs attempts native compilation on certain Elisp files. In many cases, you may want to prevent native compilation for specific files.
+This behavior arises because Emacs performs native compilation on specific Elisp files, and in many scenarios, it is desirable to prevent compilation of files that fail during the process.
 
-You can configure Emacs to skip native compilation for files matching a list of regular expression patterns by setting `native-comp-jit-compilation-deny-list`. Here is an example:
+Emacs can be configured to bypass native compilation for files whose paths match a list of regular expression patterns by setting `native-comp-jit-compilation-deny-list`. For example:
 ```elisp
 (let ((deny-list '("\\(?:[/\\\\]\\.dir-locals\\.el\\(?:\\.gz\\)?$\\)"
                    "\\(?:[/\\\\]modus-vivendi-theme\\.el\\(?:\\.gz\\)?$\\)"
@@ -2027,7 +2027,7 @@ You can configure Emacs to skip native compilation for files matching a list of 
     (setq comp-deferred-compilation-deny-list deny-list)))
 ```
 
-This deny list causes Emacs to skip native compilation for files matching these patterns, avoiding unnecessary or problematic recompilation while allowing all other files to be compiled as usual.
+This deny list instructs Emacs to bypass native compilation for files matching the specified patterns, preventing unnecessary or error-prone recompilation while permitting all other files to be compiled normally.
 
 ### How to load Emacs customizations?
 
