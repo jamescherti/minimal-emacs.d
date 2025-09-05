@@ -106,7 +106,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
         - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
         - [How to use MELPA stable?](#how-to-use-melpa-stable)
         - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
-        - [How to prevent Emacs from repeatedly recompiling some Elisp files?](#how-to-prevent-emacs-from-repeatedly-recompiling-some-elisp-files)
+        - [How to prevent Emacs from repeatedly performing native compilation on specific Elisp files](#how-to-prevent-emacs-from-repeatedly-performing-native-compilation-on-specific-elisp-files)
         - [How to load Emacs customizations?](#how-to-load-emacs-customizations)
         - [How to increase gc-cons-threshold?](#how-to-increase-gc-cons-threshold)
         - [How to prevent Emacs from loading .dir-locals.el files?](#how-to-prevent-emacs-from-loading-dir-localsel-files)
@@ -2004,7 +2004,7 @@ This allows `local.el` to load, enabling custom configurations specific to the m
 
 (Ensure that `local.el` is in the same directory as `post-init.el`.)
 
-### How to prevent Emacs from repeatedly recompiling some Elisp files?
+### How to prevent Emacs from repeatedly performing native compilation on specific Elisp files
 
 In certain Emacs configurations, specific files may be recompiled repeatedly during startup.
 ```elisp
