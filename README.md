@@ -1822,7 +1822,7 @@ This makes Emacs recenters the window when the cursor moves past `scroll-conserv
 You can override this in your `post-init.el` file. Setting it to `0` forces Emacs to recenter the point aggressively, typically positioning it in the middle of the window (NOT RECOMMENDED):
 
 ```emacs-lisp
-(setq scroll-conservatively 0)  ; NOT RECOMMENDED. SET IT TO 101 INSTEAD.
+(setq scroll-conservatively 0)  ; NOT RECOMMENDED
 ```
 
 Although this offers more surrounding context, it results in frequent and pronounced screen movement, which can disrupt navigation. A value of `0` is generally discouraged unless this behavior is explicitly desired.
@@ -1832,6 +1832,8 @@ A value of `101` minimizes screen movement and maintains point visibility with m
 ```emacs-lisp
 (setq scroll-conservatively 101)
 ```
+
+The main drawback of `101` is that Emacs will avoid recentering almost entirely, only adjusting the window just enough to keep point visible at the very top or very bottom of the screen. Point can stick to the top or bottom edge of the window, giving you very little context above or below, which can make editing harder if you want surrounding lines visible.
 
 ### How to display Emacs startup duration?
 
