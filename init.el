@@ -551,8 +551,6 @@
   (minimal-emacs-load-user-init "post-init.el"))
 (setq minimal-emacs--success t)
 
-(provide 'init)
-
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:

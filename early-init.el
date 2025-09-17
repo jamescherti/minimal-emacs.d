@@ -488,8 +488,6 @@ this stage of initialization."
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
 
-(provide 'early-init)
-
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
