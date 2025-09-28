@@ -218,9 +218,7 @@
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'mode)
-
-;; Update recentf-exclude
-(setq recentf-exclude (list "^/\\(?:ssh\\|su\\|sudo\\)?:"))
+(setq recentf-exclude nil)
 
 ;;; saveplace
 
