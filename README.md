@@ -134,7 +134,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 
 Execute the following command install this repository into `~/.emacs.d`:
 ```
-git clone https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
+git clone --depth 1 https://github.com/jamescherti/minimal-emacs.d ~/.emacs.d
 ```
 
 ### Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`
@@ -143,7 +143,7 @@ To install *minimal-emacs.d* in a non-default directory, use the `--init-directo
 
 1. Clone the repository into `~/.minimal-emacs.d/` using:
    ```
-   git clone https://github.com/jamescherti/minimal-emacs.d ~/.minimal-emacs.d
+   git clone --depth 1 https://github.com/jamescherti/minimal-emacs.d ~/.minimal-emacs.d
    ```
 
 2. Start Emacs with the new configuration directory:
