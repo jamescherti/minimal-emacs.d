@@ -1062,7 +1062,7 @@ To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
 
 ### Auto upgrade Emacs packages
 
-The `auto-package-update` package that automates the process of updating installed packages managed by *package.el*. Instead of requiring users to manually invoke `package-list-packages` and update each package, `auto-package-update` can check for available updates at regular intervals, perform updates in the background, and optionally hide the results buffer or prompt before applying changes.
+The [auto-package-update](https://github.com/rranelli/auto-package-update.el) automates the process of updating installed packages managed by *package.el*. Instead of requiring users to manually invoke `package-list-packages` and update each package, `auto-package-update` can check for available updates at regular intervals, perform updates in the background, and optionally hide the results buffer or prompt before applying changes.
 
 To configure **auto-package-update**, add the following to `~/.emacs.d/post-init.el`:
 
