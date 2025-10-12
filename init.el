@@ -120,6 +120,10 @@
 ;; Disable auto-adding a new line at the bottom when scrolling.
 (setq next-line-add-newlines nil)
 
+;; This setting forces Emacs to save bookmarks immediately after each change.
+;; Benefit: you never lose bookmarks if Emacs crashes.
+(setq bookmark-save-flag 1)
+
 ;;; Files
 
 ;; Delete by moving to trash in interactive mode
