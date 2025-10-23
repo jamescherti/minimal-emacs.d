@@ -471,6 +471,8 @@ this stage of initialization."
 ;; that emphasizes performance over clarity.
 (setq use-package-expand-minimally (not minimal-emacs-debug))
 
+(setq package-quickstart-file
+      (expand-file-name "package-quickstart.el" user-emacs-directory))
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
 (setq package-enable-at-startup nil)  ; Let the init.el file handle this
