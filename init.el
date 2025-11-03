@@ -106,8 +106,6 @@
 ;; Position underlines at the descent line instead of the baseline.
 (setq x-underline-at-descent-line t)
 
-(setq tramp-verbose 1)
-(setq tramp-completion-reread-directory-timeout 50)
 (setq remote-file-name-inhibit-cache 50)
 
 ;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
@@ -123,6 +121,11 @@
 ;; This setting forces Emacs to save bookmarks immediately after each change.
 ;; Benefit: you never lose bookmarks if Emacs crashes.
 (setq bookmark-save-flag 1)
+
+;;; tramp
+
+(setq tramp-verbose 1)
+(setq tramp-completion-reread-directory-timeout 50)
 
 ;;; Files
 
