@@ -1987,10 +1987,13 @@ If you prefer MELPA Stable over MELPA, you can add MELPA Stable and prioritize i
 ;; This change increases MELPA Stable priority to 70, above MELPA,
 ;; ensuring that MELPA is preferred for package installations
 ;; over MELPA Stable.
-(setq package-archive-priorities '(("gnu"          . 90)
-                                   ("nongnu"       . 80)
-                                   ("melpa-stable" . 70)
-                                   ("melpa"        . 60)))
+;; (Note: The minimal-emacs.d author does not assign higher priority to MELPA
+;; Stable than to MELPA.)
+;;
+;; (setq package-archive-priorities '(("gnu"          . 90)
+;;                                    ("nongnu"       . 80)
+;;                                    ("melpa-stable" . 70)
+;;                                    ("melpa"        . 60)))
 ```
 
 ### How to load a local lisp file for machine-specific configurations?
