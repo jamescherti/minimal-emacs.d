@@ -17,7 +17,7 @@ If this enhances your workflow, please show your support by **⭐ starring minim
 
 **Here are the instructions for installing minimal-emacs.d:** [Install minimal-emacs.d](#install-minimal-emacsd).
 
-## Looking for the ideal starter kit to customize Emacs? You have found it.
+### Looking for the ideal starter kit to customize Emacs? You have found it.
 
 The *minimal-emacs.d* project is:
 - **Minimal yet effective:** A solid starting point.
@@ -53,7 +53,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 
 - [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-that-provides-better-defaults-and-faster-startup)
     - [Introduction](#introduction)
-    - [Looking for the ideal starter kit to customize Emacs? You have found it.](#looking-for-the-ideal-starter-kit-to-customize-emacs-you-have-found-it)
+        - [Looking for the ideal starter kit to customize Emacs? You have found it.](#looking-for-the-ideal-starter-kit-to-customize-emacs-you-have-found-it)
         - [Startup](#startup)
     - [Install minimal-emacs.d](#install-minimal-emacsd)
         - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
@@ -116,7 +116,6 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
         - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
         - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
         - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
-        - [Testimonials from users](#testimonials-from-users)
         - [Minimal-emacs.d configurations from users](#minimal-emacsd-configurations-from-users)
     - [Features](#features)
     - [Author and license](#author-and-license)
@@ -2137,23 +2136,6 @@ To install and load packages during the early-init phase, add the following to `
 ```
 
 A drawback of using the early-init phase instead of init is that if a package fails (e.g, due to a network issue), no output will be displayed in the Emacs GUI. You will need to open a terminal to view Emacs's stdout for error messages.
-
-### Testimonials from users
-
-- [JamesBrickley (Shout out to this starter-kit: Minimal-Emacs )](https://www.reddit.com/r/emacs/comments/1epz7qn/shout_out_to_this_starterkit_minimalemacs/) appreciates that *minimal-emacs.d* provides an optimized *early-init.el* and *init.el* for fast startup times and sensible default settings. He highlights that the project includes all the essential configurations needed for a well-tuned Emacs setup, eliminating the need to sift through conflicting advice on topics like garbage collection optimization. While he has encountered similar settings before, he also discovered new optimizations he had not seen elsewhere.
-- [Brandon Schneider (skarekrow)](https://github.com/jamescherti/compile-angel.el/issues/5#issuecomment-3186187000): "...the minimal-emacs project is incredible. I love how documented it is as a beginner to learn from. Thank you for all the effort you've put into that and the other packages you maintain. It's a huge boon to new users."
-- [Leading_Ad6415 commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmw7ijd/) that after switching to *minimal-emacs.d*, their configuration execution time decreased from 3 seconds to just 1 second by simply replacing their `init.el` and `early-init.el` files with those from the project.
-- [Another user commented on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lrsfd64/), highlighting how a minimal-emacs.d significantly enhanced their Emacs performance. They reported substantial startup time reductions on both their main machine (from ~2.25 to ~0.95 seconds) and an older laptop (from ~2.95 to ~1.27 seconds) while also experiencing a generally snappier performance within Emacs. The user expressed gratitude for the project, calling it fantastic.
-- [Cyneox commented on Reddit](https://www.reddit.com/r/emacs/comments/1gh687a/comment/lwdv18t/), expressing gratitude for the resource and sharing their experience. They mentioned it was their fourth attempt to set up a vanilla configuration and highlighted that they had been using the repository as a foundation for their customizations over the past few days. They appreciated the absence of unexplained behavior and the clear instructions on where to place files. The user reported successful testing on both Linux and macOS, noting that everything functioned smoothly, including in the terminal.
-- [Sebagabones on GitHub](https://github.com/jamescherti/minimal-emacs.d/issues/77): "...let me say that I am loving minimal-emacs.d, it has been brilliant so far! :)"
-- [Mlepnos1984 on Reddit](https://www.reddit.com/r/emacs/comments/1lz181i/comment/n2yjj17/): "I give you an A+ on documentation, the readme is great!"
-- [rrajath on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb0ja8k/) has been using the minimal-emacs.d config for the past several months and loves it. His previous setup used to take around 4 seconds to load, but with minimal-emacs.d, it now loads in just 1 second.
-- [LionyxML on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/) considers that *minimal-emacs.d* contains one of the best README files he has ever read. The author of *minimal-emacs.d* found his comment encouraging. Reading this README.md is highly recommended for anyone looking to start customizing their *minimal-emacs.d* configuration.
-- [cyneox on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mdnzgqx/): "Still using it and loving it! Thanks for the regular updates."
-- [panchoh on GitHub](https://github.com/jamescherti/minimal-emacs.d/pull/62#issuecomment-2869865979): "...thank you, @jamescherti! Keep up the fantastic work you are doing!"
-- [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
-- [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
-- [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
 
 ### Minimal-emacs.d configurations from users
 
