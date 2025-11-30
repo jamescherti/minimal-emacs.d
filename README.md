@@ -2164,6 +2164,8 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [smahm006 minimal-emacs.d configuration](https://github.com/smahm006/minimal-emacs.d)
 
+- [zendo: Emacs literate configuration](https://github.com/zendo/nsworld/blob/main/dotfiles/org/all-emacs.org)
+
 Please share your configuration. It could serve as inspiration for other users.
 
 ## Features
