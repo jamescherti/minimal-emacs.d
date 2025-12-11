@@ -65,8 +65,6 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 - [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
 - [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
 
-
-
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
@@ -2171,6 +2169,7 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [zendo: Emacs literate configuration](https://github.com/zendo/nsworld/blob/main/dotfiles/org/all-emacs.org)
 
+- [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): Nice work! I just created a nix flake to using it on my dev servers https://codeberg.org/sunng/minimal-emacs.d-nix-hm
 Please share your configuration. It could serve as inspiration for other users.
 
 ## Features
