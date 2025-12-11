@@ -64,7 +64,7 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 - [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
 - [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
 - [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
-- [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): Nice work! I just created a nix flake to using it on my dev servers https://codeberg.org/sunng/minimal-emacs.d-nix-hm
+- [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): "Nice work! I just created a nix flake to using it on my dev servers https://codeberg.org/sunng/minimal-emacs.d-nix-hm "
 
 Please share your configuration. It could serve as inspiration for other users.
 
