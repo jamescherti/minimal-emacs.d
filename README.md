@@ -64,6 +64,9 @@ In addition to *minimal-emacs.d*, startup speed is influenced by your computer's
 - [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
 - [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
 - [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
+- [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): Nice work! I just created a nix flake to using it on my dev servers https://codeberg.org/sunng/minimal-emacs.d-nix-hm
+
+Please share your configuration. It could serve as inspiration for other users.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
@@ -2169,9 +2172,6 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 - [zendo: Emacs literate configuration](https://github.com/zendo/nsworld/blob/main/dotfiles/org/all-emacs.org)
 
-- [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): Nice work! I just created a nix flake to using it on my dev servers https://codeberg.org/sunng/minimal-emacs.d-nix-hm
-Please share your configuration. It could serve as inspiration for other users.
-
 ## Features
 
 1. **Performance Improvements:**
@@ -2233,6 +2233,9 @@ You should have received a copy of the GNU General Public License along with thi
 ## Links
 
 - [minimal-emacs.d @GitHub](https://github.com/jamescherti/minimal-emacs.d)
+
+Contribution from the minimal-emacs.d community:
+- [Sunng's minimal-emacs.d Nix flak](https://codeberg.org/sunng/minimal-emacs.d-nix-hm): A Nix flake that enables reproducible deployment of minimal-emacs.d, allowing the Emacs configuration to be pinned, built, and installed through Nix.
 
 Other Emacs packages by the same author:
 - [compile-angel.el](https://github.com/jamescherti/compile-angel.el): **Speed up Emacs!** This package guarantees that all .el files are both byte-compiled and native-compiled, which significantly speeds up Emacs.
