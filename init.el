@@ -546,7 +546,8 @@
 
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
-(dolist (cmd '(list-timers narrow-to-region upcase-region downcase-region
+(dolist (cmd '(list-timers narrow-to-region narrow-to-page narrow-to-defun
+                           upcase-region downcase-region
                            list-threads erase-buffer scroll-left
                            dired-find-alternate-file set-goal-column))
   (put cmd 'disabled nil))
