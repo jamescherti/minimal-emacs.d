@@ -163,8 +163,6 @@ pre-early-init.el, and post-early-init.el.")
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
 
-(setq garbage-collection-messages minimal-emacs-debug)
-
 (defun minimal-emacs--restore-gc-values ()
   "Restore garbage collection values to minimal-emacs.d values."
   (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)
