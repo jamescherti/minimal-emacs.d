@@ -2224,7 +2224,7 @@ A drawback of using the early-init phase instead of init is that if a package fa
 
 The *minimal-emacs.d* project has been written by [James Cherti](https://www.jamescherti.com/) and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
 
-Copyright (C) 2024-2025 [James Cherti](https://www.jamescherti.com)
+Copyright (C) 2024-2026 [James Cherti](https://www.jamescherti.com)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
