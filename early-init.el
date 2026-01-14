@@ -109,7 +109,8 @@ Note that this should end with a directory separator.")
 
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
-(setq debug-on-error minimal-emacs-debug)
+(when minimal-emacs-debug
+  (setq debug-on-error minimal-emacs-debug))
 
 (defvar minimal-emacs--success nil)
 (defun minimal-emacs--check-success ()
