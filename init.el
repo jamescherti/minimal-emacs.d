@@ -118,6 +118,14 @@
 ;; Benefit: you never lose bookmarks if Emacs crashes.
 (setq bookmark-save-flag 1)
 
+(setq uniquify-buffer-name-style 'forward)
+
+(setq display-time-default-load-average nil) ; Omit load average
+
+;; Disable fontification during user input to reduce lag in large buffers.
+;; Also helps marginally with scrolling performance.
+(setq redisplay-skip-fontification-on-input t)
+
 ;;; Tramp
 
 (setq tramp-verbose 1)
@@ -139,10 +147,6 @@
 ;; Prefer vertical splits over horizontal ones
 (setq split-width-threshold 170
       split-height-threshold nil)
-
-;;; Buffers
-
-(setq uniquify-buffer-name-style 'forward)
 
 ;;; comint (general command interpreter in a window)
 
@@ -254,12 +258,6 @@
 (setq window-divider-default-bottom-width 1
       window-divider-default-places t
       window-divider-default-right-width 1)
-
-;;; Fontification
-
-;; Disable fontification during user input to reduce lag in large buffers.
-;; Also helps marginally with scrolling performance.
-(setq redisplay-skip-fontification-on-input t)
 
 ;;; Scrolling
 
@@ -380,10 +378,6 @@
 
 ;; Eliminate delay before highlighting search matches
 (setq lazy-highlight-initial-delay 0)
-
-;;; Modeline
-
-(setq display-time-default-load-average nil) ; Omit load average
 
 ;;; Filetype
 
