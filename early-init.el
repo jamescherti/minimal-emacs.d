@@ -463,20 +463,19 @@ this stage of initialization."
 (setq tls-checktrust t)  ; Ensure SSL/TLS connections undergo trust verification
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
-;;; package.el
-(setq use-package-compute-statistics minimal-emacs-debug)
-
-;; Setting use-package-expand-minimally to (t) results in a more compact output
-;; that emphasizes performance over clarity.
+;; This results in a more compact output that emphasizes performance
 (setq use-package-expand-minimally (not noninteractive))
 
-(setq package-quickstart-file
-      (expand-file-name "package-quickstart.el" user-emacs-directory))
+(setq use-package-compute-statistics minimal-emacs-debug)
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
-(setq package-enable-at-startup nil)  ; Let the init.el file handle this
 (setq use-package-always-ensure t)
 (setq use-package-enable-imenu-support t)
+
+;; package.el
+(setq package-enable-at-startup nil)  ; Let the init.el file handle this
+(setq package-quickstart-file
+      (expand-file-name "package-quickstart.el" user-emacs-directory))
 (setq package-archives '(("melpa"        . "https://melpa.org/packages/")
                          ("gnu"          . "https://elpa.gnu.org/packages/")
                          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
