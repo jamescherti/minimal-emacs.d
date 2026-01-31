@@ -969,11 +969,13 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   (easysession-save-interval (* 10 60))  ; Save every 10 minutes
 
   :init
-  ;; Key mappings:
-  ;; C-c l for switching sessions
-  ;; and C-c s for saving the current session
-  (global-set-key (kbd "C-c l") 'easysession-switch-to)
-  (global-set-key (kbd "C-c s") 'easysession-save-as)
+  ;; Key mappings
+  (global-set-key (kbd "C-c ss") #'easysession-save)
+  (global-set-key (kbd "C-c sl") #'easysession-switch-to)
+  (global-set-key (kbd "C-c sL") #'easysession-switch-to-and-restore-geometry)
+  (global-set-key (kbd "C-c sr") #'easysession-rename)
+  (global-set-key (kbd "C-c sR") #'easysession-reset)
+  (global-set-key (kbd "C-c sd") #'easysession-delete)
 
   ;; The depth 102 and 103 have been added to to `add-hook' to ensure that the
   ;; session is loaded after all other packages. (Using 103/102 is particularly
@@ -1009,6 +1011,13 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
   ;; (org-fontify-whole-heading-line t)
   ;; (org-fontify-quote-and-verse-blocks t)
   (org-startup-truncated t))
+```
+
+The `org-appear` package temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves. To configure **org-appear**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package org-appear
+  :commands org-appear-mode
+  :hook (org-mode . org-appear-mode))
 ```
 
 ### Configuring markdown-mode (e.g., README.md syntax)
