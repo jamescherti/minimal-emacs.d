@@ -49,19 +49,15 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
     (unless (seq-empty-p package-archive-contents)
       (package-refresh-contents))
     (package-install 'use-package))
-
-  ;; Ensure use-package is available
   (require 'use-package))
 
 ;;; Minibuffer
 
-;; Allow nested minibuffers
-(setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers t) ; Allow nested minibuffers
 
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
@@ -122,7 +118,7 @@
 ;; Benefit: you never lose bookmarks if Emacs crashes.
 (setq bookmark-save-flag 1)
 
-;;; tramp
+;;; Tramp
 
 (setq tramp-verbose 1)
 (setq tramp-completion-reread-directory-timeout 50)
@@ -332,9 +328,6 @@
 ;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
 
-(setq-default left-fringe-width  8)
-(setq-default right-fringe-width 8)
-
 ;; Disable visual indicators in the fringe for buffer boundaries and empty lines
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -390,8 +383,7 @@
 
 ;;; Modeline
 
-;; Makes Emacs omit the load average information from the mode line.
-(setq display-time-default-load-average nil)
+(setq display-time-default-load-average nil) ; Omit load average
 
 ;;; Filetype
 
@@ -448,12 +440,13 @@
 
 ;;; Eglot
 
+(setq eglot-report-progress minimal-emacs-debug)  ; Prevent minibuffer spam
+(setq eglot-autoshutdown t)  ; Shut down after killing last managed buffer
+
 ;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
 ;; Emacs to remain fully responsive, although LSP features will only become
 ;; available once the connection is established in the background.
 (setq eglot-sync-connect 0)
-
-(setq eglot-autoshutdown t)  ; Shut down server after killing last managed buffer
 
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
@@ -467,19 +460,14 @@
   (setq eglot-events-buffer-size 0)  ; Deprecated
   (setq eglot-events-buffer-config '(:size 0 :format short)))
 
-(setq eglot-report-progress minimal-emacs-debug)  ; Prevent minibuffer spam
-
 ;;; Flymake
 
 (setq flymake-show-diagnostics-at-end-of-line nil)
-
-;; Disable wrapping around when navigating Flymake errors.
 (setq flymake-wrap-around nil)
 
 ;;; hl-line-mode
 
-;; Restrict `hl-line-mode' highlighting to the current window, reducing visual
-;; clutter and slightly improving `hl-line-mode' performance.
+;; Highlighting the current window, reducing clutter and improving performance
 (setq hl-line-sticky-flag nil)
 (setq global-hl-line-sticky-flag nil)
 
@@ -491,11 +479,10 @@
 
 ;;; flyspell
 
-(setq flyspell-issue-welcome-flag nil)
-
 ;; Improves flyspell performance by preventing messages from being displayed for
 ;; each word when checking the entire buffer.
 (setq flyspell-issue-message-flag nil)
+(setq flyspell-issue-welcome-flag nil)
 
 ;;; ispell
 
@@ -522,8 +509,8 @@
 
 ;;; abbrev
 
-;; Ensure `abbrev_defs` is stored in the correct location when
-;; `user-emacs-directory` is modified, as it defaults to ~/.emacs.d/abbrev_defs
+;; Ensure the abbrev_defs file is stored in the correct location when
+;; `user-emacs-directory' is modified, as it defaults to ~/.emacs.d/abbrev_defs
 ;; regardless of the change.
 (setq abbrev-file-name (expand-file-name "abbrev_defs" user-emacs-directory))
 
