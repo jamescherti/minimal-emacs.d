@@ -117,7 +117,8 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Changing the Default Font](#changing-the-default-font)
-    - [Persist Text Scale](#persist-text-scale)
+    - [Highlighting uncommitted changes in the buffer margin (e.g., Git changes)](#highlighting-uncommitted-changes-in-the-buffer-margin-eg-git-changes)
+    - [Persisting Text Scale](#persisting-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
@@ -1573,7 +1574,24 @@ On Linux, you can display a comprehensive list of all installed font families by
 fc-list : family | sed 's/,/\n/g' | sort -u
 ```
 
-### Persist Text Scale
+### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
+
+The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
+
+To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
+```elisp
+(use-package diff-hl
+  :commands (diff-hl-mode
+             global-diff-hl-mode)
+  :hook (prog-mode . diff-hl-mode)
+  :init
+  (setq diff-hl-flydiff-delay 0.4)  ; Faster
+  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
+  (setq diff-hl-update-async t)  ; Do not block Emacs
+  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
+```
+
+### Persisting Text Scale
 
 The [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) Emacs package provides `persist-text-scale-mode`, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
 
@@ -1665,6 +1683,21 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 ;; Track changes in the window configuration, allowing undoing actions such as
 ;; closing windows.
+(setq winner-boring-buffers '("*Completions*"
+                                "*Minibuf-0*"
+                                "*Minibuf-1*"
+                                "*Minibuf-2*"
+                                "*Minibuf-3*"
+                                "*Minibuf-4*"
+                                "*Compile-Log*"
+                                "*inferior-lisp*"
+                                "*Fuzzy Completions*"
+                                "*Apropos*"
+                                "*Help*"
+                                "*cvs*"
+                                "*Buffer List*"
+                                "*Ibuffer*"
+                                "*esh command on file*"))
 (add-hook 'after-init-hook #'winner-mode)
 
 (use-package uniquify
