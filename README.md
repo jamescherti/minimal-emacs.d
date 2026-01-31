@@ -1578,6 +1578,8 @@ fc-list : family | sed 's/,/\n/g' | sort -u
 
 The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
 
+![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
+
 To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package diff-hl
