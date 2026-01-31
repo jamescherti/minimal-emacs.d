@@ -64,7 +64,7 @@
       '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;;; User interface
+;;; Display and user interface
 
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq which-func-update-delay 1.0)
@@ -76,6 +76,13 @@
 (setq visible-bell nil)
 (setq ring-bell-function #'ignore)
 
+;; Position underlines at the descent line instead of the baseline.
+(setq x-underline-at-descent-line t)
+
+(setq truncate-string-ellipsis "…")
+
+(setq display-time-default-load-average nil) ; Omit load average
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
@@ -83,33 +90,9 @@
       show-paren-when-point-inside-paren t
       show-paren-when-point-in-periphery t)
 
-;;; Misc
+;;; Buffer management
 
 (setq custom-buffer-done-kill t)
-
-(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
-
-;; Can be activated with `display-line-numbers-mode'
-(setq-default display-line-numbers-width 3)
-(setq-default display-line-numbers-widen t)
-
-(setq truncate-string-ellipsis "…")
-
-;; Disable truncation of printed s-expressions in the message buffer
-(setq eval-expression-print-length nil
-      eval-expression-print-level nil)
-
-;; Position underlines at the descent line instead of the baseline.
-(setq x-underline-at-descent-line t)
-
-(setq remote-file-name-inhibit-cache 50)
-
-;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
-;; This ensures the index reflects recent edits.
-(setq imenu-auto-rescan t)
-
-;; Prevent truncation of long function names in `imenu' listings
-(setq imenu-max-item-length 160)
 
 ;; Disable auto-adding a new line at the bottom when scrolling.
 (setq next-line-add-newlines nil)
@@ -120,11 +103,33 @@
 
 (setq uniquify-buffer-name-style 'forward)
 
-(setq display-time-default-load-average nil) ; Omit load average
+(setq remote-file-name-inhibit-cache 50)
 
 ;; Disable fontification during user input to reduce lag in large buffers.
 ;; Also helps marginally with scrolling performance.
 (setq redisplay-skip-fontification-on-input t)
+
+;;; Misc
+
+(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
+
+;; Disable truncation of printed s-expressions in the message buffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil)
+
+;;; `display-line-numbers-mode'
+
+(setq-default display-line-numbers-width 3)
+(setq-default display-line-numbers-widen t)
+
+;;; imenu
+
+;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
+;; This ensures the index reflects recent edits.
+(setq imenu-auto-rescan t)
+
+;; Prevent truncation of long function names in `imenu' listings
+(setq imenu-max-item-length 160)
 
 ;;; Tramp
 
