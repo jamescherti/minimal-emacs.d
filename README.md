@@ -1860,10 +1860,21 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands (gitattributes-mode
              gitconfig-mode
              gitignore-mode)
-  :mode (("/.gitconfig\\'" . gitconfig-mode)
-         ("/.gitignore\\'" . gitignore-mode)
-         ("/.gitignore_global\\'" . gitignore-mode)
-         ("/.gitattributes\\'" . gitattributes-mode)))
+  :mode (("/\\.gitignore\\'" . gitignore-mode)
+         ("/info/exclude\\'" . gitignore-mode)
+         ("/git/ignore\\'" . gitignore-mode)
+         ("/.gitignore_global\\'" . gitignore-mode)  ; jc-dotfiles
+
+         ("/\\.gitconfig\\'" . gitconfig-mode)
+         ("/\\.git/config\\'" . gitconfig-mode)
+         ("/modules/.*/config\\'" . gitconfig-mode)
+         ("/git/config\\'" . gitconfig-mode)
+         ("/\\.gitmodules\\'" . gitconfig-mode)
+         ("/etc/gitconfig\\'" . gitconfig-mode)
+
+         ("/\\.gitattributes\\'" . gitattributes-mode)
+         ("/info/attributes\\'" . gitattributes-mode)
+         ("/git/attributes\\'" . gitattributes-mode)))
 
 ;; Support for YAML files.
 ;;
