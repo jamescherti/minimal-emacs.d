@@ -3,8 +3,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
-## Introduction
-
 The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init.el` and `early-init.el`) that **gives you full control over your configuration** (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive resing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
@@ -58,8 +56,7 @@ Please share your configuration. It could serve as inspiration for other users.
 ## Table of Contents
 
 - [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-that-provides-better-defaults-and-faster-startup)
-  - [Introduction](#introduction)
-    - [Startup](#startup)
+  - [-](#-)
   - [Comments from minimal-emacs.d users](#comments-from-minimal-emacsd-users)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
