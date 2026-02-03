@@ -1545,11 +1545,12 @@ To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
   (bufferfile-delete-switch-to 'parent-directory))
 ```
 
-The bufferfile package addresses the limitations of Emacs' built-in functions:
-- Renaming: Indirect buffers point to the correct file path, but their buffer names become outdated.
-- Deleting: Indirect buffers are not removed when the base buffer or another indirect buffer is deleted.
+**The *bufferfile* package overcomes limitations in Emacs' built-in functions:**
 
-**The bufferfile package addresses these issues** by ensuring that buffer names are updated when renaming a file and that all buffers, including indirect buffers, are deleted when a file is removed.
+* **Emacs built-in renaming:** While indirect buffers continue to reference the correct file path, their buffer names can become outdated.
+* **Emacs built-in deleting:** Indirect buffers are not automatically removed when the base buffer or another indirect buffer is deleted.
+
+**The bufferfile package resolves these issues** by updating buffer names when a file is renamed and removing all related buffers, including indirect ones, when a file is deleted.
 
 ### Enhancing the Elisp development experience
 
