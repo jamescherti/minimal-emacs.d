@@ -106,7 +106,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Persisting Text Scale](#persisting-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
-    - [Other filetypes](#other-filetypes)
+    - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring Elpaca (package manager)](#configuring-elpaca-package-manager)
@@ -1849,12 +1849,23 @@ It is also recommended to read the following articles:
 - [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
 
 
-### Other filetypes
+### File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)
 
 The following additional file types may be enabled to extend language support beyond the core set.
 
 These modes are optional and can be added selectively to `~/.emacs.d/post-init.el`, depending on the languages and formats commonly encountered in a given workflow.
 ```elisp
+;; Support for Git files (.gitconfig, .gitignore, .gitattributes...)
+(use-package git-modes
+  :commands (gitattributes-mode
+             gitconfig-mode
+             gitignore-mode)
+  :mode
+  ("/.gitconfig\\'" . gitconfig-mode)
+  ("/.gitignore\\'" . gitignore-mode)
+  ("/.gitignore_global\\'" . gitignore-mode)
+  ("/.gitattributes\\'" . gitattributes-mode))
+
 ;; Support for YAML files.
 ;;
 ;; NOTE: Prefer the tree-sitter-based yaml-ts-mode over yaml-mode when
@@ -1898,10 +1909,57 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands (csv-mode
              csv-align-mode)
   :mode ("\\.csv\\'" . csv-mode)
-  :hook (csv-mode . csv-align-mode)
+  :hook ((csv-mode . csv-align-mode)
+         (csv-mode . csv-guess-set-separator))
   :custom
   (csv-align-max-width 100)
-  (csv-separators '(",")))
+  (csv-separators '("," ";" " " "|" "\t"))
+
+;; Support for Go
+;;
+;; NOTE: Prefer the tree-sitter-based go-ts-mode over go-mode
+;; when available, as it provides more accurate syntax parsing and enhanced
+;; editing features.
+(use-package go-mode
+  :commands go-mode
+  :mode ("\\.go\\'" . go-mode))
+
+;; Support for Haskell
+(use-package haskell-mode
+  :commands haskell-mode
+  :mode ("\\.hs\\'" . haskell-mode))
+
+;; Major mode for editing crontab files
+(use-package crontab-mode
+  :commands crontab-mode
+  :mode ("/crontab\\(\\.X*[[:alnum:]]+\\)?\\'" . crontab-mode))
+
+;; Major mode for editing Nginx configuration files
+(use-package nginx-mode
+  :commands nginx-mode
+  :mode (("nginx\\.conf\\'"     . nginx-mode)
+         ("/nginx/.+\\.conf\\'" . nginx-mode)))
+
+;; Major mode for HashiCorp Configuration Language (HCL) files
+(use-package hcl-mode
+  :commands hcl-mode
+  :mode ("\\.hcl\\'" . hcl-mode))
+
+;; Major mode for Nix expression language files
+(use-package nix-mode
+  :commands nix-mode
+  :mode ("\\.nix\\'" . nix-mode))
+
+;; Support for common .env file syntax, typically used for environment
+;; variable files
+(use-package dotenv-mode
+  :commands dotenv-mode
+  :mode ("\\.env\\..*\\'" . dotenv-mode))
+
+;; Major mode for editing Fish shell scripts
+(use-package fish-mode
+  :commands fish-mode
+  :mode ("\\.fish\\'" . fish-mode))
 
 ;; Vim configuration file support. This mode provides syntax highlighting and
 ;; editing support for various Vim configuration files, including vimrc, gvimrc,
