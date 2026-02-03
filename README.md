@@ -1927,6 +1927,11 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
+;; Support for Gnuplot files
+(use-package gnuplot
+  :commands (gnuplot-mode)
+  :mode ("\\.gp\\'" . gnuplot-mode))
+
 ;; Support for *.lua files.
 ;;
 ;; Prefer the tree-sitter-based lua-ts-mode over lua-mode when available, as it
