@@ -1001,8 +1001,9 @@ To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
   :commands dumb-jump-xref-activate
   :init
   ;; Register `dumb-jump' as an xref backend so it integrates with
-  ;; `xref-find-definitions'
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
+  ;; more specific backend is available.
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90)
 
   (setq dumb-jump-aggressive nil)
   ;; (setq dumb-jump-quiet t)
