@@ -1683,6 +1683,15 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 2. You can also add the following to `~/.emacs.d/post-init.el`:
 ```emacs-lisp
+;;; Enable automatic insertion and management of matching pairs of characters
+;;; (e.g., (), {}, "") globally using `electric-pair-mode'.
+(use-package elec-pair
+  :ensure nil
+  :commands (electric-pair-mode
+             electric-pair-local-mode
+             electric-pair-delete-pair)
+  :hook (after-init . electric-pair-mode))
+
 ;; Allow Emacs to upgrade built-in packages, such as Org mode
 (setq package-install-upgrade-built-in t)
 
