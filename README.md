@@ -7,23 +7,7 @@
 
 The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init.el` and `early-init.el`) that **gives you full control over your configuration** (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
-Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
-
-If this enhances your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
-
-<p align="center">
-<img src="https://jamescherti.com/misc/minimal-emacs.d.png" width="50%" />
-</p>
-
-**Here are the instructions for installing minimal-emacs.d:** [Install minimal-emacs.d](#install-minimal-emacsd).
-
-### Looking for the ideal starter kit to customize Emacs? You have found it.
-
-The *minimal-emacs.d* project is:
-- **Minimal yet effective:** A solid starting point.
-- **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
-- **0 packages loaded / No forced modes:** Unlike other frameworks or starter kits, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable and which packages to load.
-- **Customizable foundation:** Designed to be extended, not replaced. This README.md offers extensive recommendations for customizing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
+Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive resing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
 
 The *minimal-emacs.d* project includes two initialization files:
 - `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
@@ -75,7 +59,6 @@ Please share your configuration. It could serve as inspiration for other users.
 
 - [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-that-provides-better-defaults-and-faster-startup)
   - [Introduction](#introduction)
-    - [Looking for the ideal starter kit to customize Emacs? You have found it.](#looking-for-the-ideal-starter-kit-to-customize-emacs-you-have-found-it)
     - [Startup](#startup)
   - [Comments from minimal-emacs.d users](#comments-from-minimal-emacsd-users)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
@@ -122,6 +105,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Persisting Text Scale](#persisting-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
+    - [Other filetypes](#other-filetypes)
   - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring Elpaca (package manager)](#configuring-elpaca-package-manager)
@@ -1837,6 +1821,77 @@ It is also recommended to read the following articles:
 - [Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/)
 - [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
 
+
+### Other filetypes
+
+The following additional file types may be enabled to extend language support beyond the core set.
+
+These modes are optional and can be added selectively to `~/.emacs.d/post-init.el`, depending on the languages and formats commonly encountered in a given workflow.
+```elisp
+;; Support for YAML files.
+;;
+;; NOTE: Prefer the tree-sitter-based yaml-ts-mode over yaml-mode when
+;; available, as it provides more accurate syntax parsing and enhanced editing
+;; features.
+(use-package yaml-mode
+  :commands yaml-mode
+  :mode (("\\.yaml\\'" . yaml-mode)
+         ("\\.yml\\'" . yaml-mode)))
+
+;; Support for Dockerfile files.
+;;
+;; NOTE: Prefer the tree-sitter-based dockerfile-ts-mode over dockerfile-mode
+;; when available, as it provides more accurate syntax parsing and enhanced
+;; editing features.
+(use-package dockerfile-mode
+  :commands dockerfile-mode
+  :mode
+  ("Dockerfile\\'" . dockerfile-mode))
+
+;; Support for *.lua files.
+;;
+;; Prefer the tree-sitter-based lua-ts-mode over lua-mode when available, as it
+;; provides more accurate syntax parsing and enhanced editing features.
+(use-package lua-mode
+  :commands lua-mode
+  :mode ("\\.lua\\'" . lua-mode))
+
+;; Jinja2 template support for files commonly used in configuration management
+;; systems and web frameworks. This mode enables syntax highlighting and basic
+;; editing facilities for templates written using the Jinja2 templating
+;; language.
+(use-package jinja2-mode
+  :commands jinja2-mode
+  :mode ("\\.j2\\'" . jinja2-mode))
+
+;; CSV file support with automatic column alignment. This configuration enables
+;; csv-align-mode whenever a CSV file is opened, improving readability by
+;; keeping columns visually aligned according to a configurable maximum width
+;; and a set of recognized field separators.
+(use-package csv-mode
+  :commands (csv-mode
+             csv-align-mode)
+  :mode ("\\.csv\\'" . csv-mode)
+  :hook
+  (csv-mode . csv-align-mode)
+  :custom
+  (csv-align-max-width 100)
+  (csv-separators '(",")))
+
+;; Vim configuration file support. This mode provides syntax highlighting and
+;; editing support for various Vim configuration files, including vimrc, gvimrc,
+;; local overrides, and project-specific configuration files.
+(use-package vimrc-mode
+  :commands vimrc-mode
+  :mode
+  ("\\.vim\\(rc\\)?\\'" . vimrc-mode))
+
+;; Support for Jenkinsfile files
+(use-package jenkinsfile-mode
+  :commands jenkinsfile-mode
+  :mode
+  ("Jenkinsfile\\'" . jenkinsfile-mode))
+```
 
 ## Customizations: pre-early-init.el
 
