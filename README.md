@@ -855,6 +855,15 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   (setq evil-collection-setup-minibuffer t)
   :config
   (evil-collection-init))
+
+;; The goto-chg package is useful with Evil to jump directly to the most recent
+;; edit location. This mirrors Vim's change navigation, allowing fast return to
+;; where text was last modified without relying on the jump list or search.
+;;
+;; The goto-chg commands are bound to g; and g,
+(use-package goto-chg
+  :commands (goto-last-change
+             goto-last-change-reverse))
 ```
 
 You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) package to enhance the built-in Emacs tab-bar with a minimalist, Vim-inspired design that automatically adapts to the active Emacs theme. Beyond its Vim-inspired design, the *vim-tab-bar* package is valued by users who prioritize theme consistency, as it integrates the Emacs tab-bar with any Emacs theme, producing a visually coherent and polished interface:
