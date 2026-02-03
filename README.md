@@ -1931,7 +1931,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 
 (use-package rust-mode
   :commands rust-mode
-  :mode ("\\.rs$" . rust-mode)
+  :mode ("\\.rs\\'" . rust-mode)
   :custom
   (rust-indent-offset 2))
 
