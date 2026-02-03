@@ -1860,11 +1860,10 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands (gitattributes-mode
              gitconfig-mode
              gitignore-mode)
-  :mode
-  ("/.gitconfig\\'" . gitconfig-mode)
-  ("/.gitignore\\'" . gitignore-mode)
-  ("/.gitignore_global\\'" . gitignore-mode)
-  ("/.gitattributes\\'" . gitattributes-mode))
+  :mode (("/.gitconfig\\'" . gitconfig-mode)
+         ("/.gitignore\\'" . gitignore-mode)
+         ("/.gitignore_global\\'" . gitignore-mode)
+         ("/.gitattributes\\'" . gitattributes-mode)))
 
 ;; Support for YAML files.
 ;;
@@ -1907,13 +1906,14 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;; and a set of recognized field separators.
 (use-package csv-mode
   :commands (csv-mode
-             csv-align-mode)
+             csv-align-mode
+             csv-guess-set-separator)
   :mode ("\\.csv\\'" . csv-mode)
   :hook ((csv-mode . csv-align-mode)
          (csv-mode . csv-guess-set-separator))
   :custom
   (csv-align-max-width 100)
-  (csv-separators '("," ";" " " "|" "\t"))
+  (csv-separators '("," ";" " " "|" "\t")))
 
 ;; Support for Go
 ;;
@@ -1932,12 +1932,12 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;; Major mode for editing crontab files
 (use-package crontab-mode
   :commands crontab-mode
-  :mode ("/crontab\\(\\.X*[[:alnum:]]+\\)?\\'" . crontab-mode))
+  :mode ("/crontab\\(\\.X*[[:alnum:]]+\\)?\\'"  . crontab-mode))
 
 ;; Major mode for editing Nginx configuration files
 (use-package nginx-mode
   :commands nginx-mode
-  :mode (("nginx\\.conf\\'"     . nginx-mode)
+  :mode (("nginx\\.conf\\'" . nginx-mode)
          ("/nginx/.+\\.conf\\'" . nginx-mode)))
 
 ;; Major mode for HashiCorp Configuration Language (HCL) files
