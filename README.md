@@ -96,28 +96,29 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code folding](#code-folding)
-    - [Changing the default theme](#changing-the-default-theme)
-    - [Automatic removal of trailing whitespace on save](#automatic-removal-of-trailing-whitespace-on-save)
     - [Enhancing undo/redo](#enhancing-undoredo)
+    - [Changing the default theme](#changing-the-default-theme)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
-    - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Persisting and Restoring all buffers, windows/split, tab-bar, frames...](#persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames)
-    - [Configuring org-mode](#configuring-org-mode)
     - [Configuring markdown-mode (e.g., README.md syntax)](#configuring-markdown-mode-eg-readmemd-syntax)
+    - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
+    - [Context-aware 'go to definition' functionality for 50+ programming languages](#context-aware-go-to-definition-functionality-for-50-programming-languages)
+    - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
+    - [Automatic removal of trailing whitespace on save](#automatic-removal-of-trailing-whitespace-on-save)
+    - [Highlighting uncommitted changes in the buffer margin (e.g., Git changes)](#highlighting-uncommitted-changes-in-the-buffer-margin-eg-git-changes)
+    - [Spell checker](#spell-checker)
+    - [Configuring org-mode](#configuring-org-mode)
+    - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Auto upgrade Emacs packages](#auto-upgrade-emacs-packages)
     - [Safely terminating unused buffers](#safely-terminating-unused-buffers)
     - [Treemacs, a tree layout file explorer (Sidebar file explorer)](#treemacs-a-tree-layout-file-explorer-sidebar-file-explorer)
     - [Inhibit the mouse](#inhibit-the-mouse)
-    - [Spell checker](#spell-checker)
-    - [Efficient jumps for enhanced productivity](#efficient-jumps-for-enhanced-productivity)
-    - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
-    - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
+    - [Efficient jumps](#efficient-jumps)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Changing the Default Font](#changing-the-default-font)
-    - [Highlighting uncommitted changes in the buffer margin (e.g., Git changes)](#highlighting-uncommitted-changes-in-the-buffer-margin-eg-git-changes)
     - [Persisting Text Scale](#persisting-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
@@ -686,6 +687,38 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
 
+### Enhancing undo/redo
+
+The [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu) package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session) package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
+
+The default undo system in Emacs has two main issues that undo-fu fixes:
+
+1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
+2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
+
+To install and configure these packages, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
+;; system, providing more convenient undo/redo functionality.
+(use-package undo-fu
+  :ensure t
+  :commands (undo-fu-only-undo
+             undo-fu-only-redo
+             undo-fu-only-redo-all
+             undo-fu-disable-checkpoint)
+  :config
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z") 'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+;; The undo-fu-session package complements undo-fu by enabling the saving
+;; and restoration of undo history across Emacs sessions, even after restarting.
+(use-package undo-fu-session
+  :ensure t
+  :commands undo-fu-session-global-mode
+  :hook (after-init . undo-fu-session-global-mode))
+```
+
 ### Changing the default theme
 
 For instance, to switch to a another theme than the default one, add the following to the `~/.emacs.d/post-init.el` file:
@@ -729,74 +762,6 @@ If you're interested in exploring third-party Emacs themes, consider the followi
 - `ef-themes` (available on MELPA): A collection of light and dark themes for GNU Emacs, designed to offer colorful yet highly legible options. They are aimed at users seeking something with more visual flair compared to the more minimalist *modus-themes*.
 - `doom-themes` (available on MELPA): An extensive collection of high-quality, visually appealing themes for Emacs, designed to offer a sleek and modern aesthetic, while drawing inspiration from popular community themes.
 - `tomorrow-night-deepblue-theme` (available on MELPA): A beautiful deep blue variant of the Tomorrow Night theme, which is renowned for its elegant color palette. It features a deep blue background color that creates a calming atmosphere. This theme is a great choice for those who miss the blue themes that were trendy a few years ago. (The theme was inspired by classic text editors such as QuickBASIC, RHIDE, and Turbo Pascal, as well as tools such as Midnight Commander.)
-
-### Automatic removal of trailing whitespace on save
-
-**Trailing whitespace** refers to any spaces or tabs that appear after the last non-whitespace character on a line. These characters have no semantic value and can lead to unnecessary diffs in version control, inconsistent formatting, or visual clutter. Removing them improves code clarity and consistency.
-
-The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
-
-To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
-```elisp
-;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
-;; that automatically removes trailing whitespace and blank lines at the end of
-;; the buffer when saving.
-(use-package stripspace
-  :ensure t
-  :commands stripspace-local-mode
-
-  ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
-  :hook ((prog-mode . stripspace-local-mode)
-         (text-mode . stripspace-local-mode)
-         (conf-mode . stripspace-local-mode))
-
-  :custom
-  ;; The `stripspace-only-if-initially-clean' option:
-  ;; - nil to always delete trailing whitespace.
-  ;; - Non-nil to only delete whitespace when the buffer is clean initially.
-  ;; (The initial cleanliness check is performed when `stripspace-local-mode'
-  ;; is enabled.)
-  (stripspace-only-if-initially-clean nil)
-
-  ;; Enabling `stripspace-restore-column' preserves the cursor's column position
-  ;; even after stripping spaces. This is useful in scenarios where you add
-  ;; extra spaces and then save the file. Although the spaces are removed in the
-  ;; saved file, the cursor remains in the same position, ensuring a consistent
-  ;; editing experience without affecting cursor placement.
-  (stripspace-restore-column t))
-```
-
-### Enhancing undo/redo
-
-The [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu) package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session) package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
-
-The default undo system in Emacs has two main issues that undo-fu fixes:
-
-1. **Redo requires two steps**: To redo an action after undoing, you need to press a key twice, which can be annoying and inefficient.
-2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
-
-To install and configure these packages, add the following to `~/.emacs.d/post-init.el`:
-```emacs-lisp
-;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
-;; system, providing more convenient undo/redo functionality.
-(use-package undo-fu
-  :ensure t
-  :commands (undo-fu-only-undo
-             undo-fu-only-redo
-             undo-fu-only-redo-all
-             undo-fu-disable-checkpoint)
-  :config
-  (global-unset-key (kbd "C-z"))
-  (global-set-key (kbd "C-z") 'undo-fu-only-undo)
-  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
-
-;; The undo-fu-session package complements undo-fu by enabling the saving
-;; and restoration of undo history across Emacs sessions, even after restarting.
-(use-package undo-fu-session
-  :ensure t
-  :commands undo-fu-session-global-mode
-  :hook (after-init . undo-fu-session-global-mode))
-```
 
 ### Configuring Vim keybindings using Evil?
 
@@ -917,44 +882,6 @@ You can also add the following code to enable commenting and uncommenting by pre
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 ```
 
-### Configuring LSP Servers with Eglot (built-in)
-
-To set up Language Server Protocol (LSP) servers using Eglot, you can configure it, add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-;; Set up the Language Server Protocol (LSP) servers using Eglot.
-(use-package eglot
-  :ensure nil
-  :commands (eglot-ensure
-             eglot-rename
-             eglot-format-buffer))
-```
-
-Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
-
-``` emacs-lisp
-;; Configure Eglot to enable or disable certain options for the pylsp server
-;; in Python development. (Note that a third-party tool,
-;; https://github.com/python-lsp/python-lsp-server, must be installed),
-(add-hook 'python-mode-hook #'eglot-ensure)
-(add-hook 'python-ts-mode-hook #'eglot-ensure)
-(setq-default eglot-workspace-configuration
-              `(:pylsp (:plugins
-                        (;; Fix imports and syntax using `eglot-format-buffer`
-                         :isort (:enabled t)
-                         :autopep8 (:enabled t)
-
-                         ;; Syntax checkers (works with Flymake)
-                         :pylint (:enabled t)
-                         :pycodestyle (:enabled t)
-                         :flake8 (:enabled t)
-                         :pyflakes (:enabled t)
-                         :pydocstyle (:enabled t)
-                         :mccabe (:enabled t)
-
-                         :yapf (:enabled :json-false)
-                         :rope_autoimport (:enabled :json-false)))))
-```
-
 ### Persisting and Restoring all buffers, windows/split, tab-bar, frames...
 
 The [easysession](https://github.com/jamescherti/easysession.el) Emacs package is a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
@@ -993,41 +920,6 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   ;; `file-name-handler-alist` at depth 101 during `emacs-startup-hook`.)
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
-```
-
-### Configuring org-mode
-
-Org mode is a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
-
-To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-;; Org mode is a major mode designed for organizing notes, planning, task
-;; management, and authoring documents using plain text with a simple and
-;; expressive markup syntax. It supports hierarchical outlines, TODO lists,
-;; scheduling, deadlines, time tracking, and exporting to multiple formats
-;; including HTML, LaTeX, PDF, and Markdown.
-(use-package org
-  :ensure t
-  :commands (org-mode org-version)
-  :mode
-  ("\\.org\\'" . org-mode)
-  :custom
-  (org-hide-leading-stars t)
-  (org-startup-indented t)
-  (org-adapt-indentation nil)
-  (org-edit-src-content-indentation 0)
-  ;; (org-fontify-done-headline t)
-  ;; (org-fontify-todo-headline t)
-  ;; (org-fontify-whole-heading-line t)
-  ;; (org-fontify-quote-and-verse-blocks t)
-  (org-startup-truncated t))
-```
-
-The `org-appear` package temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves. To configure **org-appear**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-(use-package org-appear
-  :commands org-appear-mode
-  :hook (org-mode . org-appear-mode))
 ```
 
 ### Configuring markdown-mode (e.g., README.md syntax)
@@ -1077,6 +969,297 @@ Once installed:
 These commands work on any Markdown buffer and rely on properly formatted headers (e.g., `#`, `##`) to build the table of contents.
 
 The author also recommends reading the following article: [Emacs: Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/).
+
+### Asynchronous code formatting without cursor disruption
+
+[Apheleia](https://github.com/radian-software/apheleia) is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+
+Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
+
+To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
+
+To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
+;; Black and Prettier) asynchronously without disrupting the cursor position.
+(use-package apheleia
+  :ensure t
+  :commands (apheleia-mode
+             apheleia-global-mode)
+  :hook ((prog-mode . apheleia-mode)))
+```
+
+### Context-aware 'go to definition' functionality for 50+ programming languages
+
+The [dumb-jump](https://github.com/jacktasia/dumb-jump) package provides context-aware 'go to definition' functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files.
+
+Unlike more sophisticated language-aware tools (e.g., eglot or lsp-mode), `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing users to jump to definitions or references.
+
+To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(lightemacs-use-package dumb-jump
+  :commands dumb-jump-xref-activate
+  :init
+  ;; Register `dumb-jump' as an xref backend so it integrates with
+  ;; `xref-find-definitions'
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+  (setq dumb-jump-aggressive nil)
+  ;; (setq dumb-jump-quiet t)
+
+  ;; Number of seconds a rg/grep/find command can take before being warned to
+  ;; use ag and config.
+  (setq dumb-jump-max-find-time 3)
+
+  ;; Use `completing-read' so that selection of jump targets integrates with the
+  ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
+  ;; providing a consistent minibuffer-based interface whenever multiple
+  ;; definitions are found.
+  (setq dumb-jump-selector 'completing-read)
+
+  ;; If ripgrep is available, force `dumb-jump' to use it because it is
+  ;; significantly faster and more accurate than the default searchers (grep,
+  ;; ag, etc.).
+  (when (executable-find "rg")
+    (setq dumb-jump-force-searcher 'rg)
+    (setq dumb-jump-prefer-searcher 'rg)))
+```
+
+### Efficient template expansion with snippets
+
+The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
+
+The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
+
+(NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
+
+
+```elisp
+;; The official collection of snippets for yasnippet.
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
+
+;; YASnippet is a template system designed that enhances text editing by
+;; enabling users to define and use snippets. When a user types a short
+;; abbreviation, YASnippet automatically expands it into a full template, which
+;; can include placeholders, fields, and dynamic content.
+(use-package yasnippet
+  :ensure t
+  :commands (yas-minor-mode
+             yas-global-mode)
+
+  :hook
+  (after-init . yas-global-mode)
+
+  :custom
+  (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
+  (yas-also-indent-empty-lines t)
+  (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
+  (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
+  ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
+  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
+  ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
+
+  :init
+  ;; Suppress verbose messages
+  (setq yas-verbosity 0))
+```
+
+### Automatic removal of trailing whitespace on save
+
+**Trailing whitespace** refers to any spaces or tabs that appear after the last non-whitespace character on a line. These characters have no semantic value and can lead to unnecessary diffs in version control, inconsistent formatting, or visual clutter. Removing them improves code clarity and consistency.
+
+The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
+```elisp
+;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
+;; that automatically removes trailing whitespace and blank lines at the end of
+;; the buffer when saving.
+(use-package stripspace
+  :ensure t
+  :commands stripspace-local-mode
+
+  ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
+  :hook ((prog-mode . stripspace-local-mode)
+         (text-mode . stripspace-local-mode)
+         (conf-mode . stripspace-local-mode))
+
+  :custom
+  ;; The `stripspace-only-if-initially-clean' option:
+  ;; - nil to always delete trailing whitespace.
+  ;; - Non-nil to only delete whitespace when the buffer is clean initially.
+  ;; (The initial cleanliness check is performed when `stripspace-local-mode'
+  ;; is enabled.)
+  (stripspace-only-if-initially-clean nil)
+
+  ;; Enabling `stripspace-restore-column' preserves the cursor's column position
+  ;; even after stripping spaces. This is useful in scenarios where you add
+  ;; extra spaces and then save the file. Although the spaces are removed in the
+  ;; saved file, the cursor remains in the same position, ensuring a consistent
+  ;; editing experience without affecting cursor placement.
+  (stripspace-restore-column t))
+```
+
+### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
+
+The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
+
+![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
+
+To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
+```elisp
+(use-package diff-hl
+  :commands (diff-hl-mode
+             global-diff-hl-mode)
+  :hook (prog-mode . diff-hl-mode)
+  :init
+  (setq diff-hl-flydiff-delay 0.4)  ; Faster
+  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
+  (setq diff-hl-update-async t)  ; Do not block Emacs
+  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
+```
+
+### Spell checker
+
+The `flyspell` package is a built-in Emacs minor mode that provides on-the-fly spell checking. It highlights misspelled words as you type, offering interactive corrections. In text modes, it checks the entire buffer, while in programming modes, it typically checks only comments and strings. It integrates with external spell checkers like `aspell`, `hunspell`, or `ispell` to provide suggestions and corrections.
+
+NOTE: `flyspell-mode` can become slow when using Aspell, especially with large buffers or aggressive suggestion settings like `--sug-mode=ultra`. This slowdown occurs because Flyspell checks words dynamically as you type or navigate text, requiring frequent communication between Emacs and the external Aspell process. Each check involves sending words to Aspell and receiving results, which introduces overhead from process invocation and inter-process communication.
+
+To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+;; The flyspell package is a built-in Emacs minor mode that provides
+;; on-the-fly spell checking. It highlights misspelled words as you type,
+;; offering interactive corrections. In text modes, it checks the entire buffer,
+;; while in programming modes, it typically checks only comments and strings. It
+;; integrates with external spell checkers like aspell, hunspell, or
+;; ispell to provide suggestions and corrections.
+;;
+;; NOTE: flyspell-mode can become slow when using Aspell, especially with large
+;; buffers or aggressive suggestion settings like --sug-mode=ultra. This
+;; slowdown occurs because Flyspell checks words dynamically as you type or
+;; navigate text, requiring frequent communication between Emacs and the
+;; external Aspell process. Each check involves sending words to Aspell and
+;; receiving results, which introduces overhead from process invocation and
+;; inter-process communication.
+(use-package ispell
+  :ensure nil
+  :commands (ispell ispell-minor-mode)
+  :custom
+  ;; Set the ispell program name to aspell
+  (ispell-program-name "aspell")
+
+  ;; Define the "en_US" spell-check dictionary locally, telling Emacs to use
+  ;; UTF-8 encoding, match words using alphabetic characters, allow apostrophes
+  ;; inside words, treat non-alphabetic characters as word boundaries, and pass
+  ;; -d en_US to the underlying spell-check program.
+  (ispell-local-dictionary-alist
+   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+
+  ;; Configures Aspell's suggestion mode to "ultra", which provides more
+  ;; aggressive and detailed suggestions for misspelled words. The language
+  ;; is set to "en_US" for US English, which can be replaced with your desired
+  ;; language code (e.g., "en_GB" for British English, "de_DE" for German).
+  (ispell-extra-args '(; "--sug-mode=ultra"
+                       "--lang=en_US")))
+
+;; The flyspell package is a built-in Emacs minor mode that provides
+;; on-the-fly spell checking. It highlights misspelled words as you type,
+;; offering interactive corrections.
+(use-package flyspell
+  :ensure nil
+  :commands flyspell-mode
+  :hook
+  (; (prog-mode . flyspell-prog-mode)
+   (text-mode . (lambda()
+                  (if (or (derived-mode-p 'yaml-mode)
+                          (derived-mode-p 'yaml-ts-mode)
+                          (derived-mode-p 'ansible-mode))
+                      (flyspell-prog-mode 1)
+                    (flyspell-mode 1)))))
+  :config
+  ;; Remove strings from Flyspell
+  (setq flyspell-prog-text-faces (delq 'font-lock-string-face
+                                       flyspell-prog-text-faces))
+
+  ;; Remove doc from Flyspell
+  (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
+                                       flyspell-prog-text-faces)))
+```
+
+### Configuring org-mode
+
+Org mode is a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
+
+To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+;; Org mode is a major mode designed for organizing notes, planning, task
+;; management, and authoring documents using plain text with a simple and
+;; expressive markup syntax. It supports hierarchical outlines, TODO lists,
+;; scheduling, deadlines, time tracking, and exporting to multiple formats
+;; including HTML, LaTeX, PDF, and Markdown.
+(use-package org
+  :ensure t
+  :commands (org-mode org-version)
+  :mode
+  ("\\.org\\'" . org-mode)
+  :custom
+  (org-hide-leading-stars t)
+  (org-startup-indented t)
+  (org-adapt-indentation nil)
+  (org-edit-src-content-indentation 0)
+  ;; (org-fontify-done-headline t)
+  ;; (org-fontify-todo-headline t)
+  ;; (org-fontify-whole-heading-line t)
+  ;; (org-fontify-quote-and-verse-blocks t)
+  (org-startup-truncated t))
+```
+
+The `org-appear` package temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves. To configure **org-appear**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package org-appear
+  :commands org-appear-mode
+  :hook (org-mode . org-appear-mode))
+```
+
+### Configuring LSP Servers with Eglot (built-in)
+
+To set up Language Server Protocol (LSP) servers using Eglot, you can configure it, add the following to `~/.emacs.d/post-init.el`:
+``` emacs-lisp
+;; Set up the Language Server Protocol (LSP) servers using Eglot.
+(use-package eglot
+  :ensure nil
+  :commands (eglot-ensure
+             eglot-rename
+             eglot-format-buffer))
+```
+
+Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
+
+``` emacs-lisp
+;; Configure Eglot to enable or disable certain options for the pylsp server
+;; in Python development. (Note that a third-party tool,
+;; https://github.com/python-lsp/python-lsp-server, must be installed),
+(add-hook 'python-mode-hook #'eglot-ensure)
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
+(setq-default eglot-workspace-configuration
+              `(:pylsp (:plugins
+                        (;; Fix imports and syntax using `eglot-format-buffer`
+                         :isort (:enabled t)
+                         :autopep8 (:enabled t)
+
+                         ;; Syntax checkers (works with Flymake)
+                         :pylint (:enabled t)
+                         :pycodestyle (:enabled t)
+                         :flake8 (:enabled t)
+                         :pyflakes (:enabled t)
+                         :pydocstyle (:enabled t)
+                         :mccabe (:enabled t)
+
+                         :yapf (:enabled :json-false)
+                         :rope_autoimport (:enabled :json-false)))))
+```
 
 ### Tree-sitter Integration (Better Syntax Highlighting)
 
@@ -1326,152 +1509,6 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
 
-### Spell checker
-
-The `flyspell` package is a built-in Emacs minor mode that provides on-the-fly spell checking. It highlights misspelled words as you type, offering interactive corrections. In text modes, it checks the entire buffer, while in programming modes, it typically checks only comments and strings. It integrates with external spell checkers like `aspell`, `hunspell`, or `ispell` to provide suggestions and corrections.
-
-NOTE: `flyspell-mode` can become slow when using Aspell, especially with large buffers or aggressive suggestion settings like `--sug-mode=ultra`. This slowdown occurs because Flyspell checks words dynamically as you type or navigate text, requiring frequent communication between Emacs and the external Aspell process. Each check involves sending words to Aspell and receiving results, which introduces overhead from process invocation and inter-process communication.
-
-To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
-``` emacs-lisp
-;; The flyspell package is a built-in Emacs minor mode that provides
-;; on-the-fly spell checking. It highlights misspelled words as you type,
-;; offering interactive corrections. In text modes, it checks the entire buffer,
-;; while in programming modes, it typically checks only comments and strings. It
-;; integrates with external spell checkers like aspell, hunspell, or
-;; ispell to provide suggestions and corrections.
-;;
-;; NOTE: flyspell-mode can become slow when using Aspell, especially with large
-;; buffers or aggressive suggestion settings like --sug-mode=ultra. This
-;; slowdown occurs because Flyspell checks words dynamically as you type or
-;; navigate text, requiring frequent communication between Emacs and the
-;; external Aspell process. Each check involves sending words to Aspell and
-;; receiving results, which introduces overhead from process invocation and
-;; inter-process communication.
-(use-package ispell
-  :ensure nil
-  :commands (ispell ispell-minor-mode)
-  :custom
-  ;; Set the ispell program name to aspell
-  (ispell-program-name "aspell")
-
-  ;; Define the "en_US" spell-check dictionary locally, telling Emacs to use
-  ;; UTF-8 encoding, match words using alphabetic characters, allow apostrophes
-  ;; inside words, treat non-alphabetic characters as word boundaries, and pass
-  ;; -d en_US to the underlying spell-check program.
-  (ispell-local-dictionary-alist
-   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
-
-  ;; Configures Aspell's suggestion mode to "ultra", which provides more
-  ;; aggressive and detailed suggestions for misspelled words. The language
-  ;; is set to "en_US" for US English, which can be replaced with your desired
-  ;; language code (e.g., "en_GB" for British English, "de_DE" for German).
-  (ispell-extra-args '(; "--sug-mode=ultra"
-                       "--lang=en_US")))
-
-;; The flyspell package is a built-in Emacs minor mode that provides
-;; on-the-fly spell checking. It highlights misspelled words as you type,
-;; offering interactive corrections.
-(use-package flyspell
-  :ensure nil
-  :commands flyspell-mode
-  :hook
-  (; (prog-mode . flyspell-prog-mode)
-   (text-mode . (lambda()
-                  (if (or (derived-mode-p 'yaml-mode)
-                          (derived-mode-p 'yaml-ts-mode)
-                          (derived-mode-p 'ansible-mode))
-                      (flyspell-prog-mode 1)
-                    (flyspell-mode 1)))))
-  :config
-  ;; Remove strings from Flyspell
-  (setq flyspell-prog-text-faces (delq 'font-lock-string-face
-                                       flyspell-prog-text-faces))
-
-  ;; Remove doc from Flyspell
-  (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
-                                       flyspell-prog-text-faces)))
-```
-
-### Efficient jumps for enhanced productivity
-
-The [avy](https://github.com/abo-abo/avy) package is a navigation framework designed for jumping directly to any visible text on the screen with minimal keystrokes. The primary benefit of *avy* is a substantial increase in navigational efficiency, as it minimizes keystrokes compared to iterative methods like arrow keys or standard search.
-
-It operates by generating a dynamic, temporary mapping: upon invocation, such as with the command `avy-goto-char` or `avy-goto-char-2`, the user inputs a target character, and `avy` highlights all visible instances on the screen with unique key sequences. Typing the short sequence corresponding to the desired location instantly moves the point directly there.
-
-To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-(use-package avy
-  :ensure t
-  :commands (avy-goto-char
-             avy-goto-char-2
-             avy-next)
-  :init
-  (global-set-key (kbd "C-'") 'avy-goto-char-2))
-```
-
-The author recommends using `avy-goto-char-2` (typically bound to `C-'`). Upon invocation, *avy* prompts the user to input a two-character sequence. Subsequently, all visible instances of this sequence are highlighted with unique, concise labels (e.g., single letters or numbers). The user then simply presses the key corresponding to the desired label, and *avy* instantly transports the cursor to that specific occurrence.
-
-### Asynchronous code formatting without cursor disruption
-
-[Apheleia](https://github.com/radian-software/apheleia) is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
-
-Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
-
-To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
-
-To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
-;; Black and Prettier) asynchronously without disrupting the cursor position.
-(use-package apheleia
-  :ensure t
-  :commands (apheleia-mode
-             apheleia-global-mode)
-  :hook ((prog-mode . apheleia-mode)))
-```
-
-### Efficient template expansion with snippets
-
-The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
-
-The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
-
-(NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
-
-
-```elisp
-;; The official collection of snippets for yasnippet.
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet)
-
-;; YASnippet is a template system designed that enhances text editing by
-;; enabling users to define and use snippets. When a user types a short
-;; abbreviation, YASnippet automatically expands it into a full template, which
-;; can include placeholders, fields, and dynamic content.
-(use-package yasnippet
-  :ensure t
-  :commands (yas-minor-mode
-             yas-global-mode)
-
-  :hook
-  (after-init . yas-global-mode)
-
-  :custom
-  (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
-  (yas-also-indent-empty-lines t)
-  (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
-  (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
-  ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
-  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
-  ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
-
-  :init
-  ;; Suppress verbose messages
-  (setq yas-verbosity 0))
-```
-
 ### A better Emacs *help* buffer
 
 [Helpful](https://github.com/Wilfred/helpful) is an alternative to the built-in Emacs help that provides much more contextual information.
@@ -1497,6 +1534,25 @@ To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
   :custom
   (helpful-max-buffers 7))
 ```
+
+### Efficient jumps
+
+The [avy](https://github.com/abo-abo/avy) package is a navigation framework designed for jumping directly to any visible text on the screen with minimal keystrokes. The primary benefit of *avy* is a substantial increase in navigational efficiency, as it minimizes keystrokes compared to iterative methods like arrow keys or standard search.
+
+It operates by generating a dynamic, temporary mapping: upon invocation, such as with the command `avy-goto-char` or `avy-goto-char-2`, the user inputs a target character, and `avy` highlights all visible instances on the screen with unique key sequences. Typing the short sequence corresponding to the desired location instantly moves the point directly there.
+
+To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package avy
+  :ensure t
+  :commands (avy-goto-char
+             avy-goto-char-2
+             avy-next)
+  :init
+  (global-set-key (kbd "C-'") 'avy-goto-char-2))
+```
+
+The author recommends using `avy-goto-char-2` (typically bound to `C-'`). Upon invocation, *avy* prompts the user to input a two-character sequence. Subsequently, all visible instances of this sequence are highlighted with unique, concise labels (e.g., single letters or numbers). The user then simply presses the key corresponding to the desired label, and *avy* instantly transports the cursor to that specific occurrence.
 
 ### Enhancing the Elisp development experience
 
@@ -1581,25 +1637,6 @@ To customize the default font, add the following expression to your `~/.emacs.d/
 On Linux, you can display a comprehensive list of all installed font families by executing the following command:
 ```
 fc-list : family | sed 's/,/\n/g' | sort -u
-```
-
-### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
-
-The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
-
-![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
-
-To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
-```elisp
-(use-package diff-hl
-  :commands (diff-hl-mode
-             global-diff-hl-mode)
-  :hook (prog-mode . diff-hl-mode)
-  :init
-  (setq diff-hl-flydiff-delay 0.4)  ; Faster
-  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
-  (setq diff-hl-update-async t)  ; Do not block Emacs
-  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
 ```
 
 ### Persisting Text Scale
