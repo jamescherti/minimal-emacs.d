@@ -2005,12 +2005,6 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands nix-mode
   :mode ("\\.nix\\'" . nix-mode))
 
-;; Support for common .env file syntax, typically used for environment
-;; variable files
-(use-package dotenv-mode
-  :commands dotenv-mode
-  :mode ("\\.env\\..*\\'" . dotenv-mode))
-
 ;; Major mode for editing Fish shell scripts
 (use-package fish-mode
   :commands fish-mode
