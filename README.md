@@ -109,7 +109,6 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Spell checker](#spell-checker)
     - [Configuring org-mode](#configuring-org-mode)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
-    - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Auto upgrade Emacs packages](#auto-upgrade-emacs-packages)
     - [Safely terminating unused buffers](#safely-terminating-unused-buffers)
     - [Treemacs, a tree layout file explorer (Sidebar file explorer)](#treemacs-a-tree-layout-file-explorer-sidebar-file-explorer)
@@ -117,6 +116,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Efficient jumps](#efficient-jumps)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
+    - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Changing the Default Font](#changing-the-default-font)
     - [Persisting Text Scale](#persisting-text-scale)
@@ -1262,29 +1262,6 @@ Here is an example of how to configure Eglot to enable or disable certain option
                          :rope_autoimport (:enabled :json-false)))))
 ```
 
-### Tree-sitter Integration (Better Syntax Highlighting)
-
-Tree-sitter is an incremental parsing system introduced in Emacs 29 that provides precise, high-performance syntax analysis and highlighting by constructing concrete syntax trees from source code. It supports a broad set of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, Markdown, and many others. Unlike traditional font-lock, which relies on regular expressions, Tree-sitter uses formal grammar definitions to build real-time parse trees, enabling accurate syntax highlighting, structural navigation, code folding, and foundational support for advanced editing features like refactoring.
-
-The configuration below enables Tree-sitter support using the [treesit-auto](https://github.com/renzmann/treesit-auto) package. Setting `treesit-auto-add-to-auto-mode-alist` to `'all` ensures that all available Tree-sitter modes are automatically activated for their corresponding file types. Enabling `global-treesit-auto-mode` applies this behavior globally, improving syntax accuracy and consistency across supported languages.
-
-To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
-
-```elisp
-;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
-;; that provides precise, high-performance syntax highlighting. It supports a
-;; broad set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, Markdown, and many others.
-(use-package treesit-auto
-  :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
-```
-
 ### Auto upgrade Emacs packages
 
 The [auto-package-update](https://github.com/rranelli/auto-package-update.el) automates the process of updating installed packages managed by *package.el*. Instead of requiring users to manually invoke `package-list-packages` and update each package, `auto-package-update` can check for available updates at regular intervals, perform updates in the background, and optionally hide the results buffer or prompt before applying changes.
@@ -1610,6 +1587,29 @@ Other optional packages that may be useful include:
              elisp-refs-variable
              elisp-refs-special
              elisp-refs-symbol))
+```
+
+### Tree-sitter Integration (Better Syntax Highlighting)
+
+Tree-sitter is an incremental parsing system introduced in Emacs 29 that provides precise, high-performance syntax analysis and highlighting by constructing concrete syntax trees from source code. It supports a broad set of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, Markdown, and many others. Unlike traditional font-lock, which relies on regular expressions, Tree-sitter uses formal grammar definitions to build real-time parse trees, enabling accurate syntax highlighting, structural navigation, code folding, and foundational support for advanced editing features like refactoring.
+
+The configuration below enables Tree-sitter support using the [treesit-auto](https://github.com/renzmann/treesit-auto) package. Setting `treesit-auto-add-to-auto-mode-alist` to `'all` ensures that all available Tree-sitter modes are automatically activated for their corresponding file types. Enabling `global-treesit-auto-mode` applies this behavior globally, improving syntax accuracy and consistency across supported languages.
+
+To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
+
+```elisp
+;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
+;; that provides precise, high-performance syntax highlighting. It supports a
+;; broad set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, Markdown, and many others.
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 ```
 
 ### Showing the tab-bar
