@@ -1845,8 +1845,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;; editing features.
 (use-package dockerfile-mode
   :commands dockerfile-mode
-  :mode
-  ("Dockerfile\\'" . dockerfile-mode))
+  :mode ("Dockerfile\\'" . dockerfile-mode))
 
 ;; Support for *.lua files.
 ;;
@@ -1872,8 +1871,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands (csv-mode
              csv-align-mode)
   :mode ("\\.csv\\'" . csv-mode)
-  :hook
-  (csv-mode . csv-align-mode)
+  :hook (csv-mode . csv-align-mode)
   :custom
   (csv-align-max-width 100)
   (csv-separators '(",")))
@@ -1883,14 +1881,12 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;; local overrides, and project-specific configuration files.
 (use-package vimrc-mode
   :commands vimrc-mode
-  :mode
-  ("\\.vim\\(rc\\)?\\'" . vimrc-mode))
+  :mode ("\\.vim\\(rc\\)?\\'" . vimrc-mode))
 
 ;; Support for Jenkinsfile files
 (use-package jenkinsfile-mode
   :commands jenkinsfile-mode
-  :mode
-  ("Jenkinsfile\\'" . jenkinsfile-mode))
+  :mode ("Jenkinsfile\\'" . jenkinsfile-mode))
 ```
 
 ## Customizations: pre-early-init.el
