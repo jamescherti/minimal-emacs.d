@@ -101,6 +101,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Showing the tab-bar](#showing-the-tab-bar)
+    - [Offline Dictionary](#offline-dictionary)
     - [Changing the Default Font](#changing-the-default-font)
     - [Persisting Text Scale](#persisting-text-scale)
     - [Loading the custom.el file](#loading-the-customel-file)
@@ -1604,6 +1605,32 @@ Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively wh
 ;; when multiple tabs are open:
 (setopt tab-bar-show 1)
 ```
+
+### Offline Dictionary
+
+The [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el) package serves as a lightweight Emacs interface for the `sdcv` command-line interface, which is the console version of the StarDict dictionary application.
+
+This package enables Emacs to function as an offline dictionary.
+
+To enable *quick-sdcv*, add the following to your `~/.emacs.d/post-init.el`:
+
+```emacs-lisp
+(use-package quick-sdcv
+  :ensure t
+  :custom
+  (quick-sdcv-unique-buffers t)
+  (quick-sdcv-dictionary-prefix-symbol "►")
+  (quick-sdcv-ellipsis " ▼"))
+```
+
+Here are the main interactive functions:
+- `M-x quick-sdcv-search-at-point`: Searches the word around the cursor and displays the result in a buffer.
+- `M-x quick-sdcv-search-input`: Searches the input word and displays the result in a buffer.
+
+Prerequisite:
+
+- The [sdcv](https://github.com/Dushistov/sdcv) command. (It can usually be installed by installing the `sdcv` package.)
+- Download dictionaries from: http://download.huzheng.org/ . Once the dictionaries are downloaded, extract them into `/usr/share/stardict/dic/`, or configure the variable `quick-sdcv-dictionary-data-dir` in the Emacs configuration to specify an alternative dictionary path.
 
 ### Changing the Default Font
 
