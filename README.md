@@ -1929,6 +1929,12 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands haskell-mode
   :mode ("\\.hs\\'" . haskell-mode))
 
+(use-package rust-mode
+  :commands rust-mode
+  :mode ("\\.rs$" . rust-mode)
+  :custom
+  (rust-indent-offset 2))
+
 ;; Major mode for editing crontab files
 (use-package crontab-mode
   :commands crontab-mode
