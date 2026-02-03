@@ -1929,6 +1929,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :commands haskell-mode
   :mode ("\\.hs\\'" . haskell-mode))
 
+;; Support for Rust
 (use-package rust-mode
   :commands rust-mode
   :mode ("\\.rs\\'" . rust-mode)
