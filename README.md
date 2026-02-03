@@ -1929,7 +1929,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 
 ;; Support for Gnuplot files
 (use-package gnuplot
-  :commands (gnuplot-mode)
+  :commands gnuplot-mode
   :mode ("\\.gp\\'" . gnuplot-mode))
 
 ;; Support for *.lua files.
