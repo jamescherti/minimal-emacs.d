@@ -98,6 +98,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Inhibit the mouse](#inhibit-the-mouse)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Efficient jumps](#efficient-jumps)
+    - [Renaming and deleting files](#renaming-and-deleting-files)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Showing the tab-bar](#showing-the-tab-bar)
@@ -1516,6 +1517,33 @@ To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
 ```
 
 The author recommends using `avy-goto-char-2` (typically bound to `C-'`). Upon invocation, *avy* prompts the user to input a two-character sequence. Subsequently, all visible instances of this sequence are highlighted with unique, concise labels (e.g., single letters or numbers). The user then simply presses the key corresponding to the desired label, and *avy* instantly transports the cursor to that specific occurrence.
+
+### Renaming and deleting files
+
+This [bufferfile.el](https://github.com/jamescherti/bufferfile.el) package provides helper functions to delete, rename, or copy buffer files:
+- `bufferfile-rename`: Renames the file visited by the current buffer, ensures that the destination directory exists, and updates the buffer name for all associated buffers, including clones/indirect buffers. It also ensures that buffer-local features referencing the file, such as Eglot or dired buffers, are correctly updated to reflect the new file name.
+- `bufferfile-delete`: Delete the file associated with a buffer and kill all buffers visiting the file, including clones/indirect buffers.
+- `bufferfile-copy`: Ensures that the destination directory exists and copies the file visited by the current buffer to a new file.
+
+The functions above also ensures that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
+
+To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package bufferfile
+  :ensure t
+  :commands (bufferfile-copy
+             bufferfile-rename
+             bufferfile-delete)
+  :custom
+  ;; If non-nil, display messages during file renaming operations
+  (bufferfile-verbose nil)
+
+  ;; If non-nil, enable using version control (VC) when available
+  (bufferfile-use-vc nil)
+
+  ;; Specifies the action taken after deleting a file and killing its buffer.
+  (bufferfile-delete-switch-to 'parent-directory))
+```
 
 ### Enhancing the Elisp development experience
 
