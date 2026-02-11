@@ -28,7 +28,7 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
-In addition to *minimal-emacs.d*, startup speed is influenced by your computer's processing power and disk speed. To establish a baseline, start Emacs with only *minimal-emacs.d* and no additional configurations, then run `M-x emacs-init-time`. Incrementally modify your init files and observe the impact on startup time. For consistent comparisons, always test on the same computer and Emacs version. It's also important to ensure that all packages are deferred using `:defer t` and `:commands`, which makes Emacs load them only when needed (see additional examples in this README.md). While startup time is important, other factors, like native compilation, are even more important. Although native compilation may introduce some brief initial and negligible initial delay, it is beneficial in the long run as it significantly speeds up Emacs.
+In addition to *minimal-emacs.d*, startup speed is influenced by your computer's processing power and disk speed. To establish a baseline, start Emacs with only *minimal-emacs.d* and no additional configurations, then run `M-x emacs-init-time`. Incrementally modify your init files and observe the impact on startup time. For consistent comparisons, always test on the same computer and Emacs version. It's also important to ensure that all packages are deferred using `:bind` and `:commands`, which makes Emacs load them only when needed (see additional examples in this README.md). While startup time is important, other factors, like native compilation, are even more important. Although native compilation may introduce some brief initial and negligible initial delay, it is beneficial in the long run as it significantly speeds up Emacs.
 
 ## Comments from minimal-emacs.d users
 
@@ -76,6 +76,10 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Code completion with corfu](#code-completion-with-corfu)
     - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
     - [Code folding](#code-folding)
+      - [Kirigami: A unified interface for opening and closing folds](#kirigami-a-unified-interface-for-opening-and-closing-folds)
+      - [outline-minor-mode and hs-minor-mode](#outline-minor-mode-and-hs-minor-mode)
+      - [outline-indent-minor-mode: Folding based on indentation levels](#outline-indent-minor-mode-folding-based-on-indentation-levels)
+      - [treesit-fold](#treesit-fold)
     - [Enhancing undo/redo](#enhancing-undoredo)
     - [Changing the default theme](#changing-the-default-theme)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
@@ -92,11 +96,11 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Auto upgrade Emacs packages](#auto-upgrade-emacs-packages)
     - [Safely terminating unused buffers](#safely-terminating-unused-buffers)
     - [Treemacs, a tree layout file explorer (Sidebar file explorer)](#treemacs-a-tree-layout-file-explorer-sidebar-file-explorer)
-    - [Inhibit the mouse](#inhibit-the-mouse)
     - [A better Emacs *help* buffer](#a-better-emacs-help-buffer)
     - [Efficient jumps](#efficient-jumps)
     - [Renaming and deleting files](#renaming-and-deleting-files)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
+    - [Inhibiting the mouse](#inhibiting-the-mouse)
     - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Offline Dictionary](#offline-dictionary)
@@ -613,7 +617,47 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 
 ### Code folding
 
-The built-in `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
+#### Kirigami: A unified interface for opening and closing folds
+
+The [kirigami](https://github.com/jamescherti/kirigami.el) package offers a **unified interface for opening and closing folds** across a diverse set of major and minor modes in Emacs, including `outline-mode`, `outline-minor-mode`, `outline-indent-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hs-minor-mode`, `hide-ifdef-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, and `treesit-fold-mode`.
+```elisp
+(lightemacs-use-package kirigami
+  :commands (kirigami-open-fold
+             kirigami-open-fold-rec
+             kirigami-close-fold
+             kirigami-toggle-fold
+             kirigami-open-folds
+             kirigami-close-folds-except-current
+             kirigami-close-folds)
+
+  :init
+  (global-set-key (kbd "C-c k o") 'kirigami-open-fold)      ; Open fold at point
+  (global-set-key (kbd "C-c k c") 'kirigami-close-fold)     ; Close fold at point
+  (global-set-key (kbd "C-c k m") 'kirigami-close-folds)    ; Close all folds
+  (global-set-key (kbd "C-c k r") 'kirigami-open-folds)     ; Open all folds
+  (global-set-key (kbd "C-c k O") 'kirigami-open-fold-rec)  ; Open fold recursively
+  (global-set-key (kbd "C-c k TAB") 'kirigami-toggle-fold)) ; Toggle fold at point
+
+;; Uncomment the following if you are an `evil-mode' user:
+;; (with-eval-after-load 'evil
+;;   (define-key evil-normal-state-map "zo" 'kirigami-open-fold)
+;;   (define-key evil-normal-state-map "zO" 'kirigami-open-fold-rec)
+;;   (define-key evil-normal-state-map "zc" 'kirigami-close-fold)
+;;   (define-key evil-normal-state-map "za" 'kirigami-toggle-fold)
+;;   (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
+;;   (define-key evil-normal-state-map "zm" 'kirigami-close-folds))
+```
+
+With Kirigami, folding key bindings only need to be configured **once**. After that, the same keys work consistently across all supported major and minor modes, providing a unified and predictable experience for opening and closing folds.
+
+In addition to unified interface for opening and closing folds, the **kirigami** package:
+- **Enhances Visual Stability on Fold Opening and Closing:** Preserves the cursor's exact vertical position when expanding or collapsing headings, maintaining a constant relative distance between the cursor and the window start. This Kirigami enhancement avoids the disruptive window jump or forced re-centering commonly observed during bulk folding operations.
+- **Enhances outline:** Kirigami improves folding behavior in `outline-mode`, `outline-minor-mode`, `markdown-mode`, `gfm-mode`, and `org-mode`. It ensures that deep folds open reliably and permits closing folds even when the cursor is positioned within the content body. Additionally, it maintains window-start heading stability by automatically adjusting the scroll position to keep folded headings visible, preventing the context from disappearing when closing a fold that is partially scrolled off-screen.
+- **Hooks for Folding Actions:** Two hooks, `kirigami-pre-action-predicates` and `kirigami-post-action-functions`, let external code run before and after every folding operation. The pre-action hook runs just before a fold is opened or closed and can allow or block the action. The post-action hook runs once the change is complete and can be used to update UI elements or keep external packages in sync with the new folding state.
+
+#### outline-minor-mode and hs-minor-mode
+
+One of the modes that provide code folding is `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
 
 Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
 
@@ -640,6 +684,8 @@ For example, to enable `outline-minor-mode` in Emacs Lisp:
         (set-display-table-slot display-table 'selective-display value)
         (setq buffer-display-table display-table))))))
 ```
+
+#### outline-indent-minor-mode: Folding based on indentation levels
 
 For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
@@ -669,6 +715,45 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ```
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
+
+#### treesit-fold
+
+It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
+```elisp
+;; Intelligent code folding by leveraging the structural understanding of the
+;; built-in tree-sitter parser. Unlike traditional folding methods that rely on
+;; regular expressions or indentation, treesit-fold uses the actual syntax tree
+;; of the code to accurately identify foldable regions such as functions,
+;; classes, comments, and documentation strings. This allows for faster and more
+;; precise folding behavior that respects the grammar of the programming
+;; language, ensuring that fold boundaries are always syntactically correct even
+;; in complex or nested code structures.
+(use-package treesit-fold
+  :commands (treesit-fold-close
+             treesit-fold-close-all
+             treesit-fold-open
+             treesit-fold-toggle
+             treesit-fold-open-all
+             treesit-fold-mode
+             global-treesit-fold-mode
+             treesit-fold-open-recursively
+             treesit-fold-line-comment-mode)
+
+  :custom
+  (treesit-fold-line-count-show t)
+  (treesit-fold-line-count-format " ▼")
+
+  :config
+  (set-face-attribute 'treesit-fold-replacement-face nil
+                      :foreground "#808080"
+                      :box nil
+                      :weight 'bold))
+```
+
+The `treesit-fold` mode can be enabled using `treesit-fold-mode` or a hook such as:
+```elisp
+(add-hook 'python-ts-mode-hook #'treesit-fold-mode)
+```
 
 ### Enhancing undo/redo
 
@@ -1454,31 +1539,6 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
 ;; (treemacs-start-on-boot)
 ```
 
-### Inhibit the mouse
-
-The [inhibit-mouse](https://github.com/jamescherti/inhibit-mouse.el) package disables mouse input in Emacs.
-
-This package is useful for users who want to disable the mouse to:
-- Prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
-- Reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
-
-To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
-```emacs-lisp
-;; This package is useful for users who want to disable the mouse to:
-;; - Prevent accidental clicks or cursor movements that may unexpectedly change
-;;   the cursor position.
-;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
-;;   for navigation.
-(use-package inhibit-mouse
-  :ensure t
-  :config
-  (if (daemonp)
-      (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
-    (inhibit-mouse-mode 1)))
-```
-
-NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
-
 ### A better Emacs *help* buffer
 
 [Helpful](https://github.com/Wilfred/helpful) is an alternative to the built-in Emacs help that provides much more contextual information.
@@ -1614,6 +1674,31 @@ Other optional packages that may be useful include:
              elisp-refs-special
              elisp-refs-symbol))
 ```
+
+### Inhibiting the mouse
+
+The [inhibit-mouse](https://github.com/jamescherti/inhibit-mouse.el) package disables mouse input in Emacs.
+
+This package is useful for users who want to disable the mouse to:
+- Prevent accidental clicks or cursor movements that may unexpectedly change the cursor position.
+- Reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
+
+To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
+```emacs-lisp
+;; This package is useful for users who want to disable the mouse to:
+;; - Prevent accidental clicks or cursor movements that may unexpectedly change
+;;   the cursor position.
+;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
+;;   for navigation.
+(use-package inhibit-mouse
+  :ensure t
+  :config
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
+    (inhibit-mouse-mode 1)))
+```
+
+NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
 
 ### Tree-sitter Integration (Better Syntax Highlighting)
 
