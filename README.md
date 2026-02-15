@@ -299,12 +299,12 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :commands (auto-revert-mode global-auto-revert-mode)
   :hook
   (after-init . global-auto-revert-mode)
-  :custom
-  (auto-revert-interval 3)
-  (auto-revert-remote-files nil)
-  (auto-revert-use-notify t)
-  (auto-revert-avoid-polling nil)
-  (auto-revert-verbose t))
+  :init
+  (setq auto-revert-interval 3)
+  (setq auto-revert-remote-files nil)
+  (setq auto-revert-use-notify t)
+  (setq auto-revert-avoid-polling nil)
+  (setq auto-revert-verbose t))
 
 ;; Recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
@@ -315,15 +315,15 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :hook
   (after-init . recentf-mode)
 
-  :custom
-  (recentf-auto-cleanup (if (daemonp) 300 'never))
-  (recentf-exclude
-   (list "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$"
-         "\\.bz$" "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zip$"
-         "\\.7z$" "\\.rar$"
-         "COMMIT_EDITMSG\\'"
-         "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
-         "-autoloads\\.el$" "autoload\\.el$"))
+  :init
+  (setq recentf-auto-cleanup (if (daemonp) 300 'never))
+  (setq recentf-exclude
+        (list "\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$"
+              "\\.bz$" "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zip$"
+              "\\.7z$" "\\.rar$"
+              "COMMIT_EDITMSG\\'"
+              "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+              "-autoloads\\.el$" "autoload\\.el$"))
 
   :config
   ;; A cleanup depth of -90 ensures that `recentf-cleanup' runs before
@@ -341,13 +341,9 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :commands (savehist-mode savehist-save)
   :hook
   (after-init . savehist-mode)
-  :custom
-  (savehist-autosave-interval 600)
-  (savehist-additional-variables
-   '(kill-ring                        ; clipboard
-     register-alist                   ; macros
-     mark-ring global-mark-ring       ; marks
-     search-ring regexp-search-ring)))
+  :init
+  (setq history-length 300)
+  (setq savehist-autosave-interval 600))
 
 ;; save-place-mode enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
@@ -357,8 +353,8 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :commands (save-place-mode save-place-local-mode)
   :hook
   (after-init . save-place-mode)
-  :custom
-  (save-place-limit 400))
+  :init
+  (setq save-place-limit 400))
 ```
 
 ### Activating autosave
