@@ -117,6 +117,14 @@
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
+;; This directs gpg-agent to use the minibuffer for passphrase entry
+(setq epg-pinentry-mode 'loopback)
+
+;; By default, Emacs stores sensitive authinfo credentials as unencrypted text
+;; in your home directory. Use GPG to encrypt the authinfo file for enhanced
+;; security.
+(setq auth-sources (list "~/.authinfo.gpg"))
+
 ;;; `display-line-numbers-mode'
 
 (setq-default display-line-numbers-width 3)
