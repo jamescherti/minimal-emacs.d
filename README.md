@@ -5,7 +5,7 @@
 
 The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init.el` and `early-init.el`) that **gives you full control over your configuration** (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
-Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive resing your *minimal-emacs.d* configuration. (Reminder: [Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead))
+Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
 The *minimal-emacs.d* project includes two initialization files:
 - `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
