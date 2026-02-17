@@ -131,9 +131,9 @@ Please share your configuration. It could serve as inspiration for other users.
   - [Frequently asked questions](#frequently-asked-questions)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
-    - [Optimization: Disabling site-run-file (System-Wide Initialization) and inhibit-default-init](#optimization-disabling-site-run-file-system-wide-initialization-and-inhibit-default-init)
-      - [Optimization: Disable `site-run-file`](#optimization-disable-site-run-file)
-      - [Optimization: Disable `default.el` (`inhibit-default-init`)](#optimization-disable-defaultel-inhibit-default-init)
+    - [Optimization: Disabling `site-run-file` and `inhibit-default-init`](#optimization-disabling-site-run-file-and-inhibit-default-init)
+      - [Disable `site-start.el` (Pre-Initialization Stage)](#disable-site-startel-pre-initialization-stage)
+      - [Disable `default.el` (Post-Initialization Stage)](#disable-defaultel-post-initialization-stage)
     - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
     - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
@@ -2265,43 +2265,45 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 
 (Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
 
-### Optimization: Disabling site-run-file (System-Wide Initialization) and inhibit-default-init
+### Optimization: Disabling `site-run-file` and `inhibit-default-init`
 
-Emacs has a two-stage system initialization process:
+Emacs performs a multi-stage initialization sequence that may include system-level configuration before and after user configuration. For a minimal and fully deterministic setup, these stages can be disabled.
 
-1. **`site-start.el` (Pre-Init):** Runs before your configuration. (Controlled by `site-run-file`).
-2. **`default.el` (Post-Init):** Runs *after* your configuration. This is often used by distributions or sysadmins to provide "fallback" defaults or site-wide overrides that apply to all users.
+Emacs can load two optional system-wide files:
 
-#### Optimization: Disable `site-run-file`
+1. **`site-start.el`**: Executed before the user configuration. Controlled by the variable `site-run-file`.
+2. **`default.el`**: Executed after the user configuration. Controlled by the variable `inhibit-default-init`.
 
-By default, Emacs loads the `site-start.el` file during the startup sequence. This file is typically managed by the operating system or system administrators to apply global settings, such as Linux distribution-specific packages or environment paths.
+Both files are typically maintained by operating systems or system administrators to provide global defaults, package path adjustments, or distribution-specific behavior.
 
-Loading the `site-start.el` file presents two specific drawbacks for a minimal configuration: it degrades performance by adding unnecessary I/O and evaluation time during the early startup phase, and it compromises reproducibility by injecting external configuration variables that may conflict with your personal settings, causing the setup to behave differently across various environments.
+#### Disable `site-start.el` (Pre-Initialization Stage)
 
-To guarantee a clean environment and eliminate this overhead, add the following to your `~/.emacs.d/pre-early-init.el`:
+By default, Emacs evaluates `site-start.el` early in the startup process. While useful in managed environments, this introduces two disadvantages for a minimal configuration:
+
+* **Startup overhead**: Additional I/O and evaluation during the earliest phase of initialization.
+* **Loss of determinism**: External configuration may modify variables, alter `load-path`, or introduce behavior that differs across machines.
+
+To ensure a clean and reproducible startup, disable this stage in `~/.emacs.d/pre-early-init.el`:
 
 ```elisp
-;; Prevent the loading of the system-wide site-start.el file
-;; NOTE: This must be placed in 'pre-early-init.el'.
 (setq site-run-file nil)
 ```
 
-While `site-start.el` is optional on standard Linux distributions like Ubuntu, Fedora, and Arch, often loading only generic, superfluous settings, it is required on functional operating systems such as NixOS and Guix System. Since these systems isolate every package in a unique directory, the operating system uses `site-start.el` to inject the necessary `load-path` variables, without which Emacs cannot locate its own core dependencies.
+This guarantees that no system-level configuration executes before the user configuration.
 
-#### Optimization: Disable `default.el` (`inhibit-default-init`)
+Note: On conventional GNU/Linux distributions such as Ubuntu, Fedora, or Arch Linux, `site-start.el` is often optional and may only introduce distribution defaults. However, on functional systems such as NixOS or Guix System, it may be required to populate essential `load-path` entries. Disabling it in such environments can prevent Emacs from locating required libraries.
 
-While `site-run-file` prevents Emacs from loading system configuration **before** your init file, there is another variable that prevents Emacs from loading system configuration **after** your init file.
+#### Disable `default.el` (Post-Initialization Stage)
 
-Just like `site-start.el`, the `default.el` file can overwrite your carefully tuned settings and adds unnecessary I/O at startup.
+After loading the user configuration, Emacs may evaluate `default.el`. This file can override user-defined settings or introduce additional global behavior.
 
-**To complete your system isolation, add this to your `pre-early-init.el`:**
+To prevent any system configuration from executing after the user initialization, add the following to `pre-early-init.el`:
 
 ```elisp
-;; Prevent loading of the system-wide default.el file
-;; This ensures that no system configuration runs *after* your init file.
-;; NOTE: This must be placed in 'pre-early-init.el'.
 (setq inhibit-default-init t)
 ```
+
+Disabling both `site-run-file` and `default.el` removes system-level interference, reduces startup variability, and establishes a fully controlled initialization environment suitable for minimal and reproducible configurations.
 
 ### How to get the latest version of all packages? (unstable)
 
