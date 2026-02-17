@@ -1,17 +1,31 @@
-# *minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup
+# *minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` for Better Defaults and Optimized Startup
 ![Build Status](https://github.com/jamescherti/minimal-emacs.d/actions/workflows/ci.yml/badge.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
-The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init.el` and `early-init.el`) that **gives you full control over your configuration** (without the complexity of, for instance, Doom Emacs or Spacemacs). It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
+## Introduction
+
+The **minimal-emacs.d** project is a lightweight and optimized Emacs base (`init.el` and `early-init.el`) that **gives you full control over your configuration** without the complexity of Doom Emacs or Spacemacs. It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
+If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
+
+### Looking for the ideal starter kit to customize Emacs?
+
+The *minimal-emacs.d* project is:
+
+* **Minimal yet effective:** A solid starting point.
+* **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
+* **0 packages loaded / No forced modes:** Unlike other frameworks, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable.
+* **Customizable foundation:** Designed to be extended, not replaced. This README offers extensive recommendations for customizing your configuration.
+
 The *minimal-emacs.d* project includes two initialization files:
+
 - `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
 - `init.el`: Loaded after the graphical interface is initialized. This file contains user customizations, including variable settings, package loading, mode configurations, and keybindings.
 
-Excluding empty lines, comments, and docstrings, the minimal-emacs.d configuration is approximately 450 lines long. It does not introduce additional functionality beyond offering improved default settings. The user retains full control over which packages to install and which modes to enable.
+Excluding empty lines, comments, and docstrings, the minimal-emacs.d configuration is approximately 450 lines long. It does not introduce additional functionality beyond offering improved default settings. You retain full control over which packages to install and which modes to enable.
 
 Emacs comes with many well-designed defaults, but it also retains some less-than-ideal settings, often due to historical constraints or legacy compatibility. The purpose of *minimal-emacs.d* is to offer refined defaults that improve both usability and performance, replacing long-standing Emacs settings that no longer serve modern workflows well.
 
@@ -22,15 +36,15 @@ Emacs comes with many well-designed defaults, but it also retains some less-than
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-3.png)
 *(The theme shown in the screenshot above is the *[tomorrow-night-deepblue-theme.el](https://github.com/jamescherti/tomorrow-night-deepblue-theme.el)*, available on MELPA.)*
 
-## Startup
+### Startup Performance
 
 The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongside **146 packages** ([See the packages that the author is using here](https://www.jamescherti.com/essential-emacs-packages/)). Yet, thanks to its efficient design, Emacs still **starts in just 0.22 seconds**:
 
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
-In addition to *minimal-emacs.d*, startup speed is influenced by your computer's processing power and disk speed. To establish a baseline, start Emacs with only *minimal-emacs.d* and no additional configurations, then run `M-x emacs-init-time`. Incrementally modify your init files and observe the impact on startup time. For consistent comparisons, always test on the same computer and Emacs version. It's also important to ensure that all packages are deferred using `:bind` and `:commands`, which makes Emacs load them only when needed (see additional examples in this README.md). While startup time is important, other factors, like native compilation, are even more important. Although native compilation may introduce some brief initial and negligible initial delay, it is beneficial in the long run as it significantly speeds up Emacs.
+Startup speed depends on hardware and disk speed. For consistent comparisons, test on the same computer and Emacs version. While startup time is significant, factors like native compilation are also important for long-term performance.
 
-## Comments from minimal-emacs.d users
+## User Testimonials
 
 - [gnudoc on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmn1hoo/): "That's a great learning resource. Thank you for your work on it and for sharing it!"
 - [dewyke on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmq53an/): "Lots of good stuff in there, even for people who already have established ways of organising their configs."
@@ -55,9 +69,11 @@ Please share your configuration. It could serve as inspiration for other users.
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 ## Table of Contents
 
-- [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` that Provides Better Defaults and Faster Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-that-provides-better-defaults-and-faster-startup)
-  - [Startup](#startup)
-  - [Comments from minimal-emacs.d users](#comments-from-minimal-emacsd-users)
+- [*minimal-emacs.d* - A Customizable Emacs `init.el` and `early-init.el` for Better Defaults and Optimized Startup](#minimal-emacsd---a-customizable-emacs-initel-and-early-initel-for-better-defaults-and-optimized-startup)
+  - [Introduction](#introduction)
+    - [Looking for the ideal starter kit to customize Emacs?](#looking-for-the-ideal-starter-kit-to-customize-emacs)
+    - [Startup Performance](#startup-performance)
+  - [User Testimonials](#user-testimonials)
   - [Install minimal-emacs.d](#install-minimal-emacsd)
     - [Install minimal-emacs.d into `~/.emacs.d`](#install-minimal-emacsd-into-emacsd)
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
@@ -69,12 +85,12 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
   - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
-    - [How to activate recentf, savehist, saveplace, and auto-revert?](#how-to-activate-recentf-savehist-saveplace-and-auto-revert)
-    - [Activating autosave](#activating-autosave)
+    - [File Management & History: recentf, savehist, saveplace, and auto-revert?](#file-management--history-recentf-savehist-saveplace-and-auto-revert)
+    - [Safety: Auto-Save](#safety-auto-save)
       - [auto-save-mode (Prevent data loss in case of crashes)](#auto-save-mode-prevent-data-loss-in-case-of-crashes)
       - [auto-save-visited-mode (Save file buffers after a few seconds of inactivity)](#auto-save-visited-mode-save-file-buffers-after-a-few-seconds-of-inactivity)
-    - [Code completion with corfu](#code-completion-with-corfu)
-    - [Configuring Vertico, Consult, and Embark](#configuring-vertico-consult-and-embark)
+    - [Completion System (Corfu, Vertico, Consult)](#completion-system-corfu-vertico-consult)
+    - [Vertico, Consult, Marginalia, and Embark](#vertico-consult-marginalia-and-embark)
     - [Code folding](#code-folding)
       - [Kirigami: A unified interface for opening and closing folds](#kirigami-a-unified-interface-for-opening-and-closing-folds)
       - [outline-minor-mode and hs-minor-mode](#outline-minor-mode-and-hs-minor-mode)
@@ -287,7 +303,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   (compile-angel-on-load-mode 1))
 ```
 
-### How to activate recentf, savehist, saveplace, and auto-revert?
+### File Management & History: recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by *minimal-emacs.d*. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
@@ -357,7 +373,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   (setq save-place-limit 400))
 ```
 
-### Activating autosave
+### Safety: Auto-Save
 
 #### auto-save-mode (Prevent data loss in case of crashes)
 
@@ -394,7 +410,7 @@ This is different from `auto-save-mode`: `auto-save-mode` periodically saves all
 (auto-save-visited-mode 1)
 ```
 
-### Code completion with corfu
+### Completion System (Corfu, Vertico, Consult)
 
 [Corfu](https://github.com/minad/corfu) enhances in-buffer completion by displaying a compact popup with current candidates, positioned either below or above the point. Candidates can be selected by navigating up or down.
 
@@ -441,7 +457,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
 
-### Configuring Vertico, Consult, and Embark
+### Vertico, Consult, Marginalia, and Embark
 
 [Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
 
