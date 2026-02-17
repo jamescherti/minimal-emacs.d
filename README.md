@@ -131,6 +131,7 @@ Please share your configuration. It could serve as inspiration for other users.
   - [Frequently asked questions](#frequently-asked-questions)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
+    - [Optimization: Disable site-run-file (System-Wide Initialization)](#optimization-disable-site-run-file-system-wide-initialization)
     - [How to get the latest version of all packages? (unstable)](#how-to-get-the-latest-version-of-all-packages-unstable)
     - [How to use MELPA stable?](#how-to-use-melpa-stable)
     - [How to load a local lisp file for machine-specific configurations?](#how-to-load-a-local-lisp-file-for-machine-specific-configurations)
@@ -2265,6 +2266,22 @@ Add the following to your `~/.emacs.d/pre-early-init.el` file:
 ```
 
 (Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
+
+### Optimization: Disable site-run-file (System-Wide Initialization)
+
+By default, Emacs loads the `site-start.el` file during the startup sequence. This file is typically managed by the operating system or system administrators to apply global settings, such as Linux distribution-specific packages or environment paths.
+
+Loading the `site-start.el` file presents two specific drawbacks for a minimal configuration: it degrades performance by adding unnecessary I/O and evaluation time during the early startup phase, and it compromises reproducibility by injecting external configuration variables that may conflict with your personal settings, causing the setup to behave differently across various environments.
+
+To guarantee a clean environment and eliminate this overhead, add the following to your `~/.emacs.d/pre-early-init.el`:
+
+```elisp
+;; Prevent the loading of the system-wide site-start.el file
+;; NOTE: This must be placed in 'pre-early-init.el'.
+(setq site-run-file nil)
+```
+
+While `site-start.el` is optional on standard Linux distributions like Ubuntu, Fedora, and Arch, often loading only generic, superfluous settings, it is required on functional operating systems such as NixOS and Guix System. Since these systems isolate every package in a unique directory, the operating system uses `site-start.el` to inject the necessary `load-path` variables, without which Emacs cannot locate its own core dependencies.
 
 ### How to get the latest version of all packages? (unstable)
 
