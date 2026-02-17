@@ -466,7 +466,6 @@ this stage of initialization."
 ;; This results in a more compact output that emphasizes performance
 (setq use-package-expand-minimally (not noninteractive))
 
-(setq use-package-compute-statistics minimal-emacs-debug)
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
 (setq use-package-always-ensure t)
