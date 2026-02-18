@@ -2138,6 +2138,8 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 
 ## Customizations: Before init (File: pre-init.el)
 
+NOTE: Using `straight.el` or Elpaca is **optional**. Emacs already has a built-in package manager.
+
 ### Configuring straight.el
 
 The `straight.el` package is a declarative package manager for Emacs that aims to replace traditional systems like `package.el` by providing more precise control over package installation and management. Unlike `package.el`, which relies on downloading pre-built packages from ELPA archives, `straight.el` clones packages directly from their source repositories (typically Git), enabling reproducible and fully source-controlled package configurations.
