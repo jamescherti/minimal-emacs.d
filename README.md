@@ -101,14 +101,14 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
     - [Persisting and Restoring all buffers, windows/split, tab-bar, frames...](#persisting-and-restoring-all-buffers-windowssplit-tab-bar-frames)
     - [Configuring markdown-mode (e.g., README.md syntax)](#configuring-markdown-mode-eg-readmemd-syntax)
-    - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
-    - [Context-aware 'go to definition' functionality for 50+ programming languages](#context-aware-go-to-definition-functionality-for-50-programming-languages)
-    - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
     - [Code folding](#code-folding)
       - [Kirigami: A unified interface for opening and closing folds](#kirigami-a-unified-interface-for-opening-and-closing-folds)
       - [outline-minor-mode and hs-minor-mode](#outline-minor-mode-and-hs-minor-mode)
       - [outline-indent-minor-mode: Folding based on indentation levels](#outline-indent-minor-mode-folding-based-on-indentation-levels)
       - [treesit-fold](#treesit-fold)
+    - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
+    - [Context-aware 'go to definition' functionality for 50+ programming languages](#context-aware-go-to-definition-functionality-for-50-programming-languages)
+    - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
     - [Spell checker](#spell-checker)
     - [Automatic removal of trailing whitespace on save](#automatic-removal-of-trailing-whitespace-on-save)
     - [Highlighting uncommitted changes in the buffer margin (e.g., Git changes)](#highlighting-uncommitted-changes-in-the-buffer-margin-eg-git-changes)
@@ -830,7 +830,11 @@ You can also add the following code to enable commenting and uncommenting by pre
 
 ### Persisting and Restoring all buffers, windows/split, tab-bar, frames...
 
-The [easysession](https://github.com/jamescherti/easysession.el) Emacs package is a session manager for Emacs that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, windows/splits, the built-in tab-bar (including tabs, their buffers, and windows), and Emacs frames. It offers a convenient and effortless way to manage Emacs editing sessions and utilizes built-in Emacs functions to persist and restore frames.
+The [easysession](https://github.com/jamescherti/easysession.el) package provides a comprehensive session management for Emacs. It is capable of persisting and restoring file-visiting buffers, indirect buffers (clones), buffer narrowing, Dired buffers, window configurations, the built-in tab-bar (including tabs, their buffers, and associated windows), as well as entire Emacs frames.
+
+With **easysession**, your Emacs setup is restored automatically when you restart. All files, Dired buffers, and window layouts come back as they were, so you can continue working right where you left off. While editing, you can also switch to another session, switch back, rename sessions, or delete them, giving you full control over multiple work environments.
+
+Easysession also supports extensions, enabling the restoration of Magit buffers and the scratch buffer. Custom extensions can also be created to extend its functionality.
 
 To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ``` emacs-lisp
@@ -925,108 +929,24 @@ These commands work on any Markdown buffer and rely on properly formatted header
 
 The author also recommends reading the following article: [Emacs: Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/).
 
-### Asynchronous code formatting without cursor disruption
-
-[Apheleia](https://github.com/radian-software/apheleia) is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
-
-Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
-
-To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
-
-To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
-;; Black and Prettier) asynchronously without disrupting the cursor position.
-(use-package apheleia
-  :ensure t
-  :commands (apheleia-mode
-             apheleia-global-mode)
-  :hook ((prog-mode . apheleia-mode)))
-```
-
-### Context-aware 'go to definition' functionality for 50+ programming languages
-
-The [dumb-jump](https://github.com/jacktasia/dumb-jump) package provides context-aware 'go to definition' functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files.
-
-Unlike more sophisticated language-aware tools (e.g., eglot or lsp-mode), `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing users to jump to definitions or references.
-
-To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
-```elisp
-(use-package dumb-jump
-  :commands dumb-jump-xref-activate
-  :init
-  ;; Register `dumb-jump' as an xref backend so it integrates with
-  ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
-  ;; more specific backend is available.
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90)
-
-  (setq dumb-jump-aggressive nil)
-  ;; (setq dumb-jump-quiet t)
-
-  ;; Number of seconds a rg/grep/find command can take before being warned to
-  ;; use ag and config.
-  (setq dumb-jump-max-find-time 3)
-
-  ;; Use `completing-read' so that selection of jump targets integrates with the
-  ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
-  ;; providing a consistent minibuffer-based interface whenever multiple
-  ;; definitions are found.
-  (setq dumb-jump-selector 'completing-read)
-
-  ;; If ripgrep is available, force `dumb-jump' to use it because it is
-  ;; significantly faster and more accurate than the default searchers (grep,
-  ;; ag, etc.).
-  (when (executable-find "rg")
-    (setq dumb-jump-force-searcher 'rg)
-    (setq dumb-jump-prefer-searcher 'rg)))
-```
-
-### Efficient template expansion with snippets
-
-The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
-
-The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
-
-(NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
-
-
-```elisp
-;; The official collection of snippets for yasnippet.
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet)
-
-;; YASnippet is a template system designed that enhances text editing by
-;; enabling users to define and use snippets. When a user types a short
-;; abbreviation, YASnippet automatically expands it into a full template, which
-;; can include placeholders, fields, and dynamic content.
-(use-package yasnippet
-  :ensure t
-  :commands (yas-minor-mode
-             yas-global-mode)
-
-  :hook
-  (after-init . yas-global-mode)
-
-  :custom
-  (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
-  (yas-also-indent-empty-lines t)
-  (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
-  (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
-  ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
-  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
-  ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
-
-  :init
-  ;; Suppress verbose messages
-  (setq yas-verbosity 0))
-```
-
 ### Code folding
 
 #### Kirigami: A unified interface for opening and closing folds
 
-The [kirigami](https://github.com/jamescherti/kirigami.el) package offers a **unified interface for opening and closing folds** across a diverse set of major and minor modes in Emacs, including `outline-mode`, `outline-minor-mode`, `outline-indent-minor-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hs-minor-mode`, `hide-ifdef-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, and `treesit-fold-mode`.
+The [kirigami](https://github.com/jamescherti/kirigami.el) package provides a unified method to fold and unfold text in Emacs across a diverse set of Emacs modes.
+
+**Supported modes include:** `outline-mode`, `outline-minor-mode`, `outline-indent-minor-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hide-ifdef-mode`, `vimish-fold-mode`, `TeX-fold-mode` (AUCTeX), `fold-this-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, `ts-fold-mode`, `treesit-fold-mode`, and `hs-minor-mode` (hideshow).
+
+With Kirigami, folding key bindings only need to be configured **once**. After that, the same keys work consistently across all supported major and minor modes, providing a unified and predictable experience for opening and closing folds. The available commands include:
+
+* `kirigami-open-fold`: Open the fold at point.
+* `kirigami-open-fold-rec`: Open the fold at point recursively.
+* `kirigami-close-fold`: Close the fold at point.
+* `kirigami-open-folds`: Open all folds in the buffer.
+* `kirigami-close-folds`: Close all folds in the buffer.
+* `kirigami-toggle-fold`: Toggle the fold at point.
+
+To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package kirigami
   :commands (kirigami-open-fold
@@ -1160,6 +1080,103 @@ It is also recommended to install [treesit-fold](https://github.com/emacs-tree-s
 The `treesit-fold` mode can be enabled using `treesit-fold-mode` or a hook such as:
 ```elisp
 (add-hook 'python-ts-mode-hook #'treesit-fold-mode)
+```
+
+### Asynchronous code formatting without cursor disruption
+
+[Apheleia](https://github.com/radian-software/apheleia) is an Emacs package designed to run code formatters asynchronously without disrupting the cursor position. Code formatters like Shfmt, Black and Prettier ensure consistency and improve collaboration by automating formatting, but running them on save can introduce latency (e.g., Black takes around 200ms on an empty file) and unpredictably move the cursor when modifying nearby text.
+
+Apheleia solves both problems across all languages, replacing language-specific packages like Blacken and prettier-js. It does this by invoking formatters in an `after-save-hook`, ensuring changes are applied only if the buffer remains unmodified.
+
+To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
+
+To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
+;; Black and Prettier) asynchronously without disrupting the cursor position.
+(use-package apheleia
+  :ensure t
+  :commands (apheleia-mode
+             apheleia-global-mode)
+  :hook ((prog-mode . apheleia-mode)))
+```
+
+### Context-aware 'go to definition' functionality for 50+ programming languages
+
+The [dumb-jump](https://github.com/jacktasia/dumb-jump) package provides context-aware 'go to definition' functionality for 50+ programming languages without requiring a language server. It works by using simple heuristics and regular expression searches to locate the definitions of functions, variables, and symbols across project files.
+
+Unlike more sophisticated language-aware tools (e.g., eglot or lsp-mode), `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing users to jump to definitions or references.
+
+To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
+```elisp
+(use-package dumb-jump
+  :commands dumb-jump-xref-activate
+  :init
+  ;; Register `dumb-jump' as an xref backend so it integrates with
+  ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
+  ;; more specific backend is available.
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90)
+
+  (setq dumb-jump-aggressive nil)
+  ;; (setq dumb-jump-quiet t)
+
+  ;; Number of seconds a rg/grep/find command can take before being warned to
+  ;; use ag and config.
+  (setq dumb-jump-max-find-time 3)
+
+  ;; Use `completing-read' so that selection of jump targets integrates with the
+  ;; active completion framework (e.g., Vertico, Ivy, Helm, Icomplete),
+  ;; providing a consistent minibuffer-based interface whenever multiple
+  ;; definitions are found.
+  (setq dumb-jump-selector 'completing-read)
+
+  ;; If ripgrep is available, force `dumb-jump' to use it because it is
+  ;; significantly faster and more accurate than the default searchers (grep,
+  ;; ag, etc.).
+  (when (executable-find "rg")
+    (setq dumb-jump-force-searcher 'rg)
+    (setq dumb-jump-prefer-searcher 'rg)))
+```
+
+### Efficient template expansion with snippets
+
+The [yasnippet](https://github.com/joaotavora/yasnippet) package provides a template system that enhances text editing by enabling users to define and use snippets, which are predefined templates of code or text. The user triggers snippet expansion by pressing the Tab key after typing an abbreviation, such as `if`. Upon pressing Tab, YASnippet replaces the abbreviation with the corresponding full template, allowing the user to fill in placeholders or fields within the expanded snippet.
+
+The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) package with a comprehensive collection of bundled templates for numerous programming and markup languages, including C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS...
+
+(NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
+
+
+```elisp
+;; The official collection of snippets for yasnippet.
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
+
+;; YASnippet is a template system designed that enhances text editing by
+;; enabling users to define and use snippets. When a user types a short
+;; abbreviation, YASnippet automatically expands it into a full template, which
+;; can include placeholders, fields, and dynamic content.
+(use-package yasnippet
+  :ensure t
+  :commands (yas-minor-mode
+             yas-global-mode)
+
+  :hook
+  (after-init . yas-global-mode)
+
+  :custom
+  (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
+  (yas-also-indent-empty-lines t)
+  (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
+  (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
+  ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
+  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
+  ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
+
+  :init
+  ;; Suppress verbose messages
+  (setq yas-verbosity 0))
 ```
 
 ### Spell checker
