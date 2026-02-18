@@ -96,11 +96,6 @@ Please share your configuration. It could serve as inspiration for other users.
       - [auto-save-visited-mode (Save file buffers after a few seconds of inactivity)](#auto-save-visited-mode-save-file-buffers-after-a-few-seconds-of-inactivity)
     - [Completion System (Corfu, Vertico, Consult)](#completion-system-corfu-vertico-consult)
     - [Vertico, Consult, Marginalia, and Embark](#vertico-consult-marginalia-and-embark)
-    - [Code folding](#code-folding)
-      - [Kirigami: A unified interface for opening and closing folds](#kirigami-a-unified-interface-for-opening-and-closing-folds)
-      - [outline-minor-mode and hs-minor-mode](#outline-minor-mode-and-hs-minor-mode)
-      - [outline-indent-minor-mode: Folding based on indentation levels](#outline-indent-minor-mode-folding-based-on-indentation-levels)
-      - [treesit-fold](#treesit-fold)
     - [Enhancing undo/redo](#enhancing-undoredo)
     - [Changing the default theme](#changing-the-default-theme)
     - [Configuring Vim keybindings using Evil?](#configuring-vim-keybindings-using-evil)
@@ -109,9 +104,14 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Asynchronous code formatting without cursor disruption](#asynchronous-code-formatting-without-cursor-disruption)
     - [Context-aware 'go to definition' functionality for 50+ programming languages](#context-aware-go-to-definition-functionality-for-50-programming-languages)
     - [Efficient template expansion with snippets](#efficient-template-expansion-with-snippets)
+    - [Code folding](#code-folding)
+      - [Kirigami: A unified interface for opening and closing folds](#kirigami-a-unified-interface-for-opening-and-closing-folds)
+      - [outline-minor-mode and hs-minor-mode](#outline-minor-mode-and-hs-minor-mode)
+      - [outline-indent-minor-mode: Folding based on indentation levels](#outline-indent-minor-mode-folding-based-on-indentation-levels)
+      - [treesit-fold](#treesit-fold)
+    - [Spell checker](#spell-checker)
     - [Automatic removal of trailing whitespace on save](#automatic-removal-of-trailing-whitespace-on-save)
     - [Highlighting uncommitted changes in the buffer margin (e.g., Git changes)](#highlighting-uncommitted-changes-in-the-buffer-margin-eg-git-changes)
-    - [Spell checker](#spell-checker)
     - [Configuring org-mode](#configuring-org-mode)
     - [Configuring LSP Servers with Eglot (built-in)](#configuring-lsp-servers-with-eglot-built-in)
     - [Auto upgrade Emacs packages](#auto-upgrade-emacs-packages)
@@ -634,146 +634,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   (setq consult-narrow-key "<"))
 ```
 
-### Code folding
-
-#### Kirigami: A unified interface for opening and closing folds
-
-The [kirigami](https://github.com/jamescherti/kirigami.el) package offers a **unified interface for opening and closing folds** across a diverse set of major and minor modes in Emacs, including `outline-mode`, `outline-minor-mode`, `outline-indent-minor-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hs-minor-mode`, `hide-ifdef-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, and `treesit-fold-mode`.
-```elisp
-(use-package kirigami
-  :commands (kirigami-open-fold
-             kirigami-open-fold-rec
-             kirigami-close-fold
-             kirigami-toggle-fold
-             kirigami-open-folds
-             kirigami-close-folds-except-current
-             kirigami-close-folds)
-
-  :init
-  (global-set-key (kbd "C-c k o") 'kirigami-open-fold)      ; Open fold at point
-  (global-set-key (kbd "C-c k c") 'kirigami-close-fold)     ; Close fold at point
-  (global-set-key (kbd "C-c k m") 'kirigami-close-folds)    ; Close all folds
-  (global-set-key (kbd "C-c k r") 'kirigami-open-folds)     ; Open all folds
-  (global-set-key (kbd "C-c k O") 'kirigami-open-fold-rec)  ; Open fold recursively
-  (global-set-key (kbd "C-c k TAB") 'kirigami-toggle-fold)) ; Toggle fold at point
-
-;; Uncomment the following if you are an `evil-mode' user:
-;; (with-eval-after-load 'evil
-;;   (define-key evil-normal-state-map "zo" 'kirigami-open-fold)
-;;   (define-key evil-normal-state-map "zO" 'kirigami-open-fold-rec)
-;;   (define-key evil-normal-state-map "zc" 'kirigami-close-fold)
-;;   (define-key evil-normal-state-map "za" 'kirigami-toggle-fold)
-;;   (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
-;;   (define-key evil-normal-state-map "zm" 'kirigami-close-folds))
-```
-
-With Kirigami, folding key bindings only need to be configured **once**. After that, the same keys work consistently across all supported major and minor modes, providing a unified and predictable experience for opening and closing folds.
-
-In addition to unified interface for opening and closing folds, the **kirigami** package:
-- **Enhances Visual Stability on Fold Opening and Closing:** Preserves the cursor's exact vertical position when expanding or collapsing headings, maintaining a constant relative distance between the cursor and the window start. This Kirigami enhancement avoids the disruptive window jump or forced re-centering commonly observed during bulk folding operations.
-- **Enhances outline:** Kirigami improves folding behavior in `outline-mode`, `outline-minor-mode`, `markdown-mode`, `gfm-mode`, and `org-mode`. It ensures that deep folds open reliably and permits closing folds even when the cursor is positioned within the content body. Additionally, it maintains window-start heading stability by automatically adjusting the scroll position to keep folded headings visible, preventing the context from disappearing when closing a fold that is partially scrolled off-screen.
-- **Hooks for Folding Actions:** Two hooks, `kirigami-pre-action-predicates` and `kirigami-post-action-functions`, let external code run before and after every folding operation. The pre-action hook runs just before a fold is opened or closed and can allow or block the action. The post-action hook runs once the change is complete and can be used to update UI elements or keep external packages in sync with the new folding state.
-
-#### outline-minor-mode and hs-minor-mode
-
-One of the modes that provide code folding is `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
-
-Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
-
-For example, to enable `outline-minor-mode` in Emacs Lisp:
-
-``` emacs-lisp
-;; The built-in outline-minor-mode provides structured code folding in modes
-;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
-;; based on headings or indentation levels. This feature enhances navigation and
-;; improves the management of large files with hierarchical structures.
-(use-package outline
-  :ensure nil
-  :commands outline-minor-mode
-  :hook
-  ((emacs-lisp-mode . outline-minor-mode)
-   ;; Use " ▼" instead of the default ellipsis "..." for folded text to make
-   ;; folds more visually distinctive and readable.
-   (outline-minor-mode
-    .
-    (lambda()
-      (let* ((display-table (or buffer-display-table (make-display-table)))
-             (face-offset (* (face-id 'shadow) (ash 1 22)))
-             (value (vconcat (mapcar (lambda (c) (+ face-offset c)) " ▼"))))
-        (set-display-table-slot display-table 'selective-display value)
-        (setq buffer-display-table display-table))))))
-```
-
-#### outline-indent-minor-mode: Folding based on indentation levels
-
-For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
-```elisp
-;; The outline-indent Emacs package provides a minor mode that enables code
-;; folding based on indentation levels.
-;;
-;; In addition to code folding, *outline-indent* allows:
-;; - Moving indented blocks up and down
-;; - Indenting/unindenting to adjust indentation levels
-;; - Inserting a new line with the same indentation level as the current line
-;; - Move backward/forward to the indentation level of the current line
-;; - and other features.
-(use-package outline-indent
-  :ensure t
-  :commands outline-indent-minor-mode
-
-  :custom
-  (outline-indent-ellipsis " ▼")
-
-  :init
-  ;; The minor mode can also be automatically activated for a certain modes.
-  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
-
-  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
-```
-
-![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
-
-#### treesit-fold
-
-It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
-```elisp
-;; Intelligent code folding by leveraging the structural understanding of the
-;; built-in tree-sitter parser. Unlike traditional folding methods that rely on
-;; regular expressions or indentation, treesit-fold uses the actual syntax tree
-;; of the code to accurately identify foldable regions such as functions,
-;; classes, comments, and documentation strings. This allows for faster and more
-;; precise folding behavior that respects the grammar of the programming
-;; language, ensuring that fold boundaries are always syntactically correct even
-;; in complex or nested code structures.
-(use-package treesit-fold
-  :commands (treesit-fold-close
-             treesit-fold-close-all
-             treesit-fold-open
-             treesit-fold-toggle
-             treesit-fold-open-all
-             treesit-fold-mode
-             global-treesit-fold-mode
-             treesit-fold-open-recursively
-             treesit-fold-line-comment-mode)
-
-  :custom
-  (treesit-fold-line-count-show t)
-  (treesit-fold-line-count-format " ▼")
-
-  :config
-  (set-face-attribute 'treesit-fold-replacement-face nil
-                      :foreground "#808080"
-                      :box nil
-                      :weight 'bold))
-```
-
-The `treesit-fold` mode can be enabled using `treesit-fold-mode` or a hook such as:
-```elisp
-(add-hook 'python-ts-mode-hook #'treesit-fold-mode)
-```
-
 ### Enhancing undo/redo
 
 The [undo-fu](https://codeberg.org/ideasman42/emacs-undo-fu) package is a lightweight wrapper around Emacs' built-in undo system, providing more convenient undo/redo functionality while preserving access to the full undo history. The [undo-fu-session](https://codeberg.org/ideasman42/emacs-undo-fu-session) package complements undo-fu by enabling the saving and restoration of undo history across Emacs sessions, even after restarting.
@@ -1163,59 +1023,144 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
   (setq yas-verbosity 0))
 ```
 
-### Automatic removal of trailing whitespace on save
+### Code folding
 
-**Trailing whitespace** refers to any spaces or tabs that appear after the last non-whitespace character on a line. These characters have no semantic value and can lead to unnecessary diffs in version control, inconsistent formatting, or visual clutter. Removing them improves code clarity and consistency.
+#### Kirigami: A unified interface for opening and closing folds
 
-The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
-
-To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
+The [kirigami](https://github.com/jamescherti/kirigami.el) package offers a **unified interface for opening and closing folds** across a diverse set of major and minor modes in Emacs, including `outline-mode`, `outline-minor-mode`, `outline-indent-minor-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hs-minor-mode`, `hide-ifdef-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, and `treesit-fold-mode`.
 ```elisp
-;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
-;; that automatically removes trailing whitespace and blank lines at the end of
-;; the buffer when saving.
-(use-package stripspace
-  :ensure t
-  :commands stripspace-local-mode
+(use-package kirigami
+  :commands (kirigami-open-fold
+             kirigami-open-fold-rec
+             kirigami-close-fold
+             kirigami-toggle-fold
+             kirigami-open-folds
+             kirigami-close-folds-except-current
+             kirigami-close-folds)
 
-  ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
-  :hook ((prog-mode . stripspace-local-mode)
-         (text-mode . stripspace-local-mode)
-         (conf-mode . stripspace-local-mode))
+  :init
+  (global-set-key (kbd "C-c k o") 'kirigami-open-fold)      ; Open fold at point
+  (global-set-key (kbd "C-c k c") 'kirigami-close-fold)     ; Close fold at point
+  (global-set-key (kbd "C-c k m") 'kirigami-close-folds)    ; Close all folds
+  (global-set-key (kbd "C-c k r") 'kirigami-open-folds)     ; Open all folds
+  (global-set-key (kbd "C-c k O") 'kirigami-open-fold-rec)  ; Open fold recursively
+  (global-set-key (kbd "C-c k TAB") 'kirigami-toggle-fold)) ; Toggle fold at point
 
-  :custom
-  ;; The `stripspace-only-if-initially-clean' option:
-  ;; - nil to always delete trailing whitespace.
-  ;; - Non-nil to only delete whitespace when the buffer is clean initially.
-  ;; (The initial cleanliness check is performed when `stripspace-local-mode'
-  ;; is enabled.)
-  (stripspace-only-if-initially-clean nil)
-
-  ;; Enabling `stripspace-restore-column' preserves the cursor's column position
-  ;; even after stripping spaces. This is useful in scenarios where you add
-  ;; extra spaces and then save the file. Although the spaces are removed in the
-  ;; saved file, the cursor remains in the same position, ensuring a consistent
-  ;; editing experience without affecting cursor placement.
-  (stripspace-restore-column t))
+;; Uncomment the following if you are an `evil-mode' user:
+;; (with-eval-after-load 'evil
+;;   (define-key evil-normal-state-map "zo" 'kirigami-open-fold)
+;;   (define-key evil-normal-state-map "zO" 'kirigami-open-fold-rec)
+;;   (define-key evil-normal-state-map "zc" 'kirigami-close-fold)
+;;   (define-key evil-normal-state-map "za" 'kirigami-toggle-fold)
+;;   (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
+;;   (define-key evil-normal-state-map "zm" 'kirigami-close-folds))
 ```
 
-### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
+With Kirigami, folding key bindings only need to be configured **once**. After that, the same keys work consistently across all supported major and minor modes, providing a unified and predictable experience for opening and closing folds.
 
-The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
+In addition to unified interface for opening and closing folds, the **kirigami** package:
+- **Enhances Visual Stability on Fold Opening and Closing:** Preserves the cursor's exact vertical position when expanding or collapsing headings, maintaining a constant relative distance between the cursor and the window start. This Kirigami enhancement avoids the disruptive window jump or forced re-centering commonly observed during bulk folding operations.
+- **Enhances outline:** Kirigami improves folding behavior in `outline-mode`, `outline-minor-mode`, `markdown-mode`, `gfm-mode`, and `org-mode`. It ensures that deep folds open reliably and permits closing folds even when the cursor is positioned within the content body. Additionally, it maintains window-start heading stability by automatically adjusting the scroll position to keep folded headings visible, preventing the context from disappearing when closing a fold that is partially scrolled off-screen.
+- **Hooks for Folding Actions:** Two hooks, `kirigami-pre-action-predicates` and `kirigami-post-action-functions`, let external code run before and after every folding operation. The pre-action hook runs just before a fold is opened or closed and can allow or block the action. The post-action hook runs once the change is complete and can be used to update UI elements or keep external packages in sync with the new folding state.
 
-![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
+#### outline-minor-mode and hs-minor-mode
 
-To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
+One of the modes that provide code folding is `outline-minor-mode` provides structured code folding in modes such as Emacs Lisp and Python, allowing users to collapse and expand sections based on headings or indentation levels. This feature enhances navigation and improves the management of large files with hierarchical structures.
+
+Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
+
+For example, to enable `outline-minor-mode` in Emacs Lisp:
+
+``` emacs-lisp
+;; The built-in outline-minor-mode provides structured code folding in modes
+;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
+;; based on headings or indentation levels. This feature enhances navigation and
+;; improves the management of large files with hierarchical structures.
+(use-package outline
+  :ensure nil
+  :commands outline-minor-mode
+  :hook
+  ((emacs-lisp-mode . outline-minor-mode)
+   ;; Use " ▼" instead of the default ellipsis "..." for folded text to make
+   ;; folds more visually distinctive and readable.
+   (outline-minor-mode
+    .
+    (lambda()
+      (let* ((display-table (or buffer-display-table (make-display-table)))
+             (face-offset (* (face-id 'shadow) (ash 1 22)))
+             (value (vconcat (mapcar (lambda (c) (+ face-offset c)) " ▼"))))
+        (set-display-table-slot display-table 'selective-display value)
+        (setq buffer-display-table display-table))))))
+```
+
+#### outline-indent-minor-mode: Folding based on indentation levels
+
+For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
 ```elisp
-(use-package diff-hl
-  :commands (diff-hl-mode
-             global-diff-hl-mode)
-  :hook (prog-mode . diff-hl-mode)
+;; The outline-indent Emacs package provides a minor mode that enables code
+;; folding based on indentation levels.
+;;
+;; In addition to code folding, *outline-indent* allows:
+;; - Moving indented blocks up and down
+;; - Indenting/unindenting to adjust indentation levels
+;; - Inserting a new line with the same indentation level as the current line
+;; - Move backward/forward to the indentation level of the current line
+;; - and other features.
+(use-package outline-indent
+  :ensure t
+  :commands outline-indent-minor-mode
+
+  :custom
+  (outline-indent-ellipsis " ▼")
+
   :init
-  (setq diff-hl-flydiff-delay 0.4)  ; Faster
-  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
-  (setq diff-hl-update-async t)  ; Do not block Emacs
-  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
+  ;; The minor mode can also be automatically activated for a certain modes.
+  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+
+  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
+```
+
+![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
+
+#### treesit-fold
+
+It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
+```elisp
+;; Intelligent code folding by leveraging the structural understanding of the
+;; built-in tree-sitter parser. Unlike traditional folding methods that rely on
+;; regular expressions or indentation, treesit-fold uses the actual syntax tree
+;; of the code to accurately identify foldable regions such as functions,
+;; classes, comments, and documentation strings. This allows for faster and more
+;; precise folding behavior that respects the grammar of the programming
+;; language, ensuring that fold boundaries are always syntactically correct even
+;; in complex or nested code structures.
+(use-package treesit-fold
+  :commands (treesit-fold-close
+             treesit-fold-close-all
+             treesit-fold-open
+             treesit-fold-toggle
+             treesit-fold-open-all
+             treesit-fold-mode
+             global-treesit-fold-mode
+             treesit-fold-open-recursively
+             treesit-fold-line-comment-mode)
+
+  :custom
+  (treesit-fold-line-count-show t)
+  (treesit-fold-line-count-format " ▼")
+
+  :config
+  (set-face-attribute 'treesit-fold-replacement-face nil
+                      :foreground "#808080"
+                      :box nil
+                      :weight 'bold))
+```
+
+The `treesit-fold` mode can be enabled using `treesit-fold-mode` or a hook such as:
+```elisp
+(add-hook 'python-ts-mode-hook #'treesit-fold-mode)
 ```
 
 ### Spell checker
@@ -1283,6 +1228,61 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   ;; Remove doc from Flyspell
   (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
                                        flyspell-prog-text-faces)))
+```
+
+### Automatic removal of trailing whitespace on save
+
+**Trailing whitespace** refers to any spaces or tabs that appear after the last non-whitespace character on a line. These characters have no semantic value and can lead to unnecessary diffs in version control, inconsistent formatting, or visual clutter. Removing them improves code clarity and consistency.
+
+The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
+
+To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
+```elisp
+;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
+;; that automatically removes trailing whitespace and blank lines at the end of
+;; the buffer when saving.
+(use-package stripspace
+  :ensure t
+  :commands stripspace-local-mode
+
+  ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
+  :hook ((prog-mode . stripspace-local-mode)
+         (text-mode . stripspace-local-mode)
+         (conf-mode . stripspace-local-mode))
+
+  :custom
+  ;; The `stripspace-only-if-initially-clean' option:
+  ;; - nil to always delete trailing whitespace.
+  ;; - Non-nil to only delete whitespace when the buffer is clean initially.
+  ;; (The initial cleanliness check is performed when `stripspace-local-mode'
+  ;; is enabled.)
+  (stripspace-only-if-initially-clean nil)
+
+  ;; Enabling `stripspace-restore-column' preserves the cursor's column position
+  ;; even after stripping spaces. This is useful in scenarios where you add
+  ;; extra spaces and then save the file. Although the spaces are removed in the
+  ;; saved file, the cursor remains in the same position, ensuring a consistent
+  ;; editing experience without affecting cursor placement.
+  (stripspace-restore-column t))
+```
+
+### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
+
+The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted changes in the window margin, enabling navigation between them. Also known as source control gutter indicators, it displays added, modified, and deleted lines in real time. In Git-controlled buffers, changes can be staged and unstaged directly, providing a clear view of version-control changes without running `git diff`. By default, the module does not start `diff-hl-mode` automatically.
+
+![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
+
+To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
+```elisp
+(use-package diff-hl
+  :commands (diff-hl-mode
+             global-diff-hl-mode)
+  :hook (prog-mode . diff-hl-mode)
+  :init
+  (setq diff-hl-flydiff-delay 0.4)  ; Faster
+  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
+  (setq diff-hl-update-async t)  ; Do not block Emacs
+  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
 ```
 
 ### Configuring org-mode
