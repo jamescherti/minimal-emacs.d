@@ -315,7 +315,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 
 On macOS, GUI applications (launched from the Finder, Dock, or Spotlight) do not inherit the user's shell environment variables by default. This often causes errors where Emacs cannot find external tools like `git`, `grep`, `pip`, or language servers (LSP), even if they work perfectly in your terminal.
 
-To fix this, add `exec-path-from-shell` to `~/.emacs.d/post-init.el`:
+To fix this, add **exec-path-from-shell** to `~/.emacs.d/post-init.el`:
 
 ```elisp
 (use-package exec-path-from-shell
