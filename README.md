@@ -987,13 +987,12 @@ To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
              kirigami-close-folds-except-current
              kirigami-close-folds)
 
-  :init
-  (global-set-key (kbd "C-c k o") 'kirigami-open-fold)      ; Open fold at point
-  (global-set-key (kbd "C-c k c") 'kirigami-close-fold)     ; Close fold at point
-  (global-set-key (kbd "C-c k m") 'kirigami-close-folds)    ; Close all folds
-  (global-set-key (kbd "C-c k r") 'kirigami-open-folds)     ; Open all folds
-  (global-set-key (kbd "C-c k O") 'kirigami-open-fold-rec)  ; Open fold recursively
-  (global-set-key (kbd "C-c k TAB") 'kirigami-toggle-fold)) ; Toggle fold at point
+  :bind (("C-c k o" . kirigami-open-fold)
+         ("C-c k c" . kirigami-close-fold)
+         ("C-c k m" . kirigami-close-folds)
+         ("C-c k r" . kirigami-open-folds)
+         ("C-c k O" . kirigami-open-fold-rec)
+         ("C-c k <tab>" . kirigami-toggle-fold)))
 
 ;; Uncomment the following if you are an `evil-mode' user:
 ;; (with-eval-after-load 'evil
