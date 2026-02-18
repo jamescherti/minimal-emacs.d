@@ -85,10 +85,10 @@ Please share your configuration. It could serve as inspiration for other users.
   - [Customizations: Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead)
   - [Recommendations](#recommendations)
     - [Always defer package loading](#always-defer-package-loading)
-  - [Customizations: UI (pre-early-init.el)](#customizations-ui-pre-early-initel)
+  - [Customizations: UI (File: pre-early-init.el)](#customizations-ui-file-pre-early-initel)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
-  - [Customizations: Packages (post-init.el)](#customizations-packages-post-initel)
+  - [Customizations: Packages (File: post-init.el)](#customizations-packages-file-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
     - [File Management & History: recentf, savehist, saveplace, and auto-revert?](#file-management--history-recentf-savehist-saveplace-and-auto-revert)
     - [Safety: Auto-Save](#safety-auto-save)
@@ -130,7 +130,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
-  - [Customizations: pre-early-init.el](#customizations-pre-early-initel)
+  - [Customizations: Before init (File: pre-init.el)](#customizations-before-init-file-pre-initel)
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring Elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
@@ -226,7 +226,7 @@ Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief descript
 
 To ensure your configuration remains fast and responsive, always defer package loading so that libraries are initialized only when they are needed. **The `use-package` macro makes this effortless; simply adding `:commands` or `:bind` to your package declarations automatically configures them for deferred loading.**
 
-## Customizations: UI (pre-early-init.el)
+## Customizations: UI (File: pre-early-init.el)
 
 ### How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?
 
@@ -256,7 +256,7 @@ An alternative lightweight approach is to simply change the default `~/.emacs.d`
 
 **IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
-## Customizations: Packages (post-init.el)
+## Customizations: Packages (File: post-init.el)
 
 This README.md offers guidance on installing optional external packages. While Emacs and minimal-emacs.d are fully functional without them, the recommended packages can enhance your experience and introduce additional features, which is why they are suggested.
 
@@ -2136,7 +2136,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :mode ("Jenkinsfile\\'" . jenkinsfile-mode))
 ```
 
-## Customizations: pre-early-init.el
+## Customizations: Before init (File: pre-init.el)
 
 ### Configuring straight.el
 
