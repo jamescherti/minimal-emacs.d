@@ -13,6 +13,8 @@ If this helps your workflow, please show your support by **⭐ starring minimal-
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
+Ready? You can skip to: [Install minimal-emacs.d](#install-minimal-emacsd)
+
 ### Looking for the ideal starter kit to customize Emacs?
 
 The *minimal-emacs.d* project is:
