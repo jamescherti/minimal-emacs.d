@@ -122,7 +122,6 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Renaming and deleting files](#renaming-and-deleting-files)
     - [Enhancing the Elisp development experience](#enhancing-the-elisp-development-experience)
     - [Inhibiting the mouse](#inhibiting-the-mouse)
-    - [Tree-sitter Integration (Better Syntax Highlighting)](#tree-sitter-integration-better-syntax-highlighting)
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Offline Dictionary](#offline-dictionary)
     - [Changing the Default Font](#changing-the-default-font)
@@ -1718,29 +1717,6 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ```
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
-
-### Tree-sitter Integration (Better Syntax Highlighting)
-
-Tree-sitter is an incremental parsing system introduced in Emacs 29 that provides precise, high-performance syntax analysis and highlighting by constructing concrete syntax trees from source code. It supports a broad set of programming languages, including Bash, C, C++, C#, CMake, CSS, Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML, Elisp, Lua, Markdown, and many others. Unlike traditional font-lock, which relies on regular expressions, Tree-sitter uses formal grammar definitions to build real-time parse trees, enabling accurate syntax highlighting, structural navigation, code folding, and foundational support for advanced editing features like refactoring.
-
-The configuration below enables Tree-sitter support using the [treesit-auto](https://github.com/renzmann/treesit-auto) package. Setting `treesit-auto-add-to-auto-mode-alist` to `'all` ensures that all available Tree-sitter modes are automatically activated for their corresponding file types. Enabling `global-treesit-auto-mode` applies this behavior globally, improving syntax accuracy and consistency across supported languages.
-
-To enable Tree-sitter, add the following to your `~/.emacs.d/post-init.el`:
-
-```elisp
-;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
-;; that provides precise, high-performance syntax highlighting. It supports a
-;; broad set of programming languages, including Bash, C, C++, C#, CMake, CSS,
-;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
-;; Elisp, Lua, Markdown, and many others.
-(use-package treesit-auto
-  :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
-```
 
 ### Showing the tab-bar
 
