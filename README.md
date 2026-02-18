@@ -126,6 +126,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Offline Dictionary](#offline-dictionary)
     - [Changing the Default Font](#changing-the-default-font)
     - [Persisting Text Scale](#persisting-text-scale)
+    - [A faster terminal emulator](#a-faster-terminal-emulator)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
@@ -1810,6 +1811,55 @@ To configure the *persist-text-scale* package, add the following to your `~/.ema
 
   :custom
   (text-scale-mode-step 1.07))
+```
+
+### A faster terminal emulator
+
+**NOTE:** The vterm package requires external system dependencies, specifically `cmake` (>= 3.11), `libtool-bin`, and `libvterm`. Because it contains a C component, Emacs will prompt you to compile the module the first time you run it. Ensure your environment variables are correctly configured so Emacs can locate your C compiler and build tools.
+
+The [vterm](https://github.com/akermu/emacs-libvterm) package provides is an Emacs terminal emulator that provides a fully interactive shell experience within Emacs, supporting features such as color, cursor movement, and advanced terminal capabilities.
+
+Unlike standard Emacs terminal modes, `vterm` utilizes the libvterm C library for high-performance emulation. This ensures accurate terminal behavior when running shell programs, text-based applications, and REPLs.
+
+To configure the *vterm* package, add the following to your `~/.emacs.d/post-init.el`:
+```elisp
+;; `vterm' is an Emacs terminal emulator that provides a fully interactive shell
+;; experience within Emacs, supporting features such as color, cursor movement,
+;; and advanced terminal capabilities. Unlike standard Emacs terminal modes,
+;; `vterm' utilizes the libvterm C library for high-performance emulation. This
+;; ensures accurate terminal behavior when running shell programs, text-based
+;; applications, and REPLs.
+(use-package vterm
+  :if (bound-and-true-p module-file-suffix)
+  :commands (vterm
+             vterm-send-string
+             vterm-send-return
+             vterm-send-key
+             vterm-module-compile)
+
+  :preface
+  (when noninteractive
+    ;; vterm unnecessarily triggers compilation of vterm-module.so upon loading.
+    ;; This prevents that during byte-compilation (`use-package' eagerly loads
+    ;; packages when compiling).
+    (advice-add #'vterm-module-compile :override #'ignore))
+
+  (defun my-vterm--setup ()
+    ;; Hide the mode-line
+    (setq mode-line-format nil)
+
+    ;; Inhibit early horizontal scrolling
+    (setq-local hscroll-margin 0)
+
+    ;; Suppress prompts for terminating active processes when closing vterm
+    (setq-local confirm-kill-processes nil))
+
+  :init
+  (add-hook 'vterm-mode-hook #'my-vterm--setup)
+
+  (setq vterm-timer-delay 0.05)  ; Faster vterm
+  (setq vterm-kill-buffer-on-exit t)
+  (setq vterm-max-scrollback 5000))
 ```
 
 ### Loading the custom.el file
