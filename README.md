@@ -11,11 +11,11 @@ In just a few minutes of applying what's in this README.md file, you will posses
 
 If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
 
-Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
+In just a few minutes of applying what's in this README.md file, you will possess a fully functional, high-performance Emacs configuration that is ready for work. By simply adopting **minimal-emacs.d**, you bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs. You gain immediate access to a professional-grade foundation featuring optimized garbage collection, sensible UI defaults, and a fast startup. This is your fast track to a vanilla Emacs setup that remains lightweight, responsive, and entirely under your control.
 
 **Ready to start? [Install minimal-emacs.d](#install-minimal-emacsd)**
 
-In just a few minutes of applying what's in this README.md file, you will possess a fully functional, high-performance Emacs configuration that is ready for work. By simply adopting **minimal-emacs.d**, you bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs. You gain immediate access to a professional-grade foundation featuring optimized garbage collection, sensible UI defaults, and a fast startup. This is your fast track to a vanilla Emacs setup that remains lightweight, responsive, and entirely under your control.
+Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
 
 ### Looking for the ideal starter kit to customize Emacs?
 
