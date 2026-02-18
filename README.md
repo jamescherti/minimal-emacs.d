@@ -18,7 +18,7 @@ Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of *
 The *minimal-emacs.d* project is:
 
 * **Minimal yet effective:** A solid starting point.
-* **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages.
+* **Better defaults:** Improved settings for usability, UI, garbage collection, and built-in packages. (Emacs comes with many well-designed defaults, but it also retains some less-than-ideal settings, often due to historical constraints or legacy compatibility.)
 * **0 packages loaded / No forced modes:** Unlike other frameworks, *minimal-emacs.d* does not impose modes or require packages. **You have full control** over which global or minor modes to enable.
 * **Customizable foundation:** Designed to be extended, not replaced. This README offers extensive recommendations for customizing your configuration.
 
@@ -28,8 +28,6 @@ The *minimal-emacs.d* project includes two initialization files:
 - `init.el`: Loaded after the graphical interface is initialized. This file contains user customizations, including variable settings, package loading, mode configurations, and keybindings.
 
 Excluding empty lines, comments, and docstrings, the minimal-emacs.d configuration is approximately 450 lines long. It does not introduce additional functionality beyond offering improved default settings. You retain full control over which packages to install and which modes to enable.
-
-Emacs comes with many well-designed defaults, but it also retains some less-than-ideal settings, often due to historical constraints or legacy compatibility. The purpose of *minimal-emacs.d* is to offer refined defaults that improve both usability and performance, replacing long-standing Emacs settings that no longer serve modern workflows well.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
 *(The theme shown in the screenshot above is ef-melissa-light, which is part of the ef-themes collection available on MELPA.)*
