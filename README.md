@@ -125,8 +125,8 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Showing the tab-bar](#showing-the-tab-bar)
     - [Offline Dictionary](#offline-dictionary)
     - [Changing the Default Font](#changing-the-default-font)
-    - [Persisting Text Scale](#persisting-text-scale)
-    - [A faster terminal emulator](#a-faster-terminal-emulator)
+    - [Persisting and Restoring Text Scale](#persisting-and-restoring-text-scale)
+    - [A Faster Terminal Emulator](#a-faster-terminal-emulator)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
@@ -1790,7 +1790,7 @@ On Linux, you can display a comprehensive list of all installed font families by
 fc-list : family | sed 's/,/\n/g' | sort -u
 ```
 
-### Persisting Text Scale
+### Persisting and Restoring Text Scale
 
 The [persist-text-scale](https://github.com/jamescherti/persist-text-scale.el) Emacs package provides `persist-text-scale-mode`, which ensures that all adjustments made with `text-scale-increase` and `text-scale-decrease` are persisted and restored across sessions. As a result, the text size in each buffer remains consistent, even after restarting Emacs.
 
@@ -1813,7 +1813,7 @@ To configure the *persist-text-scale* package, add the following to your `~/.ema
   (text-scale-mode-step 1.07))
 ```
 
-### A faster terminal emulator
+### A Faster Terminal Emulator
 
 **NOTE:** The vterm package requires external system dependencies, specifically `cmake` (>= 3.11), `libtool-bin`, and `libvterm`. Because it contains a C component, Emacs will prompt you to compile the module the first time you run it. Ensure your environment variables are correctly configured so Emacs can locate your C compiler and build tools.
 
