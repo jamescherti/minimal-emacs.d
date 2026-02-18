@@ -2586,6 +2586,24 @@ NOTE: Running package initialization and installation during the early-init phas
 To install and load packages during the early-init phase, add the following to `post-early-init.el`:
 
 ```elisp
+;; THIS IS NOT RECOMMENDED
+;;
+;; Running package initialization and installation during the early-init phase
+;; is NOT RECOMMENDED because this stage occurs before the GUI system,
+;; windowing, and comprehensive error-handling buffers are fully initialized.
+;; When package-install or `package-refresh-contents` triggers a failure—such as
+;; a TLS handshake error or a lost network connection—Emacs cannot yet render a
+;; graphical window to display the backtrace or warning. This results in a
+;; "silent" hang or a crash that provides no visual feedback to the user,
+;; forcing a pivot to a terminal to inspect standard output. Furthermore, many
+;; packages expect a fully functional frame and loaded user environment to
+;; configure themselves correctly; forcing them to load during early-init
+;; bypasses the intentional separation designed to let you set up UI-independent
+;; variables before the package system and GUI logic complicate the startup
+;; sequence.
+;;
+;; File: `post-early-init.el'
+
 (setq minimal-emacs-package-initialize-and-refresh nil)
 
 ;; If you want to ignore the warning:
@@ -2605,8 +2623,6 @@ To install and load packages during the early-init phase, add the following to `
 
 ;; TODO: Add your use-package code here
 ```
-
-A drawback of using the early-init phase instead of init is that if a package fails (e.g, due to a network issue), no output will be displayed in the Emacs GUI. You will need to open a terminal to view Emacs's stdout for error messages.
 
 ### Minimal-emacs.d configurations from users
 
