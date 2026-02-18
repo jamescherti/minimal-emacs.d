@@ -222,9 +222,9 @@ Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief descript
 
 ### Always defer package loading
 
-To ensure your configuration remains fast and responsive, always defer package loading so that libraries are initialized only when they are needed. The `use-package` macro makes this effortless; simply adding `:commands` or `:bind` to your package declarations automatically configures them for deferred loading.
+**All `use-package` declarations in this README use deferred loading, so you can safely copy and paste them into your configuration.**
 
-All `use-package` declarations in this README use deferred loading, so you can safely copy and paste them into your configuration.
+To ensure your configuration remains fast and responsive, always defer package loading so that libraries are initialized only when they are needed. **The `use-package` macro makes this effortless; simply adding `:commands` or `:bind` to your package declarations automatically configures them for deferred loading.**
 
 ## Customizations: UI (pre-early-init.el)
 
