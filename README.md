@@ -90,6 +90,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
   - [Customizations: Packages (File: post-init.el)](#customizations-packages-file-post-initel)
     - [Optimization: Native Compilation](#optimization-native-compilation)
+    - [Environment Variable Synchronization (Essential for macOS users)](#environment-variable-synchronization-essential-for-macos-users)
     - [File Management & History: recentf, savehist, saveplace, and auto-revert?](#file-management--history-recentf-savehist-saveplace-and-auto-revert)
     - [Safety: Auto-Save](#safety-auto-save)
       - [auto-save-mode (Prevent data loss in case of crashes)](#auto-save-mode-prevent-data-loss-in-case-of-crashes)
@@ -308,6 +309,26 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   ;; `require'. Additionally, it compiles all packages that were loaded before
   ;; the mode `compile-angel-on-load-mode' was activated.
   (compile-angel-on-load-mode 1))
+```
+
+### Environment Variable Synchronization (Essential for macOS users)
+
+On macOS, GUI applications (launched from the Finder, Dock, or Spotlight) do not inherit the user's shell environment variables by default. This often causes errors where Emacs cannot find external tools like `git`, `grep`, `pip`, or language servers (LSP), even if they work perfectly in your terminal.
+
+To fix this, add `exec-path-from-shell` to `~/.emacs.d/post-init.el`:
+
+```elisp
+(use-package exec-path-from-shell
+  :if (and (display-graphic-p)
+           (eq system-type 'darwin)) ; macOS only
+  :ensure t
+  :demand t
+  :functions exec-path-from-shell-initialize
+  :config
+  (dolist (var '("TMPDIR" "SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO"
+                 "LANG" "LC_CTYPE" "VIRTUAL_ENV"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 ```
 
 ### File Management & History: recentf, savehist, saveplace, and auto-revert?
