@@ -2612,16 +2612,16 @@ To install and load packages during the early-init phase, add the following to `
 ;; (setq warning-suppress-types '((package)))
 
 ;; Initialize packages in the early-init phase instead of init
-(progn
+(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+  ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
   (unless (package-installed-p 'use-package)
+    (unless (seq-empty-p package-archive-contents)
+      (package-refresh-contents))
     (package-install 'use-package))
-  (eval-when-compile
-    (require 'use-package)))
+  (require 'use-package))
 
-;; TODO: Add your use-package code here
+;; TODO: Add your use-package packages here
 ```
 
 ### Minimal-emacs.d configurations from users
