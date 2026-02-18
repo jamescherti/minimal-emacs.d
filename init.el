@@ -326,7 +326,6 @@
 
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
 ;; non-focused windows.
-(setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
 ;;; Text editing, indent, font, and formatting
