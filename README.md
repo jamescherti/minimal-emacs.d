@@ -29,6 +29,8 @@ The *minimal-emacs.d* project includes two initialization files:
 - `early-init.el`: Loaded early in the Emacs startup process, before the graphical interface is initialized. Introduced in Emacs 27, this file configures settings that influence startup performance and GUI behavior prior to package loading.
 - `init.el`: Loaded after the graphical interface is initialized. This file contains user customizations, including variable settings, package loading, mode configurations, and keybindings.
 
+**Skip to: [Install minimal-emacs.d](#install-minimal-emacsd)**
+
 Excluding empty lines, comments, and docstrings, the minimal-emacs.d configuration is approximately 450 lines long. It does not introduce additional functionality beyond offering improved default settings. You retain full control over which packages to install and which modes to enable.
 
 ![](https://www.jamescherti.com/misc/screenshot-minimal-emacs-2.png)
