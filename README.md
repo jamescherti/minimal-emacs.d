@@ -11,8 +11,6 @@ In just a few minutes of applying what's in this README.md file, you will posses
 
 If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
 
-In just a few minutes of applying what's in this README.md file, you will possess a fully functional, high-performance Emacs configuration that is ready for work. By simply adopting **minimal-emacs.d**, you bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs. You gain immediate access to a professional-grade foundation featuring optimized garbage collection, sensible UI defaults, and a fast startup. This is your fast track to a vanilla Emacs setup that remains lightweight, responsive, and entirely under your control.
-
 **Ready to start? [Install minimal-emacs.d](#install-minimal-emacsd)**
 
 Building the *minimal-emacs.d* `init.el` and `early-init.el` was the result of **extensive research and testing** to fine-tune the best parameters and optimizations for an Emacs configuration. *(More information about the *minimal-emacs.d* features can be found here: [Features](#features).)*
@@ -270,7 +268,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
    ```elisp
    (native-comp-available-p)
    ```
-   (A non-nil result indicates that native compilation is active.)
+   (A non-nil result indicates that native compilation is available.)
 
 2. Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code to the `~/.emacs.d/post-init.el` file:
 ```emacs-lisp
