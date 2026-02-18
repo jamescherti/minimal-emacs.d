@@ -642,7 +642,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 
 The [kirigami](https://github.com/jamescherti/kirigami.el) package offers a **unified interface for opening and closing folds** across a diverse set of major and minor modes in Emacs, including `outline-mode`, `outline-minor-mode`, `outline-indent-minor-mode`, `org-mode`, `markdown-mode`, `gfm-mode`, `vdiff-mode`, `vdiff-3way-mode`, `hs-minor-mode`, `hide-ifdef-mode`, `origami-mode`, `yafolding-mode`, `folding-mode`, and `treesit-fold-mode`.
 ```elisp
-(lightemacs-use-package kirigami
+(use-package kirigami
   :commands (kirigami-open-fold
              kirigami-open-fold-rec
              kirigami-close-fold
@@ -1095,7 +1095,7 @@ Unlike more sophisticated language-aware tools (e.g., eglot or lsp-mode), `dumb-
 
 To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
-(lightemacs-use-package dumb-jump
+(use-package dumb-jump
   :commands dumb-jump-xref-activate
   :init
   ;; Register `dumb-jump' as an xref backend so it integrates with
