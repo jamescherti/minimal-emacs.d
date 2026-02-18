@@ -276,16 +276,27 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 ;; Native compilation enhances Emacs performance by converting Elisp code into
 ;; native machine code, resulting in faster execution and improved
 ;; responsiveness.
-;;
+
+;; Uncomment to disable Emacs JIT Native-compile to completely replace it with
+;; compile-angel. This can prevents redundant or repetitive background
+;; compilations:
+;; (setq native-comp-jit-compilation nil)
+;; (setq native-comp-deferred-compilation native-comp-jit-compilation)
+
 ;; Ensure adding the following compile-angel code at the very beginning
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
   :demand t
   :ensure t
-  :custom
+
+  :init
+  ;; The following disables compilation of packages during installation;
+  ;; compile-angel will handle it.
+  (setq package-native-compile nil)
+
   ;; Set `compile-angel-verbose` to nil to suppress output from compile-angel.
   ;; Drawback: The minibuffer will not display compile-angel's actions.
-  (compile-angel-verbose t)
+  (setq compile-angel-verbose t)
 
   :config
   ;; The following directive prevents compile-angel from compiling your init
