@@ -1774,7 +1774,7 @@ Here are the main interactive functions:
 
 Prerequisite:
 
-- The [sdcv](https://github.com/Dushistov/sdcv) command. (It can usually be installed by installing the `sdcv` package.)
+- The [sdcv](https://github.com/Dushistov/sdcv) command. (On Linux systems, it can usually be installed by using the system's package manager to install the `sdcv` package.)
 - Download dictionaries from: http://download.huzheng.org/ . Once the dictionaries are downloaded, extract them into `/usr/share/stardict/dic/`, or configure the variable `quick-sdcv-dictionary-data-dir` in the Emacs configuration to specify an alternative dictionary path.
 
 ### Changing the Default Font
