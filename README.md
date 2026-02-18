@@ -1862,6 +1862,8 @@ To configure the *vterm* package, add the following to your `~/.emacs.d/post-ini
   (setq vterm-max-scrollback 5000))
 ```
 
+The `vterm` terminal emulator can be started with `M-x vterm`.
+
 ### Loading the custom.el file
 
 **NOTE:** The author advises against loading `custom.el`. Users are instead encouraged to define their configuration programmatically in files such as `post-init.el`. Maintaining configuration programmatically offers several advantages: it ensures reproducibility and facilitates version control. This makes it easier to understand, audit, and evolve the configuration over time.
