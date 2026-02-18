@@ -87,7 +87,6 @@ When non-nil, the following variables are set to non-nil to enable
 native compilation features:
 - `native-comp-deferred-compilation'
 - `native-comp-jit-compilation'
-- `package-native-compile'
 If nil, these variables are left at their default values and are not
 modified during setup.")
 
@@ -187,12 +186,9 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Native compilation and Byte compilation
 
-(if (and (featurep 'native-compile)
-         (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (when minimal-emacs-setup-native-compilation
-      ;; Activate `native-compile'
-      (setq package-native-compile t))
+(unless (and (featurep 'native-compile)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
