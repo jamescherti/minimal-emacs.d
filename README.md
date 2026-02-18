@@ -79,7 +79,8 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Alternative: Install minimal-emacs.d into `~/.minimal-emacs.d`](#alternative-install-minimal-emacsd-into-minimal-emacsd)
   - [Update minimal-emacs.d](#update-minimal-emacsd)
   - [Customizations: Never modify init.el and early-init.el. Modify these instead...](#customizations-never-modify-initel-and-early-initel-modify-these-instead)
-  - [Debug on error](#debug-on-error)
+  - [Recommendations](#recommendations)
+    - [Always defer package loading](#always-defer-package-loading)
   - [Customizations: UI (pre-early-init.el)](#customizations-ui-pre-early-initel)
     - [How to enable the menu-bar, the tool-bar, dialogs, the contextual menu, and tooltips?](#how-to-enable-the-menu-bar-the-tool-bar-dialogs-the-contextual-menu-and-tooltips)
     - [Reducing clutter in `~/.emacs.d` by redirecting files to `~/.emacs.d/var/`](#reducing-clutter-in-emacsd-by-redirecting-files-to-emacsdvar)
@@ -129,6 +130,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring Elpaca (package manager)](#configuring-elpaca-package-manager)
   - [Frequently asked questions](#frequently-asked-questions)
+    - [How to debug my configuration?](#how-to-debug-my-configuration)
     - [Customizing Scroll Recentering](#customizing-scroll-recentering)
     - [How to display Emacs startup duration?](#how-to-display-emacs-startup-duration)
     - [Optimization: Disabling `site-run-file` and `inhibit-default-init`](#optimization-disabling-site-run-file-and-inhibit-default-init)
@@ -212,15 +214,13 @@ Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief descript
 
 **Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the files `pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
 
-## Debug on error
+## Recommendations
 
-During the development of your init files, the author strongly recommends adding the following line at the very beginning of your `~/.emacs.d/pre-early-init.el` file:
+### Always defer package loading
 
-```elisp
-(setq debug-on-error t)
-```
+To ensure your configuration remains fast and responsive, always defer package loading so that libraries are initialized only when they are needed. The `use-package` macro makes this effortless; simply adding `:commands` or `:bind` to your package declarations automatically configures them for deferred loading.
 
-Enabling `debug-on-error` at this stage allows you to catch errors that might otherwise cause Emacs to fail silently or behave unpredictably.
+All `use-package` declarations in this README use deferred loading, so you can safely copy and paste them into your configuration.
 
 ## Customizations: UI (pre-early-init.el)
 
@@ -2220,6 +2220,16 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 ```
 
 ## Frequently asked questions
+
+### How to debug my configuration?
+
+During the development of your init files, the author strongly recommends adding the following line at the very beginning of your `~/.emacs.d/pre-early-init.el` file:
+
+```elisp
+(setq debug-on-error t)
+```
+
+Enabling `debug-on-error` at this stage allows you to catch errors that might otherwise cause Emacs to fail silently or behave unpredictably.
 
 ### Customizing Scroll Recentering
 
