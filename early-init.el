@@ -81,15 +81,6 @@ tradeoff is that the mode line is hidden during the startup phase.")
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
-(defvar minimal-emacs-setup-native-compilation t
-  "Controls whether native compilation settings are enabled during setup.
-When non-nil, the following variables are set to non-nil to enable
-native compilation features:
-- `native-comp-deferred-compilation'
-- `native-comp-jit-compilation'
-If nil, these variables are left at their default values and are not
-modified during setup.")
-
 (defvar minimal-emacs-inhibit-redisplay-during-startup nil
   "Suppress redisplay during startup to improve performance.
 This prevents visual updates while Emacs initializes. The tradeoff is that you
