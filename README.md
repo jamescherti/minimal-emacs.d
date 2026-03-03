@@ -2098,6 +2098,14 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
          ("/info/attributes\\'" . gitattributes-mode)
          ("/git/attributes\\'" . gitattributes-mode)))
 
+;; Configure built-in sgml-mode to automatically enable
+;; `sgml-electric-tag-pair-mode' in `html-mode' and `mhtml-mode', providing
+;; automatic insertion of matching closing tags.
+(use-package sgml-mode
+  :ensure nil
+  :commands (sgml-mode sgml-electric-tag-pair-mode)
+  :hook ((html-mode mhtml-mode) . sgml-electric-tag-pair-mode))
+
 ;; Support for YAML files.
 ;;
 ;; NOTE: Prefer the tree-sitter-based yaml-ts-mode over yaml-mode when

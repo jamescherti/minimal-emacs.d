@@ -95,6 +95,18 @@ of the progress or any relevant activities during startup.")
   "Directory beneath minimal-emacs.d files are placed.
 Note that this should end with a directory separator.")
 
+(defvar minimal-emacs-load-pre-early-init t
+  "If non-nil, attempt to load `pre-early-init.el`.")
+
+(defvar minimal-emacs-load-post-early-init t
+  "If non-nil, attempt to load `post-early-init.el`.")
+
+(defvar minimal-emacs-load-pre-init t
+  "If non-nil, attempt to load `pre-init.el`.")
+
+(defvar minimal-emacs-load-post-init t
+  "If non-nil, attempt to load `post-init.el`.")
+
 ;;; Load pre-early-init.el
 
 ;; Prefer loading newer compiled files
@@ -143,7 +155,8 @@ pre-early-init.el, and post-early-init.el.")
       (setq init-file (minimal-emacs--remove-el-file-suffix init-file))
       (load init-file :no-error (not minimal-emacs-debug)))))
 
-(minimal-emacs-load-user-init "pre-early-init.el")
+(when minimal-emacs-load-pre-early-init
+  (minimal-emacs-load-user-init "pre-early-init.el"))
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
@@ -454,7 +467,9 @@ this stage of initialization."
                                    ("melpa-stable" . 50)))
 
 ;;; Load post-early-init.el
-(minimal-emacs-load-user-init "post-early-init.el")
+
+(when minimal-emacs-load-post-early-init
+  (minimal-emacs-load-user-init "post-early-init.el"))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)

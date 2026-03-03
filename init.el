@@ -22,9 +22,11 @@
 ;;; Code:
 
 ;;; Load pre-init.el
+
 (if (fboundp 'minimal-emacs-load-user-init)
-    (minimal-emacs-load-user-init "pre-init.el")
-  (error "The early-init.el file failed to loaded"))
+    (when minimal-emacs-load-pre-init
+      (minimal-emacs-load-user-init "pre-init.el"))
+  (error "The early-init.el file failed to load"))
 
 ;;; Before package
 
@@ -562,8 +564,11 @@
   (put cmd 'disabled nil))
 
 ;;; Load post init
-(when (fboundp 'minimal-emacs-load-user-init)
+
+(when (and minimal-emacs-load-post-init
+           (fboundp 'minimal-emacs-load-user-init))
   (minimal-emacs-load-user-init "post-init.el"))
+
 (setq minimal-emacs--success t)
 
 ;; Local variables:
