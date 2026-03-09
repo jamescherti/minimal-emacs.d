@@ -280,9 +280,20 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 ;; Ensure adding the following compile-angel code at the very beginning
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
-  :ensure t
-  :demand t
-  :config
+  :commands (compile-angel-on-load-mode
+             compile-angel-on-save-local-mode
+             compile-angel-on-save-mode)
+
+  :hook
+  ;; A global mode that compiles .el files prior to loading them via `load' or
+  ;; `require'. Additionally, it compiles all packages that were loaded before
+  ;; the mode `compile-angel-on-load-mode' was activated.
+  (after-init . compile-angel-on-load-mode)
+
+  ;; A local mode that compiles .el files whenever the user saves them.
+  ;; (emacs-lisp-mode . compile-angel-on-save-local-mode)
+
+  :init
   ;; The following disables compilation of packages during installation;
   ;; compile-angel will handle it.
   (setq package-native-compile nil)
@@ -291,6 +302,9 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   ;; (When set to nil, compile-angel won't show which file is being compiled.)
   (setq compile-angel-verbose t)
 
+  ;; (setq compile-angel-debug t)
+
+  :config
   ;; The following directive prevents compile-angel from compiling your init
   ;; files. If you choose to remove this push to `compile-angel-excluded-files'
   ;; and compile your pre/post-init files, ensure you understand the
@@ -303,15 +317,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
   (push "/pre-init.el" compile-angel-excluded-files)
   (push "/post-init.el" compile-angel-excluded-files)
   (push "/pre-early-init.el" compile-angel-excluded-files)
-  (push "/post-early-init.el" compile-angel-excluded-files)
-
-  ;; A local mode that compiles .el files whenever the user saves them.
-  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
-
-  ;; A global mode that compiles .el files prior to loading them via `load' or
-  ;; `require'. Additionally, it compiles all packages that were loaded before
-  ;; the mode `compile-angel-on-load-mode' was activated.
-  (compile-angel-on-load-mode 1))
+  (push "/post-early-init.el" compile-angel-excluded-files))
 ```
 
 ### Environment Variable Synchronization (Essential for macOS users)
