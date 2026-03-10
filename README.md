@@ -703,8 +703,11 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 For instance, to switch to a another theme than the default one, add the following to the `~/.emacs.d/post-init.el` file:
 
 ```emacs-lisp
-(mapc #'disable-theme custom-enabled-themes)  ; Disable all active themes
-(load-theme 'modus-operandi t)  ; Load the built-in theme
+(let ((inhibit-redisplay t))
+  ;; Disable all active themes
+  (mapc #'disable-theme custom-enabled-themes)
+  ;; Load the built-in theme
+  (load-theme 'modus-operandi t))
 ```
 
 (If you prefer dark themes, replace `modus-operandi` with `modus-vivendi`.)
