@@ -161,7 +161,6 @@
 ;;; Tramp
 
 (setq tramp-verbose 1)
-(setq tramp-completion-reread-directory-timeout 50)
 
 ;;; Files
 
@@ -300,10 +299,6 @@
 
 ;;; Frames and windows
 
-;; However, do not resize windows pixelwise, as this can cause crashes in some
-;; cases when resizing too many windows at once or rapidly.
-(setq window-resize-pixelwise nil)
-
 (setq resize-mini-windows 'grow-only)
 
 ;; The native border "uses" a pixel of the fringe on the rightmost
@@ -333,19 +328,9 @@
 ;; 2. Resolving the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
 
-;; Number of lines of margin at the top and bottom of a window.
-(setq scroll-margin 0)
-
-;; Number of lines of continuity when scrolling by screenfuls.
-(setq next-screen-context-lines 0)
-
 ;; Horizontal scrolling
 (setq hscroll-margin 2
       hscroll-step 1)
-
-;;; Mouse
-
-(setq mouse-yank-at-point nil)
 
 ;; Emacs 29
 (when (memq 'context-menu minimal-emacs-ui-features)
@@ -362,9 +347,6 @@
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
 
-;; Do not extend the cursor to fit wide characters
-(setq x-stretch-cursor nil)
-
 ;; Reduce rendering/line scan work by not rendering cursors or regions in
 ;; non-focused windows.
 (setq highlight-nonselected-windows nil)
@@ -377,10 +359,6 @@
 ;; A longer delay can be annoying as it causes a noticeable pause after each
 ;; deletion, disrupting the flow of editing.
 (setq delete-pair-blink-delay 0.03)
-
-;; Disable visual indicators in the fringe for buffer boundaries and empty lines
-(setq-default indicate-buffer-boundaries nil)
-(setq-default indicate-empty-lines nil)
 
 ;; Continue wrapped lines at whitespace rather than breaking in the
 ;; middle of a word.
