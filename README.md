@@ -2767,8 +2767,8 @@ The minimal-emacs.d base provides a sensible foundation for your personal config
 
 * **Repository Prioritization:** Configures archives and sets explicit priorities for GNU ELPA, NonGNU ELPA, and MELPA.
 * **Centralized Artifacts:** Routes auto-save and backup files to dedicated subdirectories within the Emacs configuration folder. Enables versioned backups.
-* **Auto-Revert:** Automatically refreshes buffers when the underlying file changes on disk. (Disabled by default)
-* **Session Memory:** Saves cursor positions across sessions, maintains recent file history, and persists the minibuffer history. (Disabled by default)
+* **Auto-Revert:** Refreshes buffers when the underlying file changes on disk. (Disabled by default.)
+* **Session Memory:** Saves cursor positions across sessions, maintains recent file history, and persists the minibuffer history. (Disabled by default.)
 
 ### Precision Editing and UX Enhancements
 
