@@ -425,7 +425,10 @@ To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 ;; `recover-session' to restore unsaved changes.
 (setq auto-save-default t)
 
+;; Trigger an auto-save after 300 keystrokes
 (setq auto-save-interval 300)
+
+;; Trigger an auto-save 30 seconds of idle time.
 (setq auto-save-timeout 30)
 ```
 

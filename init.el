@@ -229,7 +229,6 @@
 ;; Enable auto-save to safeguard against crashes or data loss. The
 ;; `recover-file' or `recover-session' functions can be used to restore
 ;; auto-saved data.
-(setq auto-save-default t)
 (setq auto-save-no-message t)
 
 (when noninteractive
@@ -245,6 +244,20 @@
       (expand-file-name "autosave/" user-emacs-directory))
 (setq tramp-auto-save-directory
       (expand-file-name "tramp-autosave/" user-emacs-directory))
+
+(setq auto-save-file-name-transforms
+      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+         ,(file-name-concat auto-save-list-file-prefix "tramp-\\2-") sha1)
+        ("\\`/\\([^/]+/\\)*\\([^/]+\\)\\'"
+         ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
+
+;; Ensure the directory for auto-save session logs exists with restricted
+;; permissions.
+(when auto-save-default
+  (let ((auto-save-dir (file-name-directory auto-save-list-file-prefix)))
+    (unless (file-exists-p auto-save-dir)
+      (with-file-modes #o700
+        (make-directory auto-save-dir t)))))
 
 ;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
