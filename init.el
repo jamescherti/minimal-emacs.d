@@ -70,7 +70,7 @@
   (unless package-archive-contents
     (package-refresh-contents))
   (when (and (version< emacs-version "29.1")
-             (package-installed-p 'use-package))
+             (not (package-installed-p 'use-package)))
     (package-install 'use-package))
   (require 'use-package))
 
