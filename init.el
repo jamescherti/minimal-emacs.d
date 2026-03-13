@@ -132,7 +132,7 @@
 
 (setq whitespace-line-column nil)  ; Use the value of `fill-column'.
 
-;; Disable truncation of printed s-expressions in the message buffer
+;; Disable ellipsis when printing s-expressions in the message buffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
@@ -172,8 +172,10 @@
 ;; Ignoring this is acceptable since it will redirect to the buffer regardless.
 (setq find-file-suppress-same-file-warnings t)
 
-;; Resolve symlinks so that operations are conducted from the file's directory
+;; Resolve symlinks to avoid duplicate buffers
 (setq find-file-visit-truename t
+      ;; Automatically follow a symlink to its source if that source is managed
+      ;; by a version control system, rather than asking for permission.
       vc-follow-symlinks t)
 
 ;; Prefer vertical splits over horizontal ones

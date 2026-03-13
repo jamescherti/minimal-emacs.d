@@ -7,6 +7,8 @@
 
 The **minimal-emacs.d** project is a **fast and lightweight** minimal Emacs starter kit (`init.el` and `early-init.el`) that **gives you full control over your configuration**. It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
+Each setting in minimal-emacs.d is carefully chosen to answer this question: does it provide a better default that modernizes Emacs while keeping it lightweight, fast and stable?
+
 In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible defaults, and a fast startup.
 
 If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
@@ -156,6 +158,14 @@ Please share your configuration. It could serve as inspiration for other users.
     - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
     - [Minimal-emacs.d configurations from users](#minimal-emacsd-configurations-from-users)
   - [Features](#features)
+    - [Fast Initialization and Performance](#fast-initialization-and-performance)
+    - [Native Compilation and Byte Compilation](#native-compilation-and-byte-compilation)
+    - [Interface Defaults](#interface-defaults)
+    - [Package and File Management](#package-and-file-management)
+    - [Precision Editing and UX Enhancements](#precision-editing-and-ux-enhancements)
+    - [Developer Experience](#developer-experience)
+    - [Buffer, Directory, and Window Management](#buffer-directory-and-window-management)
+    - [Security, Stability, and Customizable Initialization](#security-stability-and-customizable-initialization)
   - [Author and license](#author-and-license)
   - [Links](#links)
 
@@ -215,7 +225,7 @@ Always begin your `pre-init.el`, `post-init.el`, `post-early-init.el`, and `pre-
 
 Replace `FILENAME.el` with the actual name and DESCRIPTION with a brief description of its purpose.
 
-*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded.)*
+*(Only if you know what you're doing: Removing `no-byte-compile: t;` from your init files allows Emacs to compile them, improving load and execution speed. However, if you do so, you may need to add required dependencies. For example, if you're using `use-package`, add `(require 'use-package)` at the top of `post-init.el` to ensure all necessary `use-package` variables and functions are loaded. **The only init file where `no-byte-compile: t` should never be removed is `early-init.el`**, because if this file is compiled, Emacs may load an outdated compiled version.)*
 
 **Important:** The examples in this README reference pre/post init files in the `~/.emacs.d/` directory, but the files `pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el` should be placed in the same directory as `init.el` and `early-init.el`, regardless of their location.
 
@@ -2480,9 +2490,7 @@ Here is a comprehensive `package-pinned-packages` configuration to guarantee tha
         (vertico-prescient             . "melpa-stable")
         (visual-fill-column            . "melpa-stable")
         (yasnippet-snippets            . "melpa-stable")
-        (ace-window                    . "gnu")
         (aggressive-indent             . "gnu")
-        (avy                           . "gnu")
         (cape                          . "gnu")
         (compat                        . "gnu")
         (consult                       . "gnu")
@@ -2733,49 +2741,63 @@ To install and load packages during the early-init phase, add the following to `
 
 ## Features
 
-1. **Performance Improvements:**
-   - Increases the amount read from processes in a single chunk.
-   - Prefers loading newer compiled files.
-   - Reduces startup screen and message noise, including removing the "For information about GNU Emacs..." message.
-   - Configures Emacs to start with a scratch buffer in `fundamental-mode` to shave seconds off startup time.
-   - Delays garbage collection during startup to improve performance and resets it to a more reasonable value once Emacs has started.
-   - Customizes `file-name-handler-alist` for improved startup time and package load time (Special thanks to the Doom Emacs developers for the `file-name-handler-alist` optimizations; This function have been inspired by their project and will contribute to improving vanilla Emacs configurations.)
-   - Reduces rendering workload by not rendering cursors or regions in non-focused windows.
-   - Disables warnings from the legacy advice API and suppresses warnings about aliased variables.
-   - Avoids unnecessary excessive UI updates.
-   - Disables font compacting to avoid high memory usage.
-   - Defer tool bar setup
-   - Unset command line options irrelevant to the current OS
+The minimal-emacs.d base provides a sensible foundation for your personal configuration. It addresses common pain points in vanilla Emacs to provide a responsive and clean environment from the start, without forcing a specific workflow.
 
-2. **Native Compilation and Byte Compilation:**
-   - Configures native compilation and byte compilation settings
-   - Suppresses compiler warnings and errors during native compilation.
+### Fast Initialization and Performance
 
-4. **UI Element Management:**
-   - Disables the startup screen and messages, including menu bar, tool bar, and scroll bars.
-   - Configures Emacs to avoid resizing frames and minimizes unnecessary UI updates.
+* **Optimized File Handlers:** Defers garbage collection during startup to reduce load times, restoring it to a standard threshold once Emacs is ready.
+* **Process Throughput:** Increases the chunk size for reading from processes to speed up external tool interactions.
+* **Compiled File Preference:** Instructs Emacs to prioritize loading newer byte-compiled files.
+* **Optimized Text Rendering:** Disables bidirectional text scanning and font compacting during startup to reduce memory usage and speed up initialization.
+* **Silent Boot Sequence:** Removes the GNU Emacs startup message, unsets OS-irrelevant command line options, and defers toolbar setup.
+* **Instant Scratch Buffer:** Starts the initial scratch buffer in `fundamental-mode` to reduce startup overhead.
 
-5. **Package Management:**
-   - Configures package archives and priorities for MELPA, ELPA, and other repositories.
+### Native Compilation and Byte Compilation
 
-6. **Customizable Initialization Files:**
-   - Supports additional configuration files (`pre-init.el`, `post-init.el`, `pre-early-init.el`, and `post-early-init.el`) to allow further customization at different stages of the startup process.
+* **Out-of-the-Box Optimization:** Configures default settings for native and byte compilation.
+* **Quiet Compilation:** Suppresses warnings and errors during async native compilation to prevent popup interruptions.
 
-7. **File Management:**
-   - Manages auto-save and backup files, including backup options and version control settings.
+### Interface Defaults
 
-8. **User Experience Enhancements:**
-   - Configures user interface settings such as cursor behavior, scrolling, and response to prompts.
-   - Disables beeping and blinking to avoid distractions.
+* **Minimal UI:** Disables the startup screen, menu bar, tool bar, and scroll bars by default to maximize screen space.
+* **Smart Rendering:** Stops rendering cursors and region highlights in non-focused windows. Prevents Emacs from automatically resizing frames on setting adjustments.
+* **Typographic Defaults:** Renders underlines at the descent line, replaces truncation markers with an ellipsis ("..."), and disables the visible bell.
+* **Focused Minibuffer:** Enables recursive minibuffers and restricts the cursor from entering read-only prompt areas.
 
-9. **Buffer and Window Configuration:**
-   - Sets default fringe widths and buffer boundaries.
-   - Configures smooth scrolling and cursor behavior for a more seamless editing experience.
+### Package and File Management
 
-10. **Miscellaneous**
-    - Verifies that the Emacs configuration has loaded successfully and issues a warning if there are any issues.
-    - Configure and optimize settings for Eglot, recentf, savehist, auto-save, and others without enabling the modes themselves. This modifies the behavior and preferences to improve performance and usability.
-    - Configure Ediff to use a single frame and split windows horizontally
+* **Repository Prioritization:** Configures archives and sets explicit priorities for GNU ELPA, NonGNU ELPA, and MELPA.
+* **Centralized Artifacts:** Routes auto-save and backup files to dedicated subdirectories within the Emacs configuration folder. Enables versioned backups.
+* **Auto-Revert:** Automatically refreshes buffers when the underlying file changes on disk. (Disabled by default)
+* **Session Memory:** Saves cursor positions across sessions, maintains recent file history, and persists the minibuffer history. (Disabled by default)
+
+### Precision Editing and UX Enhancements
+
+* **Predictable Scrolling:** Configures conservative scrolling to eliminate default half-screen jumps.
+* **Modern Formatting Standards:** Enforces a POSIX-compliant final newline on save, disables double-space sentence endings, and triggers smart indentation only on newlines and backspaces.
+* **Sensible Tab Management:** Defaults to spaces with a tab width. Configures the tab key to indent first, then complete.
+* **Fast Interactions:** Configures prompts to accept "y" or "n" instead of "yes" or "no".
+
+### Developer Experience
+
+* **Pre-Tuned Packages:** Configures optimized settings for built-in packages like Eglot, recentf, savehist, and auto-save without enabling them by default.
+* **Git Integration:** Sets version control to use the `--histogram` diff algorithm and automatically follow file renames in logs.
+* **Bash Scripting:** Enforces consistent indentation after line continuations in shell scripts.
+* **Clean Logs:** Disables warnings from the legacy advice API and suppresses aliased variable warnings.
+
+### Buffer, Directory, and Window Management
+
+* **Modern Splits:** Favors vertical window splits over horizontal ones.
+* **Ediff Optimization:** Configures Ediff to use a single frame and split windows horizontally.
+* **Dired Mastery:** Enables `dired-dwim-target` for easier file operations between panes. Auto-updates Dired buffers and cleans up deleted directories silently.
+* **Window Dividers:** Uses minimalistic window dividers and sets default fringe widths.
+
+### Security, Stability, and Customizable Initialization
+
+* **Safety Checks:** Verifies successful configuration load and warns of conflicts with legacy `~/.emacs` files.
+* **Drop-In Customization:** Supports loading modular configuration files (`pre-early-init.el`, `post-early-init.el`, `pre-init.el`, and `post-init.el`) to hook into different stages of the startup process.
+* **Strict TLS Verification:** Enforces strict SSL/TLS certificate checks and raises the minimum encryption strength for GnuTLS.
+* **Encrypted Auth Sources:** Prefers GPG-encrypted authentication files (`~/.authinfo.gpg`) and directs the GPG agent to use the minibuffer for passphrase entry.
 
 ## Author and license
 
