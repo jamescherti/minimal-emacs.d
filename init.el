@@ -197,8 +197,16 @@
 
 ;;; Backup files
 
-;; Avoid backups or lockfiles to prevent creating world-readable copies of files
+;; Disable the creation of lockfiles (e.g., .#filename).
+;; Modern workflows rely on `global-auto-revert-mode' to handle external file
+;; changes gracefully, making the restrictive nature of lockfiles unnecessary.
 (setq create-lockfiles nil)
+
+;; Disable backup files (e.g., filename~). Note that `auto-save-default'
+;; remains enabled by default. Even with `make-backup-files' backups disabled,
+;; Emacs will still generate temporary recovery files (e.g., #filename#) for
+;; unsaved buffers. This protects your active work from sudden crashes while
+;; ensuring the file system is cleaned up immediately upon a successful save.
 (setq make-backup-files nil)
 
 (setq backup-directory-alist
@@ -214,7 +222,6 @@
 ;;; VC
 
 (setq vc-git-print-log-follow t)
-(setq vc-make-backup-files nil)  ; Do not backup version controlled files
 (setq vc-git-diff-switches '("--histogram"))  ; Faster algorithm for diffing.
 
 ;;; Auto save
@@ -222,8 +229,13 @@
 ;; Enable auto-save to safeguard against crashes or data loss. The
 ;; `recover-file' or `recover-session' functions can be used to restore
 ;; auto-saved data.
-(setq auto-save-default nil)
+(setq auto-save-default t)
 (setq auto-save-no-message t)
+
+(when noninteractive
+  ;; The command line interface
+  (setq enable-dir-local-variables nil)
+  (setq case-fold-search nil))
 
 ;; Do not auto-disable auto-save after deleting large chunks of
 ;; text.

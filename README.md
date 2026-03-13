@@ -7,7 +7,7 @@
 
 The **minimal-emacs.d** project is a **fast and lightweight** minimal Emacs starter kit (`init.el` and `early-init.el`) that **gives you full control over your configuration**. It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
 
-In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible UI defaults, and a fast startup.
+In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible defaults, and a fast startup.
 
 If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
 
