@@ -2748,9 +2748,8 @@ The minimal-emacs.d base provides a sensible foundation for your personal config
 * **Optimized File Handlers:** Defers garbage collection during startup to reduce load times, restoring it to a standard threshold once Emacs is ready.
 * **Process Throughput:** Increases the chunk size for reading from processes to speed up external tool interactions.
 * **Compiled File Preference:** Instructs Emacs to prioritize loading newer byte-compiled files.
-* **Optimized Text Rendering:** Disables bidirectional text scanning and font compacting during startup to reduce memory usage and speed up initialization.
+* **Optimized Text Rendering:** Disables font compacting during startup to reduce memory usage and speed up initialization.
 * **Silent Boot Sequence:** Removes the GNU Emacs startup message, unsets OS-irrelevant command line options, and defers toolbar setup.
-* **Instant Scratch Buffer:** Starts the initial scratch buffer in `fundamental-mode` to reduce startup overhead.
 
 ### Native Compilation and Byte Compilation
 
@@ -2780,10 +2779,8 @@ The minimal-emacs.d base provides a sensible foundation for your personal config
 
 ### Developer Experience
 
-* **Pre-Tuned Packages:** Configures optimized settings for built-in packages like Eglot, recentf, savehist, and auto-save without enabling them by default.
+* **Optional Built-in Package Defaults:** Configures optimized settings for built-in packages like Eglot, recentf, savehist, and auto-save without enabling them by default.
 * **Git Integration:** Sets version control to use the `--histogram` diff algorithm and automatically follow file renames in logs.
-* **Bash Scripting:** Enforces consistent indentation after line continuations in shell scripts.
-* **Clean Logs:** Disables warnings from the legacy advice API and suppresses aliased variable warnings.
 
 ### Buffer, Directory, and Window Management
 
