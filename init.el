@@ -281,7 +281,6 @@
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'mode)
-(setq recentf-exclude nil)
 
 ;;; saveplace
 
@@ -294,7 +293,6 @@
 ;; `savehist-mode' is an Emacs feature that preserves the minibuffer history
 ;; between sessions.
 (setq history-length 300)
-(setq savehist-save-minibuffer-history t)  ;; Default
 (setq savehist-additional-variables
       '(register-alist                   ; macros
         mark-ring global-mark-ring       ; marks
