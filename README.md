@@ -2290,8 +2290,7 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
   (elpaca-no-symlink-mode 1))
 
 ;; Install use-package support
-(elpaca
-    elpaca-use-package
+(elpaca elpaca-use-package
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 ```
