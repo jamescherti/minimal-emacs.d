@@ -2284,16 +2284,6 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; Optional: Install use-package support
-;; (elpaca elpaca-use-package
-;;   (elpaca-use-package-mode))
-
-(elpaca
- elpaca-use-package
- ;; Enable use-package :ensure support for Elpaca.
- (elpaca-use-package-mode))
-
-;; TODO windows
 ;; Uncomment for systems which cannot create symlinks:
 ;; (elpaca-no-symlink-mode)
 
