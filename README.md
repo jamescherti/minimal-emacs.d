@@ -2284,8 +2284,10 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; Uncomment for systems which cannot create symlinks:
-;; (elpaca-no-symlink-mode)
+;; Enable 'elpaca-no-symlink-mode' on Windows, as symlink creation
+;; often fails without Administrator privileges or Developer Mode.
+(when (eq system-type 'windows-nt)
+  (elpaca-no-symlink-mode 1))
 
 ;; Install use-package support
 (elpaca
