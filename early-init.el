@@ -124,8 +124,10 @@ Note that this should end with a directory separator.")
       (error "Emacs ignored loading 'init.el'. Please ensure that files such as ~/.emacs or ~/.emacs.el do not exist, as they may be preventing Emacs from loading the 'init.el' file"))
 
      (t
-      (error "Configuration error. Debug by starting Emacs with: emacs --debug-init")))))
-(add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
+      (error "Configuration error. Debug by starting Emacs with: --debug-init")))))
+
+(unless noninteractive
+  (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102))
 
 (defvar minimal-emacs-load-compiled-init-files nil
   "If non-nil, attempt to load byte-compiled .elc for init files.
@@ -174,7 +176,9 @@ pre-early-init.el, and post-early-init.el.")
 
 (defun minimal-emacs--restore-gc ()
   "Restore garbage collection settings."
-  (if (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+  (if (and (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+           ;; In noninteractive mode, the event loop does not run
+           (not noninteractive))
       ;; Defer garbage collection during initialization to avoid 2 collections.
       (run-with-timer minimal-emacs-gc-cons-threshold-restore-delay nil
                       #'minimal-emacs--restore-gc-values)

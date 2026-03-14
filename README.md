@@ -69,6 +69,8 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
 - [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
 - [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): "Nice work! I just created a nix flake to using it on my dev servers"
+- [zackattackz287 on Reddit](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/oa8okca/): "Congrats and thank you (and the community around minimal.d) for your work! I've been using it for quite a while now and I've not ever had any breakages when merging changes from main..."
+- [utility on Reddit](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/oa8wrap/): "Excellent. I use this and I'm very happy with it!"
 
 Please share your configuration. It could serve as inspiration for other users.
 
@@ -365,11 +367,11 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :hook
   (after-init . global-auto-revert-mode)
   :init
+  ;; (setq auto-revert-verbose t)
   (setq auto-revert-interval 3)
   (setq auto-revert-remote-files nil)
   (setq auto-revert-use-notify t)
-  (setq auto-revert-avoid-polling nil)
-  (setq auto-revert-verbose t))
+  (setq auto-revert-avoid-polling nil))
 
 ;; Recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
