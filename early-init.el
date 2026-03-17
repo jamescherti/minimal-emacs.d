@@ -359,6 +359,9 @@ this stage of initialization."
 
 ;;; Performance: Disable mode-line during startup
 
+(defvar-local minimal-emacs--hidden-mode-line nil
+  "Store the buffer-local value of `mode-line-format' during startup.")
+
 (when (and minimal-emacs-disable-mode-line-during-startup
            (not noninteractive)
            (not minimal-emacs-debug))
@@ -367,7 +370,9 @@ this stage of initialization."
   (setq-default mode-line-format nil)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
-      (setq mode-line-format nil))))
+      (when (local-variable-p 'mode-line-format)
+        (setq minimal-emacs--hidden-mode-line mode-line-format)
+        (setq mode-line-format nil)))))
 
 ;;; Restore values
 
@@ -386,7 +391,12 @@ this stage of initialization."
     (when minimal-emacs-disable-mode-line-during-startup
       (unless (default-toplevel-value 'mode-line-format)
         (setq-default mode-line-format (get 'mode-line-format
-                                            'initial-value))))))
+                                            'initial-value)))
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (local-variable-p 'minimal-emacs--hidden-mode-line)
+            (setq mode-line-format minimal-emacs--hidden-mode-line)
+            (kill-local-variable 'minimal-emacs--hidden-mode-line)))))))
 
 (advice-add 'startup--load-user-init-file :around
             #'minimal-emacs--startup-load-user-init-file)
