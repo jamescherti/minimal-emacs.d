@@ -1,10 +1,10 @@
 ;;; early-init.el --- Early Init -*- lexical-binding: t; -*-
 
-;; Author: James Cherti
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
 ;; URL: https://github.com/jamescherti/minimal-emacs.d
 ;; Package-Requires: ((emacs "29.1"))
 ;; Keywords: maint
-;; Version: 1.3.0
+;; Version: 1.4.1
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
@@ -81,16 +81,6 @@ tradeoff is that the mode line is hidden during the startup phase.")
 When set to non-nil, Emacs will automatically call `package-initialize' and
 `package-refresh-contents' to set up and update the package system.")
 
-(defvar minimal-emacs-setup-native-compilation t
-  "Controls whether native compilation settings are enabled during setup.
-When non-nil, the following variables are set to non-nil to enable
-native compilation features:
-- `native-comp-deferred-compilation'
-- `native-comp-jit-compilation'
-- `package-native-compile'
-If nil, these variables are left at their default values and are not
-modified during setup.")
-
 (defvar minimal-emacs-inhibit-redisplay-during-startup nil
   "Suppress redisplay during startup to improve performance.
 This prevents visual updates while Emacs initializes. The tradeoff is that you
@@ -105,11 +95,24 @@ of the progress or any relevant activities during startup.")
   "Directory beneath minimal-emacs.d files are placed.
 Note that this should end with a directory separator.")
 
+(defvar minimal-emacs-load-pre-early-init t
+  "If non-nil, attempt to load `pre-early-init.el`.")
+
+(defvar minimal-emacs-load-post-early-init t
+  "If non-nil, attempt to load `post-early-init.el`.")
+
+(defvar minimal-emacs-load-pre-init t
+  "If non-nil, attempt to load `pre-init.el`.")
+
+(defvar minimal-emacs-load-post-init t
+  "If non-nil, attempt to load `post-init.el`.")
+
 ;;; Load pre-early-init.el
 
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
-(setq debug-on-error minimal-emacs-debug)
+(when minimal-emacs-debug
+  (setq debug-on-error minimal-emacs-debug))
 
 (defvar minimal-emacs--success nil)
 (defun minimal-emacs--check-success ()
@@ -121,8 +124,10 @@ Note that this should end with a directory separator.")
       (error "Emacs ignored loading 'init.el'. Please ensure that files such as ~/.emacs or ~/.emacs.el do not exist, as they may be preventing Emacs from loading the 'init.el' file"))
 
      (t
-      (error "Configuration error. Debug by starting Emacs with: emacs --debug-init")))))
-(add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
+      (error "Configuration error. Debug by starting Emacs with: --debug-init")))))
+
+(unless noninteractive
+  (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102))
 
 (defvar minimal-emacs-load-compiled-init-files nil
   "If non-nil, attempt to load byte-compiled .elc for init files.
@@ -146,13 +151,14 @@ pre-early-init.el, and post-early-init.el.")
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
     (if (not minimal-emacs-load-compiled-init-files)
-        (load init-file :no-error (not init-file-debug) :nosuffix)
+        (load init-file :no-error (not minimal-emacs-debug) :nosuffix)
       ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
       ;; select between .el and .elc files.
       (setq init-file (minimal-emacs--remove-el-file-suffix init-file))
-      (load init-file :no-error (not init-file-debug)))))
+      (load init-file :no-error (not minimal-emacs-debug)))))
 
-(minimal-emacs-load-user-init "pre-early-init.el")
+(when minimal-emacs-load-pre-early-init
+  (minimal-emacs-load-user-init "pre-early-init.el"))
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
@@ -163,8 +169,6 @@ pre-early-init.el, and post-early-init.el.")
 ;; Garbage collection significantly affects startup times. This setting delays
 ;; garbage collection during startup but will be reset later.
 
-(setq garbage-collection-messages minimal-emacs-debug)
-
 (defun minimal-emacs--restore-gc-values ()
   "Restore garbage collection values to minimal-emacs.d values."
   (setq gc-cons-threshold minimal-emacs-gc-cons-threshold)
@@ -172,7 +176,9 @@ pre-early-init.el, and post-early-init.el.")
 
 (defun minimal-emacs--restore-gc ()
   "Restore garbage collection settings."
-  (if (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+  (if (and (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+           ;; In noninteractive mode, the event loop does not run
+           (not noninteractive))
       ;; Defer garbage collection during initialization to avoid 2 collections.
       (run-with-timer minimal-emacs-gc-cons-threshold-restore-delay nil
                       #'minimal-emacs--restore-gc-values)
@@ -188,12 +194,9 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Native compilation and Byte compilation
 
-(if (and (featurep 'native-compile)
-         (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (when minimal-emacs-setup-native-compilation
-      ;; Activate `native-compile'
-      (setq package-native-compile t))
+(unless (and (featurep 'native-compile)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
   ;; Deactivate the `native-compile' feature if it is not available
   (setq features (delq 'native-compile features)))
 
@@ -207,9 +210,6 @@ pre-early-init.el, and post-early-init.el.")
 ;;; Miscellaneous
 
 (set-language-environment "UTF-8")
-
-;; Set-language-environment sets default-input-method, which is unwanted.
-(setq default-input-method nil)
 
 ;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 2 1024 1024))  ; 1024kb
@@ -239,7 +239,7 @@ pre-early-init.el, and post-early-init.el.")
 ;; icon fonts on Windows. This will increase memory usage.
 (setq inhibit-compacting-font-caches t)
 
-(when (and (not (daemonp)) (not noninteractive))
+(when (not noninteractive)
   ;; Resizing the Emacs frame can be costly when changing the font. Disable this
   ;; to improve startup times with fonts larger than the system default.
   (setq frame-resize-pixelwise t)
@@ -272,16 +272,6 @@ pre-early-init.el, and post-early-init.el.")
   ;; Suppress the vanilla startup screen completely. We've disabled it with
   ;; `inhibit-startup-screen', but it would still initialize anyway.
   (advice-add 'display-startup-screen :override #'ignore)
-
-  ;; The initial buffer is created during startup even in non-interactive
-  ;; sessions, and its major mode is fully initialized. Modes like `text-mode',
-  ;; `org-mode', or even the default `lisp-interaction-mode' load extra packages
-  ;; and run hooks, which can slow down startup.
-  ;;
-  ;; Using `fundamental-mode' for the initial buffer to avoid unnecessary
-  ;; startup overhead.
-  (setq initial-major-mode 'fundamental-mode
-        initial-scratch-message nil)
 
   (unless minimal-emacs-debug
     ;; Unset command line options irrelevant to the current OS. These options
@@ -316,7 +306,6 @@ this stage of initialization."
                         minimal-emacs--old-file-name-handler-alist))))
 
 (when (and minimal-emacs-optimize-file-name-handler-alist
-           (not (daemonp))
            (not minimal-emacs-debug))
   ;; Determine the state of bundled libraries using calc-loaddefs.el. If
   ;; compressed, retain the gzip handler in `file-name-handler-alist`. If
@@ -348,7 +337,6 @@ this stage of initialization."
   (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-redisplay))
 
 (when (and minimal-emacs-inhibit-redisplay-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   ;; Suppress redisplay and redraw during startup to avoid delays and
@@ -364,7 +352,6 @@ this stage of initialization."
   (remove-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message))
 
 (when (and minimal-emacs-inhibit-message-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   (setq-default inhibit-message t)
@@ -372,8 +359,10 @@ this stage of initialization."
 
 ;;; Performance: Disable mode-line during startup
 
+(defvar-local minimal-emacs--hidden-mode-line nil
+  "Store the buffer-local value of `mode-line-format' during startup.")
+
 (when (and minimal-emacs-disable-mode-line-during-startup
-           (not (daemonp))
            (not noninteractive)
            (not minimal-emacs-debug))
   (put 'mode-line-format
@@ -381,7 +370,9 @@ this stage of initialization."
   (setq-default mode-line-format nil)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
-      (setq mode-line-format nil))))
+      (when (local-variable-p 'mode-line-format)
+        (setq minimal-emacs--hidden-mode-line mode-line-format)
+        (setq mode-line-format nil)))))
 
 ;;; Restore values
 
@@ -400,7 +391,12 @@ this stage of initialization."
     (when minimal-emacs-disable-mode-line-during-startup
       (unless (default-toplevel-value 'mode-line-format)
         (setq-default mode-line-format (get 'mode-line-format
-                                            'initial-value))))))
+                                            'initial-value)))
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (local-variable-p 'minimal-emacs--hidden-mode-line)
+            (setq mode-line-format minimal-emacs--hidden-mode-line)
+            (kill-local-variable 'minimal-emacs--hidden-mode-line)))))))
 
 (advice-add 'startup--load-user-init-file :around
             #'minimal-emacs--startup-load-user-init-file)
@@ -430,8 +426,7 @@ this stage of initialization."
     (when (bound-and-true-p tool-bar-mode)
       (funcall 'tool-bar-setup))))
 
-(when (and (not (daemonp))
-           (not noninteractive))
+(unless noninteractive
   (when (fboundp 'tool-bar-setup)
     ;; Temporarily override the tool-bar-setup function to prevent it from
     ;; running during the initial stages of startup
@@ -464,18 +459,18 @@ this stage of initialization."
 (setq tls-checktrust t)  ; Ensure SSL/TLS connections undergo trust verification
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
-;;; package.el
-(setq use-package-compute-statistics minimal-emacs-debug)
-
-;; Setting use-package-expand-minimally to (t) results in a more compact output
-;; that emphasizes performance over clarity.
-(setq use-package-expand-minimally (not minimal-emacs-debug))
+;; This results in a more compact output that emphasizes performance
+(setq use-package-expand-minimally t)
 
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
-(setq package-enable-at-startup nil)  ; Let the init.el file handle this
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure (not noninteractive))
 (setq use-package-enable-imenu-support t)
+
+;; package.el
+(setq package-enable-at-startup nil)  ; Let the init.el file handle this
+(setq package-quickstart-file
+      (expand-file-name "package-quickstart.el" user-emacs-directory))
 (setq package-archives '(("melpa"        . "https://melpa.org/packages/")
                          ("gnu"          . "https://elpa.gnu.org/packages/")
                          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
@@ -486,7 +481,9 @@ this stage of initialization."
                                    ("melpa-stable" . 50)))
 
 ;;; Load post-early-init.el
-(minimal-emacs-load-user-init "post-early-init.el")
+
+(when minimal-emacs-load-post-early-init
+  (minimal-emacs-load-user-init "post-early-init.el"))
 
 ;; Local variables:
 ;; byte-compile-warnings: (not obsolete free-vars)
