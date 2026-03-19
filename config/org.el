@@ -4,15 +4,19 @@
   :commands (org-mode org-version)
   :mode
   ("\\.org\\'" . org-mode)
+  :hook (org-mode . visual-line-mode)
   :init
   (setq org-directory (format "%s/org/" xdg-home))
   (let ((org-archive-directory (format "%s/archives/" org-directory)))
     (me/mkdir org-archive-directory)
     (setq org-archive-location (format "%s/%%s::" org-archive-directory)))
   :bind
-  (:map me/org-map
+  ((:map me/org-map
         ("c" . org-capture)
         ("a" . org-agenda))
+   (:map org-mode-map
+         ("M-<return>" . org-insert-heading-respect-content)
+         ("C-<return>" . org-insert-item)))
   :custom
   ;; General
   (org-hide-leading-stars t)

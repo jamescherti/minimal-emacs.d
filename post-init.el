@@ -3,6 +3,9 @@
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Allow :make or :shell when using :vc with use-package
+(setq package-vc-allow-build-commands t)
+
 ;; Ensure all libraries are byte-compiled and native-compiled
 (use-package compile-angel
   :ensure t

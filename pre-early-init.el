@@ -1,7 +1,7 @@
 ;;; pre-early-init.el --- Pre-Early-Init.el  -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; Set debug mode on/off
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;; Set XDG Base Directory variables
 ;; https://wiki.archlinux.org/title/XDG_Base_Directory

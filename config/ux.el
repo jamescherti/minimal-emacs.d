@@ -75,12 +75,12 @@
 (use-package ibuffer
   :ensure nil
   :bind
-  (:map ctl-x-map
-   ("B" . me/switch-to-previous-buffer)
-   :map me/buffer-map
-   ("r" . me/rename-file-and-buffer)
-   ("d" . me/delete-file-and-buffer)
-   ("o" . me/kill-other-buffers))
+  ((:map ctl-x-map
+         ("B" . me/switch-to-previous-buffer))
+   (:map me/buffer-map
+         ("r" . me/rename-file-and-buffer)
+         ("d" . me/delete-file-and-buffer)
+         ("o" . me/kill-other-buffers)))
   :init (me/protected-buffers)
   :preface
   (defvar protected-buffers '("*scratch*" "*Messages*"))
