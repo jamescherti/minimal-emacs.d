@@ -52,6 +52,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 
 ## User Testimonials
 
+- [DapperStatement3364](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/ocv82id/): "Thank you!!! It helped me a lot. I was having some problems with my config (latency/input lag), was considering to going back to Neovim and your config solved my problems. Great documentation btw, everything is very clear and easy to follow."
 - [gnudoc on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmn1hoo/): "That's a great learning resource. Thank you for your work on it and for sharing it!"
 - [dewyke on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmq53an/): "Lots of good stuff in there, even for people who already have established ways of organising their configs."
 - [JamesBrickley (Shout out to this starter-kit: Minimal-Emacs )](https://www.reddit.com/r/emacs/comments/1epz7qn/shout_out_to_this_starterkit_minimalemacs/) appreciates that *minimal-emacs.d* provides an optimized *early-init.el* and *init.el* for fast startup times and sensible default settings. He highlights that the project includes all the essential configurations needed for a well-tuned Emacs setup, eliminating the need to sift through conflicting advice on topics like garbage collection optimization. While he has encountered similar settings before, he also discovered new optimizations he had not seen elsewhere.
