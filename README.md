@@ -1236,6 +1236,8 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   :ensure nil
   :commands (ispell ispell-minor-mode)
   :custom
+  (ispell-quietly t)
+
   ;; Set the ispell program name to aspell
   (ispell-program-name "aspell")
 
@@ -2253,6 +2255,11 @@ The `straight.el` package is a declarative package manager for Emacs that aims t
   (load bootstrap-file nil 'nomessage))
 
 (setq straight-use-package-by-default t)
+
+;; Limit Git clone depth to a single commit when using straight.el. This
+;; performs shallow clones, reducing download size the cost of full
+;; repository history.
+;; (setq straight-vc-git-default-clone-depth 1)
 ```
 
 ### Configuring Elpaca (package manager)
