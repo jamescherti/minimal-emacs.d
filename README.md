@@ -133,6 +133,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Changing the Default Font](#changing-the-default-font)
     - [Persisting and Restoring Text Scale](#persisting-and-restoring-text-scale)
     - [A Faster Terminal Emulator](#a-faster-terminal-emulator)
+    - [Emacs server](#emacs-server)
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
@@ -1874,6 +1875,40 @@ To configure the *vterm* package, add the following to your `~/.emacs.d/post-ini
 
 The `vterm` terminal emulator can be started with `M-x vterm`.
 
+### Emacs server
+
+The Emacs server allows external programs such as `emacsclient` to connect to a single running instance of Emacs. This makes it possible to open files in the existing session rather than starting a new Emacs process each time.
+
+To start the Emacs server after initialization, add the following form to your `~/.emacs.d/post-init.el`:
+
+```elisp
+;; The Emacs server allows external programs such as `emacsclient' to connect to
+;; a single running instance of Emacs. This makes it possible to open files in
+;; the existing session rather than starting a new Emacs process each time.
+;;
+;; Once the server is running, the `emacsclient' command can be used in the
+;; terminal to open files in the active Emacs session. For example, running the
+;; following command opens the file in the existing Emacs frame without blocking
+;; the terminal process.
+;;   emacsclient -n filename.txt
+;;
+(use-package server
+  :ensure nil
+  :if (not (daemonp))
+  :commands (server-running-p
+             server-start)
+  :hook (after-init . my-server-start)
+  :preface
+  (defun my-server-start ()
+    "Start the Emacs server if no server process is currently active."
+    (unless (server-running-p)
+      (server-start))))
+```
+
+This configuration safely checks that Emacs is not running as a daemon and ensures that no existing server process is active, preventing conflicts.
+
+Once the server is running, the `emacsclient` command can be used in the terminal to open files in the active Emacs session. For example, running `emacsclient -n filename.txt` opens the file in the existing Emacs frame without blocking the terminal process.
+
 ### Loading the custom.el file
 
 **NOTE:** The author advises against loading `custom.el`. Users are instead encouraged to define their configuration programmatically in files such as `post-init.el`. Maintaining configuration programmatically offers several advantages: it ensures reproducibility and facilitates version control. This makes it easier to understand, audit, and evolve the configuration over time.
@@ -2033,15 +2068,6 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 (setq tooltip-delay 0.4)        ; Delay before showing a tooltip after mouse hover (default: 0.7)
 (setq tooltip-short-delay 0.08) ; Delay before showing a short tooltip (Default: 0.1)
 (tooltip-mode 1)
-
-;; Configure the built-in Emacs server to start after initialization,
-;; allowing the use of the emacsclient command to open files in the
-;; current session.
-(use-package server
-  :ensure nil
-  :commands server-start
-  :hook
-  (after-init . server-start))
 ```
 
 It is also recommended to read the following articles:
@@ -2708,6 +2734,8 @@ To install and load packages during the early-init phase, add the following to `
 - [smahm006 minimal-emacs.d configuration](https://github.com/smahm006/minimal-emacs.d)
 
 - [zendo: Emacs literate configuration](https://github.com/zendo/nsworld/blob/main/dotfiles/org/all-emacs.org)
+
+- [ZforCandY minimal-emacs.d configuration](https://codeberg.org/ZforCandY/priv-conf/src/branch/main/minimal-emacs.d)
 
 ## Features
 
