@@ -998,7 +998,7 @@ To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
    ("C-c z r" . kirigami-open-folds)         ; Open all folds
    ("C-c z c" . kirigami-close-fold)         ; Close fold at point
    ("C-c z m" . kirigami-close-folds)        ; Close all folds
-   ("C-c z <tab>" . kirigami-toggle-fold)))  ; Toggle fold at point
+   ("C-c z a" . kirigami-toggle-fold)))      ; Toggle fold at point
 
 ;; Uncomment the following if you are an `evil-mode' user:
 ;; (with-eval-after-load 'evil
@@ -1023,7 +1023,7 @@ One of the modes that provide code folding is `outline-minor-mode` provides stru
 
 Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by curly braces, functions, or other language-specific delimiters. However, for more flexible folding that supports multiple nested levels, `outline-minor-mode` is generally the preferred choice, as it enables finer control over section visibility in deeply structured code.
 
-For example, to enable `outline-minor-mode` in Emacs Lisp:
+For example, to enable `outline-minor-mode`:
 
 ``` emacs-lisp
 ;; The built-in outline-minor-mode provides structured code folding in modes
@@ -1034,8 +1034,7 @@ For example, to enable `outline-minor-mode` in Emacs Lisp:
   :ensure nil
   :commands outline-minor-mode
   :hook
-  ((emacs-lisp-mode . outline-minor-mode)
-   ;; Use " ▼" instead of the default ellipsis "..." for folded text to make
+  (;; Use " ▼" instead of the default ellipsis "..." for folded text to make
    ;; folds more visually distinctive and readable.
    (outline-minor-mode
     .
@@ -1045,6 +1044,32 @@ For example, to enable `outline-minor-mode` in Emacs Lisp:
              (value (vconcat (mapcar (lambda (c) (+ face-offset c)) " ▼"))))
         (set-display-table-slot display-table 'selective-display value)
         (setq buffer-display-table display-table))))))
+
+;; Enable the mode
+(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+(add-hook 'conf-mode-hook #'outline-minor-mode)
+(add-hook 'markdown-mode-hook #'outline-minor-mode)
+```
+
+To enable `hs-minor-mode`, which is ideal for C-style languages and others that use braces `{}`:
+```elisp
+;; Systems and General Purpose
+(add-hook 'c-mode-hook #'hs-minor-mode)
+(add-hook 'c++-mode-hook #'hs-minor-mode)
+(add-hook 'java-mode-hook #'hs-minor-mode)
+(add-hook 'rust-mode-hook #'hs-minor-mode)
+(add-hook 'go-mode-hook #'hs-minor-mode)
+(add-hook 'ruby-mode-hook #'hs-minor-mode)
+
+;; Web and Frontend
+(add-hook 'js-mode-hook #'hs-minor-mode)
+(add-hook 'typescript-mode-hook #'hs-minor-mode)
+(add-hook 'css-mode-hook #'hs-minor-mode)
+
+;; Scripting, Data, and Infrastructure
+(add-hook 'sh-mode-hook #'hs-minor-mode) ; for bash/shell scripts
+(add-hook 'json-mode-hook #'hs-minor-mode)
+(add-hook 'lua-mode-hook #'hs-minor-mode)
 ```
 
 #### outline-indent-minor-mode: Folding based on indentation levels
@@ -1053,8 +1078,7 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ```elisp
 ;; The outline-indent Emacs package provides a minor mode that enables code
 ;; folding based on indentation levels.
-;;
-;; In addition to code folding, *outline-indent* allows:
+;; In addition to code folding, outline-indent allows:
 ;; - Moving indented blocks up and down
 ;; - Indenting/unindenting to adjust indentation levels
 ;; - Inserting a new line with the same indentation level as the current line
@@ -1062,26 +1086,28 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ;; - and other features.
 (use-package outline-indent
   :commands outline-indent-minor-mode
-
   :custom
-  (outline-indent-ellipsis " ▼")
+  (outline-indent-ellipsis " ▼"))
 
-  :init
-  ;; The minor mode can also be automatically activated for a certain modes.
-  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+;; Python
+(add-hook 'python-mode-hook #'outline-indent-minor-mode)
+(add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
 
-  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
+;; Yaml
+(add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+(add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+
+;; Haskell
+(add-hook 'haskell-mode-hook #'outline-indent-minor-mode)
 ```
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
 
 #### treesit-fold
 
-It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by leveraging the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
+It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by using the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
 ```elisp
-;; Intelligent code folding by leveraging the structural understanding of the
+;; Intelligent code folding by using the structural understanding of the
 ;; built-in tree-sitter parser. Unlike traditional folding methods that rely on
 ;; regular expressions or indentation, treesit-fold uses the actual syntax tree
 ;; of the code to accurately identify foldable regions such as functions,
@@ -1109,11 +1135,36 @@ It is also recommended to install [treesit-fold](https://github.com/emacs-tree-s
                       :foreground "#808080"
                       :box nil
                       :weight 'bold))
-```
 
-The `treesit-fold` mode can be enabled using `treesit-fold-mode` or a hook such as:
-```elisp
-(add-hook 'python-ts-mode-hook #'treesit-fold-mode)
+;; Systems and General Purpose
+(add-hook 'c-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'c++-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'java-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'rust-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'go-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'ruby-ts-mode-hook #'treesit-fold-mode)
+
+;; Web and Frontend
+(add-hook 'js-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'typescript-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'tsx-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'css-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'html-ts-mode-hook #'treesit-fold-mode)
+
+;; Scripting and Infrastructure
+(add-hook 'bash-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'cmake-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'dockerfile-ts-mode-hook #'treesit-fold-mode)
+
+;; Data and Configuration
+(add-hook 'json-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'toml-ts-mode-hook #'treesit-fold-mode)
+
+;; Third-party
+;; (add-hook 'kotlin-ts-mode-hook #'treesit-fold-mode)
+;; (add-hook 'swift-ts-mode-hook #'treesit-fold-mode)
+;; (add-hook 'elixir-ts-mode-hook #'treesit-fold-mode)
+;; (add-hook 'zig-ts-mode-hook #'treesit-fold-mode)
 ```
 
 ### Asynchronous code formatting without cursor disruption
