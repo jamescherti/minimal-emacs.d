@@ -1052,6 +1052,7 @@ For example, to enable `outline-minor-mode`:
 (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
 (add-hook 'conf-mode-hook #'outline-minor-mode)
 (add-hook 'markdown-mode-hook #'outline-minor-mode)
+(add-hook 'diff-mode-hook #'outline-minor-mode)
 ```
 
 To enable `hs-minor-mode`, which is ideal for C-style languages and others that use braces `{}`:
