@@ -1050,6 +1050,7 @@ For example, to enable `outline-minor-mode`:
 
 ;; Enable the mode
 (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+(add-hook 'lisp-mode-hook #'outline-minor-mode)
 (add-hook 'conf-mode-hook #'outline-minor-mode)
 (add-hook 'markdown-mode-hook #'outline-minor-mode)
 (add-hook 'diff-mode-hook #'outline-minor-mode)
@@ -1074,6 +1075,8 @@ To enable `hs-minor-mode`, which is ideal for C-style languages and others that 
 (add-hook 'sh-mode-hook #'hs-minor-mode) ; for bash/shell scripts
 (add-hook 'json-mode-hook #'hs-minor-mode)
 (add-hook 'lua-mode-hook #'hs-minor-mode)
+(add-hook 'nxml-mode-hook #'hs-minor-mode)
+(add-hook 'html-mode-hook #'hs-minor-mode)  ;; mhtml and html
 ```
 
 #### outline-indent-minor-mode: Folding based on indentation levels
