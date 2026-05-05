@@ -140,6 +140,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Loading the custom.el file](#loading-the-customel-file)
     - [Which other customizations can be interesting to add?](#which-other-customizations-can-be-interesting-to-add)
     - [File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)](#file-types-yaml-dockerfile-lua-jinja2-csv-vimrc)
+    - [Auto save buffers](#auto-save-buffers)
   - [Customizations: Before init (File: pre-init.el)](#customizations-before-init-file-pre-initel)
     - [Configuring straight.el](#configuring-straightel)
     - [Configuring Elpaca (package manager)](#configuring-elpaca-package-manager)
@@ -1050,6 +1051,7 @@ For example, to enable `outline-minor-mode`:
 
 ;; Enable the mode
 (add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+(add-hook 'lisp-mode-hook #'outline-minor-mode)
 (add-hook 'conf-mode-hook #'outline-minor-mode)
 (add-hook 'markdown-mode-hook #'outline-minor-mode)
 (add-hook 'diff-mode-hook #'outline-minor-mode)
@@ -1074,6 +1076,8 @@ To enable `hs-minor-mode`, which is ideal for C-style languages and others that 
 (add-hook 'sh-mode-hook #'hs-minor-mode) ; for bash/shell scripts
 (add-hook 'json-mode-hook #'hs-minor-mode)
 (add-hook 'lua-mode-hook #'hs-minor-mode)
+(add-hook 'nxml-mode-hook #'hs-minor-mode)
+(add-hook 'html-mode-hook #'hs-minor-mode)  ;; mhtml and html
 ```
 
 #### outline-indent-minor-mode: Folding based on indentation levels
@@ -2280,6 +2284,45 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;; (use-package haskell-mode
 ;;   :commands haskell-mode
 ;;   :mode ("\\.hs\\'" . haskell-mode))
+```
+
+### Auto save buffers
+
+The [buffer-guardian](https://github.com/jamescherti/buffer-guardian.el) Emacs package provides `buffer-guardian-mode`, a global mode that automatically saves buffers without requiring manual intervention.
+
+By default, `buffer-guardian-mode` saves file-visiting buffers when:
+- Switching to another buffer.
+- Switching to another window or frame.
+- The window configuration changes (e.g., window splits).
+- The minibuffer is opened.
+- Emacs loses focus.
+
+In addition to regular file-visiting buffers, `buffer-guardian-mode` also handles specialized editing buffers used for inline code blocks, such as `org-src` (for Org mode) and `edit-indirect` (commonly used for Markdown source code blocks). These temporary buffers are linked to an underlying parent buffer. Automatically saving them ensures that modifications made within these isolated code environments are correctly propagated back to the original Org or Markdown file.
+
+To configure the *buffer-guardian* package, add the following to your `~/.emacs.d/post-init.el`:
+```elisp
+(use-package buffer-guardian
+  :custom
+  ;; When non-nil, include remote files in the auto-save process
+  (buffer-guardian-inhibit-saving-remote-files t)
+
+  ;; When non-nil, buffers visiting nonexistent files are not saved
+  (buffer-guardian-inhibit-saving-nonexistent-files nil)
+
+  ;; Save the buffer even if the window change results in the same buffer
+  (buffer-guardian-save-on-same-buffer-window-change t)
+
+  ;; Non-nil to enable verbose mode to log when a buffer is automatically saved
+  (buffer-guardian-verbose nil)
+
+  ;; Save all buffers after N seconds of user idle time. (Disabled by default)
+  ;; (buffer-guardian-save-all-buffers-idle 30)
+
+  ;; Save all buffers every N seconds. (Disabled by default)
+  ;; (setq buffer-guardian-save-all-buffers-interval (* 60 30))
+
+  :hook
+  (after-init . buffer-guardian-mode))
 ```
 
 ## Customizations: Before init (File: pre-init.el)
