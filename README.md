@@ -805,7 +805,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 (use-package evil-collection
   :after evil
   :init
-  ;; It has to be defined before evil-colllection
+  ;; It has to be defined before evil-collection
   (setq evil-collection-setup-minibuffer t)
   :config
   (evil-collection-init))
