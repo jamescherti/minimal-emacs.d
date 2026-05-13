@@ -442,6 +442,14 @@
 ;; subdirectory, causing UI freezes on remote/network drives).
 (setq dired-auto-revert-buffer 'dired-directory-changed-p)
 
+;; Automatically revert destination Dired buffers after file operations
+;; (e.g., copying or renaming), but skip remote directories to prevent
+;; TRAMP network latency and UI freezes.
+(defun minimal-emacs--local-dir-p (dir)
+  "Return non-nil if DIR is a local directory."
+  (not (file-remote-p dir)))
+(setq dired-do-revert-buffer #'minimal-emacs--local-dir-p)
+
 ;; dired-omit-mode
 (setq dired-omit-verbose nil
       dired-omit-files (concat "\\`[.]\\'"))

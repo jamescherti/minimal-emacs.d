@@ -63,7 +63,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [Sebagabones on GitHub](https://github.com/jamescherti/minimal-emacs.d/issues/77): "...let me say that I am loving minimal-emacs.d, it has been brilliant so far! :)"
 - [Mlepnos1984 on Reddit](https://www.reddit.com/r/emacs/comments/1lz181i/comment/n2yjj17/): "I give you an A+ on documentation, the readme is great!"
 - [rrajath on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb0ja8k/) has been using the minimal-emacs.d config for the past several months and loves it. His previous setup used to take around 4 seconds to load, but with minimal-emacs.d, it now loads in just 1 second.
-- [LionyxML on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/) considers that *minimal-emacs.d* contains one of the best README files he has ever read. The author of *minimal-emacs.d* found his comment encouraging. Reading this README.md is highly recommended for anyone looking to start customizing their *minimal-emacs.d* configuration.
+- [LionyxML on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/): "One of the best READMEs I’ve ever seen. Very good."
 - [cyneox on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mdnzgqx/): "Still using it and loving it! Thanks for the regular updates."
 - [panchoh on GitHub](https://github.com/jamescherti/minimal-emacs.d/pull/62#issuecomment-2869865979): "...thank you, @jamescherti! Keep up the fantastic work you are doing!"
 - [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
@@ -164,6 +164,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [Why did the author develop minimal-emacs.d?](#why-did-the-author-develop-minimal-emacsd)
     - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
     - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
+    - [How to compile Emacs for Performance on Linux and Unix systems?](#how-to-compile-emacs-for-performance-on-linux-and-unix-systems)
     - [Minimal-emacs.d configurations from users](#minimal-emacsd-configurations-from-users)
   - [Features](#features)
     - [Fast Initialization and Performance](#fast-initialization-and-performance)
@@ -2823,6 +2824,14 @@ To install and load packages during the early-init phase, add the following to `
 
 ;; TODO: Add your use-package packages here
 ```
+
+### How to compile Emacs for Performance on Linux and Unix systems?
+
+Most Linux distributions ship generic binaries compiled to run safely on a vast array of older hardware configurations. While this ensures broad compatibility, it sacrifices the speed that comes from using the specific, modern instruction sets of your processor. Compiling Emacs directly from source allows instructing the compiler to generate machine code targeted at your CPU architecture, resulting in a faster and more efficient runtime environment.
+
+Beyond raw hardware optimization, building from source enables dropping decades of legacy compatibility layers and embracing modern desktop technologies. For example, Wayland users can configure the build to bypass old X11 display protocols in favor of a Wayland environment, ensuring smoother rendering and better system integration...
+
+If you are interested in compiling Emacs, read: [A Technical Guide to Compiling Emacs for Performance on Linux and Unix systems](https://www.jamescherti.com/compiling-emacs/)
 
 ### Minimal-emacs.d configurations from users
 
