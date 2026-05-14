@@ -279,7 +279,6 @@
 ;; `recentf' is an that maintains a list of recently accessed files.
 (setq recentf-max-saved-items 300) ; default is 20
 (setq recentf-max-menu-items 15)
-(setq recentf-auto-cleanup 'mode)
 
 ;;; saveplace
 

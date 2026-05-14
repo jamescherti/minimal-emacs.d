@@ -2130,12 +2130,22 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 (setq tooltip-delay 0.4)        ; Delay before showing a tooltip after mouse hover (default: 0.7)
 (setq tooltip-short-delay 0.08) ; Delay before showing a short tooltip (Default: 0.1)
 (tooltip-mode 1)
+
+;; Ediff: Ignore all whitespace differences (-w) to reduce visual noise from
+;; indentation changes or auto-formatters, keeping the focus on logic.
+(setq ediff-diff-options "-w")
+
+;; Ediff: Skip over regions where the only differences are whitespace (or other
+;; ignored options) when navigating with 'n' and 'p'.
+(setq ediff-ignore-similar-regions t)
+
+;; Keep unmodified buffers A/B/C at session end
+(setq ediff-keep-variants t)
 ```
 
 It is also recommended to read the following articles:
 - [Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/)
 - [Maintaining proper indentation in indentation-sensitive programming languages](https://www.jamescherti.com/elisp-code-and-emacs-packages-for-maintaining-proper-indentation-in-indentation-sensitive-languages-such-as-python-or-yaml/)
-
 
 ### File types (Yaml, Dockerfile, Lua, Jinja2, CSV, Vimrc...)
 
