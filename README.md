@@ -1067,6 +1067,7 @@ To enable `hs-minor-mode`, which is ideal for C-style languages and others that 
 (add-hook 'rust-mode-hook #'hs-minor-mode)
 (add-hook 'go-mode-hook #'hs-minor-mode)
 (add-hook 'ruby-mode-hook #'hs-minor-mode)
+(add-hook 'php-mode-hook #'hs-minor-mode)
 
 ;; Web and Frontend
 (add-hook 'js-mode-hook #'hs-minor-mode)
@@ -1152,6 +1153,7 @@ It is also recommended to install [treesit-fold](https://github.com/emacs-tree-s
 (add-hook 'rust-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'go-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'ruby-ts-mode-hook #'treesit-fold-mode)
+(add-hook 'php-ts-mode-hook #'treesit-fold-mode)
 
 ;; Web and Frontend
 (add-hook 'js-ts-mode-hook #'treesit-fold-mode)
