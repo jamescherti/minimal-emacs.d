@@ -198,6 +198,7 @@ pre-early-init.el, and post-early-init.el.")
              (fboundp 'native-comp-available-p)
              (native-comp-available-p))
   ;; Deactivate the `native-compile' feature if it is not available
+  (setq native-comp-jit-compilation nil)
   (setq features (delq 'native-compile features)))
 
 (setq native-comp-warning-on-missing-source minimal-emacs-debug
@@ -220,7 +221,15 @@ pre-early-init.el, and post-early-init.el.")
 (setq ffap-machine-p-known 'reject)
 
 (setq warning-minimum-level (if minimal-emacs-debug :warning :error))
-(setq warning-suppress-types '((lexical-binding)))
+
+;; Establish a strict baseline for suppressed warnings.
+;; - defvaralias: Emacs emits warnings when an alias is defined for a variable
+;;   that already exists. In modern, lazy-loaded configurations, this occurs
+;;   frequently and is almost always benign.
+;; - lexical-binding: Emacs warns about third-party packages that lack
+;;   lexical-binding. Because end users cannot easily fix upstream source code,
+;;   these warnings create noise without providing actionable value.
+(setq warning-suppress-types '((defvaralias) (lexical-binding)))
 
 (when minimal-emacs-debug
   (setq message-log-max 16384))
@@ -258,6 +267,9 @@ pre-early-init.el, and post-early-init.el.")
   (setq initial-buffer-choice nil
         inhibit-startup-buffer-menu t
         inhibit-x-resources t)
+
+  ;; Disable startup screens and messages
+  (setq inhibit-splash-screen t)
 
   ;; Disable bidirectional text scanning for a modest performance boost.
   (setq-default bidi-display-reordering 'left-to-right
@@ -406,9 +418,6 @@ this stage of initialization."
 
 (setq frame-title-format minimal-emacs-frame-title-format
       icon-title-format minimal-emacs-frame-title-format)
-
-;; Disable startup screens and messages
-(setq inhibit-splash-screen t)
 
 (defun minimal-emacs--setup-toolbar (&rest _)
   "Setup the toolbar."
