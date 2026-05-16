@@ -235,11 +235,11 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Performance: Miscellaneous options
 
-;; Font compacting can be very resource-intensive, especially when rendering
-;; icon fonts on Windows. This will increase memory usage.
-(setq inhibit-compacting-font-caches t)
+(unless noninteractive
+  ;; Font compacting can be very resource-intensive, especially when rendering
+  ;; icon fonts on Windows. This will increase memory usage.
+  (setq inhibit-compacting-font-caches t)
 
-(when (not noninteractive)
   ;; Resizing the Emacs frame can be costly when changing the font. Disable this
   ;; to improve startup times with fonts larger than the system default.
   (setq frame-resize-pixelwise t)
@@ -306,7 +306,8 @@ this stage of initialization."
                         minimal-emacs--old-file-name-handler-alist))))
 
 (when (and minimal-emacs-optimize-file-name-handler-alist
-           (not minimal-emacs-debug))
+           (not minimal-emacs-debug)
+           (not noninteractive))
   ;; Determine the state of bundled libraries using calc-loaddefs.el. If
   ;; compressed, retain the gzip handler in `file-name-handler-alist`. If
   ;; compiled or neither, omit the gzip handler during startup for improved
@@ -409,16 +410,6 @@ this stage of initialization."
 ;; Disable startup screens and messages
 (setq inhibit-splash-screen t)
 
-;; I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
-;; `scroll-bar-mode' because manipulating frame parameters can trigger or queue
-;; a superfluous and potentially expensive frame redraw at startup, depending
-;; on the window system. The variables must also be set to `nil' so users don't
-;; have to call the functions twice to re-enable them.
-(unless (memq 'menu-bar minimal-emacs-ui-features)
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (unless (memq window-system '(mac ns))
-    (setq menu-bar-mode nil)))
-
 (defun minimal-emacs--setup-toolbar (&rest _)
   "Setup the toolbar."
   (when (fboundp 'tool-bar-setup)
@@ -427,32 +418,42 @@ this stage of initialization."
       (funcall 'tool-bar-setup))))
 
 (unless noninteractive
+  ;; I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
+  ;; `scroll-bar-mode' because manipulating frame parameters can trigger or queue
+  ;; a superfluous and potentially expensive frame redraw at startup, depending
+  ;; on the window system. The variables must also be set to `nil' so users don't
+  ;; have to call the functions twice to re-enable them.
+  (unless (memq 'menu-bar minimal-emacs-ui-features)
+    (push '(menu-bar-lines . 0) default-frame-alist)
+    (unless (memq window-system '(mac ns))
+      (setq menu-bar-mode nil)))
+
   (when (fboundp 'tool-bar-setup)
     ;; Temporarily override the tool-bar-setup function to prevent it from
     ;; running during the initial stages of startup
     (advice-add 'tool-bar-setup :override #'ignore)
 
     (advice-add 'startup--load-user-init-file :after
-                #'minimal-emacs--setup-toolbar)))
+                #'minimal-emacs--setup-toolbar))
 
-(unless (memq 'tool-bar minimal-emacs-ui-features)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (setq tool-bar-mode nil))
+  (unless (memq 'tool-bar minimal-emacs-ui-features)
+    (push '(tool-bar-lines . 0) default-frame-alist)
+    (setq tool-bar-mode nil))
 
-(setq default-frame-scroll-bars 'right)
-(push '(vertical-scroll-bars) default-frame-alist)
-(push '(horizontal-scroll-bars) default-frame-alist)
-(setq scroll-bar-mode nil)
+  (setq default-frame-scroll-bars 'right)
+  (push '(vertical-scroll-bars) default-frame-alist)
+  (push '(horizontal-scroll-bars) default-frame-alist)
+  (setq scroll-bar-mode nil)
 
-(unless (memq 'tooltips minimal-emacs-ui-features)
-  (when (bound-and-true-p tooltip-mode)
-    (tooltip-mode -1)))
+  (unless (memq 'tooltips minimal-emacs-ui-features)
+    (when (bound-and-true-p tooltip-mode)
+      (tooltip-mode -1)))
 
-;; Disable GUIs because they are inconsistent across systems, desktop
-;; environments, and themes, and they don't match the look of Emacs.
-(unless (memq 'dialogs minimal-emacs-ui-features)
-  (setq use-file-dialog nil)
-  (setq use-dialog-box nil))
+  ;; Disable GUIs because they are inconsistent across systems, desktop
+  ;; environments, and themes, and they don't match the look of Emacs.
+  (unless (memq 'dialogs minimal-emacs-ui-features)
+    (setq use-file-dialog nil)
+    (setq use-dialog-box nil)))
 
 ;;; Security
 (setq gnutls-verify-error t)  ; Prompts user if there are certificate issues
