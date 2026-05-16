@@ -1068,6 +1068,7 @@ To enable `hs-minor-mode`, which is ideal for C-style languages and others that 
 (add-hook 'go-mode-hook #'hs-minor-mode)
 (add-hook 'ruby-mode-hook #'hs-minor-mode)
 (add-hook 'php-mode-hook #'hs-minor-mode)
+(add-hook 'perl-mode-hook #'hs-minor-mode)
 
 ;; Web and Frontend
 (add-hook 'js-mode-hook #'hs-minor-mode)
