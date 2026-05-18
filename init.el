@@ -102,6 +102,9 @@
 
 (setq display-time-default-load-average nil) ; Omit load average
 
+;; Force the mouse to paste text at the active cursor position.
+(setq mouse-yank-at-point t)
+
 ;;; Show-paren
 
 (setq show-paren-delay 0.1
