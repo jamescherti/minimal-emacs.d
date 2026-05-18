@@ -160,7 +160,10 @@
 
 ;;; Tramp
 
-(setq tramp-verbose 1)
+(setq tramp-verbose 1
+      remote-file-name-inhibit-cache 50
+      remote-file-name-inhibit-locks t
+      remote-file-name-inhibit-auto-save-visited t)
 
 ;;; Files
 
