@@ -162,6 +162,7 @@
 
 (setq tramp-verbose 1
       remote-file-name-inhibit-cache 50
+      ;; Disable lockfiles and auto-saves for remote files to eliminate lag
       remote-file-name-inhibit-locks t
       remote-file-name-inhibit-auto-save-visited t)
 
@@ -477,7 +478,15 @@
 
 ;; Configure Ediff to use a single frame and split windows horizontally
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
-      ediff-split-window-function 'split-window-horizontally)
+      ediff-split-window-function 'split-window-horizontally
+
+      ;; Ignore all whitespace differences (-w) to reduce visual noise from
+      ;; indentation changes or auto-formatters, keeping the focus on logic.
+      ediff-diff-options "-w"
+
+      ;; Skip over regions where the only differences are whitespace (or other
+      ;; ignored options) when navigating with 'n' and 'p'.
+      ediff-ignore-similar-regions t)
 
 ;;; Help
 

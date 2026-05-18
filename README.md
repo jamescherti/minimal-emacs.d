@@ -2134,14 +2134,6 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 (setq tooltip-short-delay 0.08) ; Delay before showing a short tooltip (Default: 0.1)
 (tooltip-mode 1)
 
-;; Ediff: Ignore all whitespace differences (-w) to reduce visual noise from
-;; indentation changes or auto-formatters, keeping the focus on logic.
-(setq ediff-diff-options "-w")
-
-;; Ediff: Skip over regions where the only differences are whitespace (or other
-;; ignored options) when navigating with 'n' and 'p'.
-(setq ediff-ignore-similar-regions t)
-
 ;; Keep unmodified buffers A/B/C at session end
 (setq ediff-keep-variants t)
 ```
