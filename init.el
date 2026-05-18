@@ -122,8 +122,6 @@
 
 (setq uniquify-buffer-name-style 'forward)
 
-(setq remote-file-name-inhibit-cache 50)
-
 ;; Disable fontification during user input to reduce lag in large buffers.
 ;; Also helps marginally with scrolling performance.
 (setq redisplay-skip-fontification-on-input t)
