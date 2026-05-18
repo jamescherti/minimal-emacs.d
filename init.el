@@ -187,6 +187,10 @@
 (setq split-width-threshold 170
       split-height-threshold nil)
 
+;; Increase threshold for large-file warning to reduce prompts when opening
+;; moderately large files while still preserving safeguards for large files.
+(setq large-file-warning-threshold (* 100 1024 1024)) ; 100 Mb
+
 ;;; comint (general command interpreter in a window)
 
 (setq ansi-color-for-comint-mode t
