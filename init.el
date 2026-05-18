@@ -85,7 +85,9 @@
 
 ;; By default, Emacs "updates" its ui more often than it needs to
 (setq which-func-update-delay 1.0)
-(setq idle-update-delay which-func-update-delay)  ;; Obsolete in >= 30.1
+(with-no-warnings
+  ;; Obsolete in >= 30.1
+  (setq idle-update-delay which-func-update-delay))
 
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
@@ -585,7 +587,7 @@
 (setq minimal-emacs--success t)
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; init.el ends here

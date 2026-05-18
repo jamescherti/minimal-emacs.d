@@ -30,7 +30,9 @@
 
 ;; Temporarily raise the garbage collection threshold to its maximum value.
 ;; It will be restored later to controlled values.
-(setq gc-cons-threshold most-positive-fixnum)
+(if noninteractive
+    (setq gc-cons-threshold 268435456) ; 256 Mb
+  (setq gc-cons-threshold most-positive-fixnum))
 (setq gc-cons-percentage 1.0)
 
 ;;; Variables
@@ -465,8 +467,8 @@ this stage of initialization."
     (setq use-dialog-box nil)))
 
 ;;; Security
-(setq gnutls-verify-error t)  ; Prompts user if there are certificate issues
-(setq tls-checktrust t)  ; Ensure SSL/TLS connections undergo trust verification
+(setq gnutls-verify-error t)  ; Prompts if there are cert issues
+(setq tls-checktrust gnutls-verify-error)  ; Ensure SSL/TLS connections cheks
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
 ;; This results in a more compact output that emphasizes performance
@@ -496,7 +498,7 @@ this stage of initialization."
   (minimal-emacs-load-user-init "post-early-init.el"))
 
 ;; Local variables:
-;; byte-compile-warnings: (not obsolete free-vars)
+;; byte-compile-warnings: (not free-vars)
 ;; End:
 
 ;;; early-init.el ends here
