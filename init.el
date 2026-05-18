@@ -415,6 +415,13 @@
 ;; ensuring spaces in the middle of a line are never converted to tabs.
 (setq tabify-regexp (rx line-start (zero-or-more ?\t) ?\s (one-or-more blank)))
 
+;; Prevent Emacs filling commands (such as `fill-paragraph', `fill-region',
+;; `auto-fill-mode', and Evil's `gq' operator) from inserting line breaks inside
+;; text that is currently hidden via text properties. This prevents accidental
+;; corruption of folded outlines (e.g., in Org or Outline mode) and concealed
+;; markup (e.g., hidden Markdown URLs).
+(setq fill-nobreak-invisible t)
+
 ;;; Filetype
 
 ;; Do not notify the user each time Python tries to guess the indentation offset
