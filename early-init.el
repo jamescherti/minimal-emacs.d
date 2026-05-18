@@ -232,6 +232,7 @@ pre-early-init.el, and post-early-init.el.")
 ;;   lexical-binding. Because end users cannot easily fix upstream source code,
 ;;   these warnings create noise without providing actionable value.
 (setq warning-suppress-types '((defvaralias) (lexical-binding)))
+(setq warning-inhibit-types '((files missing-lexbind-cookie)))
 
 (when minimal-emacs-debug
   (setq message-log-max 16384))
