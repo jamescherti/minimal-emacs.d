@@ -196,9 +196,10 @@ pre-early-init.el, and post-early-init.el.")
 
 ;;; Native compilation and Byte compilation
 
-(unless (and (featurep 'native-compile)
-             (fboundp 'native-comp-available-p)
-             (native-comp-available-p))
+(if (and (featurep 'native-compile)
+         (fboundp 'native-comp-available-p)
+         (native-comp-available-p))
+    (setq package-native-compile t)
   ;; Deactivate the `native-compile' feature if it is not available
   (setq native-comp-jit-compilation nil)
   (setq features (delq 'native-compile features)))

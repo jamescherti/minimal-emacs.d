@@ -165,6 +165,7 @@ Please share your configuration. It could serve as inspiration for other users.
     - [How to keep minimal-emacs.d pre-\*.el and post-\*.el files in a separate directory?](#how-to-keep-minimal-emacsd-pre-el-and-post-el-files-in-a-separate-directory)
     - [How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?](#how-to-make-minimal-emacsd-install-packages-in-the-early-init-phase-instead-of-the-init-phase)
     - [How to compile Emacs for Performance on Linux and Unix systems?](#how-to-compile-emacs-for-performance-on-linux-and-unix-systems)
+    - [How to prevent Emacs from writing custom setting amd maintain a version controller configuration?](#how-to-prevent-emacs-from-writing-custom-setting-amd-maintain-a-version-controller-configuration)
     - [Minimal-emacs.d configurations from users](#minimal-emacsd-configurations-from-users)
   - [Features](#features)
     - [Fast Initialization and Performance](#fast-initialization-and-performance)
@@ -2837,6 +2838,16 @@ Most Linux distributions ship generic binaries compiled to run safely on a vast 
 Beyond raw hardware optimization, building from source enables dropping decades of legacy compatibility layers and embracing modern desktop technologies. For example, Wayland users can configure the build to bypass old X11 display protocols in favor of a Wayland environment, ensuring smoother rendering and better system integration...
 
 If you are interested in compiling Emacs, read: [A Technical Guide to Compiling Emacs for Performance on Linux and Unix systems](https://www.jamescherti.com/compiling-emacs/)
+
+### How to prevent Emacs from writing custom setting amd maintain a version controller configuration?
+
+If you want to maintain a strictly version-controlled, declarative configuration, you should prevent the Emacs customization interface from automatically appending custom-set-variables blocks to your files.
+
+```elisp
+;; Prevent Emacs from writing custom settings to any file
+(with-eval-after-load 'cus-edit
+  (advice-add 'custom-save-all :override #'ignore))
+```
 
 ### Minimal-emacs.d configurations from users
 
