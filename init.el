@@ -202,6 +202,9 @@
 
 (setq compilation-ask-about-save nil
       compilation-always-kill t
+      ;; Parse up to 2048 characters per line in compilation buffers. This
+      ;; safely catches deep errors and long paths without risking hangs.
+      compilation-max-output-line-length 2048
       compilation-scroll-output 'first-error)
 
 ;; Skip confirmation prompts when creating a new file or buffer
