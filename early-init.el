@@ -238,17 +238,29 @@ pre-early-init.el, and post-early-init.el.")
 (when minimal-emacs-debug
   (setq message-log-max 16384))
 
-;; In PGTK, this timeout introduces latency. Reducing it from the default 0.1
-;; improves responsiveness of childframes and related packages.
-(when (boundp 'pgtk-wait-for-event-timeout)
-  (setq pgtk-wait-for-event-timeout 0.001))
-
 ;; Disable warnings from the legacy advice API. They aren't useful.
 (setq ad-redefinition-action 'accept)
 
 ;;; Performance: Miscellaneous options
 
+;; A second, case-insensitive pass over `auto-mode-alist' is time wasted.
+;; No second pass of case-insensitive search over auto-mode-alist.
+(setq auto-mode-case-fold nil)
+
+(unless minimal-emacs-debug
+  ;; Unset command line options irrelevant to the current OS. These options
+  ;; are still processed by `command-line-1` but have no effect.
+  (unless (eq system-type 'darwin)
+    (setq command-line-ns-option-alist nil))
+  (unless (memq initial-window-system '(x pgtk))
+    (setq command-line-x-option-alist nil)))
+
 (unless noninteractive
+  ;; In PGTK, this timeout introduces latency. Reducing it from the default 0.1
+  ;; improves responsiveness of childframes and related packages.
+  (when (boundp 'pgtk-wait-for-event-timeout)
+    (setq pgtk-wait-for-event-timeout 0.001))
+
   ;; Font compacting can be very resource-intensive, especially when rendering
   ;; icon fonts on Windows. This will increase memory usage.
   (setq inhibit-compacting-font-caches t)
@@ -259,10 +271,6 @@ pre-early-init.el, and post-early-init.el.")
 
   ;; Without this, Emacs will try to resize itself to a specific column size
   (setq frame-inhibit-implied-resize t)
-
-  ;; A second, case-insensitive pass over `auto-mode-alist' is time wasted.
-  ;; No second pass of case-insensitive search over auto-mode-alist.
-  (setq auto-mode-case-fold nil)
 
   ;; Reduce *Message* noise at startup. An empty scratch buffer (or the
   ;; dashboard) is more than enough, and faster to display.
@@ -287,15 +295,7 @@ pre-early-init.el, and post-early-init.el.")
 
   ;; Suppress the vanilla startup screen completely. We've disabled it with
   ;; `inhibit-startup-screen', but it would still initialize anyway.
-  (advice-add 'display-startup-screen :override #'ignore)
-
-  (unless minimal-emacs-debug
-    ;; Unset command line options irrelevant to the current OS. These options
-    ;; are still processed by `command-line-1` but have no effect.
-    (unless (eq system-type 'darwin)
-      (setq command-line-ns-option-alist nil))
-    (unless (memq initial-window-system '(x pgtk))
-      (setq command-line-x-option-alist nil))))
+  (advice-add 'display-startup-screen :override #'ignore))
 
 ;;; Performance: File-name-handler-alist
 
@@ -420,9 +420,6 @@ this stage of initialization."
 
 ;;; UI elements
 
-(setq frame-title-format minimal-emacs-frame-title-format
-      icon-title-format minimal-emacs-frame-title-format)
-
 (defun minimal-emacs--setup-toolbar (&rest _)
   "Setup the toolbar."
   (when (fboundp 'tool-bar-setup)
@@ -431,6 +428,9 @@ this stage of initialization."
       (funcall 'tool-bar-setup))))
 
 (unless noninteractive
+  (setq frame-title-format minimal-emacs-frame-title-format
+        icon-title-format minimal-emacs-frame-title-format)
+
   ;; I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
   ;; `scroll-bar-mode' because manipulating frame parameters can trigger or queue
   ;; a superfluous and potentially expensive frame redraw at startup, depending
