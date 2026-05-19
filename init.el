@@ -496,6 +496,11 @@
       ;; ignored options) when navigating with 'n' and 'p'.
       ediff-ignore-similar-regions t)
 
+;;; Diff
+
+;; Move +/- indicators to the fringe for cleaner diffs
+(setq diff-font-lock-prettify t)
+
 ;;; Help
 
 ;; Enhance `apropos' and related functions to perform more extensive searches

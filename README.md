@@ -2004,8 +2004,9 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
              electric-pair-delete-pair)
   :hook (after-init . electric-pair-mode))
 
-;; Allow Emacs to upgrade built-in packages, such as Org mode
-(setq package-install-upgrade-built-in t)
+;; Set the fringes to match the pixel height of a character. This ensures the
+;; fringe is wide enough, scaling dynamically with the current font size.
+(fringe-mode (frame-char-height))
 
 ;; When Delete Selection mode is enabled, typed text replaces the selection
 ;; if the selection is active.
