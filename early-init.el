@@ -470,7 +470,7 @@ this stage of initialization."
 
 ;;; Security
 (setq gnutls-verify-error t)  ; Prompts if there are cert issues
-(setq tls-checktrust gnutls-verify-error)  ; Ensure SSL/TLS connections cheks
+(setq tls-checktrust gnutls-verify-error)  ; Ensure SSL/TLS connections checks
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
 ;; This results in a more compact output that emphasizes performance
