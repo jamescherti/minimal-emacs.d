@@ -2006,7 +2006,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 ;; Set the fringes to match the pixel height of a character. This ensures the
 ;; fringe is wide enough, scaling dynamically with the current font size.
-(fringe-mode (frame-char-height))
+(fringe-mode (frame-char-width))
 
 ;; When Delete Selection mode is enabled, typed text replaces the selection
 ;; if the selection is active.
