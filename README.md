@@ -75,7 +75,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [Karrot_Kream](https://news.ycombinator.com/item?id=45784591): "If you don't want to use a distribution like Doom (which I don't fwiw and I've been using emacs for 20-something years), then **I'm a big fan of minimal-emacs a compact init.el and early-init.el that configures vanilla emacs into a good, default state**. From there I would pick and choose which packages..."
 - [uutangohotel](https://news.ycombinator.com/item?id=45783901): "https://github.com/jamescherti/minimal-emacs.d is a great starting point for owning your config."
 - [kleinishere](https://news.ycombinator.com/item?id=45784429): "Came here to find this. MANY upvotes. I used Doom for a couple months. Then started considering a vanilla eMacs. I started taking notes on packages I found highly recommended and interesting. Then I found this [minimal-emacs.d]. And the author has done all that work and then made it into a "let me walk through a config" including a lot of the most recommended packages and sensible configs. Gives you the lesson of building a config, knowing what's in your config, and then being fluent in changing it. He also has more notes on his blog about the packages + more : https://www.jamescherti.com/essential-emacs-packages/ And I now feel comfortable making changes myself."
-- [microamp](https://github.com/microamp): "...thanks for creating and maintaining the project. It's been my favourite starter kit for Emacs by far."
+- [microamp](https://github.com/jamescherti/minimal-emacs.d/issues/91): "...thanks for creating and maintaining the project. It's been my favourite starter kit for Emacs by far."
 
 Please share your configuration. It could serve as inspiration for other users.
 
