@@ -973,6 +973,8 @@ The author also recommends reading the following article: [Emacs: Automating Tab
 
 ### Code folding
 
+NOTE: The following article provides a comprehensive guide on installing and enabling the supported folding modes: **[The Definitive Guide to Code Folding in Emacs](https://www.jamescherti.com/emacs-the-definitive-guide-to-code-folding/)**.
+
 #### Kirigami: A unified interface for opening and closing folds
 
 The [kirigami](https://github.com/jamescherti/kirigami.el) package provides a unified method to fold and unfold text in Emacs across a diverse set of Emacs modes.
@@ -1062,27 +1064,11 @@ For example, to enable `outline-minor-mode`:
 
 To enable `hs-minor-mode`, which is ideal for C-style languages and others that use braces `{}`:
 ```elisp
-;; Systems and General Purpose
 (add-hook 'c-mode-hook #'hs-minor-mode)
 (add-hook 'c++-mode-hook #'hs-minor-mode)
 (add-hook 'java-mode-hook #'hs-minor-mode)
-(add-hook 'rust-mode-hook #'hs-minor-mode)
-(add-hook 'go-mode-hook #'hs-minor-mode)
-(add-hook 'ruby-mode-hook #'hs-minor-mode)
-(add-hook 'php-mode-hook #'hs-minor-mode)
-(add-hook 'perl-mode-hook #'hs-minor-mode)
-
-;; Web and Frontend
-(add-hook 'js-mode-hook #'hs-minor-mode)
-(add-hook 'typescript-mode-hook #'hs-minor-mode)
-(add-hook 'css-mode-hook #'hs-minor-mode)
-
-;; Scripting, Data, and Infrastructure
-(add-hook 'sh-mode-hook #'hs-minor-mode) ; for bash/shell scripts
-(add-hook 'json-mode-hook #'hs-minor-mode)
-(add-hook 'lua-mode-hook #'hs-minor-mode)
-(add-hook 'nxml-mode-hook #'hs-minor-mode)
-(add-hook 'html-mode-hook #'hs-minor-mode)  ;; mhtml and html
+(add-hook 'sh-mode-hook #'hs-minor-mode)
+(add-hook 'html-mode-hook #'hs-minor-mode)
 ```
 
 #### outline-indent-minor-mode: Folding based on indentation levels
@@ -1149,36 +1135,13 @@ It is also recommended to install [treesit-fold](https://github.com/emacs-tree-s
                       :box nil
                       :weight 'bold))
 
-;; Systems and General Purpose
+;; A few examples
 (add-hook 'c-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'c++-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'java-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'rust-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'go-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'ruby-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'php-ts-mode-hook #'treesit-fold-mode)
-
-;; Web and Frontend
-(add-hook 'js-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'typescript-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'tsx-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'css-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'html-ts-mode-hook #'treesit-fold-mode)
-
-;; Scripting and Infrastructure
 (add-hook 'bash-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'cmake-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'dockerfile-ts-mode-hook #'treesit-fold-mode)
-
-;; Data and Configuration
-(add-hook 'json-ts-mode-hook #'treesit-fold-mode)
-(add-hook 'toml-ts-mode-hook #'treesit-fold-mode)
-
-;; Third-party
-;; (add-hook 'kotlin-ts-mode-hook #'treesit-fold-mode)
-;; (add-hook 'swift-ts-mode-hook #'treesit-fold-mode)
-;; (add-hook 'elixir-ts-mode-hook #'treesit-fold-mode)
-;; (add-hook 'zig-ts-mode-hook #'treesit-fold-mode)
 ```
 
 ### Asynchronous code formatting without cursor disruption
