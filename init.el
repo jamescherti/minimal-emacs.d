@@ -86,10 +86,14 @@
 ;; security.
 (setq auth-sources (list "~/.authinfo.gpg"))
 
-;; Speed up `find-library' and reduce completion clutter. By default, unrelated
-;; files such as C sources are included in searches. Disabling this keeps
-;; completion focused on Lisp libraries and improves responsiveness.
+;; Speed up 'find-library' and reduce completion clutter by excluding internal
+;; helper files. This provides a library-focused list.
 (setq find-library-include-other-files nil)
+
+;; Protect the system from code injection vulnerabilities when browsing files.
+;; Disabling local 'eval' expressions ensures that opening a malicious project
+;; or third-party script cannot execute arbitrary Lisp code on your machine.
+(setq enable-local-eval nil)
 
 ;;; Minibuffer
 

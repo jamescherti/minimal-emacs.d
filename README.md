@@ -2102,6 +2102,11 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 ;; Keep unmodified buffers A/B/C at session end
 (setq ediff-keep-variants t)
+
+;; Automatically apply verified, safe file-local variables. This eliminates
+;; confirmation prompts when loading files, while ensuring that unauthorized or
+;; risky configurations are silently ignored.
+(setq enable-local-variables :safe)
 ```
 
 It is also recommended to read the following articles:
