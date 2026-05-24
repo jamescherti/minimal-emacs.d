@@ -53,12 +53,6 @@
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
 
-;;; Undo/redo
-
-(setq undo-limit (* 13 160000)
-      undo-strong-limit (* 13 240000)
-      undo-outer-limit (* 13 24000000))
-
 ;;; package.el
 
 (when (and (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
@@ -71,6 +65,31 @@
              (not (package-installed-p 'use-package)))
     (package-install 'use-package))
   (require 'use-package))
+
+;;; Misc
+
+(setq undo-limit (* 13 160000)
+      undo-strong-limit (* 13 240000)
+      undo-outer-limit (* 13 24000000))
+
+(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
+
+;; Disable ellipsis when printing s-expressions in the message buffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil)
+
+;; This directs gpg-agent to use the minibuffer for passphrase entry
+(setq epg-pinentry-mode 'loopback)
+
+;; By default, Emacs stores sensitive authinfo credentials as unencrypted text
+;; in your home directory. Use GPG to encrypt the authinfo file for enhanced
+;; security.
+(setq auth-sources (list "~/.authinfo.gpg"))
+
+;; Speed up `find-library' and reduce completion clutter. By default, unrelated
+;; files such as C sources are included in searches. Disabling this keeps
+;; completion focused on Lisp libraries and improves responsiveness.
+(setq find-library-include-other-files nil)
 
 ;;; Minibuffer
 
@@ -128,22 +147,6 @@
 ;; Disable fontification during user input to reduce lag in large buffers.
 ;; Also helps marginally with scrolling performance.
 (setq redisplay-skip-fontification-on-input t)
-
-;;; Misc
-
-(setq whitespace-line-column nil)  ; Use the value of `fill-column'.
-
-;; Disable ellipsis when printing s-expressions in the message buffer
-(setq eval-expression-print-length nil
-      eval-expression-print-level nil)
-
-;; This directs gpg-agent to use the minibuffer for passphrase entry
-(setq epg-pinentry-mode 'loopback)
-
-;; By default, Emacs stores sensitive authinfo credentials as unencrypted text
-;; in your home directory. Use GPG to encrypt the authinfo file for enhanced
-;; security.
-(setq auth-sources (list "~/.authinfo.gpg"))
 
 ;;; `display-line-numbers-mode'
 
