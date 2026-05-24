@@ -316,6 +316,7 @@
 ;;; Frames and windows
 
 (setq resize-mini-windows 'grow-only)
+(setq max-mini-window-height 0.33)
 
 ;; The native border "uses" a pixel of the fringe on the rightmost
 ;; splits, whereas `window-divider-mode' does not.
