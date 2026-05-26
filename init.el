@@ -494,15 +494,7 @@
 
 ;; Configure Ediff to use a single frame and split windows horizontally
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
-      ediff-split-window-function 'split-window-horizontally
-
-      ;; Ignore all whitespace differences (-w) to reduce visual noise from
-      ;; indentation changes or auto-formatters, keeping the focus on logic.
-      ediff-diff-options "-w"
-
-      ;; Skip over regions where the only differences are whitespace (or other
-      ;; ignored options) when navigating with 'n' and 'p'.
-      ediff-ignore-similar-regions t)
+      ediff-split-window-function 'split-window-horizontally)
 
 ;;; Diff
 
