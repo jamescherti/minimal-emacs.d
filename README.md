@@ -11,7 +11,7 @@ Each setting in minimal-emacs.d is carefully chosen to answer this question: doe
 
 In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible defaults, and a fast startup.
 
-If this helps your workflow, please show your support by **⭐ starring minimal-emacs.d on GitHub** to help more Emacs users discover its benefits.
+**If this helps your workflow, please support the project by ⭐ starring minimal-emacs.d on GitHub and sharing it on your website, blog, Mastodon, Reddit, X, LinkedIn, or other social media platforms to help more Git users discover its benefits.**
 
 **Ready to start? [Install minimal-emacs.d](#install-minimal-emacsd)**
 
