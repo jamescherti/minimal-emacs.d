@@ -1263,25 +1263,45 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
 (use-package ispell
   :ensure nil
   :commands (ispell ispell-minor-mode)
-  :custom
-  (ispell-quietly t)
+  :init
+  (setq ispell-quietly t)
 
   ;; Set the ispell program name to aspell
-  (ispell-program-name "aspell")
+  (setq ispell-program-name "aspell")
 
   ;; Define the "en_US" spell-check dictionary locally, telling Emacs to use
   ;; UTF-8 encoding, match words using alphabetic characters, allow apostrophes
   ;; inside words, treat non-alphabetic characters as word boundaries, and pass
   ;; -d en_US to the underlying spell-check program.
-  (ispell-local-dictionary-alist
-   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
 
   ;; Configures Aspell's suggestion mode to "ultra", which provides more
   ;; aggressive and detailed suggestions for misspelled words. The language
   ;; is set to "en_US" for US English, which can be replaced with your desired
   ;; language code (e.g., "en_GB" for British English, "de_DE" for German).
-  (ispell-extra-args '(; "--sug-mode=ultra"
-                       "--lang=en_US")))
+  (setq ispell-extra-args '("--sug-mode=ultra"
+                            "--lang=en_US"
+                            ;; The --run-together flag instructs Aspell to accept
+                            ;; words formed by combining two or more valid dictionary
+                            ;; words without spaces, treating the resulting string as
+                            ;; valid.
+                            ;;
+                            ;; This is excellent for source code. Code is heavily
+                            ;; populated with compound variable names and technical
+                            ;; terms (e.g., filepath, buffername, checkbox). This
+                            ;; flag stops the spell checker from highlighting every
+                            ;; combined word as an error, significantly reducing
+                            ;; false positives and visual noise in your programming
+                            ;; buffers.
+                            "--run-together"))
+
+
+  (defun my-ispell-text-mode-setup ()
+    "Remove the --run-together argument from Aspell in text modes."
+    (setq-local ispell-extra-args (remove "--run-together" ispell-extra-args)))
+
+  (add-hook 'text-mode-hook #'my-ispell-text-mode-setup))
 
 ;; The flyspell package is a built-in Emacs minor mode that provides
 ;; on-the-fly spell checking. It highlights misspelled words as you type,
@@ -1290,21 +1310,13 @@ To configure **flyspell**, add the following to `~/.emacs.d/post-init.el`:
   :ensure nil
   :commands flyspell-mode
   :hook
-  (; (prog-mode . flyspell-prog-mode)
+  ((prog-mode . flyspell-prog-mode)
    (text-mode . (lambda()
                   (if (or (derived-mode-p 'yaml-mode)
                           (derived-mode-p 'yaml-ts-mode)
                           (derived-mode-p 'ansible-mode))
                       (flyspell-prog-mode 1)
-                    (flyspell-mode 1)))))
-  :config
-  ;; Remove strings from Flyspell
-  (setq flyspell-prog-text-faces (delq 'font-lock-string-face
-                                       flyspell-prog-text-faces))
-
-  ;; Remove doc from Flyspell
-  (setq flyspell-prog-text-faces (delq 'font-lock-doc-face
-                                       flyspell-prog-text-faces)))
+                    (flyspell-mode 1))))))
 ```
 
 ### Automatic removal of trailing whitespace on save
