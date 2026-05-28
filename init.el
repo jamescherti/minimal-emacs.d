@@ -624,7 +624,7 @@
 (setq minimal-emacs--success t)
 
 ;; Local variables:
-;; byte-compile-warnings: (not free-vars)
+;; byte-compile-warnings: (not obsolete free-vars)
 ;; End:
 
 ;;; init.el ends here
