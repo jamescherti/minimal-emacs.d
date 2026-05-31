@@ -63,7 +63,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [Sebagabones on GitHub](https://github.com/jamescherti/minimal-emacs.d/issues/77): "...let me say that I am loving minimal-emacs.d, it has been brilliant so far! :)"
 - [Mlepnos1984 on Reddit](https://www.reddit.com/r/emacs/comments/1lz181i/comment/n2yjj17/): "I give you an A+ on documentation, the readme is great!"
 - [rrajath on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb0ja8k/) has been using the minimal-emacs.d config for the past several months and loves it. His previous setup used to take around 4 seconds to load, but with minimal-emacs.d, it now loads in just 1 second.
-- [LionyxML on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/): "One of the best READMEs I’ve ever seen. Very good."
+- [LionyxML on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mb35t9y/): "One of the best READMEs I've ever seen. Very good."
 - [cyneox on Reddit](https://www.reddit.com/r/emacs/comments/1ihn2tv/comment/mdnzgqx/): "Still using it and loving it! Thanks for the regular updates."
 - [panchoh on GitHub](https://github.com/jamescherti/minimal-emacs.d/pull/62#issuecomment-2869865979): "...thank you, @jamescherti! Keep up the fantastic work you are doing!"
 - [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
