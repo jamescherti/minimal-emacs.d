@@ -2316,6 +2316,43 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 
 ## Frequently asked questions
 
+## Why minimal-emacs.d uses `setq` instead of `setopt`
+
+The *minimal-emacs.d* configuration prioritizes an optimized, fast startup. Using `setopt` introduces overhead due to its type checking and function execution. For the vast majority of variables, this overhead is unnecessary during the initial startup phase.
+
+Here is the distinction between the two Emacs Lisp functions:
+
+* `setopt`: Assigns a value, but also validates the data type against the package's definition and executes the `:set` function associated with the customizable variable. The `:set` function specifies a function that must execute whenever the variable's value is changed. This function is responsible for handling required side-effects, such as rebuilding internal data structures, updating hooks, toggling related minor modes, or redrawing user interface elements based on the new value.
+* `setq`: Directly assigns a value to a variable. It is extremely fast because it bypasses type validation and ignores any `:set` side-effect functions defined in the package's `defcustom` declaration.
+
+Here is an example of how a package author might write a `defcustom` with an expensive `:set` property:
+
+```elisp
+;; Example: Why minimal-emacs.d uses `setq' instead of `setopt'
+(defcustom my-global-visual-indicator t
+  "Toggle a heavy visual indicator across all open buffers."
+  :type 'boolean
+  :group 'my-ui-package
+  :set (lambda (symbol value)
+         ;; Update the variable's value
+         (set-default symbol value)
+
+         ;; The slow part: Iterate through every open buffer
+         ;; and trigger a costly visual update or cache rebuild.
+         (dolist (buffer (buffer-list))
+           (with-current-buffer buffer
+             ;; This simulated function might parse the buffer,
+             ;; apply text properties, or query a language server.
+             (my-heavy-visual-update-function value)))
+
+         ;; Force Emacs to immediately redraw all frames
+         (redraw-display)))
+```
+
+If you use `setopt` to configure `my-global-visual-indicator` within your `init.el`, Emacs will execute the associated lambda function during the startup sequence. The function loops through all open buffers (including hidden or internal buffers created during initialization), runs the heavy update function, and forces a display redraw. This introduces significant latency to your load time.
+
+When using `setq`, Emacs simply updates the boolean value to `t` or `nil` in memory and bypasses the lambda entirely. The entire operation takes a fraction of a millisecond.
+
 ### How to debug my configuration?
 
 During the development of your init files, the author strongly recommends adding the following line at the very beginning of your `~/.emacs.d/pre-early-init.el` file:
