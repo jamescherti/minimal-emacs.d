@@ -2328,7 +2328,11 @@ Here is the distinction between the two Emacs Lisp functions:
 Here is an example of how a package author might write a `defcustom` with an expensive `:set` property:
 
 ```elisp
-;; Example: Why minimal-emacs.d uses `setq' instead of `setopt'
+;; -------------------------------------------------------------------
+;; EXAMPLE: Why minimal-emacs.d uses `setq' instead of `setopt'
+;; -------------------------------------------------------------------
+;; NOTE: DO NOT ADD THIS TO YOUR CONFIGURATION
+;; -------------------------------------------------------------------
 (defcustom my-global-visual-indicator t
   "Toggle a heavy visual indicator across all open buffers."
   :type 'boolean
