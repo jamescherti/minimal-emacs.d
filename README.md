@@ -2331,7 +2331,7 @@ Here is an example of how a package author might write a `defcustom` with an exp
 ;; -------------------------------------------------------------------
 ;; EXAMPLE: Why minimal-emacs.d uses `setq' instead of `setopt'
 ;; -------------------------------------------------------------------
-;; NOTE: DO NOT ADD THIS TO YOUR CONFIGURATION
+;; NOTE: DO NOT ADD THIS CODE SNIPPET TO YOUR CONFIGURATION
 ;; -------------------------------------------------------------------
 (defcustom my-global-visual-indicator t
   "Toggle a heavy visual indicator across all open buffers."
