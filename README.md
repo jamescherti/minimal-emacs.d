@@ -11,7 +11,7 @@ Each setting in minimal-emacs.d is carefully chosen to answer this question: doe
 
 In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible defaults, and a fast startup.
 
-**If this helps your workflow, please support the project by ⭐ starring minimal-emacs.d on GitHub and sharing it on your website, blog, Mastodon, Reddit, X, LinkedIn, or other social media platforms to help more Emacs users discover its benefits.**
+**NOTE: If this project helps your workflow, please consider supporting the project by ⭐ starring minimal-emacs.d on GitHub and sharing it on your website, blog, Mastodon, Reddit, X, LinkedIn, or other social media platforms so other Emacs users can discover its benefits.**
 
 **Ready to start? [Install minimal-emacs.d](#install-minimal-emacsd)**
 
@@ -79,6 +79,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [dewyke](https://www.reddit.com/r/emacs/comments/1tuowci/minimalemacsd_a_customizable_initel_and/): "I spent the weekend migrating to this and it's been brilliant, thank you. "
 - [NagNawed](https://www.reddit.com/r/emacs/comments/1tuowci/comment/opormk7/): "I love this. Great starting point, even better than some of the distros (if you are not using evil mode)..."
 - [JamesBrickley](https://www.reddit.com/r/emacs/comments/1tzfbsq/comment/oqds13q/): "I'm really enjoying James Cherti's Minimal-Emacs.d, Compile-Angle, Easy-Session, and Buffer-Terminator packages."
+- [david-bakin](https://github.com/jamescherti/minimal-emacs.d/issues/94#issuecomment-4721692648): "This emacs-starter-kit framework is fantastic. After years ... actually, decades ... of just using someone else's .emacs.d configuration and then using emacs in a limited way (only to edit text and code and doing everything else at the command line or via other tools) I am now fully transitioning to Emacs as my everything and of all the frameworks I looked at this is the one I can really understand. (And your personal support obviously is part of that.) I'm working through init.el line-by-line (having already done early-init.el) and not only am I getting a better picture of Emacs customization than I've ever had, I'm actually configuring Emacs the way I really like, now that I'm learning what the knobs I can turn are."
 
 Please share your configuration. It could serve as inspiration for other users.
 
