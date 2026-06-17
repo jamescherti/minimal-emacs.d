@@ -267,17 +267,27 @@
 (setq tramp-auto-save-directory
       (expand-file-name "tramp-autosave/" user-emacs-directory))
 
-(setq auto-save-file-name-transforms
-      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
-         ;; Redirect TRAMP (remote) file auto-saves to the local machine
-         ;; (prefixed with "tramp-") to prevent Emacs from hanging due to
-         ;; network latency during auto-save operations.
-         ,(file-name-concat auto-save-list-file-prefix "tramp-\\2-") sha1)
-        ("\\`/\\([^/]+/\\)*\\([^/]+\\)\\'"
-         ;; Redirect absolute file paths auto-saves to the
-         ;; `auto-save-list-file-prefix' directory. This appends the base
-         ;; filename to the prefix, avoiding #file.txt# files across the system.
-         ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
+(defun minimal-emacs-setup-auto-save-transforms ()
+  "Configure `auto-save-file-name-transforms' for local and remote files.
+This should be called after changing `auto-save-list-file-prefix'."
+  (setq auto-save-file-name-transforms
+        `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+           ;; Redirect TRAMP (remote) file auto-saves to the local machine
+           ;; (prefixed with "tramp-") to prevent Emacs from hanging due to
+           ;; network latency during auto-save operations.
+           ,(file-name-concat auto-save-list-file-prefix "tramp-\\2-") sha1)
+          ("\\`/\\([^/]+/\\)*\\([^/]+\\)\\'"
+           ;; Redirect absolute file paths auto-saves to the
+           ;; `auto-save-list-file-prefix' directory. This appends the base
+           ;; filename to the prefix, avoiding #file.txt# files across the system.
+           ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
+
+  (when (memq system-type '(windows-nt cygwin ms-dos))
+    (push `("\\`\\(/\\|[a-zA-Z]:/\\|//\\)\\([^/]+/\\)*\\([^/]+\\)\\'"
+            ,(file-name-concat auto-save-list-file-prefix "\\3-") sha1)
+          auto-save-file-name-transforms)))
+
+(minimal-emacs-setup-auto-save-transforms)
 
 ;; Ensure the directory for auto-save session logs exists with restricted
 ;; permissions.
