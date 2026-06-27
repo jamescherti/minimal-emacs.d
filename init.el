@@ -297,11 +297,19 @@ This should be called after changing `auto-save-list-file-prefix'."
       (with-file-modes #o700
         (make-directory auto-save-dir t)))))
 
-;; Auto save options
 (setq kill-buffer-delete-auto-save-files t)
 
 ;; Remove duplicates from the kill ring to reduce clutter
 (setq kill-do-not-save-duplicates t)
+
+;; Preserve the system clipboard before Emacs delete/kill operations.
+;;
+;; By default, deleting text in Emacs overwrites your system clipboard. For
+;; example, if you copy a link from a browser, switch to Emacs, and delete some
+;; text, your copied link is lost. This setting fixes that by pushing the
+;; clipboard contents into your paste history right before the deletion,
+;; ensuring external data remains retrievable via `yank-pop'.
+(setq save-interprogram-paste-before-kill t)
 
 ;;; Auto revert
 ;; Auto-revert in Emacs is a feature that automatically updates the contents of
