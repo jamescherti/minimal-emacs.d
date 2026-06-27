@@ -68,7 +68,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 - [panchoh on GitHub](https://github.com/jamescherti/minimal-emacs.d/pull/62#issuecomment-2869865979): "...thank you, @jamescherti! Keep up the fantastic work you are doing!"
 - [xzway on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrh8dye/): "The minimal-emacs.d configuration is very well-designed and non-intrusive. I'm also using it to refactor my configuration."
 - [jeenajeena on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrfk13i/): "Thank you. Plenty of inspiring settings. Worth to be read line by line."
-- [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d — thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
+- [uutangohotel on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/nrg5kja/): "I get a lot out of minimal-emacs.d - thank you! I use stow to manage my dotfiles in a git repo. I created a submodule in one dir for minimal-emacs.d and another for my “overrides”, e.g. post-init.el. Easy and works great."
 - [sunng on Reddit](https://www.reddit.com/r/emacs/comments/1p9y8h4/comment/ns1nehi/): "Nice work! I just created a nix flake to using it on my dev servers"
 - [zackattackz287 on Reddit](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/oa8okca/): "Congrats and thank you (and the community around minimal.d) for your work! I've been using it for quite a while now and I've not ever had any breakages when merging changes from main..."
 - [utility on Reddit](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/oa8wrap/): "Excellent. I use this and I'm very happy with it!"
@@ -846,7 +846,7 @@ To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
         ("C-c C-e" . markdown-do)))
 ```
 
-This configuration sets up `markdown-mode` with deferred loading to improve startup performance. The `:commands` and `:mode` keywords ensure that the mode is loaded only when needed—for example, when opening `.md`, `.markdown`, or `README.md` files. Files named `README.md` are specifically associated with `gfm-mode`, which is for GitHub Flavored Markdown syntax. The `markdown-command` variable is set to `"multimarkdown"` to specify the Markdown processor used for previews and exports. Additionally, a keybinding (`C-c C-e`) is defined in `markdown-mode-map` to invoke `markdown-do`, which can be customized to perform common Markdown-related actions.
+This configuration sets up `markdown-mode` with deferred loading to improve startup performance. The `:commands` and `:mode` keywords ensure that the mode is loaded only when needed-for example, when opening `.md`, `.markdown`, or `README.md` files. Files named `README.md` are specifically associated with `gfm-mode`, which is for GitHub Flavored Markdown syntax. The `markdown-command` variable is set to `"multimarkdown"` to specify the Markdown processor used for previews and exports. Additionally, a keybinding (`C-c C-e`) is defined in `markdown-mode-map` to invoke `markdown-do`, which can be customized to perform common Markdown-related actions.
 
 **Table of contents:** To generate a table of contents when editing Markdown files, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
@@ -2317,7 +2317,7 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 
 ## Frequently asked questions
 
-## Why minimal-emacs.d uses `setq` instead of `setopt`
+### Why minimal-emacs.d uses `setq` instead of `setopt`
 
 The *minimal-emacs.d* configuration prioritizes an optimized, fast startup. Using `setopt` introduces overhead due to its type checking and function execution. For the vast majority of variables, this overhead is unnecessary during the initial startup phase.
 
@@ -2710,7 +2710,7 @@ Keep in mind that if you change the `minimal-emacs-user-directory`, *minimal-ema
 
 ### How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?
 
-NOTE: Running package initialization and installation during the early-init phase is **NOT RECOMMENDED** because this stage occurs before the GUI system, windowing, and comprehensive error-handling buffers are fully initialized. When package-install or `package-refresh-contents` triggers a failure—such as a TLS handshake error or a lost network connection—Emacs cannot yet render a graphical window to display the backtrace or warning. This results in a "silent" hang or a crash that provides no visual feedback to the user, forcing a pivot to a terminal to inspect standard output. Furthermore, many packages expect a fully functional frame and loaded user environment to configure themselves correctly; forcing them to load during early-init bypasses the intentional separation designed to let you set up UI-independent variables before the package system and GUI logic complicate the startup sequence.
+NOTE: Running package initialization and installation during the early-init phase is **NOT RECOMMENDED** because this stage occurs before the GUI system, windowing, and comprehensive error-handling buffers are fully initialized. When package-install or `package-refresh-contents` triggers a failure-such as a TLS handshake error or a lost network connection-Emacs cannot yet render a graphical window to display the backtrace or warning. This results in a "silent" hang or a crash that provides no visual feedback to the user, forcing a pivot to a terminal to inspect standard output. Furthermore, many packages expect a fully functional frame and loaded user environment to configure themselves correctly; forcing them to load during early-init bypasses the intentional separation designed to let you set up UI-independent variables before the package system and GUI logic complicate the startup sequence.
 
 To install and load packages during the early-init phase, add the following to `post-early-init.el`:
 
@@ -2720,8 +2720,8 @@ To install and load packages during the early-init phase, add the following to `
 ;; Running package initialization and installation during the early-init phase
 ;; is NOT RECOMMENDED because this stage occurs before the GUI system,
 ;; windowing, and comprehensive error-handling buffers are fully initialized.
-;; When package-install or `package-refresh-contents` triggers a failure—such as
-;; a TLS handshake error or a lost network connection—Emacs cannot yet render a
+;; When package-install or `package-refresh-contents` triggers a failure-such as
+;; a TLS handshake error or a lost network connection-Emacs cannot yet render a
 ;; graphical window to display the backtrace or warning. This results in a
 ;; "silent" hang or a crash that provides no visual feedback to the user,
 ;; forcing a pivot to a terminal to inspect standard output. Furthermore, many
@@ -2770,6 +2770,26 @@ If you want to maintain a strictly version-controlled, declarative configuration
 (with-eval-after-load 'cus-edit
   (advice-add 'custom-save-all :override #'ignore))
 ```
+
+### Plain Text Pasting (Fixing "Org-Mode Bleed")
+
+Copying text from an Org buffer often results in unwanted colors, backgrounds, or text weights bleeding into the destination buffer.
+
+By default, vanilla Emacs preserves explicit text formatting (`face` properties) when copying and pasting to support rich-text environments. While standard syntax highlighting (`font-lock-face`) is automatically stripped, modes like `org-mode` rely heavily on the `face` property for their visual styling.
+
+To resolve this and ensure that pasted text acts as plain text-immediately inheriting the syntax highlighting of its new destination-add the following to your `~/.emacs.d/post-init.el`:
+
+```elisp
+(add-to-list 'yank-excluded-properties 'face)
+
+```
+
+Benefits:
+
+* Prevents visual formatting bleed between different major modes.
+* Unlike the common workaround of stripping all text properties entirely `(setq yank-excluded-properties t)`, this method is surgical. It *only* removes visual properties, ensuring that functional text properties remain fully intact.
+
+This configuration intentionally disables the ability to copy and paste rich-text formatting. If you specifically require the preservation of text colors or weights across buffers (for example, when using `enriched-mode` or composing HTML emails), you should omit this setting.
 
 ### Minimal-emacs.d configurations from users
 
