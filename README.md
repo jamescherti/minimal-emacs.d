@@ -271,25 +271,20 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; on disk.
 (use-package autorevert
   :ensure nil
-  :commands (auto-revert-mode global-auto-revert-mode)
-  :hook
-  (after-init . global-auto-revert-mode)
   :init
   ;; (setq auto-revert-verbose t)
   (setq auto-revert-interval 3)
   (setq auto-revert-remote-files nil)
   (setq auto-revert-use-notify t)
-  (setq auto-revert-avoid-polling nil))
+  (setq auto-revert-avoid-polling nil)
+  :config
+  (global-auto-revert-mode 1))
 
 ;; Recentf is an Emacs package that maintains a list of recently
 ;; accessed files, making it easier to reopen files you have worked on
 ;; recently.
 (use-package recentf
   :ensure nil
-  :commands (recentf-mode recentf-cleanup)
-  :hook
-  (after-init . recentf-mode)
-
   :init
   (setq recentf-auto-cleanup (if (daemonp) 300 'never))
   (setq recentf-exclude
@@ -305,7 +300,9 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   ;; `recentf-save-list', allowing stale entries to be removed before the list
   ;; is saved by `recentf-save-list', which is automatically added to
   ;; `kill-emacs-hook' by `recentf-mode'.
-  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup -90)
+  ;; Enable `recentf-mode'
+  (recentf-mode 1))
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
@@ -313,23 +310,21 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; their minibuffer history across Emacs restarts.
 (use-package savehist
   :ensure nil
-  :commands (savehist-mode savehist-save)
-  :hook
-  (after-init . savehist-mode)
   :init
   (setq history-length 300)
-  (setq savehist-autosave-interval 600))
+  (setq savehist-autosave-interval 600)
+  :config
+  (savehist-mode 1))
 
 ;; save-place-mode enables Emacs to remember the last location within a file
 ;; upon reopening. This feature is particularly beneficial for resuming work at
 ;; the precise point where you previously left off.
 (use-package saveplace
   :ensure nil
-  :commands (save-place-mode save-place-local-mode)
-  :hook
-  (after-init . save-place-mode)
   :init
-  (setq save-place-limit 400))
+  (setq save-place-limit 400)
+  :config
+  (save-place-mode 1))
 ```
 
 ### Safety: Auto-Save
@@ -386,12 +381,6 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ;; current candidates, positioned either below or above the point. Candidates
 ;; can be selected by navigating up or down.
 (use-package corfu
-  :commands (corfu-mode global-corfu-mode)
-
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode))
-
   :custom
   ;; Hide commands in M-x which do not apply to the current mode.
   (read-extended-command-predicate #'command-completion-default-include-p)
@@ -425,7 +414,7 @@ Vertico provides a vertical completion interface, making it easier to navigate a
 
 Consult offers a suite of commands for efficient searching, previewing, and interacting with buffers, file contents, and more, improving various tasks.
 
-Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive and powerful environment for managing completions and interactions.
+Embark integrates with these tools to provide context-sensitive actions and quick access to commands based on the current selection, further improving user efficiency and workflow within Emacs. Together, they create a cohesive environment for managing completions and interactions.
 
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
@@ -451,13 +440,13 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; In addition to that, Marginalia also enhances Vertico by adding rich
 ;; annotations to the completion candidates displayed in Vertico's interface.
 (use-package marginalia
-  :commands (marginalia-mode marginalia-cycle)
-  :hook (after-init . marginalia-mode))
+  :config
+  (marginalia-mode 1))
 
 ;; Embark integrates with Consult and Vertico to provide context-sensitive
 ;; actions and quick access to commands based on the current selection, further
 ;; improving user efficiency and workflow within Emacs. Together, they create a
-;; cohesive and powerful environment for managing completions and interactions.
+;; cohesive environment for managing completions and interactions.
 (use-package embark
   ;; Embark is an Emacs package that acts like a context menu, allowing
   ;; users to perform context-sensitive actions on selected items
@@ -599,7 +588,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
              undo-fu-only-redo
              undo-fu-only-redo-all
              undo-fu-disable-checkpoint)
-  :config
+  :init
   (global-unset-key (kbd "C-z"))
   (global-set-key (kbd "C-z") 'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
@@ -607,8 +596,8 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu-session package complements undo-fu by enabling the saving
 ;; and restoration of undo history across Emacs sessions, even after restarting.
 (use-package undo-fu-session
-  :commands undo-fu-session-global-mode
-  :hook (after-init . undo-fu-session-global-mode))
+  :config
+  (undo-fu-session-global-mode 1))
 ```
 
 ### Changing the default theme
@@ -668,9 +657,6 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 ;; Vim emulation
 (use-package evil
-  :commands (evil-mode evil-define-key)
-  :hook (after-init . evil-mode)
-
   :init
   ;; It has to be defined before evil
   (setq evil-want-integration t)
@@ -702,7 +688,10 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   ;; Disable wrapping of search around buffer
   (evil-search-wrap nil)
   ;; Whether Y yanks to the end of the line
-  (evil-want-Y-yank-to-eol t))
+  (evil-want-Y-yank-to-eol t)
+
+  :config
+  (evil-mode 1))
 
 (use-package evil-collection
   :after evil
@@ -726,8 +715,8 @@ You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-ba
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
-  :commands vim-tab-bar-mode
-  :hook (after-init . vim-tab-bar-mode))
+  :config
+  (vim-tab-bar-mode 1))
 ```
 
 ![](https://raw.githubusercontent.com/jamescherti/vim-tab-bar.el/main/.screenshots/emacs-tab-like-vim.png)
@@ -743,7 +732,6 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 ;; using S" or gS".
 (use-package evil-surround
   :after evil
-  :commands global-evil-surround-mode
   :custom
   (evil-surround-pairs-alist
    '((?\( . ("(" . ")"))
@@ -756,7 +744,8 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 
      (?< . ("<" . ">"))
      (?> . ("<" . ">"))))
-  :hook (after-init . global-evil-surround-mode))
+  :config
+  (global-evil-surround-mode 1))
 ```
 
 You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
@@ -788,39 +777,42 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ;; manage Emacs editing sessions and utilizes built-in Emacs functions to
 ;; persist and restore frames.
 (use-package easysession
-  :commands (easysession-switch-to
-             easysession-save-as
-             easysession-save-mode
-             easysession-load-including-geometry)
+  ;; ':demand t' ensures the package is loaded immediately upon startup
+  :demand t
 
-  :custom
-  (easysession-mode-line-misc-info t)  ; Display the session in the modeline
-  (easysession-save-interval (* 10 60))  ; Save every 10 minutes
-
-  :init
+  :config
   ;; Key mappings
-  (global-set-key (kbd "C-c ss") #'easysession-save)
-  (global-set-key (kbd "C-c sl") #'easysession-switch-to)
+  (global-set-key (kbd "C-c sl") #'easysession-switch-to) ; Load session
+  (global-set-key (kbd "C-c ss") #'easysession-save) ; Save session
   (global-set-key (kbd "C-c sL") #'easysession-switch-to-and-restore-geometry)
   (global-set-key (kbd "C-c sr") #'easysession-rename)
   (global-set-key (kbd "C-c sR") #'easysession-reset)
+  (global-set-key (kbd "C-c su") #'easysession-unload)
   (global-set-key (kbd "C-c sd") #'easysession-delete)
 
-  (if (fboundp 'easysession-setup)
-      ;; The `easysession-setup' function adds hooks:
-      ;; - To enable automatic session loading during `emacs-startup-hook', or
-      ;;   `server-after-make-frame-hook' when running in daemon mode.
-      ;; - To automatically save the session at regular intervals, and when
-      ;;   Emacs exits.
-      (easysession-setup)
-    ;; Legacy
-    ;; The depth 102 and 103 have been added to to `add-hook' to ensure that the
-    ;; session is loaded after all other packages. (Using 103/102 is
-    ;; particularly useful for those using minimal-emacs.d, where some
-    ;; optimizations restore `file-name-handler-alist` at depth 101 during
-    ;; `emacs-startup-hook`.)
-    (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
-    (add-hook 'emacs-startup-hook #'easysession-save-mode 103)))
+  ;; Save every 10 minutes
+  (setq easysession-save-interval (* 10 60))
+
+  ;; Save the current session when using `easysession-switch-to'
+  (setq easysession-switch-to-save-session t)
+
+  ;; Do not exclude the current session when switching sessions
+  (setq easysession-switch-to-exclude-current nil)
+
+  ;; Display the active session name in the mode-line lighter.
+  ;; (setq easysession-save-mode-lighter-show-session-name t)
+
+  ;; Optionally, the session name can be shown in the modeline info area:
+  ;; (setq easysession-mode-line-misc-info t)
+  ;; non-nil: Make `easysession-setup' load the session automatically.
+  ;; (nil: session is not loaded automatically; the user can load it manually.)
+  (setq easysession-setup-load-session t)
+
+  ;; The `easysession-setup' function adds hooks:
+  ;; - To enable automatic session loading during `emacs-startup-hook', or
+  ;;   `server-after-make-frame-hook' when running in daemon mode.
+  ;; - To save the session at regular intervals, and when Emacs exits.
+  (easysession-setup))
 ```
 
 ### Configuring markdown-mode (e.g., README.md syntax)
@@ -1117,12 +1109,6 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 ;; abbreviation, YASnippet automatically expands it into a full template, which
 ;; can include placeholders, fields, and dynamic content.
 (use-package yasnippet
-  :commands (yas-minor-mode
-             yas-global-mode)
-
-  :hook
-  (after-init . yas-global-mode)
-
   :custom
   (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
   (yas-also-indent-empty-lines t)
@@ -1134,7 +1120,10 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 
   :init
   ;; Suppress verbose messages
-  (setq yas-verbosity 0))
+  (setq yas-verbosity 0)
+
+  :config
+  (yas-global-mode 1))
 ```
 
 ### Spell checker
@@ -1756,13 +1745,11 @@ This category-based behavior can be further customized by assigning a function t
 To configure the *persist-text-scale* package, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package persist-text-scale
-  :commands (persist-text-scale-mode
-             persist-text-scale-restore)
-
-  :hook (after-init . persist-text-scale-mode)
-
   :custom
-  (text-scale-mode-step 1.07))
+  (text-scale-mode-step 1.07)
+
+  :config
+  (persist-text-scale-mode 1))
 ```
 
 ### A Faster Terminal Emulator
@@ -1836,14 +1823,13 @@ To start the Emacs server after initialization, add the following form to your `
 (use-package server
   :ensure nil
   :if (not (daemonp))
-  :commands (server-running-p
-             server-start)
-  :hook (after-init . my-server-start)
   :preface
   (defun my-server-start ()
     "Start the Emacs server if no server process is currently active."
     (unless (server-running-p)
-      (server-start))))
+      (server-start)))
+  :config
+  (my-server-start))
 ```
 
 This configuration safely checks that Emacs is not running as a daemon and ensures that no existing server process is active, preventing conflicts.
@@ -1874,10 +1860,8 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;;; (e.g., (), {}, "") globally using `electric-pair-mode'.
 (use-package elec-pair
   :ensure nil
-  :commands (electric-pair-mode
-             electric-pair-local-mode
-             electric-pair-delete-pair)
-  :hook (after-init . electric-pair-mode))
+  :config
+  (electric-pair-mode 1))
 
 ;; Set the fringes to match the pixel height of a character. This ensures the
 ;; fringe is wide enough, scaling dynamically with the current font size.
@@ -1901,14 +1885,14 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 (setq treesit-font-lock-level 4)
 
 (use-package which-key
-  :ensure nil ; builtin
-  :commands which-key-mode
-  :hook (after-init . which-key-mode)
+  :ensure nil
   :custom
   (which-key-idle-delay 1.5)
   (which-key-idle-secondary-delay 0.25)
   (which-key-add-column-padding 1)
-  (which-key-max-description-length 40))
+  (which-key-max-description-length 40)
+  :config
+  (which-key-mode 1))
 
 (unless (and (eq window-system 'mac)
              (bound-and-true-p mac-carbon-version-string))
@@ -1922,10 +1906,10 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
   (pixel-scroll-precision-mode 1))
 
 ;; Display the time in the modeline
-(add-hook 'after-init-hook #'display-time-mode)
+(display-time-mode 1)
 
 ;; Paren match highlighting
-(add-hook 'after-init-hook #'show-paren-mode)
+(show-paren-mode 1)
 
 ;; Track changes in the window configuration, allowing undoing actions such as
 ;; closing windows.
@@ -1944,7 +1928,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
                                 "*Buffer List*"
                                 "*Ibuffer*"
                                 "*esh command on file*"))
-(add-hook 'after-init-hook #'winner-mode)
+(winner-mode 1)
 
 (use-package uniquify
   :ensure nil
@@ -1957,7 +1941,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;; be dragged with the mouse, thus allowing you to easily resize adjacent
 ;; windows.
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Dividers.html
-(add-hook 'after-init-hook #'window-divider-mode)
+(window-divider-mode 1)
 
 ;; Constrain vertical cursor movement to lines within the buffer
 (setq dired-movement-style 'bounded-files)
@@ -1991,7 +1975,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
       (setq dired-listing-switches args))))
 
 ;; Enables visual indication of minibuffer recursion depth after initialization.
-(add-hook 'after-init-hook #'minibuffer-depth-indicate-mode)
+(minibuffer-depth-indicate-mode 1)
 
 ;; Configure Emacs to ask for confirmation before exiting
 (setq confirm-kill-emacs 'y-or-n-p)
@@ -2209,8 +2193,8 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
   ;; Save all buffers every N seconds. (Disabled by default)
   ;; (setq buffer-guardian-save-all-buffers-interval (* 60 30))
 
-  :hook
-  (after-init . buffer-guardian-mode))
+  :config
+  (buffer-guardian-mode 1))
 ```
 
 ## Customizations: Before init (File: pre-init.el)
@@ -2265,15 +2249,15 @@ Add to `~/.emacs.d/pre-early-init.el`:
 And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=readme-ov-file#installer) to `~/.emacs.d/pre-init.el`:
 ```elisp
 ;; Elpaca bootstrap
-(defvar elpaca-installer-version 0.11)
+(defvar elpaca-installer-version 0.12)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
                               :ref nil :depth 1 :inherit ignore
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+                              :build (:not elpaca-activate)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-sources-directory))
        (build (expand-file-name "elpaca/" elpaca-builds-directory))
        (order (cdr elpaca-order))
        (default-directory repo))
@@ -2603,6 +2587,12 @@ Add the following line to the end of your `post-init.el` file:
 This allows `local.el` to load, enabling custom configurations specific to the machine.
 
 (Ensure that `local.el` is in the same directory as `post-init.el`.)
+
+Alternatively, the target file can be loaded from a subdirectory relative to the location of `post-init.el`:
+
+```elisp
+(minimal-emacs-load-user-init "sub-directory/local.el")
+```
 
 ### How to prevent Emacs from repeatedly performing native compilation on specific Elisp files
 
