@@ -277,7 +277,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   (setq auto-revert-remote-files nil)
   (setq auto-revert-use-notify t)
   (setq auto-revert-avoid-polling nil)
-  :config
   (global-auto-revert-mode 1))
 
 ;; Recentf is an Emacs package that maintains a list of recently
@@ -294,15 +293,15 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
               "COMMIT_EDITMSG\\'"
               "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
               "-autoloads\\.el$" "autoload\\.el$"))
+  ;; Enable `recentf-mode'
+  (recentf-mode 1)
 
   :config
   ;; A cleanup depth of -90 ensures that `recentf-cleanup' runs before
   ;; `recentf-save-list', allowing stale entries to be removed before the list
   ;; is saved by `recentf-save-list', which is automatically added to
   ;; `kill-emacs-hook' by `recentf-mode'.
-  (add-hook 'kill-emacs-hook #'recentf-cleanup -90)
-  ;; Enable `recentf-mode'
-  (recentf-mode 1))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
 
 ;; savehist is an Emacs feature that preserves the minibuffer history between
 ;; sessions. It saves the history of inputs in the minibuffer, such as commands,
@@ -313,7 +312,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :init
   (setq history-length 300)
   (setq savehist-autosave-interval 600)
-  :config
   (savehist-mode 1))
 
 ;; save-place-mode enables Emacs to remember the last location within a file
@@ -323,7 +321,6 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   :ensure nil
   :init
   (setq save-place-limit 400)
-  :config
   (save-place-mode 1))
 ```
 
@@ -388,9 +385,8 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (text-mode-ispell-word-completion nil)
   (tab-always-indent 'complete)
 
-  ;; Enable Corfu
-  :config
-  (global-corfu-mode))
+  :init
+  (global-corfu-mode 1))
 
 ;; Cape, or Completion At Point Extensions, extends the capabilities of
 ;; in-buffer completion. It integrates with Corfu or the default completion UI,
@@ -625,7 +621,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu-session package complements undo-fu by enabling the saving
 ;; and restoration of undo history across Emacs sessions, even after restarting.
 (use-package undo-fu-session
-  :config
+  :init
   (undo-fu-session-global-mode 1))
 ```
 
@@ -686,11 +682,6 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 ;; Vim emulation
 (use-package evil
-  :init
-  ;; It has to be defined before evil
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-
   :custom
   ;; Make :s in visual mode operate only on the actual visual selection
   ;; (character or block), instead of the full lines covered by the selection
@@ -719,15 +710,24 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   ;; Whether Y yanks to the end of the line
   (evil-want-Y-yank-to-eol t)
 
+  :init
+  ;; It has to be defined before evil
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (evil-mode 1)
+
   :config
-  (evil-mode 1))
+  ;; Occasionally, `evil' fails to respect `evil-search-module' when it is
+  ;; defined inside the :custom block. This fix ensures the search module
+  ;; is correctly set to `evil-search'.
+  (setq evil-search-module 'evil-search)
+  (evil-select-search-module 'evil-search-module 'evil-search))
 
 (use-package evil-collection
   :after evil
   :init
   ;; It has to be defined before evil-collection
   (setq evil-collection-setup-minibuffer t)
-  :config
   (evil-collection-init))
 
 ;; The goto-chg package is useful with Evil to jump directly to the most recent
@@ -744,7 +744,7 @@ You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-ba
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
-  :config
+  :init
   (vim-tab-bar-mode 1))
 ```
 
@@ -773,7 +773,7 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 
      (?< . ("<" . ">"))
      (?> . ("<" . ">"))))
-  :config
+  :init
   (global-evil-surround-mode 1))
 ```
 
@@ -1130,28 +1130,26 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 
 ```elisp
 ;; The official collection of snippets for yasnippet.
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package yasnippet-snippets)
 
 ;; YASnippet is a template system designed that enhances text editing by
 ;; enabling users to define and use snippets. When a user types a short
 ;; abbreviation, YASnippet automatically expands it into a full template, which
 ;; can include placeholders, fields, and dynamic content.
 (use-package yasnippet
+  :after yasnippet-snippets
   :custom
   (yas-also-auto-indent-first-line t)  ; Indent first line of snippet
   (yas-also-indent-empty-lines t)
   (yas-snippet-revival nil)  ; Setting this to t causes issues with undo
   (yas-wrap-around-region nil) ; Do not wrap region when expanding snippets
+  (yas-indent-line 'fixed) ; Do not auto-indent snippet content
   ;; (yas-triggers-in-field nil)  ; Disable nested snippet expansion
-  ;; (yas-indent-line 'fixed) ; Do not auto-indent snippet content
   ;; (yas-prompt-functions '(yas-no-prompt))  ; No prompt for snippet choices
 
   :init
   ;; Suppress verbose messages
   (setq yas-verbosity 0)
-
-  :config
   (yas-global-mode 1))
 ```
 
@@ -1362,49 +1360,6 @@ Here is an example of how to configure Eglot to enable or disable certain option
                          :rope_autoimport (:enabled :json-false)))))
 ```
 
-### Auto upgrade Emacs packages
-
-The [auto-package-update](https://github.com/rranelli/auto-package-update.el) automates the process of updating installed packages managed by *package.el*. Instead of requiring users to manually invoke `package-list-packages` and update each package, `auto-package-update` can check for available updates at regular intervals, perform updates in the background, and optionally hide the results buffer or prompt before applying changes.
-
-To configure **auto-package-update**, add the following to `~/.emacs.d/post-init.el`:
-
-```elisp
-;; This automates the process of updating installed packages
-(use-package auto-package-update
-  :custom
-  ;; Set the number of days between automatic updates.
-  ;; Here, packages will only be updated if at least 7 days have passed
-  ;; since the last successful update.
-  (auto-package-update-interval 7)
-
-  ;; Suppress display of the *auto-package-update results* buffer after updates.
-  ;; This keeps the user interface clean and avoids unnecessary interruptions.
-  (auto-package-update-hide-results t)
-
-  ;; Automatically delete old package versions after updates to reduce disk
-  ;; usage and keep the package directory clean. This prevents the accumulation
-  ;; of outdated files in Emacs's package directory, which consume
-  ;; unnecessary disk space over time.
-  (auto-package-update-delete-old-versions t)
-
-  ;; Uncomment the following line to enable a confirmation prompt
-  ;; before applying updates. This can be useful if you want manual control.
-  ;; (auto-package-update-prompt-before-update t)
-
-  :config
-  ;; Run package updates automatically at startup, but only if the configured
-  ;; interval has elapsed.
-  (auto-package-update-maybe)
-
-  ;; Schedule a background update attempt daily at 10:00 AM.
-  ;; This uses Emacs' internal timer system. If Emacs is running at that time,
-  ;; the update will be triggered. Otherwise, the update is skipped for that
-  ;; day. Note that this scheduled update is independent of
-  ;; `auto-package-update-maybe` and can be used as a complementary or
-  ;; alternative mechanism.
-  (auto-package-update-at-time "10:00"))
-```
-
 ### Safely terminating unused buffers
 
 The [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) Emacs package *automatically and safely kills buffers*, ensuring a clean and efficient workspace while *enhancing the performance of Emacs* by reducing open buffers, which minimizes active modes, timers, processes...
@@ -1427,7 +1382,7 @@ To configure **buffer-terminator**, add the following to `~/.emacs.d/post-init.e
   ;; minutes):
   (buffer-terminator-interval (* 10 60)) ; 10 minutes
 
-  :config
+  :init
   (buffer-terminator-mode 1))
 ```
 
@@ -1699,7 +1654,7 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
 ;;   for navigation.
 (use-package inhibit-mouse
-  :config
+  :init
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
     (inhibit-mouse-mode 1)))
@@ -1777,7 +1732,7 @@ To configure the *persist-text-scale* package, add the following to your `~/.ema
   :custom
   (text-scale-mode-step 1.07)
 
-  :config
+  :init
   (persist-text-scale-mode 1))
 ```
 
@@ -1857,8 +1812,9 @@ To start the Emacs server after initialization, add the following form to your `
     "Start the Emacs server if no server process is currently active."
     (unless (server-running-p)
       (server-start)))
-  :config
-  (my-server-start))
+  :init
+  ;; Defer starting the server until after Emacs has finished initializing
+  (add-hook 'emacs-startup-hook #'my-server-start))
 ```
 
 This configuration safely checks that Emacs is not running as a daemon and ensures that no existing server process is active, preventing conflicts.
@@ -1889,7 +1845,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;;; (e.g., (), {}, "") globally using `electric-pair-mode'.
 (use-package elec-pair
   :ensure nil
-  :config
+  :init
   (electric-pair-mode 1))
 
 ;; Set the fringes to match the pixel height of a character. This ensures the
@@ -1920,7 +1876,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
   (which-key-idle-secondary-delay 0.25)
   (which-key-add-column-padding 1)
   (which-key-max-description-length 40)
-  :config
+  :init
   (which-key-mode 1))
 
 (unless (and (eq window-system 'mac)
@@ -2222,44 +2178,13 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
   ;; Save all buffers every N seconds. (Disabled by default)
   ;; (setq buffer-guardian-save-all-buffers-interval (* 60 30))
 
-  :config
+  :init
   (buffer-guardian-mode 1))
 ```
 
 ## Customizations: Before init (File: pre-init.el)
 
 NOTE: Using `straight.el` or Elpaca is **optional**. Emacs already has a built-in package manager.
-
-### Configuring straight.el
-
-The `straight.el` package is a declarative package manager for Emacs that aims to replace traditional systems like `package.el` by providing more precise control over package installation and management. Unlike `package.el`, which relies on downloading pre-built packages from ELPA archives, `straight.el` clones packages directly from their source repositories (typically Git), enabling reproducible and fully source-controlled package configurations.
-
-[Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
-``` emacs-lisp
-;; Straight bootstrap
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(setq straight-use-package-by-default t)
-
-;; Limit Git clone depth to a single commit when using straight.el. This
-;; performs shallow clones, reducing download size the cost of full
-;; repository history.
-;; (setq straight-vc-git-default-clone-depth 1)
-```
 
 ### Configuring Elpaca (package manager)
 
@@ -2326,6 +2251,41 @@ And [add the Elpaca bootstrap code](https://github.com/progfolio/elpaca?tab=read
 (elpaca elpaca-use-package
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
+```
+
+### Configuring straight.el
+
+**Note:** For *straight.el* to function correctly, replace `:ensure nil` with `:straight nil` across all use-package declarations.
+
+**Note:** It is highly recommended to use *elpaca* instead of *straight.el* because *elpaca* operates asynchronously. Unlike Straight, which blocks the Emacs UI during package installation and updates, Elpaca processes operations in the background.
+
+The *straight.el* package is a declarative package manager for Emacs that aims to replace traditional systems like *package.el* by providing more precise control over package installation and management. Unlike *package.el*, which relies on downloading pre-built packages from ELPA archives, *straight.el* clones packages directly from their source repositories (typically Git), enabling reproducible and fully source-controlled package configurations.
+
+[Add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to `~/.emacs.d/pre-init.el`:
+``` emacs-lisp
+;; Straight bootstrap
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(setq straight-use-package-by-default t)
+
+;; Limit Git clone depth to a single commit when using straight.el. This
+;; performs shallow clones, reducing download size the cost of full
+;; repository history.
+;; (setq straight-vc-git-default-clone-depth 1)
 ```
 
 ## Frequently asked questions
