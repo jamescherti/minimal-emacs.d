@@ -922,12 +922,15 @@ To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
              kirigami-close-folds)
 
   :bind
-  (("C-c z o" . kirigami-open-fold)          ; Open fold at point
-   ("C-c z O" . kirigami-open-fold-rec)      ; Open fold recursively
-   ("C-c z r" . kirigami-open-folds)         ; Open all folds
-   ("C-c z c" . kirigami-close-fold)         ; Close fold at point
-   ("C-c z m" . kirigami-close-folds)        ; Close all folds
-   ("C-c z a" . kirigami-toggle-fold)))      ; Toggle fold at point
+  (("C-c z o" . kirigami-open-fold)      ; Open fold at point
+   ("C-c z O" . kirigami-open-fold-rec)  ; Open fold recursively
+   ("C-c z r" . kirigami-open-folds)     ; Open all folds
+   ("C-c z c" . kirigami-close-fold)     ; Close fold at point
+   ("C-c z m" . kirigami-close-folds)    ; Close all folds
+   ("C-c z a" . kirigami-toggle-fold))   ; Toggle fold at point
+
+  :init
+  (kirigami-global-mode 1))
 
 ;; Uncomment the following if you are an `evil-mode' user:
 ;; (with-eval-after-load 'evil
@@ -1094,9 +1097,10 @@ To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
   :commands dumb-jump-xref-activate
   :init
   ;; Register `dumb-jump' as an xref backend so it integrates with
-  ;; `xref-find-definitions'. A priority of 90 ensures it is used only when no
+  ;; `xref-find-definitions'. A priority of 80 ensures it is used only when no
   ;; more specific backend is available.
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 90)
+  (with-eval-after-load 'xref
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 80))
 
   (setq dumb-jump-aggressive nil)
   ;; (setq dumb-jump-quiet t)
@@ -1111,6 +1115,7 @@ To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
   ;; definitions are found.
   (setq dumb-jump-selector 'completing-read)
 
+  :config
   ;; If ripgrep is available, force `dumb-jump' to use it because it is
   ;; significantly faster and more accurate than the default searchers (grep,
   ;; ag, etc.).
