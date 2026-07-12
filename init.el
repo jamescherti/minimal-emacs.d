@@ -52,6 +52,7 @@
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (advice-add 'yes-or-no-p :override #'y-or-n-p))
+(setq revert-buffer-quick-short-answers t)
 
 ;;; package.el
 
