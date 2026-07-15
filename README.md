@@ -2191,7 +2191,7 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
 
 **NOTE:** Despite its name, the **evil-matchit** package is fully compatible with vanilla Emacs and does not require `evil-mode`.
 
-The [evil-matchit](https://github.com/redguardtoo/evil-matchit/) package is a extensible package that allows jumping between matching syntactic pairs. It provides out-of-the-box support for a wide array of syntaxes, ranging from Python indentation blocks and Bash shell scripting constructs to Git merge conflicts. Although designed to integrate cleanly with `evil-mode`, the package operates entirely independently and offers native commands for standard usage. Additionally, it features an accessible Elisp API, enabling developers to quickly write custom matching rules and integrate third-party jump functions for any unsupported languages.
+The [evil-matchit](https://github.com/redguardtoo/evil-matchit/) package is an extensible package that allows jumping between matching syntactic pairs. It provides out-of-the-box support for a wide array of syntaxes, ranging from Python indentation blocks and Bash shell scripting constructs to Git merge conflicts. Although designed to integrate cleanly with `evil-mode`, the package operates entirely independently and offers native commands for standard usage. Additionally, it features an accessible Elisp API, enabling developers to quickly write custom matching rules and integrate third-party jump functions for any unsupported languages.
 
 To configure the `evil-matchit` package, add the following to your `~/.emacs.d/post-init.el`:
 ```elisp
