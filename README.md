@@ -402,6 +402,8 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
 
+**Note:** While setting `corfu-auto` to `t` enables automatic completion, this configuration is discouraged for both performance and security reasons. Because Emacs operates on a single thread, the continuous polling of heavy completion-at-point functions (CAPFs) and external LSP servers on every keystroke introduces input latency. More significantly, automatic completion introduces security vulnerabilities when working with untrusted repositories. The continuous background parsing forces external binaries and language servers to process buffer contents without explicit user intent, creating attack vectors for arbitrary code execution or unauthorized data exposure. Manual completion remains the standard practice, providing a deterministic editing experience while ensuring the developer retains absolute control over when external processes analyze the source code.
+
 ### Vertico, Consult, Marginalia, and Embark
 
 [Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
