@@ -50,6 +50,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 
 Startup speed depends on hardware and disk speed. For consistent comparisons, test on the same computer and Emacs version. While startup time is significant, factors like native compilation are also important for long-term performance.
 
+**Skip to: [Install minimal-emacs.d](#install-minimal-emacsd)**
+
 ## User Testimonials
 
 - [DapperStatement3364](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/ocv82id/): "Thank you!!! It helped me a lot. I was having some problems with my config (latency/input lag), was considering to going back to Neovim and your config solved my problems. Great documentation btw, everything is very clear and easy to follow."
