@@ -2016,7 +2016,6 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :mode (("/\\.gitignore\\'" . gitignore-mode)
          ("/info/exclude\\'" . gitignore-mode)
          ("/git/ignore\\'" . gitignore-mode)
-         ("/.gitignore_global\\'" . gitignore-mode)  ; jc-dotfiles
 
          ("/\\.gitconfig\\'" . gitconfig-mode)
          ("/\\.git/config\\'" . gitconfig-mode)
