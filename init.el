@@ -552,6 +552,10 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;; Activate Eglot in cross-referenced non-project files
 (setq eglot-extend-to-xref t)
 
+;; Disable margin indicators to prevent line-height shifts caused by emoji font
+;; rendering issues. This disables both `left-fringe' and `margin' indicators.
+(setq eglot-code-action-indications '(eldoc-hint))
+
 ;; Eglot optimization
 (if minimal-emacs-debug
     (setq eglot-events-buffer-config '(:size 2000000 :format full))

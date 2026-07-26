@@ -11,7 +11,7 @@ Each setting in minimal-emacs.d is carefully chosen to answer this question: doe
 
 In just a few minutes of applying what's in this README.md file, you will have a fully functional, high-performance Emacs configuration ready for work. You will bypass hours of configuration and the heavy overhead of frameworks like Doom or Spacemacs, gaining access to optimized garbage collection, sensible defaults, and a fast startup.
 
-**NOTE: If this project helps your workflow, please consider supporting the project by ⭐ starring minimal-emacs.d on GitHub and sharing it on your website, blog, Mastodon, Reddit, X, LinkedIn, or other social media platforms so other Emacs users can discover its benefits.**
+**NOTE: If this project helps your workflow, please consider supporting it by ⭐ starring minimal-emacs.d on GitHub and sharing it on your website, blog, Mastodon, Reddit, X, LinkedIn, or other social media platforms so other Emacs users can discover its benefits.**
 
 **Ready to start? [Install minimal-emacs.d](#install-minimal-emacsd)**
 
@@ -49,6 +49,8 @@ The author uses *minimal-emacs.d* as his `early-init.el` and `init.el`, alongsid
 ![](https://www.jamescherti.com/wp-content/uploads/minimal-emacs-startup-time.png)
 
 Startup speed depends on hardware and disk speed. For consistent comparisons, test on the same computer and Emacs version. While startup time is significant, factors like native compilation are also important for long-term performance.
+
+**Skip to: [Install minimal-emacs.d](#install-minimal-emacsd)**
 
 ## User Testimonials
 
@@ -2014,7 +2016,6 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :mode (("/\\.gitignore\\'" . gitignore-mode)
          ("/info/exclude\\'" . gitignore-mode)
          ("/git/ignore\\'" . gitignore-mode)
-         ("/.gitignore_global\\'" . gitignore-mode)  ; jc-dotfiles
 
          ("/\\.gitconfig\\'" . gitconfig-mode)
          ("/\\.git/config\\'" . gitconfig-mode)
