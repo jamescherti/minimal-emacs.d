@@ -162,7 +162,7 @@
 
 ;; Automatically rescan the buffer for Imenu entries when `imenu' is invoked
 ;; This ensures the index reflects recent edits.
-(setq imenu-auto-rescan t)
+(setq-default imenu-auto-rescan t)
 
 ;; Prevent truncation of long function names in `imenu' listings
 (setq imenu-max-item-length 160)
@@ -257,7 +257,7 @@
 (when noninteractive
   ;; The command line interface
   (setq enable-dir-local-variables nil)
-  (setq case-fold-search nil))
+  (setq-default case-fold-search nil))
 
 ;; Do not auto-disable auto-save after deleting large chunks of
 ;; text.
