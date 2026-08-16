@@ -2843,6 +2843,8 @@ This configuration intentionally disables the ability to copy and paste rich-tex
 
 - [ZforCandY minimal-emacs.d configuration](https://codeberg.org/ZforCandY/priv-conf/src/branch/main/minimal-emacs.d)
 
+- [mgd/mgd-emacs](https://codeberg.org/mgd/mgd-emacs)
+
 ## Features
 
 The minimal-emacs.d base provides a sensible foundation for your personal configuration. It addresses common pain points in vanilla Emacs to provide a responsive and clean environment from the start, without forcing a specific workflow.
