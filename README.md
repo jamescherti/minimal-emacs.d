@@ -2920,6 +2920,7 @@ You should have received a copy of the GNU General Public License along with thi
 - [minimal-emacs.d @GitHub](https://github.com/jamescherti/minimal-emacs.d)
 
 Contribution from the minimal-emacs.d community:
+
 - [Sunng's minimal-emacs.d Nix flake](https://codeberg.org/sunng/minimal-emacs.d-nix-hm): A Nix flake that enables reproducible deployment of minimal-emacs.d, allowing the Emacs configuration to be pinned, built, and installed through Nix.
 
 Other Emacs packages by the same author:
