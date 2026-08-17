@@ -2815,7 +2815,6 @@ To resolve this and ensure that pasted text acts as plain text-immediately inher
 
 ```elisp
 (add-to-list 'yank-excluded-properties 'face)
-
 ```
 
 Benefits:
