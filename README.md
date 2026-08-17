@@ -2923,6 +2923,7 @@ Contribution from the minimal-emacs.d community:
 - [Sunng's minimal-emacs.d Nix flake](https://codeberg.org/sunng/minimal-emacs.d-nix-hm): A Nix flake that enables reproducible deployment of minimal-emacs.d, allowing the Emacs configuration to be pinned, built, and installed through Nix.
 
 Other Emacs packages by the same author:
+
 - [compile-angel.el](https://github.com/jamescherti/compile-angel.el): **Speed up Emacs!** This package guarantees that all .el files are both byte-compiled and native-compiled, which significantly speeds up Emacs.
 - [outline-indent.el](https://github.com/jamescherti/outline-indent.el): An Emacs package that provides a minor mode that enables code folding and outlining based on indentation levels for various indentation-based text files, such as YAML, Python, and other indented text files.
 - [easysession.el](https://github.com/jamescherti/easysession.el): Easysession is lightweight Emacs session manager that can persist and restore file editing buffers, indirect buffers/clones, Dired buffers, the tab-bar, and the Emacs frames (with or without the Emacs frames size, width, and height).
