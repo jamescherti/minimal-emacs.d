@@ -54,6 +54,7 @@ Startup speed depends on hardware and disk speed. For consistent comparisons, te
 
 ## User Testimonials
 
+- [viperML](https://www.reddit.com/r/emacs/comments/1vq0aez/comment/p4af5a7/):  "Hey, I just want to deeply thank you for creating this! I've started using emacs recently, and your project allowed me to focus on configuring more impactful things. I also think a project like this is useful to clear the mist of knowledge regarding "tweaks" that don't really affect performance, and are snake oil. For now I include your repository in my .config/emacs, and even if in the future I fork it and go completely vanilla, it will have paid dividends. "
 - [DapperStatement3364](https://www.reddit.com/r/emacs/comments/1rsmaut/comment/ocv82id/): "Thank you!!! It helped me a lot. I was having some problems with my config (latency/input lag), was considering to going back to Neovim and your config solved my problems. Great documentation btw, everything is very clear and easy to follow."
 - [gnudoc on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmn1hoo/): "That's a great learning resource. Thank you for your work on it and for sharing it!"
 - [dewyke on Reddit](https://www.reddit.com/r/emacs/comments/1feaf37/comment/lmq53an/): "Lots of good stuff in there, even for people who already have established ways of organising their configs."
