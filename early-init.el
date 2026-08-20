@@ -8,6 +8,7 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
+
 ;; The minimal-emacs.d project is a lightweight and optimized Emacs base
 ;; (init.el and early-init.el) that gives you full control over your
 ;; configuration. It provides better defaults, an optimized startup, and a clean
@@ -19,6 +20,16 @@
 ;;
 ;; Do not modify this file; instead, modify pre-early-init.el or
 ;; post-early-init.el.
+;;
+;; About the early-init.el functions:
+;; ----------------------------------
+;; The custom functions in this file (like minimal-emacs--restore-gc or
+;; minimal-emacs--restore-file-name-handler-alist) exist specifically to manage
+;; the boilerplate required for Emacs startup optimizations.
+;;
+;; Every internal function and variable is strictly prefixed with
+;; "minimal-emacs-". This ensures that the base configuration will never collide
+;; with your own custom functions or third-party packages.
 
 ;;; Code:
 
@@ -468,19 +479,31 @@ this stage of initialization."
     (setq use-dialog-box nil)))
 
 ;;; Security
+
+;; Defining TLS and security variables in early-init.el guarantees that any
+;; network connection made during the initialization sequence is secure. If a
+;; user's post-early-init.el or pre-init.el triggers a download, setting these
+;; beforehand prevents Emacs from using default, less secure settings.
 (setq gnutls-verify-error t)  ; Prompts if there are cert issues
 (setq tls-checktrust gnutls-verify-error)  ; Ensure SSL/TLS connections checks
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
-;; This results in a more compact output that emphasizes performance
+;; Defining these early guarantees that the behavior and macro expansion of
+;; use-package are configured before the first use-package form is evaluated in
+;; post-early-init.el, pre-init.el, init.el, or post-init.el.
 (setq use-package-expand-minimally t)
-
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
 (setq use-package-always-ensure (not noninteractive))
 (setq use-package-enable-imenu-support t)
 
 ;; package.el
+
+;; Placing the use-package-* in early-init.el ensures the package variables are
+;; populated before package.el is initialized. This prevents cases where Emacs
+;; might attempt to fetch from default repositories before it evaluates the
+;; overridden variables in init.el. (This also offers the possibility to
+;; download packages in post-early-init.el, for users who need it.)
 (setq package-enable-at-startup nil)  ; Let the init.el file handle this
 (setq package-quickstart-file
       (expand-file-name "package-quickstart.el" user-emacs-directory))

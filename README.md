@@ -2746,7 +2746,7 @@ This will ensure that the *minimal-emacs.d* configuration loads `post-early-init
 
 Keep in mind that if you change the `minimal-emacs-user-directory`, *minimal-emacs.d* will attempt to load the rest of the configuration from that directory (e.g., `~/.config/minimal-emacs/post-early-init.el`, `~/.config/minimal-emacs/pre-init.el` and `~/.config/minimal-emacs/post-init.el`, etc.).
 
-### How to make *minimal-emacs.d* install packages in the early-init phase instead of the init phase?
+### How to make minimal-emacs.d install packages in the early-init phase instead of the init phase?
 
 NOTE: Running package initialization and installation during the early-init phase is **NOT RECOMMENDED** because this stage occurs before the GUI system, windowing, and comprehensive error-handling buffers are fully initialized. When package-install or `package-refresh-contents` triggers a failure-such as a TLS handshake error or a lost network connection-Emacs cannot yet render a graphical window to display the backtrace or warning. This results in a "silent" hang or a crash that provides no visual feedback to the user, forcing a pivot to a terminal to inspect standard output. Furthermore, many packages expect a fully functional frame and loaded user environment to configure themselves correctly; forcing them to load during early-init bypasses the intentional separation designed to let you set up UI-independent variables before the package system and GUI logic complicate the startup sequence.
 
