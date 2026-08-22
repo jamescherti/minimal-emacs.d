@@ -330,9 +330,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   (save-place-mode 1))
 ```
 
-### Safety: Auto-Save
-
-#### auto-save-mode (Prevent data loss in case of crashes)
+### auto-save-mode (Prevent data loss in case of crashes)
 
 Enabling `auto-save-mode` mitigates the risk of data loss in the event of a crash. Auto-saved data can be recovered using the `recover-file` or `recover-session` functions.
 
@@ -348,26 +346,6 @@ To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 
 ;; Trigger an auto-save 30 seconds of idle time.
 (setq auto-save-timeout 30)
-```
-
-#### auto-save-visited-mode (Save file buffers after a few seconds of inactivity)
-
-When `auto-save-visited-mode` is enabled, Emacs will auto-save file-visiting buffers after a certain amount of idle time if the user forgets to save it with `save-buffer` or `C-x s` for example.
-
-This is different from `auto-save-mode`: `auto-save-mode` periodically saves all modified buffers, creating backup files, including those not associated with a file, while `auto-save-visited-mode` only saves file-visiting buffers after a period of idle time, directly saving to the file itself without creating backup files.
-
-``` emacs-lisp
-;; When auto-save-visited-mode is enabled, Emacs will auto-save file-visiting
-;; buffers after a certain amount of idle time if the user forgets to save it
-;; with save-buffer or C-x s for example.
-;;
-;; This is different from auto-save-mode: auto-save-mode periodically saves
-;; all modified buffers, creating backup files, including those not associated
-;; with a file, while auto-save-visited-mode only saves file-visiting buffers
-;; after a period of idle time, directly saving to the file itself without
-;; creating backup files.
-(setq auto-save-visited-interval 5)   ; Save after 5 seconds if inactivity
-(auto-save-visited-mode 1)
 ```
 
 ### Completion System (Corfu, Vertico, Consult)
