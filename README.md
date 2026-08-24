@@ -2682,22 +2682,9 @@ If you want to maintain a strictly version-controlled, declarative configuration
 
 ### Plain Text Pasting (Fixing "Org-Mode Bleed")
 
-Copying text from an Org buffer often results in unwanted colors, backgrounds, or text weights bleeding into the destination buffer.
+Copying text from an Org buffer often results in unwanted colors, backgrounds, or text weights bleeding into the destination buffer. By default, vanilla Emacs preserves explicit text formatting (`face` properties) when copying and pasting to support rich-text environments. While standard syntax highlighting (`font-lock-face`) is automatically stripped, modes like `org-mode` rely heavily on the `face` property for their visual styling.
 
-By default, vanilla Emacs preserves explicit text formatting (`face` properties) when copying and pasting to support rich-text environments. While standard syntax highlighting (`font-lock-face`) is automatically stripped, modes like `org-mode` rely heavily on the `face` property for their visual styling.
-
-To resolve this and ensure that pasted text acts as plain text-immediately inheriting the syntax highlighting of its new destination-add the following to your `~/.emacs.d/post-init.el`:
-
-```elisp
-(add-to-list 'yank-excluded-properties 'face)
-```
-
-Benefits:
-
-- Prevents visual formatting bleed between different major modes.
-- Unlike the common workaround of stripping all text properties entirely `(setq yank-excluded-properties t)`, this method is surgical. It *only* removes visual properties, ensuring that functional text properties remain fully intact.
-
-This configuration intentionally disables the ability to copy and paste rich-text formatting. If you specifically require the preservation of text colors or weights across buffers (for example, when using `enriched-mode` or composing HTML emails), you should omit this setting.
+To resolve this, read the article: [Emacs: Preventing Org-Mode formatting bleed when copy-pasting](https://www.jamescherti.com/emacs-fix-org-mode-copy-paste-yank-blee/).
 
 ### Minimal-emacs.d configurations from users
 
