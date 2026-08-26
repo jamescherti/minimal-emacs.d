@@ -226,7 +226,7 @@ pre-early-init.el, and post-early-init.el.")
 (set-language-environment "UTF-8")
 
 ;; Increase how much is read from processes in a single chunk
-(setq read-process-output-max (* 4 1024 1024))  ; 4096kb
+(setq read-process-output-max (* 1024 1024))
 
 (setq process-adaptive-read-buffering nil)
 
