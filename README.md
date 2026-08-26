@@ -2273,6 +2273,8 @@ Enabling `debug-on-error` at this stage allows you to catch errors that might ot
 
 ### Customizing Scroll Recentering
 
+It is recommended to read: [Configuring Emacs scrolling for better performance and usability](https://www.jamescherti.com/emacs-scrolling-better-performance-usability/)
+
 By default, minimal-emacs.d sets `scroll-conservatively` to `20`:
 
 ```emacs-lisp
