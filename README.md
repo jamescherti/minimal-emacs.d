@@ -2709,6 +2709,8 @@ To resolve this, read the article: [Emacs: Preventing Org-Mode formatting bleed 
 
 - [mgd/mgd-emacs](https://codeberg.org/mgd/mgd-emacs)
 
+- [hotel-california-of-creative-writing](https://codeberg.org/jacmoe/hotel-california-of-creative-writing)
+
 ## Features
 
 The minimal-emacs.d base provides a sensible foundation for your personal configuration. It addresses common pain points in vanilla Emacs to provide a responsive and clean environment from the start, without forcing a specific workflow.
