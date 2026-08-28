@@ -1266,6 +1266,10 @@ Here is an example of how to configure Eglot to enable or disable certain option
                          :rope_autoimport (:enabled :json-false)))))
 ```
 
+Related articles:
+- [Configuring Emacs Eglot for Better Performance and Latency](https://www.jamescherti.com/emacs-eglot-performance/)
+- [Configuring Eglot for Python Development in Emacs: Integrating python-lsp-server (pylsp) with Linters and Formatters](https://www.jamescherti.com/emacs-python-dev-using-eglot-pylsp-ruff-pylint-flake8/)
+
 ### Safely terminating unused buffers
 
 The [buffer-terminator](https://github.com/jamescherti/buffer-terminator.el) Emacs package *automatically and safely kills buffers*, ensuring a clean and efficient workspace while *enhancing the performance of Emacs* by reducing open buffers, which minimizes active modes, timers, processes...
@@ -2298,6 +2302,9 @@ A value of `101` minimizes screen movement and maintains point visibility with m
 ```
 
 The main drawback of `101` is that Emacs will avoid recentering almost entirely, only adjusting the window just enough to keep point visible at the very top or very bottom of the screen. Point can stick to the top or bottom edge of the window, giving you very little context above or below, which can make editing harder if you want surrounding lines visible.
+
+Related articles:
+- [Configuring Emacs Scrolling for Better Usability](https://www.jamescherti.com/emacs-scrolling-better-performance-usability/)
 
 ### Optimization: Disabling `site-run-file` and `inhibit-default-init`
 
