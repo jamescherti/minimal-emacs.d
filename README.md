@@ -2299,24 +2299,6 @@ A value of `101` minimizes screen movement and maintains point visibility with m
 
 The main drawback of `101` is that Emacs will avoid recentering almost entirely, only adjusting the window just enough to keep point visible at the very top or very bottom of the screen. Point can stick to the top or bottom edge of the window, giving you very little context above or below, which can make editing harder if you want surrounding lines visible.
 
-### How to display Emacs startup duration?
-
-To measure and display the time taken for Emacs to start, you can use the following Emacs Lisp function. This function will report both the startup duration and the number of garbage collections that occurred during initialization.
-
-Add the following to your `~/.emacs.d/pre-early-init.el` file:
-```emacs-lisp
-(defun display-startup-time ()
-  "Display the startup time and number of garbage collections."
-  (message "Emacs init loaded in %.2f seconds (Full emacs-startup: %.2fs) with %d garbage collections."
-           (float-time (time-subtract after-init-time before-init-time))
-           (time-to-seconds (time-since before-init-time))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'display-startup-time 100)
-```
-
-(Alternatively, you may use the built-in `M-x emacs-init-time` command to obtain the startup duration. However, `emacs-init-time` does not account for the portion of the startup process that occurs after `after-init-time`.)
-
 ### Optimization: Disabling `site-run-file` and `inhibit-default-init`
 
 Emacs performs a multi-stage initialization sequence that may include system-level configuration before and after user configuration. For a minimal and fully deterministic setup, these stages can be disabled.
@@ -2619,6 +2601,13 @@ To ensure the *minimal-emacs.d* configuration loads `post-early-init.el`, `pre-i
 This will ensure that the *minimal-emacs.d* configuration loads `post-early-init.el`, `pre-init.el`, and `post-init.el` from `~/.config/minimal-emacs.d/`.
 
 Keep in mind that if you change the `minimal-emacs-user-directory`, *minimal-emacs.d* will attempt to load the rest of the configuration from that directory (e.g., `~/.config/minimal-emacs/post-early-init.el`, `~/.config/minimal-emacs/pre-init.el` and `~/.config/minimal-emacs/post-init.el`, etc.).
+
+### How to display Emacs startup duration?
+
+As an Emacs configuration grows, startup time can gradually increase. Measuring that increase accurately makes it easier to identify regressions. However, the built-in emacs-init-time function does not measure the entire startup sequence.
+
+Here is how to accurately measure your total Emacs startup time:
+**[Measuring Emacs Startup Time More Accurately Than the Built-in emacs-init-time Function](https://www.jamescherti.com/measuring-emacs-startup-time/)**
 
 ### How to make minimal-emacs.d install packages in the early-init phase instead of the init phase?
 
