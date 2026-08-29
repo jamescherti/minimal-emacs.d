@@ -487,10 +487,6 @@ This should be called after changing `auto-save-list-file-prefix'."
       ;; Suppress Dired buffer kill prompt for deleted dirs
       dired-clean-confirm-killing-deleted-buffers nil)
 
-;; This is a higher-level predicate that wraps `dired-directory-changed-p'
-;; with additional logic. This `dired-buffer-stale-p' predicate handles remote
-;; files, wdired, unreadable dirs, and delegates to dired-directory-changed-p
-;; for modification checks.
 (setq auto-revert-remote-files nil)
 
 ;; Auto refresh Dired buffers, but only if the directory's modification time has
