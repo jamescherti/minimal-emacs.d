@@ -60,7 +60,7 @@ This variable holds a list of Emacs UI features that can be enabled:
 (defvar minimal-emacs-frame-title-format "%b – Emacs"
   "Template for displaying the title bar of visible and iconified frame.")
 
-(defvar minimal-emacs-debug (bound-and-true-p init-file-debug)
+(defvar minimal-emacs-debug (when init-file-debug t)
   "Non-nil to enable debug.")
 
 (defvar minimal-emacs-optimize-startup-gc t
