@@ -1866,7 +1866,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;; Hide files from dired
 (setq dired-omit-files (concat "\\`[.]\\'"
                                "\\|\\(?:\\.js\\)?\\.meta\\'"
-                               "\\|\\.\\(?:elc|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
+                               "\\|\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                                "\\|^\\.DS_Store\\'"
                                "\\|^\\.\\(?:svn\\|git\\)\\'"
                                "\\|^\\.ccls-cache\\'"
