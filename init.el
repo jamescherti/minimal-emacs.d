@@ -477,7 +477,6 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;;; Dired and ls-lisp
 
 (setq dired-free-space nil
-      dired-dwim-target t  ; Propose a target for intelligent moving/copying
       dired-deletion-confirmer 'y-or-n-p
       dired-filter-verbose nil
       dired-recursive-deletes 'top
