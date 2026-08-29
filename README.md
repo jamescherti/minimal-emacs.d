@@ -2346,6 +2346,40 @@ To prevent any system configuration from executing after the user initialization
 
 Disabling both `site-run-file` and `default.el` removes system-level interference, reduces startup variability, and establishes a fully controlled initialization environment suitable for minimal and reproducible configurations.
 
+### Splitting your configuration into multiple files
+
+As your configuration grows, your `post-init.el` might become difficult to navigate. A standard practice in Elisp development is to split a large configuration into smaller, modular files organized by topic (e.g., UI, programming languages, Org mode).
+
+Here is how you can organize your custom Elisp files:
+
+**Step 1:** Create a directory to store your modular configuration files, for example, `~/.emacs.d/lisp/`.
+
+**Step 2:** Create your individual configuration files inside the `~/.emacs.d/lisp/` directory. For example, create a file named ``~/.emacs.d/lisp/my-ui-config.el`.
+
+**Step 3:** At the end of `my-ui-config.el`, add the `provide` function so Emacs knows the feature has been loaded:
+
+```elisp
+;;; my-ui-config.el --- UI customizations -*- no-byte-compile: t; lexical-binding: t; -*-
+
+;; Your UI configuration goes here...
+(setq display-line-numbers-type 'relative)
+
+(provide 'my-ui-config)
+```
+
+**Step 4:** Add this new directory to your Emacs `load-path`. You can do this by adding the following line to the top of your `~/.emacs.d/post-init.el` (or `pre-init.el`):
+```elisp
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+```
+
+**Step 5:** Finally, load this file in your `~/.emacs.d/post-init.el` using `require`:
+
+```elisp
+(require 'my-ui-config)
+```
+
+This keeps your `post-init.el` clean and makes it much easier to maintain your setup.
+
 ### How to get the latest version of all packages? (unstable)
 
 By default, *minimal-emacs.d* is configured to prioritize packages from [GNU ELPA](https://elpa.gnu.org/) and [NonGNU ELPA](https://elpa.nongnu.org/) repositories over [MELPA](https://melpa.org/), ensuring greater stability.
