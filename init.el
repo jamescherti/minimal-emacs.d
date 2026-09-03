@@ -308,11 +308,11 @@ This should be called after changing `auto-save-list-file-prefix'."
       kill-do-not-save-duplicates t
 
       ;; Preserve the system clipboard before Emacs delete/kill operations. By
-      ;;default, deleting text in Emacs overwrites your system clipboard. For
-      ;;example, if you copy a link from a browser, switch to Emacs, and delete
-      ;;some text, your copied link is lost. This setting fixes that by pushing
-      ;;the clipboard contents into your paste history right before the
-      ;;deletion, ensuring external data remains retrievable via `yank-pop'.
+      ;; default, deleting text in Emacs overwrites your system clipboard. For
+      ;; example, if you copy a link from a browser, switch to Emacs, and delete
+      ;; some text, your copied link is lost. This setting fixes that by pushing
+      ;; the clipboard contents into your paste history right before the
+      ;; deletion, ensuring external data remains retrievable via `yank-pop'.
       save-interprogram-paste-before-kill t)
 
 ;;; Auto revert
