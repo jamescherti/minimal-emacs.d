@@ -85,18 +85,19 @@
       ;; This directs gpg-agent to use the minibuffer for passphrase entry
       epg-pinentry-mode 'loopback
 
-      ;; By default, Emacs stores sensitive authinfo credentials as unencrypted text
-      ;; in your home directory. Use GPG to encrypt the authinfo file for enhanced
-      ;; security.
+      ;; By default, Emacs stores sensitive authinfo credentials as unencrypted
+      ;; text in your home directory. Use GPG to encrypt the authinfo file for
+      ;; enhanced security.
       auth-sources '("~/.authinfo.gpg")
 
-      ;; Speed up 'find-library' and reduce completion clutter by excluding internal
-      ;; helper files. This provides a library-focused list.
+      ;; Speed up 'find-library' and reduce completion clutter by excluding
+      ;; internal helper files. This provides a library-focused list.
       find-library-include-other-files nil
 
-      ;; Protect the system from code injection vulnerabilities when browsing files.
-      ;; Disabling local 'eval' expressions ensures that opening a malicious project
-      ;; or third-party script cannot execute arbitrary Lisp code on your machine.
+      ;; Protect the system from code injection vulnerabilities when browsing
+      ;; files. Disabling local 'eval' expressions ensures that opening a
+      ;; malicious project or third-party script cannot execute arbitrary Lisp
+      ;; code on your machine.
       enable-local-eval nil)
 
 ;;; Minibuffer
@@ -147,8 +148,8 @@
       ;; Disable auto-adding a new line at the bottom when scrolling.
       next-line-add-newlines nil
 
-      ;; This setting forces Emacs to save bookmarks immediately after each change.
-      ;; Benefit: you never lose bookmarks if Emacs crashes.
+      ;; This setting forces Emacs to save bookmarks immediately after each
+      ;; change. Benefit: you never lose bookmarks if Emacs crashes.
       bookmark-save-flag 1
 
       uniquify-buffer-name-style 'forward
@@ -193,6 +194,7 @@
  ;; working directory so C-x C-f opens in the right folder and version control
  ;; tools recognize the Git repository.
  find-file-visit-truename t
+
  ;; Automatically follow a symlink to its source if that source is managed
  ;; by a version control system, rather than asking for permission.
  vc-follow-symlinks t
@@ -305,13 +307,12 @@ This should be called after changing `auto-save-list-file-prefix'."
       ;; Remove duplicates from the kill ring to reduce clutter
       kill-do-not-save-duplicates t
 
-      ;; Preserve the system clipboard before Emacs delete/kill operations.
-      ;;
-      ;; By default, deleting text in Emacs overwrites your system clipboard. For
-      ;; example, if you copy a link from a browser, switch to Emacs, and delete some
-      ;; text, your copied link is lost. This setting fixes that by pushing the
-      ;; clipboard contents into your paste history right before the deletion,
-      ;; ensuring external data remains retrievable via `yank-pop'.
+      ;; Preserve the system clipboard before Emacs delete/kill operations. By
+      ;;default, deleting text in Emacs overwrites your system clipboard. For
+      ;;example, if you copy a link from a browser, switch to Emacs, and delete
+      ;;some text, your copied link is lost. This setting fixes that by pushing
+      ;;the clipboard contents into your paste history right before the
+      ;;deletion, ensuring external data remains retrievable via `yank-pop'.
       save-interprogram-paste-before-kill t)
 
 ;;; Auto revert
@@ -467,10 +468,10 @@ This should be called after changing `auto-save-list-file-prefix'."
  tabify-regexp (rx line-start (zero-or-more ?\t) ?\s (one-or-more blank))
 
  ;; Prevent Emacs filling commands (such as `fill-paragraph', `fill-region',
- ;; `auto-fill-mode', and Evil's `gq' operator) from inserting line breaks inside
- ;; text that is currently hidden via text properties. This prevents accidental
- ;; corruption of folded outlines (e.g., in Org or Outline mode) and concealed
- ;; markup (e.g., hidden Markdown URLs).
+ ;; `auto-fill-mode', and Evil's `gq' operator) from inserting line breaks
+ ;; inside text that is currently hidden via text properties. This prevents
+ ;; accidental corruption of folded outlines (e.g., in Org or Outline mode) and
+ ;; concealed markup (e.g., hidden Markdown URLs).
  fill-nobreak-invisible t)
 
 ;;; Filetype
@@ -494,11 +495,12 @@ This should be called after changing `auto-save-list-file-prefix'."
 
       auto-revert-remote-files nil
 
-      ;; Auto refresh Dired buffers, but only if the directory's modification time has
-      ;; changed on disk. Using `dired-directory-changed-p' is efficient: it avoids
-      ;; the unconditional re-renders of `t', and skips the heavy overhead of
-      ;; `dired-buffer-stale-p' (which makes blocking I/O calls for every inserted
-      ;; subdirectory, causing UI freezes on remote/network drives).
+      ;; Auto refresh Dired buffers, but only if the directory's modification
+      ;; time has changed on disk. Using `dired-directory-changed-p' is
+      ;; efficient: it avoids the unconditional re-renders of `t', and skips the
+      ;; heavy overhead of `dired-buffer-stale-p' (which makes blocking I/O
+      ;; calls for every inserted subdirectory, causing UI freezes on
+      ;; remote/network drives).
       dired-auto-revert-buffer 'dired-directory-changed-p)
 
 ;; Automatically revert destination Dired buffers after file operations
@@ -544,8 +546,8 @@ This should be called after changing `auto-save-list-file-prefix'."
 
 ;;; Eglot
 
-(setq eglot-report-progress minimal-emacs-debug  ; Prevent minibuffer spam
-      eglot-autoshutdown t  ; Shut down after killing last managed buffer
+(setq eglot-report-progress init-file-debug ; Prevent minibuffer spam
+      eglot-autoshutdown t ; Shut down after killing last managed buffer
 
       ;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
       ;; Emacs to remain fully responsive, although LSP features will only become
@@ -555,12 +557,13 @@ This should be called after changing `auto-save-list-file-prefix'."
       ;; Activate Eglot in cross-referenced non-project files
       eglot-extend-to-xref t
 
-      ;; Disable margin indicators to prevent line-height shifts caused by emoji font
-      ;; rendering issues. This disables both `left-fringe' and `margin' indicators.
+      ;; Disable margin indicators to prevent line-height shifts caused by emoji
+      ;; font rendering issues. This disables both `left-fringe' and `margin'
+      ;; indicators.
       eglot-code-action-indications '(eldoc-hint))
 
 ;; Eglot optimization
-(if minimal-emacs-debug
+(if init-file-debug
     (setq eglot-events-buffer-config '(:size 2000000 :format full))
   ;; This reduces log clutter to improves performance.
   (setq jsonrpc-event-hook nil

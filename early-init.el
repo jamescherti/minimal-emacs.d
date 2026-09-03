@@ -60,9 +60,6 @@ This variable holds a list of Emacs UI features that can be enabled:
 (defvar minimal-emacs-frame-title-format "%b - Emacs"
   "Template for displaying the title bar of visible and iconified frame.")
 
-(defvar minimal-emacs-debug (when init-file-debug t)
-  "Non-nil to enable debug.")
-
 (defvar minimal-emacs-optimize-startup-gc t
   "If non-nil, increase `gc-cons-threshold' during startup to reduce pauses.
 After Emacs finishes loading, `gc-cons-threshold' is restored to the value
@@ -124,8 +121,6 @@ Note that this should end with a directory separator.")
 
 ;; Prefer loading newer compiled files
 (setq load-prefer-newer t)
-(when minimal-emacs-debug
-  (setq debug-on-error minimal-emacs-debug))
 
 (defvar minimal-emacs--success nil)
 (defun minimal-emacs--check-success ()
@@ -164,11 +159,11 @@ pre-early-init.el, and post-early-init.el.")
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
     (if (not minimal-emacs-load-compiled-init-files)
-        (load init-file :no-error (not minimal-emacs-debug) :nosuffix)
+        (load init-file :no-error (not init-file-debug) :nosuffix)
       ;; Remove the file suffix (.el, .el.gz, etc.) to let the `load' function
       ;; select between .el and .elc files.
       (setq init-file (minimal-emacs--remove-el-file-suffix init-file))
-      (load init-file :no-error (not minimal-emacs-debug)))))
+      (load init-file :no-error (not init-file-debug)))))
 
 (when minimal-emacs-load-pre-early-init
   (minimal-emacs-load-user-init "pre-early-init.el"))
@@ -212,11 +207,11 @@ pre-early-init.el, and post-early-init.el.")
   (setq native-comp-jit-compilation nil
         features (delq 'native-compile features)))
 
-(setq native-comp-warning-on-missing-source minimal-emacs-debug
-      native-comp-async-report-warnings-errors minimal-emacs-debug
-      jka-compr-verbose minimal-emacs-debug
-      byte-compile-warnings minimal-emacs-debug
-      byte-compile-verbose minimal-emacs-debug)
+(setq native-comp-warning-on-missing-source init-file-debug
+      native-comp-async-report-warnings-errors init-file-debug
+      jka-compr-verbose init-file-debug
+      byte-compile-warnings init-file-debug
+      byte-compile-verbose init-file-debug)
 
 ;;; Miscellaneous
 
@@ -230,7 +225,7 @@ pre-early-init.el, and post-early-init.el.")
  ;; Don't ping things that look like domain names.
  ffap-machine-p-known 'reject
 
- warning-minimum-level (if minimal-emacs-debug :warning :error)
+ warning-minimum-level (if init-file-debug :warning :error)
 
  ;; Establish a strict baseline for suppressed warnings.
  ;; - defvaralias: Emacs emits warnings when an alias is defined for a variable
@@ -245,7 +240,7 @@ pre-early-init.el, and post-early-init.el.")
  ;; Disable warnings from the legacy advice API. They aren't useful.
  ad-redefinition-action 'accept)
 
-(when minimal-emacs-debug
+(when init-file-debug
   (setq message-log-max 16384))
 
 ;;; Performance: Miscellaneous options
@@ -254,7 +249,7 @@ pre-early-init.el, and post-early-init.el.")
 ;; No second pass of case-insensitive search over auto-mode-alist.
 (setq auto-mode-case-fold nil)
 
-(unless minimal-emacs-debug
+(unless init-file-debug
   ;; Unset command line options irrelevant to the current OS. These options
   ;; are still processed by `command-line-1` but have no effect.
   (unless (eq system-type 'darwin)
@@ -330,7 +325,7 @@ this stage of initialization."
                         minimal-emacs--old-file-name-handler-alist))))
 
 (when (and minimal-emacs-optimize-file-name-handler-alist
-           (not minimal-emacs-debug)
+           (not init-file-debug)
            (not noninteractive))
   ;; Determine the state of bundled libraries using calc-loaddefs.el. If
   ;; compressed, retain the gzip handler in `file-name-handler-alist`. If
@@ -363,7 +358,7 @@ this stage of initialization."
 
 (when (and minimal-emacs-inhibit-redisplay-during-startup
            (not noninteractive)
-           (not minimal-emacs-debug))
+           (not init-file-debug))
   ;; Suppress redisplay and redraw during startup to avoid delays and
   ;; prevent flashing an unstyled Emacs frame.
   (setq-default inhibit-redisplay t)
@@ -378,7 +373,7 @@ this stage of initialization."
 
 (when (and minimal-emacs-inhibit-message-during-startup
            (not noninteractive)
-           (not minimal-emacs-debug))
+           (not init-file-debug))
   (setq-default inhibit-message t)
   (add-hook 'post-command-hook #'minimal-emacs--reset-inhibit-message -100))
 
@@ -389,7 +384,7 @@ this stage of initialization."
 
 (when (and minimal-emacs-disable-mode-line-during-startup
            (not noninteractive)
-           (not minimal-emacs-debug))
+           (not init-file-debug))
   (put 'mode-line-format
        'initial-value (default-toplevel-value 'mode-line-format))
   (setq-default mode-line-format nil)
@@ -429,7 +424,7 @@ this stage of initialization."
 ;;; UI elements
 
 (defun minimal-emacs--setup-toolbar (&rest _)
-  "Setup the toolbar."
+  "Setup the toolbar. The _ argument is ignored."
   (when (fboundp 'tool-bar-setup)
     (advice-remove 'tool-bar-setup #'ignore)
     (when (bound-and-true-p tool-bar-mode)
@@ -440,10 +435,10 @@ this stage of initialization."
         icon-title-format minimal-emacs-frame-title-format)
 
   ;; I intentionally avoid calling `menu-bar-mode', `tool-bar-mode', and
-  ;; `scroll-bar-mode' because manipulating frame parameters can trigger or queue
-  ;; a superfluous and potentially expensive frame redraw at startup, depending
-  ;; on the window system. The variables must also be set to `nil' so users don't
-  ;; have to call the functions twice to re-enable them.
+  ;; `scroll-bar-mode' because manipulating frame parameters can trigger or
+  ;; queue a superfluous and potentially expensive frame redraw at startup,
+  ;; depending on the window system. The variables must also be set to `nil' so
+  ;; users don't have to call the functions twice to re-enable them.
   (unless (memq 'menu-bar minimal-emacs-ui-features)
     (push '(menu-bar-lines . 0) default-frame-alist)
     (unless (memq window-system '(mac ns))
@@ -498,8 +493,8 @@ this stage of initialization."
  ;; use-package are configured before the first use-package form is evaluated in
  ;; post-early-init.el, pre-init.el, init.el, or post-init.el.
  use-package-expand-minimally t
- use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1)
- use-package-verbose minimal-emacs-debug
+ use-package-minimum-reported-time (if init-file-debug 0 0.1)
+ use-package-verbose init-file-debug
  use-package-always-ensure (not noninteractive)
  use-package-enable-imenu-support t
 
