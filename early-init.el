@@ -144,9 +144,13 @@ init files for the following initialization files: pre-init.el, post-init.el,
 pre-early-init.el, and post-early-init.el.")
 
 (defun minimal-emacs--remove-el-file-suffix (filename)
-  "Remove the Elisp file suffix from FILENAME and return it (.el, .el.gz...)."
-  (let ((suffixes (mapcar (lambda (ext) (concat ".el" ext))
-                          load-file-rep-suffixes)))
+  "Remove the Elisp suffix from FILENAME and return it (.el, .elc, .el.gz...).
+FILENAME is the full or relative path of the file as a string."
+  (let ((suffixes (apply #'append
+                         (mapcar (lambda (ext)
+                                   (list (concat ".elc" ext)
+                                         (concat ".el" ext)))
+                                 load-file-rep-suffixes))))
     (catch 'done
       (dolist (suffix suffixes filename)
         (when (string-suffix-p suffix filename)
