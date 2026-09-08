@@ -384,6 +384,8 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 
 **Note:** Setting `corfu-auto` to `t` to enable automatic completion is discouraged for both performance and security reasons. Continuous polling of heavy completion-at-point functions (CAPFs) and external LSP servers on every keystroke introduces latency. More significantly, automatic completion introduces security vulnerabilities when working with untrusted code. This background parsing forces external binaries and language servers to process buffer contents without explicit user intent, creating attack vectors for arbitrary code execution. It is recommended to activate `corfu-auto` only in directories where all files are trusted.
 
+Interesting article: [Why Emacs Consult async searches feel slow and how to speed them up? (consult-fd, consult-find, consult-grep, consult-ripgrep...)](https://www.jamescherti.com/emacs-consult-speed-async-searche-grep-ripgrep-fd-find/)
+
 ### Vertico, Consult, Marginalia, and Embark
 
 [Vertico](https://github.com/minad/vertico), [Consult](https://github.com/minad/consult), and [Embark](https://github.com/oantolin/embark) collectively enhance Emacs' completion and navigation capabilities.
