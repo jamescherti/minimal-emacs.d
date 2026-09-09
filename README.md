@@ -2281,10 +2281,10 @@ Enabling `debug-on-error` at this stage allows you to catch errors that might ot
 
 It is recommended to read: [Configuring Emacs scrolling for better performance and usability](https://www.jamescherti.com/emacs-scrolling-better-performance-usability/)
 
-By default, minimal-emacs.d sets `scroll-conservatively` to `20`:
+By default, minimal-emacs.d sets `scroll-conservatively` to `11`:
 
 ```emacs-lisp
-(setq scroll-conservatively 20)  ; Default minimal-emacs.d value
+(setq scroll-conservatively 11)  ; Default minimal-emacs.d value
 ```
 
 This makes Emacs recenters the window when the cursor moves past `scroll-conservatively` lines beyond the window edge.
