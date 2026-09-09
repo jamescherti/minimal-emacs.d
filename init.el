@@ -284,7 +284,8 @@ This should be called after changing `auto-save-list-file-prefix'."
           ("\\`/\\([^/]+/\\)*\\([^/]+\\)\\'"
            ;; Redirect absolute file paths auto-saves to the
            ;; `auto-save-list-file-prefix' directory. This appends the base
-           ;; filename to the prefix, avoiding #file.txt# files across the system.
+           ;; filename to the prefix, avoiding #file.txt# files across the
+           ;; system.
            ,(file-name-concat auto-save-list-file-prefix "\\2-") sha1)))
 
   (when (memq system-type '(windows-nt cygwin ms-dos))
@@ -365,12 +366,14 @@ This should be called after changing `auto-save-list-file-prefix'."
  ;; Move point to top/bottom of buffer before signaling a scrolling error.
  scroll-error-top-bottom t
 
- ;; Keep screen position if scroll command moved it vertically out of the window.
+ ;; Keep screen position if scroll command moved it vertically out of the
+ ;; window.
  scroll-preserve-screen-position t
 
- ;; Emacs recenters the window when the cursor moves past `scroll-conservatively'
- ;; lines beyond the window edge. A value over 101 disables recentering; the
- ;; default (0) is too eager. Here it is set to 20 for a balanced behavior.
+ ;; Emacs recenters the window when the cursor moves past
+ ;; `scroll-conservatively' lines beyond the window edge. A value over 101
+ ;; disables recentering; the default (0) is too eager. Here it is set to 20 for
+ ;; a balanced behavior.
  scroll-conservatively 20
 
  ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
@@ -433,8 +436,8 @@ This should be called after changing `auto-save-list-file-prefix'."
  fill-column 80)
 
 (setq
- ;; If enabled and `truncate-lines' is disabled, soft wrapping will not occur
- ;; when the window is narrower than `truncate-partial-width-windows' characters.
+ ;; If enabled and `truncate-lines' is nil, soft wrapping will not occur when
+ ;; the window is narrower than `truncate-partial-width-windows' characters.
  truncate-partial-width-windows nil
 
  ;; Enable indentation and completion using the TAB key
@@ -452,7 +455,7 @@ This should be called after changing `auto-save-list-file-prefix'."
  ;; This prevents unintended visual gaps and maintains a consistent appearance.
  comment-empty-lines t
 
- ;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
+ ;; Disable the obsolete practice of end-of-line spacing.
  sentence-end-double-space nil
 
  ;; According to the POSIX, a line is defined as "a sequence of zero or more
@@ -477,7 +480,7 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;;; Filetype
 
 (setq
- ;; Do not notify the user each time Python tries to guess the indentation offset
+ ;; Do not notify the user each time Python tries to guess the indent offset
  python-indent-guess-indent-offset-verbose nil
  sh-indent-after-continuation 'always)
 
@@ -549,8 +552,8 @@ This should be called after changing `auto-save-list-file-prefix'."
 (setq eglot-report-progress init-file-debug ; Prevent minibuffer spam
       eglot-autoshutdown t ; Shut down after killing last managed buffer
 
-      ;; A setting of nil or 0 means Eglot will not block the UI at all, allowing
-      ;; Emacs to remain fully responsive, although LSP features will only become
+      ;; A setting of 0 means Eglot will not block the UI at all, allowing Emacs
+      ;; to remain fully responsive, although LSP features will only become
       ;; available once the connection is established in the background.
       eglot-sync-connect 0
 
