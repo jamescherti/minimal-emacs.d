@@ -372,8 +372,7 @@ This should be called after changing `auto-save-list-file-prefix'."
 
  ;; Emacs recenters the window when the cursor moves past
  ;; `scroll-conservatively' lines beyond the window edge. A value over 101
- ;; disables recentering; the default (0) is too eager. Here it is set to 20 for
- ;; a balanced behavior.
+ ;; disables recentering; the default (0) is too eager.
  scroll-conservatively 11
 
  ;; 1. Preventing automatic adjustments to `window-vscroll' for long lines.
