@@ -1795,6 +1795,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 (setq mode-line-position-column-line-format '("%l:%C"))
 
 ;; Display of line numbers in the buffer:
+;; Read: https://www.jamescherti.com/emacs-display-line-numbers-mode-performance/
 (setq-default display-line-numbers-type 'relative)
 (dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
   (add-hook hook #'display-line-numbers-mode))
@@ -2701,6 +2702,8 @@ If you want to maintain a strictly version-controlled, declarative configuration
 ```
 
 ### Interesting articles
+
+- [Fixing Slow Scrolling in Emacs display-line-numbers-mode](https://www.jamescherti.com/emacs-display-line-numbers-mode-performance/): The display-line-numbers-mode and global-display-line-numbers-mode modes render line numbers in the margin of an Emacs window. Line-number display is implemented in the core C display engine, avoiding the overhead of legacy Elisp overlays like linum-mode. Despite the native C implementation, and even after configuring Emacs scrolling for better usability, specific configurations can still trigger expensive Lisp evaluations during the interactive command loop, vertical scrolling, and buffer initialization. This article outlines configurations that avoid unnecessary width calculations and initialization scans.
 
 - [Optimizing Emacs startup - Guide to deferred package loading with use-package](https://www.jamescherti.com/emacs-startup-defer-use-package-performance/): As an Emacs user, your configuration can easily grow from a few lightweight adjustments to a massive, hundred-package IDE. Without careful management, Emacs startup time can degrade from sub-second execution to several seconds, or minutes, in the worst cases. Eager package loading is one common source of startup overhead. This guide explains how Emacs loads libraries, how use-package configures package loading, and how deferred loading can reduce startup time.
 
