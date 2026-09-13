@@ -225,6 +225,10 @@
       ;; Skip confirmation prompts when creating a new file or buffer
       confirm-nonexistent-file-or-buffer nil)
 
+;; Add the ANSI color filter to the compilation filter hook to apply colors
+;; immediately during compilation output processing.
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
 ;;; Backup files
 
 (setq
