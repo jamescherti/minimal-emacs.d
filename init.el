@@ -211,7 +211,13 @@
 
 (setq ansi-color-for-comint-mode t ; Renders native ANSI colors in the shell
       comint-prompt-read-only t
-      comint-buffer-maximum-size 4096)
+      comint-buffer-maximum-size 4096
+      ;; Move the cursor to the bottom when the process prints new output
+      comint-move-point-for-output t
+      ;; Scroll the window viewport down when new output arrives
+      comint-scroll-to-bottom-on-output t
+      ;; Snap the view back down to the prompt the moment you start typing
+      comint-scroll-to-bottom-on-input t)
 
 ;;; Compilation
 
