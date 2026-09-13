@@ -427,6 +427,10 @@ This should be called after changing `auto-save-list-file-prefix'."
  delete-pair-blink-delay 0.03)
 
 (setq-default
+ ;; Saves CPU cycles by preventing the display engine from continually
+ ;; calculating and redrawing hollow cursors in inactive windows.
+ cursor-in-non-selected-windows nil
+
  ;; Continue wrapped lines at whitespace rather than breaking in the
  ;; middle of a word.
  word-wrap t
