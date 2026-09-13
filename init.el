@@ -100,6 +100,9 @@
       ;; code on your machine.
       enable-local-eval nil)
 
+;;  `prettify-symbols-mode': Show unprettified symbol at point
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+
 ;;; Minibuffer
 
 (setq enable-recursive-minibuffers t ; Allow nested minibuffers
