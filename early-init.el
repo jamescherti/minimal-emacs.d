@@ -451,6 +451,10 @@ this stage of initialization."
   ;; users don't have to call the functions twice to re-enable them.
   (unless (memq 'menu-bar minimal-emacs-ui-features)
     (push '(menu-bar-lines . 0) default-frame-alist)
+    ;; Fix #104: menu bar remaining visible on TTY frames
+    ;; On a TTY, the initial frame is created before early-init.el is loaded, so
+    ;; `default-frame-alist' does not apply to it and the menu bar remains
+    ;; visible.
     (unless initial-window-system
       (set-frame-parameter nil 'menu-bar-lines 0))
     (unless (memq window-system '(mac ns))
