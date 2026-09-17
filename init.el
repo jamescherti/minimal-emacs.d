@@ -561,6 +561,7 @@ This should be called after changing `auto-save-list-file-prefix'."
  help-enable-completion-autoload nil
  help-enable-autoload nil
  help-enable-symbol-autoload nil
+ help-clean-buttons t
  help-window-select t)  ;; Focus new help windows when opened
 
 ;;; Eglot
