@@ -451,6 +451,8 @@ this stage of initialization."
   ;; users don't have to call the functions twice to re-enable them.
   (unless (memq 'menu-bar minimal-emacs-ui-features)
     (push '(menu-bar-lines . 0) default-frame-alist)
+    (unless initial-window-system
+      (set-frame-parameter nil 'menu-bar-lines 0))
     (unless (memq window-system '(mac ns))
       (setq menu-bar-mode nil)))
 
