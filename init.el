@@ -586,9 +586,10 @@ This should be called after changing `auto-save-list-file-prefix'."
 (if init-file-debug
     (setq eglot-events-buffer-config '(:size 2000000 :format full))
   ;; This reduces log clutter to improves performance.
+  (with-no-warnings
+    (setq eglot-events-buffer-size 0))  ; Deprecated
   (setq jsonrpc-event-hook nil
         ;; Reduce memory usage and avoid cluttering *EGLOT events* buffer
-        eglot-events-buffer-size 0  ; Deprecated
         eglot-events-buffer-config '(:size 0 :format short)))
 
 ;;; Flymake
