@@ -245,9 +245,8 @@ FILENAME is the full or relative path of the file as a string."
  ad-redefinition-action 'accept)
 
 ;; Improve performance on Windows by fixing file I/O and process bottlenecks.
-(when (memq system-type '(windows-nt cygwin ms-dos))
-  (setq w32-pipe-read-delay 0                 ; Faster IPC
-        w32-get-true-file-attributes nil      ; Decrease file IO workload
+(when (eq system-type 'windows-nt)
+  (setq w32-get-true-file-attributes nil      ; Decrease file IO workload
         w32-pipe-buffer-size (* 128 1024)))   ; Read more at a time
 
 (when init-file-debug
