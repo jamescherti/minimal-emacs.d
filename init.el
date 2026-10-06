@@ -265,6 +265,16 @@
 ;;; VC
 
 (setq vc-git-print-log-follow t
+      ;; Remove obsolete version control systems to enhance file loading
+      ;; performance, especially over TRAMP:
+      ;;   - SCCS: A historical version control system.
+      ;;   - SRC: A niche system with limited adoption.
+      ;;   - Bzr: Obsolete. Even Canonical migrated to Git.
+      ;;   - CVS: Largely superseded by newer version control systems.
+      ;; Exception:
+      ;;   - RCS: Obsolete, but still used by some sysadmins to version
+      ;;     individual files, including files under /etc.
+      vc-handled-backends '(Git SVN Hg RCS)
       vc-git-diff-switches '("--histogram"))  ; Faster algorithm for diffing.
 
 ;;; Auto save
