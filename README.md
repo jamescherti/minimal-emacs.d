@@ -3,6 +3,10 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
+- Git repository: [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)
+- Author: [James Cherti](https://www.jamescherti.com/)
+- License: GPL
+
 ## Introduction
 
 The [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d) project is a **fast and lightweight** minimal Emacs starter kit (`init.el` and `early-init.el`) that **gives you full control over your configuration**. It provides better defaults, an optimized startup, and a clean foundation for building your own vanilla Emacs setup.
