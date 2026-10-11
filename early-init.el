@@ -277,9 +277,8 @@ FILENAME is the full or relative path of the file as a string."
    ;; icon fonts on Windows. This will increase memory usage.
    inhibit-compacting-font-caches t
 
-   ;; Resizing the Emacs frame can be costly when changing the font. Disable this
-   ;; to improve startup times with fonts larger than the system default.
    frame-resize-pixelwise t
+   window-resize-pixelwise nil
 
    ;; Without this, Emacs will try to resize itself to a specific column size
    frame-inhibit-implied-resize t
