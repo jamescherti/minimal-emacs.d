@@ -427,8 +427,10 @@ this stage of initialization."
             (setq mode-line-format minimal-emacs--hidden-mode-line)
             (kill-local-variable 'minimal-emacs--hidden-mode-line)))))))
 
-(advice-add 'startup--load-user-init-file :around
-            #'minimal-emacs--startup-load-user-init-file)
+(unless (or noninteractive
+            init-file-debug)
+  (advice-add 'startup--load-user-init-file :around
+              #'minimal-emacs--startup-load-user-init-file))
 
 ;;; UI elements
 
