@@ -343,8 +343,9 @@ this stage of initialization."
    'file-name-handler-alist
    (if (locate-file-internal "calc-loaddefs.el" load-path)
        nil
-     (list (rassq 'jka-compr-handler
-                  minimal-emacs--old-file-name-handler-alist))))
+     (let ((handler (rassq 'jka-compr-handler
+                           minimal-emacs--old-file-name-handler-alist)))
+       (when handler (list handler)))))
 
   ;; Ensure the new value persists through any current let-binding.
   (put 'file-name-handler-alist 'initial-value
