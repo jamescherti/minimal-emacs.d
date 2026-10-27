@@ -456,7 +456,7 @@ this stage of initialization."
     ;; visible.
     (unless initial-window-system
       (set-frame-parameter nil 'menu-bar-lines 0))
-    (unless (memq window-system '(mac ns))
+    (unless (memq initial-window-system '(mac ns))
       (setq menu-bar-mode nil)))
 
   (when (fboundp 'tool-bar-setup)
