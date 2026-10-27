@@ -186,7 +186,7 @@ FILENAME is the full or relative path of the file as a string."
 
 (defun minimal-emacs--restore-gc ()
   "Restore garbage collection settings."
-  (if (and (bound-and-true-p minimal-emacs-gc-cons-threshold-restore-delay)
+  (if (and (numberp minimal-emacs-gc-cons-threshold-restore-delay)
            ;; In noninteractive mode, the event loop does not run
            (not noninteractive))
       ;; Defer garbage collection during initialization to avoid 2 collections.
