@@ -208,9 +208,8 @@ FILENAME is the full or relative path of the file as a string."
 (unless (and (featurep 'native-compile)
              (fboundp 'native-comp-available-p)
              (native-comp-available-p))
-  ;; Deactivate the `native-compile' feature if it is not available
-  (setq native-comp-jit-compilation nil
-        features (delq 'native-compile features)))
+  ;; Disable JIT compilation if native compilation is unavailable.
+  (setq native-comp-jit-compilation nil))
 
 (setq native-comp-warning-on-missing-source init-file-debug
       native-comp-async-report-warnings-errors init-file-debug
