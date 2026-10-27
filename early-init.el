@@ -326,6 +326,7 @@ this stage of initialization."
 
 (defun minimal-emacs--restore-file-name-handler-alist ()
   "Restore `file-name-handler-alist'."
+  (advice-remove 'command-line-1 #'minimal-emacs--respect-file-handlers)
   (set-default-toplevel-value
    'file-name-handler-alist
    ;; Merge instead of overwrite to preserve any changes made since startup.
@@ -436,6 +437,7 @@ this stage of initialization."
 
 (defun minimal-emacs--setup-toolbar (&rest _)
   "Setup the toolbar. The _ argument is ignored."
+  (advice-remove 'startup--load-user-init-file #'minimal-emacs--setup-toolbar)
   (when (fboundp 'tool-bar-setup)
     (advice-remove 'tool-bar-setup #'ignore)
     (when (bound-and-true-p tool-bar-mode)
