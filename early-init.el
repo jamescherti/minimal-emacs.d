@@ -198,7 +198,8 @@ FILENAME is the full or relative path of the file as a string."
     ;; `gc-cons-threshold' is managed by minimal-emacs.d
     (add-hook 'emacs-startup-hook #'minimal-emacs--restore-gc 105)
   ;; gc-cons-threshold is not managed by minimal-emacs.d.
-  (when (= gc-cons-threshold most-positive-fixnum)
+  (when (= gc-cons-threshold
+           (if noninteractive 268435456 most-positive-fixnum))
     (setq gc-cons-threshold minimal-emacs--backup-gc-cons-threshold
           gc-cons-percentage minimal-emacs--backup-gc-cons-percentage)))
 
