@@ -662,7 +662,7 @@ This should be called after changing `auto-save-list-file-prefix'."
 
       dabbrev-ignored-buffer-modes
       '(archive-mode image-mode docview-mode tags-table-mode
-                     pdf-view-mode tags-table-mode)
+                     pdf-view-mode)
 
       dabbrev-ignored-buffer-regexps
       '(;; - Buffers starting with a space (internal or temporary buffers)
