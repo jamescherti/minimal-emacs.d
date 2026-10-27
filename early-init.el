@@ -69,7 +69,7 @@ stored in `minimal-emacs-gc-cons-threshold'.")
   "Value to which `gc-cons-threshold' is set after Emacs startup.
 Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
-(defvar minimal-emacs-gc-cons-percentage gc-cons-percentage
+(defvar minimal-emacs-gc-cons-percentage minimal-emacs--backup-gc-cons-percentage
   "Value to which `gc-cons-percentage' is set after Emacs startup.
 Ignored if `minimal-emacs-optimize-startup-gc' is nil.")
 
