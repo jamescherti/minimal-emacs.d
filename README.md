@@ -363,10 +363,13 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ;; can be selected by navigating up or down.
 (use-package corfu
   :init
+  ;; Disable Ispell completion function. As an alternative try `cape-dict'.
   (setq text-mode-ispell-word-completion nil)
+
   ;; Hide commands in M-x which do not apply to the current mode.
   (setq read-extended-command-predicate #'command-completion-default-include-p)
-  ;; Disable Ispell completion function. As an alternative try `cape-dict'.
+
+  ;; Enable completion by pressing TAB.
   (setq tab-always-indent 'complete)
 
   (global-corfu-mode 1))
