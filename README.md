@@ -2824,6 +2824,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 ## Links
 
+- [minimal-emacs.d @jamescherti.com: A Customizable Emacs init.el and early-init.el for Better Defaults and Optimized Startup](https://www.jamescherti.com/minimal-emacs-d/)
 - [minimal-emacs.d @GitHub](https://github.com/jamescherti/minimal-emacs.d)
 
 Contribution from the minimal-emacs.d community:
