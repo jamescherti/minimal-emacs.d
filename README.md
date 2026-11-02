@@ -1244,7 +1244,6 @@ To set up Language Server Protocol (LSP) servers using Eglot, you can configure 
 (use-package eglot
   :ensure nil
   :commands (eglot-ensure
-             eglot-rename
              eglot-format-buffer))
 ```
 
