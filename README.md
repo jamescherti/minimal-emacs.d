@@ -5,7 +5,7 @@
 
 - Git repository: [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d)
 - Author: [James Cherti](https://www.jamescherti.com/)
-- License: GPL
+- License: GPL 3.0 or later
 
 ## Introduction
 
