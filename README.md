@@ -166,9 +166,11 @@ To ensure your configuration remains fast and responsive, always defer package l
 
 To customize your Emacs setup to include various user interface elements, you can use the following settings in your ``~/.emacs.d/pre-early-init.el``:
 
+<!-- pre-early-init.el:begin -->
 ``` emacs-lisp
 (setq minimal-emacs-ui-features '(context-menu tool-bar menu-bar dialogs tooltips))
 ```
+<!-- pre-early-init.el:end -->
 
 These settings control the visibility of dialogs, context menus, toolbars, menu bars, and tooltips.
 
@@ -179,12 +181,14 @@ Emacs, by default, stores various configuration files, caches, backups, and othe
 A common solution to this issue is installing the no-littering package; however, this package is not essential.
 
 An alternative lightweight approach is to simply change the default `~/.emacs.d` directory to `~/.emacs.d/var/`, which will contain all the files that Emacs typically stores in the base directory. This can be accomplished by adding the following code to `~/.emacs.d/pre-early-init.el`:
+<!-- pre-early-init.el:begin -->
 ``` emacs-lisp
 ;;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
 ;; NOTE: This must be placed in 'pre-early-init.el'.
 (setq user-emacs-directory (expand-file-name "var/" minimal-emacs-user-directory))
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 ```
+<!-- pre-early-init.el:end -->
 
 **IMPORTANT:** The code above should be added to `~/.emacs.d/pre-early-init.el`, not the other files, as it modifies the behavior of all subsequent init files.
 
@@ -204,6 +208,7 @@ To check if native compilation is enabled, evaluate:
 (A non-nil result indicates that native compilation is available.)
 
 Ensure all libraries are byte-compiled and native-compiled using [compile-angel.el](https://github.com/jamescherti/compile-angel.el). To install compile-angel, add the following code to the `~/.emacs.d/post-init.el` file:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; Native compilation enhances Emacs performance by converting Elisp code into
 ;; native machine code, resulting in faster execution and improved
@@ -240,6 +245,7 @@ Ensure all libraries are byte-compiled and native-compiled using [compile-angel.
   ;; the mode `compile-angel-on-load-mode' was activated.
   (compile-angel-on-load-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### Environment Variable Synchronization (Essential for macOS users)
 
@@ -247,6 +253,7 @@ On macOS, GUI applications (launched from the Finder, Dock, or Spotlight) do not
 
 To fix this, add **exec-path-from-shell** to `~/.emacs.d/post-init.el`:
 
+<!-- post-init.el:begin -->
 ```elisp
 (use-package exec-path-from-shell
   :if (and (or (display-graphic-p) (daemonp))
@@ -267,10 +274,12 @@ To fix this, add **exec-path-from-shell** to `~/.emacs.d/post-init.el`:
   ;; Initialize
   (exec-path-from-shell-initialize))
 ```
+<!-- post-init.el:end -->
 
 ### File Management & History: recentf, savehist, saveplace, and auto-revert?
 
 The recentf, savehist, saveplace, and auto-revert built-in packages are already configured by *minimal-emacs.d*. All you need to do is activate them by adding the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Auto-revert in Emacs is a feature that automatically updates the
 ;; contents of a buffer to reflect changes made to the underlying file
@@ -329,6 +338,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
   (setq save-place-limit 400)
   (save-place-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### auto-save-mode (Prevent data loss in case of crashes)
 
@@ -336,6 +346,7 @@ Enabling `auto-save-mode` mitigates the risk of data loss in the event of a cras
 
 To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
 ;; `recover-session' to restore unsaved changes.
@@ -347,6 +358,7 @@ To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 ;; Trigger an auto-save 30 seconds of idle time.
 (setq auto-save-timeout 30)
 ```
+<!-- post-init.el:end -->
 
 ### Completion System (Corfu, Vertico, Consult)
 
@@ -357,6 +369,7 @@ To enable autosave, add the following to `~/.emacs.d/post-init.el`:
 ![](https://github.com/minad/corfu/blob/screenshots/popupinfo-dark.png?raw=true)
 
 To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Corfu enhances in-buffer completion by displaying a compact popup with
 ;; current candidates, positioned either below or above the point. Candidates
@@ -387,6 +400,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 ```
+<!-- post-init.el:end -->
 
 **Note:** Setting `corfu-auto` to `t` to enable automatic completion is discouraged for both performance and security reasons. Continuous polling of heavy completion-at-point functions (CAPFs) and external LSP servers on every keystroke introduces latency. More significantly, automatic completion introduces security vulnerabilities when working with untrusted code. This background parsing forces external binaries and language servers to process buffer contents without explicit user intent, creating attack vectors for arbitrary code execution. It is recommended to activate `corfu-auto` only in directories where all files are trusted.
 
@@ -405,6 +419,7 @@ Embark integrates with these tools to provide context-sensitive actions and quic
 ![](https://github.com/minad/consult/blob/screenshots/consult-grep.gif?raw=true)
 
 Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and Embark:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Vertico provides a vertical completion interface, making it easier to
 ;; navigate and select from completion candidates (e.g., when `M-x` is pressed).
@@ -583,6 +598,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
 )
 ```
+<!-- post-init.el:end -->
 
 ### Enhancing undo/redo
 
@@ -594,6 +610,7 @@ The default undo system in Emacs has two main issues that undo-fu fixes:
 2. **Accidental over-redo**: When redoing, it's easy to go too far back, past the point where you started the undo, which makes it hard to return to the exact state you wanted to restore.
 
 To install and configure these packages, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
 ;; system, providing more convenient undo/redo functionality.
@@ -613,11 +630,13 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
   :init
   (undo-fu-session-global-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### Changing the default theme
 
 For instance, to switch to a another theme than the default one, add the following to the `~/.emacs.d/post-init.el` file:
 
+<!-- post-init.el:begin -->
 ```emacs-lisp
 (let ((inhibit-redisplay t))
   ;; Disable all active themes
@@ -625,6 +644,7 @@ For instance, to switch to a another theme than the default one, add the followi
   ;; Load the built-in theme
   (load-theme 'modus-operandi t))
 ```
+<!-- post-init.el:end -->
 
 (If you prefer dark themes, replace `modus-operandi` with `modus-vivendi`.)
 
@@ -665,6 +685,7 @@ If you're interested in exploring third-party Emacs themes, consider the followi
 
 Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency if you are accustomed to Vim's modal editing style. Add the following to `~/.emacs.d/post-init.el` to set up [Evil mode](https://github.com/emacs-evil/evil):
 
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Uncomment the following if you are using undo-fu
 ;; (setq evil-undo-system 'undo-fu)
@@ -729,20 +750,24 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
   :commands (goto-last-change
              goto-last-change-reverse))
 ```
+<!-- post-init.el:end -->
 
 You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-bar.el) package to enhance the built-in Emacs tab-bar with a minimalist, Vim-inspired design that automatically adapts to the active Emacs theme. Beyond its Vim-inspired design, the *vim-tab-bar* package is valued by users who prioritize theme consistency, as it integrates the Emacs tab-bar with any Emacs theme, producing a visually coherent and polished interface:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
   :init
   (vim-tab-bar-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ![](https://raw.githubusercontent.com/jamescherti/vim-tab-bar.el/main/.screenshots/emacs-tab-like-vim.png)
 
 *(The screenshot above showcases how vim-tab-bar modifies the built-in Emacs tab-bar.)*
 
 The `evil-surround` package simplifies handling surrounding characters, such as parentheses, brackets, quotes, etc. It provides key bindings to easily add, change, or delete these surrounding characters in pairs. For instance, you can surround the currently selected text with double quotes in visual state using `S"` or `gS"`:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; The evil-surround package simplifies handling surrounding characters, such as
 ;; parentheses, brackets, quotes, etc. It provides key bindings to easily add,
@@ -766,8 +791,10 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
   :config
   (global-evil-surround-mode 1))
 ```
+<!-- post-init.el:end -->
 
 You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; The following code enables commenting and uncommenting by pressing gcc in
 ;; normal mode and gc in visual mode.
@@ -778,6 +805,7 @@ You can also add the following code to enable commenting and uncommenting by pre
     (comment-or-uncomment-region beg end))
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 ```
+<!-- post-init.el:end -->
 
 ### Persisting and Restoring all buffers, windows/split, tab-bar, frames...
 
@@ -788,6 +816,7 @@ With **easysession**, your Emacs setup is restored automatically when you restar
 Easysession also supports extensions, enabling the restoration of Magit buffers and the scratch buffer. Custom extensions can also be created to extend its functionality.
 
 To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; The easysession Emacs package is a session manager for Emacs that can persist
 ;; and restore file editing buffers, indirect buffers/clones, Dired buffers,
@@ -833,12 +862,14 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   ;; - To save the session at regular intervals, and when Emacs exits.
   (easysession-setup))
 ```
+<!-- post-init.el:end -->
 
 ### Configuring markdown-mode (e.g., README.md syntax)
 
 The [markdown-mode](https://github.com/jrblevin/markdown-mode) package provides a major mode for Emacs for syntax highlighting, editing commands, and preview support for Markdown documents. It supports core Markdown syntax as well as extensions like GitHub Flavored Markdown (GFM).
 
 To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; The markdown-mode package provides a major mode for Emacs for syntax
 ;; highlighting, editing commands, and preview support for Markdown documents.
@@ -856,10 +887,12 @@ To configure **markdown-mode**, add the following to `~/.emacs.d/post-init.el`:
   (:map markdown-mode-map
         ("C-c C-e" . markdown-do)))
 ```
+<!-- post-init.el:end -->
 
 This configuration sets up `markdown-mode` with deferred loading to improve startup performance. The `:commands` and `:mode` keywords ensure that the mode is loaded only when needed-for example, when opening `.md`, `.markdown`, or `README.md` files. Files named `README.md` are specifically associated with `gfm-mode`, which is for GitHub Flavored Markdown syntax. The `markdown-command` variable is set to `"multimarkdown"` to specify the Markdown processor used for previews and exports. Additionally, a keybinding (`C-c C-e`) is defined in `markdown-mode-map` to invoke `markdown-do`, which can be customized to perform common Markdown-related actions.
 
 **Table of contents:** To generate a table of contents when editing Markdown files, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; Automatically generate a table of contents when editing Markdown files
 (use-package markdown-toc
@@ -870,6 +903,7 @@ This configuration sets up `markdown-mode` with deferred loading to improve star
   :init
   (setq markdown-toc-header-toc-title "**Table of Contents**"))
 ```
+<!-- post-init.el:end -->
 
 Once installed:
 
@@ -901,6 +935,7 @@ With Kirigami, folding key bindings only need to be configured **once**. After t
 - `kirigami-toggle-fold`: Toggle the fold at point.
 
 To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package kirigami
   :commands (kirigami-open-fold
@@ -931,6 +966,7 @@ To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
 ;;   (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
 ;;   (define-key evil-normal-state-map "zm" 'kirigami-close-folds))
 ```
+<!-- post-init.el:end -->
 
 With Kirigami, folding key bindings only need to be configured **once**. After that, the same keys work consistently across all supported major and minor modes, providing a unified and predictable experience for opening and closing folds.
 
@@ -947,6 +983,7 @@ Alternatively, `hs-minor-mode` offers basic code folding for blocks defined by c
 
 For example, to enable `outline-minor-mode`:
 
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; The built-in outline-minor-mode provides structured code folding in modes
 ;; such as Emacs Lisp and Python, allowing users to collapse and expand sections
@@ -974,8 +1011,10 @@ For example, to enable `outline-minor-mode`:
 (add-hook 'markdown-mode-hook #'outline-minor-mode)
 (add-hook 'diff-mode-hook #'outline-minor-mode)
 ```
+<!-- post-init.el:end -->
 
 To enable `hs-minor-mode`, which is ideal for C-style languages and others that use braces `{}`:
+<!-- post-init.el:begin -->
 ```elisp
 (add-hook 'c-mode-hook #'hs-minor-mode)
 (add-hook 'c++-mode-hook #'hs-minor-mode)
@@ -983,10 +1022,12 @@ To enable `hs-minor-mode`, which is ideal for C-style languages and others that 
 (add-hook 'sh-mode-hook #'hs-minor-mode)
 (add-hook 'html-mode-hook #'hs-minor-mode)
 ```
+<!-- post-init.el:end -->
 
 #### outline-indent-minor-mode: Folding based on indentation levels
 
 For folding based on indentation levels, the **[outline-indent](https://github.com/jamescherti/outline-indent.el)** Emacs package provides a minor mode that enables folding according to the indentation structure:
+<!-- post-init.el:begin -->
 ```elisp
 ;; The outline-indent Emacs package provides a minor mode that enables code
 ;; folding based on indentation levels.
@@ -1012,12 +1053,14 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ;; Haskell
 (add-hook 'haskell-mode-hook #'outline-indent-minor-mode)
 ```
+<!-- post-init.el:end -->
 
 ![](https://raw.githubusercontent.com/jamescherti/outline-indent.el/main/.images/screenshot2.png)
 
 #### treesit-fold
 
 It is also recommended to install [treesit-fold](https://github.com/emacs-tree-sitter/treesit-fold), which provides intelligent code folding by using the structural understanding of the built-in tree-sitter parser. Unlike traditional folding methods that rely on regular expressions or indentation, treesit-fold uses the actual syntax tree of the code to accurately identify foldable regions such as functions, classes, comments, and documentation strings. This allows for faster and more precise folding behavior that respects the grammar of the programming language, ensuring that fold boundaries are always syntactically correct even in complex or nested code structures.
+<!-- post-init.el:begin -->
 ```elisp
 ;; Intelligent code folding by using the structural understanding of the
 ;; built-in tree-sitter parser. Unlike traditional folding methods that rely on
@@ -1056,6 +1099,7 @@ It is also recommended to install [treesit-fold](https://github.com/emacs-tree-s
 (add-hook 'html-ts-mode-hook #'treesit-fold-mode)
 (add-hook 'bash-ts-mode-hook #'treesit-fold-mode)
 ```
+<!-- post-init.el:end -->
 
 ### Asynchronous code formatting without cursor disruption
 
@@ -1066,6 +1110,7 @@ Apheleia solves both problems across all languages, replacing language-specific 
 To maintain cursor stability, Apheleia generates an RCS patch, applies it selectively, and employs a dynamic programming algorithm to reposition the cursor if necessary. If the formatting alters the vertical position of the cursor in the window, Apheleia adjusts the scroll position to preserve visual continuity across all displayed instances of the buffer. This allows enjoying automated code formatting without sacrificing editor responsiveness or usability.
 
 To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
 ;; Black and Prettier) asynchronously without disrupting the cursor position.
@@ -1074,6 +1119,7 @@ To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
              apheleia-global-mode)
   :hook ((prog-mode . apheleia-mode)))
 ```
+<!-- post-init.el:end -->
 
 ### Context-aware 'go to definition' functionality for 50+ programming languages
 
@@ -1082,6 +1128,7 @@ The [dumb-jump](https://github.com/jacktasia/dumb-jump) package provides context
 Unlike more sophisticated language-aware tools (e.g., eglot or lsp-mode), `dumb-jump' does not parse code semantically, which makes it lightweight and fast, but sometimes less precise. It integrates with popular navigation packages like `xref', allowing users to jump to definitions or references.
 
 To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package dumb-jump
   :commands dumb-jump-xref-activate
@@ -1113,6 +1160,7 @@ To configure **dumb-jump**, add the following to `~/.emacs.d/post-init.el`:
     (setq dumb-jump-force-searcher 'rg)
     (setq dumb-jump-prefer-searcher 'rg)))
 ```
+<!-- post-init.el:end -->
 
 ### Efficient template expansion with snippets
 
@@ -1123,6 +1171,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 (NOTE: Users of UltiSnips, a popular snippet engine for Vim, can export their snippets to YASnippet format using the tool [ultyas](https://github.com/jamescherti/ultyas))
 
 
+<!-- post-init.el:begin -->
 ```elisp
 ;; The official collection of snippets for yasnippet.
 (use-package yasnippet-snippets)
@@ -1147,6 +1196,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 
   (yas-global-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### Automatic removal of trailing whitespace on save
 
@@ -1155,6 +1205,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 The [stripspace](https://github.com/jamescherti/stripspace.el) Emacs package provides `stripspace-local-mode`, a minor mode that automatically removes trailing whitespace and blank lines at the end of the buffer when saving.
 
 To enable **stripspace** and automatically delete trailing whitespace, add the following configuration to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; The stripspace Emacs package provides stripspace-local-mode, a minor mode
 ;; that automatically removes trailing whitespace and blank lines at the end of
@@ -1182,6 +1233,7 @@ To enable **stripspace** and automatically delete trailing whitespace, add the f
   ;; editing experience without affecting cursor placement.
   (setq stripspace-restore-column t))
 ```
+<!-- post-init.el:end -->
 
 ### Highlighting uncommitted changes in the buffer margin (e.g., Git changes)
 
@@ -1190,6 +1242,7 @@ The [diff-hl](https://github.com/dgutov/diff-hl) package highlights uncommitted 
 ![](https://raw.githubusercontent.com/dgutov/diff-hl/refs/heads/master/screenshot.png)
 
 To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package diff-hl
   :commands (diff-hl-mode
@@ -1201,12 +1254,14 @@ To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-i
   (setq diff-hl-update-async t)  ; Do not block Emacs
   (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
 ```
+<!-- post-init.el:end -->
 
 ### Configuring org-mode
 
 Org mode is a major mode designed for organizing notes, planning, task management, and authoring documents using plain text with a simple and expressive markup syntax. It supports hierarchical outlines, TODO lists, scheduling, deadlines, time tracking, and exporting to multiple formats including HTML, LaTeX, PDF, and Markdown.
 
 To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; Org mode is a major mode designed for organizing notes, planning, task
 ;; management, and authoring documents using plain text with a simple and
@@ -1228,17 +1283,21 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
   ;; (setq org-fontify-quote-and-verse-blocks t)
   (setq org-startup-truncated t))
 ```
+<!-- post-init.el:end -->
 
 The `org-appear` package temporarily reveals normally hidden elements (such as emphasis markers, links, or entities) when the cursor enters them, and hides them again when the cursor leaves. To configure **org-appear**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package org-appear
   :commands org-appear-mode
   :hook (org-mode . org-appear-mode))
 ```
+<!-- post-init.el:end -->
 
 ### Configuring LSP Servers with Eglot (built-in)
 
 To set up Language Server Protocol (LSP) servers using Eglot, you can configure it, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ``` emacs-lisp
 ;; Set up the Language Server Protocol (LSP) servers using Eglot.
 (use-package eglot
@@ -1246,6 +1305,7 @@ To set up Language Server Protocol (LSP) servers using Eglot, you can configure 
   :commands (eglot-ensure
              eglot-format-buffer))
 ```
+<!-- post-init.el:end -->
 
 Here is an example of how to configure Eglot to enable or disable certain options for the `pylsp` server in Python development. (Note that a third-party tool, [python-lsp-server](https://github.com/python-lsp/python-lsp-server), must be installed):
 
@@ -1285,6 +1345,7 @@ Beyond performance, *buffer-terminator* provides other benefits. For instance, i
 
 To configure **buffer-terminator**, add the following to `~/.emacs.d/post-init.el`:
 
+<!-- post-init.el:begin -->
 ```emacs-lisp
 (use-package buffer-terminator
   :init
@@ -1301,6 +1362,7 @@ To configure **buffer-terminator**, add the following to `~/.emacs.d/post-init.e
 
   (buffer-terminator-mode 1))
 ```
+<!-- post-init.el:end -->
 
 (By default, *buffer-terminator* automatically determines which buffers are safe to terminate. However, if you need to define specific rules for keeping or terminating certain buffers, you can configure them using `buffer-terminator-rules-alist`.)
 
@@ -1311,6 +1373,7 @@ The [treemacs](https://github.com/Alexander-Miller/treemacs) package is a file a
 ![](https://raw.githubusercontent.com/Alexander-Miller/treemacs/refs/heads/master/screenshots/screenshot.png)
 
 To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; A file and project explorer for Emacs that displays a structured tree
 ;; layout, similar to file browsers in modern IDEs. It functions as a sidebar
@@ -1426,12 +1489,14 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
 ;;
 ;; (treemacs-start-on-boot)
 ```
+<!-- post-init.el:end -->
 
 ### A better Emacs *help* buffer
 
 [Helpful](https://github.com/Wilfred/helpful) is an alternative to the built-in Emacs help that provides much more contextual information.
 
 To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; Helpful is an alternative to the built-in Emacs help that provides much more
 ;; contextual information.
@@ -1451,6 +1516,7 @@ To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
   :init
   (setq helpful-max-buffers 7))
 ```
+<!-- post-init.el:end -->
 
 ### Efficient jumps
 
@@ -1459,6 +1525,7 @@ The [avy](https://github.com/abo-abo/avy) package is a navigation framework desi
 It operates by generating a dynamic, temporary mapping: upon invocation, such as with the command `avy-goto-char` or `avy-goto-char-2`, the user inputs a target character, and `avy` highlights all visible instances on the screen with unique key sequences. Typing the short sequence corresponding to the desired location instantly moves the point directly there.
 
 To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package avy
   :commands (avy-goto-char
@@ -1467,6 +1534,7 @@ To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
   :init
   (global-set-key (kbd "C-'") 'avy-goto-char-2))
 ```
+<!-- post-init.el:end -->
 
 The author recommends using `avy-goto-char-2` (typically bound to `C-'`). Upon invocation, *avy* prompts the user to input a two-character sequence. Subsequently, all visible instances of this sequence are highlighted with unique, concise labels (e.g., single letters or numbers). The user then simply presses the key corresponding to the desired label, and *avy* instantly transports the cursor to that specific occurrence.
 
@@ -1480,6 +1548,7 @@ This [bufferfile.el](https://github.com/jamescherti/bufferfile.el) package provi
 The functions above also ensures that any modified buffers are saved prior to executing operations like renaming, deleting, or copying.
 
 To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package bufferfile
   :commands (bufferfile-copy
@@ -1495,6 +1564,7 @@ To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
   ;; Specifies the action taken after deleting a file and killing its buffer.
   (setq bufferfile-delete-switch-to 'parent-directory))
 ```
+<!-- post-init.el:end -->
 
 **The *bufferfile* package overcomes limitations in Emacs' built-in functions:**
 
@@ -1506,6 +1576,7 @@ To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
 ### Enhancing the Elisp development experience
 
 To enhance the Elisp development experience, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; Enables automatic indentation of code while typing
 (use-package aggressive-indent
@@ -1519,8 +1590,10 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
   :hook
   (emacs-lisp-mode . highlight-defined-mode))
 ```
+<!-- post-init.el:end -->
 
 Other optional packages that may be useful include:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; Prevent parenthesis imbalance
 (use-package paredit
@@ -1553,6 +1626,7 @@ Other optional packages that may be useful include:
              elisp-refs-special
              elisp-refs-symbol))
 ```
+<!-- post-init.el:end -->
 
 ### Inhibiting the mouse
 
@@ -1563,6 +1637,7 @@ This package is useful for users who want to disable the mouse to:
 - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse for navigation.
 
 To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;; This package is useful for users who want to disable the mouse to:
 ;; - Prevent accidental clicks or cursor movements that may unexpectedly change
@@ -1575,17 +1650,20 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
       (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
     (inhibit-mouse-mode 1)))
 ```
+<!-- post-init.el:end -->
 
 NOTE: `inhibit-mouse-mode` allows users to disable and re-enable mouse functionality, giving them the flexibility to use the mouse when needed.
 
 ### Showing the tab-bar
 
 Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively when multiple tabs are open:
+<!-- post-init.el:begin -->
 ```elisp
 ;; Configure the `tab-bar-show` variable to 1 to display the tab bar exclusively
 ;; when multiple tabs are open:
 (setopt tab-bar-show 1)
 ```
+<!-- post-init.el:end -->
 
 ### Offline Dictionary
 
@@ -1595,6 +1673,7 @@ This package enables Emacs to function as an offline dictionary.
 
 To enable *quick-sdcv*, add the following to your `~/.emacs.d/post-init.el`:
 
+<!-- post-init.el:begin -->
 ```emacs-lisp
 (use-package quick-sdcv
   :commands (quick-sdcv-search-at-point
@@ -1618,6 +1697,7 @@ To enable *quick-sdcv*, add the following to your `~/.emacs.d/post-init.el`:
   ;; You can then unfold the dictionaries you want to read.
   (setq quick-sdcv-fold-on-search t))
 ```
+<!-- post-init.el:end -->
 
 Here are the main interactive functions:
 - `M-x quick-sdcv-search-at-point`: Searches the word around the cursor and displays the result in a buffer.
@@ -1659,12 +1739,14 @@ This package also facilitates grouping buffers into categories, allowing buffers
 This category-based behavior can be further customized by assigning a function to the `persist-text-scale-buffer-category-function` variable. The function determines how buffers are categorized by returning a category identifier (string) based on the buffer's context. Buffers within the same category will share the same text scale.
 
 To configure the *persist-text-scale* package, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package persist-text-scale
   :init
   (setq text-scale-mode-step 1.07)
   (persist-text-scale-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### A Faster Terminal Emulator
 
@@ -1675,6 +1757,7 @@ The [vterm](https://github.com/akermu/emacs-libvterm) package provides is an Ema
 Unlike standard Emacs terminal modes, `vterm` utilizes the libvterm C library for high-performance emulation. This ensures accurate terminal behavior when running shell programs, text-based applications, and REPLs.
 
 To configure the *vterm* package, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; `vterm' is an Emacs terminal emulator that provides a fully interactive shell
 ;; experience within Emacs, supporting features such as color, cursor movement,
@@ -1714,6 +1797,7 @@ To configure the *vterm* package, add the following to your `~/.emacs.d/post-ini
   (setq vterm-kill-buffer-on-exit t)
   (setq vterm-max-scrollback 5000))
 ```
+<!-- post-init.el:end -->
 
 The `vterm` terminal emulator can be started with `M-x vterm`.
 
@@ -1733,6 +1817,7 @@ The Emacs server allows external programs such as `emacsclient` to connect to a 
 
 To start the Emacs server after initialization, add the following form to your `~/.emacs.d/post-init.el`:
 
+<!-- post-init.el:begin -->
 ```elisp
 ;; The Emacs server allows external programs such as `emacsclient' to connect to
 ;; a single running instance of Emacs. This makes it possible to open files in
@@ -1756,6 +1841,7 @@ To start the Emacs server after initialization, add the following form to your `
   ;; Defer starting the server until after Emacs has finished initializing
   (add-hook 'emacs-startup-hook #'my-server-start))
 ```
+<!-- post-init.el:end -->
 
 This configuration safely checks that Emacs is not running as a daemon and ensures that no existing server process is active, preventing conflicts.
 
@@ -1780,6 +1866,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 1. Read the following article from the same author: [Essential Emacs Packages for Efficient Software Development and Text Editing](https://www.jamescherti.com/essential-emacs-packages/)
 
 2. You can also add the following to `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```emacs-lisp
 ;;; Enable automatic insertion and management of matching pairs of characters
 ;;; (e.g., (), {}, "") globally using `electric-pair-mode'.
@@ -1925,6 +2012,7 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;; risky configurations are silently ignored.
 (setq enable-local-variables :safe)
 ```
+<!-- post-init.el:end -->
 
 It is also recommended to read the following articles:
 - [Automating Table of Contents Update for Markdown Documents (e.g., README.md)](https://www.jamescherti.com/emacs-markdown-table-of-contents-update-before-save/)
@@ -1935,6 +2023,7 @@ It is also recommended to read the following articles:
 The following additional file types may be enabled to extend language support beyond the core set.
 
 These modes are optional and can be added selectively to `~/.emacs.d/post-init.el`, depending on the languages and formats commonly encountered in a given workflow.
+<!-- post-init.el:begin -->
 ```elisp
 ;; Support for Git files (.gitconfig, .gitignore, .gitattributes...)
 (use-package git-modes
@@ -2078,6 +2167,7 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 ;;   :commands haskell-mode
 ;;   :mode ("\\.hs\\'" . haskell-mode))
 ```
+<!-- post-init.el:end -->
 
 ### Auto save buffers
 
@@ -2093,6 +2183,7 @@ By default, `buffer-guardian-mode` saves file-visiting buffers when:
 In addition to regular file-visiting buffers, `buffer-guardian-mode` also handles specialized editing buffers used for inline code blocks, such as `org-src` (for Org mode) and `edit-indirect` (commonly used for Markdown source code blocks). These temporary buffers are linked to an underlying parent buffer. Automatically saving them ensures that modifications made within these isolated code environments are correctly propagated back to the original Org or Markdown file.
 
 To configure the *buffer-guardian* package, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 (use-package buffer-guardian
   :init
@@ -2116,6 +2207,7 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
 
   (buffer-guardian-mode 1))
 ```
+<!-- post-init.el:end -->
 
 ### Jump between matching syntactic text objects, such as HTML tags, conditional blocks (if/then/else), and paired parentheses
 
@@ -2124,6 +2216,7 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
 The [evil-matchit](https://github.com/redguardtoo/evil-matchit/) package is an extensible package that allows jumping between matching syntactic pairs. It provides out-of-the-box support for a wide array of syntaxes, ranging from Python indentation blocks and Bash shell scripting constructs to Git merge conflicts. Although designed to integrate cleanly with `evil-mode`, the package operates entirely independently and offers native commands for standard usage. Additionally, it features an accessible Elisp API, enabling developers to quickly write custom matching rules and integrate third-party jump functions for any unsupported languages.
 
 To configure the `evil-matchit` package, add the following to your `~/.emacs.d/post-init.el`:
+<!-- post-init.el:begin -->
 ```elisp
 ;; The `evil-matchit' package is a extensible package that allows jumping
 ;; between matching syntactic pairs. It provides out-of-the-box support for a
@@ -2162,6 +2255,7 @@ To configure the `evil-matchit` package, add the following to your `~/.emacs.d/p
     (evilmi-load-plugin-rules '(python-ts-mode) '(simple python))
     (evilmi-load-plugin-rules '(yaml-ts-mode) '(simple yaml))))
 ```
+<!-- post-init.el:end -->
 
 ## Customizations: Before init (File: pre-init.el)
 
