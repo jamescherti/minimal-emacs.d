@@ -153,11 +153,7 @@
       ;; change. Benefit: you never lose bookmarks if Emacs crashes.
       bookmark-save-flag 1
 
-      uniquify-buffer-name-style 'forward
-
-      ;; Disable fontification during user input to reduce lag in large buffers.
-      ;; Also helps marginally with scrolling performance.
-      redisplay-skip-fontification-on-input t)
+      uniquify-buffer-name-style 'forward)
 
 ;;; `display-line-numbers-mode'
 
