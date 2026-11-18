@@ -214,8 +214,7 @@ FILENAME is the full or relative path of the file as a string."
 (setq native-comp-warning-on-missing-source init-file-debug
       native-comp-async-report-warnings-errors init-file-debug
       jka-compr-verbose init-file-debug
-      byte-compile-warnings init-file-debug
-      byte-compile-verbose init-file-debug)
+      byte-compile-warnings init-file-debug)
 
 ;;; Miscellaneous
 
