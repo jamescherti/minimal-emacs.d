@@ -629,7 +629,8 @@ This should be called after changing `auto-save-list-file-prefix'."
 
 ;;; ibuffer
 
-(setq ibuffer-formats
+(setq ibuffer-show-empty-filter-groups nil
+      ibuffer-formats
       '((mark modified read-only locked
               " " (name 55 55 :left :elide)
               " " (size 8 -1 :right)
