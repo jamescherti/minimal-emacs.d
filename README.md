@@ -2852,7 +2852,7 @@ The minimal-emacs.d base provides a sensible foundation for your personal config
 - **Optimized File Handlers:** Defers garbage collection during startup to reduce load times, restoring it to a standard threshold once Emacs is ready.
 - **Process Throughput:** Increases the chunk size for reading from processes to speed up external tool interactions.
 - **Compiled File Preference:** Instructs Emacs to prioritize loading newer byte-compiled files.
-- **Optimized Text Rendering:** Disables font compacting during startup to reduce memory usage and speed up initialization.
+- **Optimized Text Rendering:** Prevents Emacs from compacting font caches during interactive sessions, improving rendering performance.
 - **Silent Boot Sequence:** Removes the GNU Emacs startup message, unsets OS-irrelevant command line options, and defers toolbar setup.
 
 ### Native Compilation and Byte Compilation
@@ -2890,7 +2890,7 @@ The minimal-emacs.d base provides a sensible foundation for your personal config
 
 - **Modern Splits:** Favors vertical window splits over horizontal ones.
 - **Ediff Optimization:** Configures Ediff to use a single frame and split windows horizontally.
-- **Dired Mastery:** Enables `dired-dwim-target` for easier file operations between panes. Auto-updates Dired buffers and cleans up deleted directories silently.
+- **Dired Mastery:** Auto-updates Dired buffers and cleans up deleted directories silently.
 - **Window Dividers:** Uses minimalistic window dividers and sets default fringe widths.
 
 ### Security, Stability, and Customizable Initialization
