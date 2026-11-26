@@ -671,10 +671,12 @@ This should be called after changing `auto-save-list-file-prefix'."
 ;;; Remove warnings from narrow-to-region, upcase-region...
 
 (dolist (cmd '(list-timers narrow-to-region narrow-to-page
-                           upcase-region downcase-region
-                           list-threads erase-buffer scroll-left
-                           dired-find-alternate-file set-goal-column))
+                           upcase-region downcase-region list-threads
+                           erase-buffer scroll-left set-goal-column))
   (put cmd 'disabled nil))
+
+(with-eval-after-load 'dired
+  (put 'dired-find-alternate-file 'disabled nil))
 
 ;;; Load post init
 
