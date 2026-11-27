@@ -56,8 +56,13 @@ Return a list of (FILENAME CONTENT START END) quadruples."
 (defun minimal-emacs--strip-fences (content)
   "Remove surrounding ```lang ... ``` fences from CONTENT if present."
   (let ((stripped (string-trim content)))
-    (if (string-match "^\\`\\`\\`[a-zA-Z0-9_-]*[ \\t]*\n\\(.*\\)\n?\\`\\`\\`[ \\t]*\\'" stripped)
-        (string-trim (match-string 1 stripped))
+    (if (string-match "^\\`\\`\\`[a-zA-Z0-9_-]*[ \t]*\n\\(.*\n\\)*\\`\\`\\`[ \t]*$" stripped)
+        (let ((inner (substring stripped (match-end 0) (string-length stripped))))
+          ;; Remove the leading content up to the last ```
+          (string-match "^[ \t]*\n\\(.*\\)" inner)
+          (string-trim (if (match-string 1 inner)
+                          (match-string 1 inner)
+                        inner)))
       stripped)))
 
 ;; ---------------------------------------------------------------------------
