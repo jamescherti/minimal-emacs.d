@@ -61,8 +61,8 @@ Return a list of (FILENAME CONTENT START END) quadruples."
           ;; Remove the leading content up to the last ```
           (string-match "^[ \t]*\n\\(.*\\)" inner)
           (string-trim (if (match-string 1 inner)
-                          (match-string 1 inner)
-                        inner)))
+                           (match-string 1 inner)
+                         inner)))
       stripped)))
 
 ;; ---------------------------------------------------------------------------
@@ -75,6 +75,7 @@ LABEL is used in the error message."
   (let* ((tmpel (make-temp-file "__readme-test-" nil ".el"))
          (result nil))
     (with-temp-buffer
+      (insert ";;; test.el --- test -*- lexical-binding: t; no-byte-compile: t; -*-")
       (insert "(setq gc-cons-threshold most-positive-fixnum)\n\n")
       (insert code)
       (write-file tmpel))
