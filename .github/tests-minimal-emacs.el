@@ -1,5 +1,12 @@
 ;;; tests-minimal-emacs.el --- ERT tests for minimal-emacs.d -*- lexical-binding: t; no-byte-compile: t; -*-
 
+;; Author: James Cherti <https://www.jamescherti.com/contact/>
+;; URL: https://github.com/jamescherti/minimal-emacs.d
+;; Package-Requires: ((emacs "29.1"))
+;; Keywords: maint
+;; Version: 1.5.2
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
 ;; Verify README elisp blocks and init files by byte-compiling them.
 ;; Extracts configuration blocks from README.md between
 ;;   <!-- filename.el:begin --> and <!-- filename.el:end --> markers,
@@ -168,7 +175,7 @@ LABEL is used in the error message."
    "init.el"))
 
 (ert-deftest minimal-emacs--readme-byte-compiles ()
-  "Materialize README config, byte-compile the init files.
+  "Extract README code blocks, write files, and byte-compile successfully.
 Materialize README config blocks into the repo working directory next
 to init.el / early-init.el, byte-compile them, and require actual
 compilation success (no parse/syntax errors).
