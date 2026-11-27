@@ -3,4 +3,7 @@
 !early-init.el
 !init.el
 !.github/
+!.github/tests-minimal-emacs.el
+!.github/FUNDING.yml
+!.github/workflows/ci.yml
 !.LICENSE
