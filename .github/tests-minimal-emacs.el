@@ -54,16 +54,70 @@ Return a list of (FILENAME CONTENT START END) quadruples."
     (nreverse blocks)))
 
 (defun minimal-emacs--strip-fences (content)
-  "Remove surrounding ```lang ... ``` fences from CONTENT if present."
-  (let ((stripped (string-trim content)))
-    (if (string-match "^\\`\\`\\`[a-zA-Z0-9_-]*[ \t]*\n\\(.*\n\\)*\\`\\`\\`[ \t]*$" stripped)
-        (let ((inner (substring stripped (match-end 0) (string-length stripped))))
-          ;; Remove the leading content up to the last ```
-          (string-match "^[ \t]*\n\\(.*\\)" inner)
-          (string-trim (if (match-string 1 inner)
-                           (match-string 1 inner)
-                         inner)))
-      stripped)))
+  "Remove the opening and closing code-fence lines of a single fenced block.
+Handles the fence variants used in README.md: ```lang, ``` lang, and a
+plain closing ```.  If no fences are present, returns CONTENT trimmed."
+  (let ((lines (split-string (string-trim content) "\n" t)))
+    (when (and lines
+               (string-match-p "^```[ \t]*[a-zA-Z0-9_+-]*[ \t]*$" (car lines)))
+      (setq lines (cdr lines)))
+    (when (and lines
+               (string-match-p "^```[ \t]*$" (car (last lines))))
+      (setq lines (butlast lines)))
+    (string-trim (string-join lines "\n"))))
+
+(defun minimal-emacs--group-by-filename (blocks)
+  "Group BLOCKS by filename, concatenating contents in README order.
+BLOCKS is a list of (FILENAME CONTENT START END) quadruples.
+Returns a list of (FILENAME CONCATENATED-CONTENT) pairs, preserving the
+order in which each filename first appears.  Empty blocks are skipped."
+  (let ((groups))
+    (dolist (b blocks)
+      (let* ((fname (car b))
+             (content (minimal-emacs--strip-fences (cadr b)))
+             (cell (catch 'found
+                     (dolist (g groups)
+                       (when (equal (car g) fname)
+                         (throw 'found g))))))
+        (when (not (string-empty-p content))
+          (if cell
+              (setcar (cdr cell) (concat (cadr cell) "\n\n" content))
+            (push (list fname content) groups)))))
+    (nreverse groups)))
+
+(defun minimal-emacs--materialize (fname content)
+  "Write CONTENT to repo-root/FNAME with a `lexical-binding' header.
+Returns the absolute file name of the materialized file."
+  (let ((path (expand-file-name fname minimal-emacs--repo-root)))
+    (with-temp-file path
+      (insert (concat ";;; -*- lexical-binding: t; -*-\n" content)))
+    path))
+
+(defun minimal-emacs--byte-compile-config (file)
+  "Byte-compile FILE in-process, succeeding only if it produces a .elc.
+`byte-compile-file' reports hard parse/syntax errors to stderr and returns
+nil (rather than signalling), so a produced .elc is the authoritative success
+signal.  Warnings are not treated as failures: these are the user
+customization files (`pre-early-init.el', `post-init.el') that CI never
+byte-compiles, and they legitimately reference packages and symbols absent
+from the minimal test environment.  A stray markdown code-fence marker such
+as ```elisp leaks into the extracted source and yields a hard parse error,
+which fails the test.
+Returns t on success, otherwise a string describing the failure."
+  (let* ((byte-compile-error-on-warn nil)
+         (byte-compile-warnings '(not obsolete free-vars))
+         (elc (concat file "c")))
+    (unwind-protect
+        (progn
+          (when (file-exists-p elc)
+            (delete-file elc))
+          (byte-compile-file file)
+          (if (file-exists-p elc)
+              t
+            (format "%s: byte-compilation failed (no %s produced) ,  the source\ncontains a hard parse/syntax error, e.g. a stray markdown code-fence marker.\nSee the byte-compiler's stderr for the specific diagnostic."
+                    (file-name-nondirectory file) (file-name-nondirectory elc))))
+      (when (file-exists-p elc)
+        (delete-file elc)))))
 
 ;; ---------------------------------------------------------------------------
 ;; Byte-compilation helper
@@ -114,16 +168,42 @@ LABEL is used in the error message."
    "init.el"))
 
 (ert-deftest minimal-emacs--readme-byte-compiles ()
-  "Verify that README.md elisp blocks byte-compile without errors."
+  "Materialize README config, byte-compile the init files.
+Materialize README config blocks into the repo working directory next
+to init.el / early-init.el, byte-compile them, and require actual
+compilation success (no parse/syntax errors).
+
+The README documents the `pre-early-init.el' and `post-init.el'
+customization files as fenced code blocks.  This test extracts those blocks,
+strips the markdown code-fence markers (```elisp / ```emacs-lisp / ```),
+materializes one file per documented filename (concatenating all blocks that
+share a filename, in README order), writes them to the repo root, and
+byte-compiles each.  Stray fence markers leak into the extracted source and
+produce a hard parse error, which fails the test; the legitimate warnings
+that these config files emit in the minimal environment (undefined
+functions, free variables) do not."
   (should (file-exists-p minimal-emacs--readme))
-  (let ((blocks (minimal-emacs--extract-blocks minimal-emacs--readme)))
-    (should (> (length blocks) 0))
-    (dolist (b blocks)
-      (let* ((fname (car b))
-             (content (cadr b))
-             (code (minimal-emacs--strip-fences content)))
-        (when (string-trim code)
-          (minimal-emacs--byte-compile-string code fname))))))
+  (let* ((blocks (minimal-emacs--extract-blocks minimal-emacs--readme))
+         (groups (minimal-emacs--group-by-filename blocks))
+         (fnames (mapcar 'car groups)))
+    (should (> (length groups) 0))
+    (should (member "pre-early-init.el" fnames))
+    (should (member "post-init.el" fnames))
+    (let (failures)
+      (dolist (g groups)
+        (let* ((fname (car g))
+               (content (cadr g))
+               (path (minimal-emacs--materialize fname content))
+               (result (minimal-emacs--byte-compile-config path)))
+          (unless (eq result t)
+            (push (format "%s: %s" fname result) failures))
+          ;; Remove the compiled artifact; keep the materialized source.
+          (let ((elc (concat path "c")))
+            (when (file-exists-p elc)
+              (delete-file elc)))))
+      (when failures
+        (error "Byte-compilation failed for materialized README files:\n%s"
+               (string-join (nreverse failures) "\n"))))))
 
 (ert-deftest minimal-emacs--line-count-consistency ()
   "Verify README line count claim is within 25% of actual non-trivial code lines.
