@@ -8,7 +8,8 @@
 ;; Also performs offline consistency checks between README claims and
 ;; the actual init.el / early-init.el source.
 ;;
-;; Run with: make test  (or: emacs -Q --batch -l tests-minimal-emacs.el -f ert-run-tests-batch-and-exit)
+;; Run with:
+;; emacs -Q --batch -l .github/tests-minimal-emacs.el -f ert-run-tests-batch-and-exit
 
 ;;; Code:
 
@@ -40,7 +41,7 @@ Return a list of (FILENAME CONTENT START END) quadruples."
               "<!--[ \\t]*\\(\\(?:[a-zA-Z0-9_-]+\\.el\\)\\)[ \\t]*:begin[ \\t]*-->"
               nil t)
         (let* ((fname (match-string 1))
-               (start (match-beginning 0))
+               (start (match-end 0))
                end
                content)
           (when (re-search-forward
@@ -160,8 +161,8 @@ so count only substantive code lines to match that claim."
          ;; List of (LABEL README-PATTERN VAR-NAME)
          ;; Covers every Feature bullet in the README Features section.
          (checks '(("Optimized File Handlers"
-                     "\\*\\*Optimized File Handlers"
-                     "gc-cons-threshold")
+                    "\\*\\*Optimized File Handlers"
+                    "gc-cons-threshold")
                    ("Process Throughput"
                     "\\*\\*Process Throughput"
                     "read-process-output-max")
