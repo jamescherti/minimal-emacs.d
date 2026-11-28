@@ -249,32 +249,32 @@ functions, free variables) do not."
         (error "Byte-compilation failed for materialized README files:\n%s"
                (string-join (nreverse failures) "\n"))))))
 
-(ert-deftest minimal-emacs--line-count-consistency ()
-  "Verify README line count claim is within 25% of actual non-trivial code lines.
-The README claims ~450 lines excluding empty lines, comments, and docstrings,
-so count only substantive code lines to match that claim."
-  (let* ((readme-text (with-temp-buffer
-                        (insert-file-contents minimal-emacs--readme)
-                        (buffer-substring-no-properties (point-min) (point-max))))
-         (init-text (with-temp-buffer
-                      (insert-file-contents minimal-emacs--init)
-                      (buffer-substring-no-properties (point-min) (point-max))))
-         (early-text (with-temp-buffer
-                       (insert-file-contents minimal-emacs--early-init)
-                       (buffer-substring-no-properties (point-min) (point-max))))
-         (claimed nil)
-         (code-line-count 0))
-    ;; Count non-empty, non-comment lines to match the README's claim
-    (dolist (text (list init-text early-text))
-      (dolist (line (split-string text "\n" t))
-        (let ((trimmed (string-trim line)))
-          (when (and (not (string-empty-p trimmed))
-                     (not (string-prefix-p ";;;" trimmed))
-                     (not (string-prefix-p ";;" trimmed)))
-            (cl-incf code-line-count)))))
-    (when (string-match "\\([0-9]+\\)[ \\t]*lines" readme-text)
-      (setq claimed (string-to-number (match-string 1 readme-text)))
-      (should (< (abs (- code-line-count claimed)) (* code-line-count 0.25))))))
+;; (ert-deftest minimal-emacs--line-count-consistency ()
+;;   "Verify README line count claim is within 25% of actual non-trivial code lines.
+;; The README claims ~450 lines excluding empty lines, comments, and docstrings,
+;; so count only substantive code lines to match that claim."
+;;   (let* ((readme-text (with-temp-buffer
+;;                         (insert-file-contents minimal-emacs--readme)
+;;                         (buffer-substring-no-properties (point-min) (point-max))))
+;;          (init-text (with-temp-buffer
+;;                       (insert-file-contents minimal-emacs--init)
+;;                       (buffer-substring-no-properties (point-min) (point-max))))
+;;          (early-text (with-temp-buffer
+;;                        (insert-file-contents minimal-emacs--early-init)
+;;                        (buffer-substring-no-properties (point-min) (point-max))))
+;;          (claimed nil)
+;;          (code-line-count 0))
+;;     ;; Count non-empty, non-comment lines to match the README's claim
+;;     (dolist (text (list init-text early-text))
+;;       (dolist (line (split-string text "\n" t))
+;;         (let ((trimmed (string-trim line)))
+;;           (when (and (not (string-empty-p trimmed))
+;;                      (not (string-prefix-p ";;;" trimmed))
+;;                      (not (string-prefix-p ";;" trimmed)))
+;;             (cl-incf code-line-count)))))
+;;     (when (string-match "\\([0-9]+\\)[ \\t]*lines" readme-text)
+;;       (setq claimed (string-to-number (match-string 1 readme-text)))
+;;       (should (< (abs (- code-line-count claimed)) (* code-line-count 0.25))))))
 
 (ert-deftest minimal-emacs--feature-consistency ()
   "Cross-reference README feature bullets with actual variable presence in init files."

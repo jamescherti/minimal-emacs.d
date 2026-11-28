@@ -239,10 +239,10 @@ Ensure all libraries are byte-compiled and native-compiled using [compile-angel.
   ;; the `use-package' macro, you'll need to explicitly add:
   ;; (eval-when-compile (require 'use-package))
   ;; at the top of your init file.
-  (push "/init.el" compile-angel-excluded-files)
-  (push "/early-init.el" compile-angel-excluded-files)
-  (push "/pre-init.el" compile-angel-excluded-files)
-  (push "/post-init.el" compile-angel-excluded-files)
+  (push "/init.el" compile-angel-excluded-path-suffixes)
+  (push "/early-init.el" compile-angel-excluded-path-suffixes)
+  (push "/pre-init.el" compile-angel-excluded-path-suffixes)
+  (push "/post-init.el" compile-angel-excluded-path-suffixes)
   (push "/pre-early-init.el" compile-angel-excluded-files)
   (push "/post-early-init.el" compile-angel-excluded-files))
 ```
@@ -261,6 +261,7 @@ To fix this, add **exec-path-from-shell** to `~/.emacs.d/post-init.el`:
            (eq system-type 'darwin)) ; macOS only
   :demand t
   :functions exec-path-from-shell-initialize
+  :defines exec-path-from-shell-variables
   :config
   (dolist (var '("TMPDIR"
                  "SSH_AUTH_SOCK" "SSH_AGENT_PID"
