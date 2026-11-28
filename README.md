@@ -233,18 +233,18 @@ Ensure all libraries are byte-compiled and native-compiled using [compile-angel.
   (setq compile-angel-verbose t)
 
   ;; The following directive prevents compile-angel from compiling your init
-  ;; files. If you choose to remove this push to `compile-angel-excluded-files'
-  ;; and compile your pre/post-init files, ensure you understand the
-  ;; implications and thoroughly test your code. For example, if you're using
-  ;; the `use-package' macro, you'll need to explicitly add:
-  ;; (eval-when-compile (require 'use-package))
-  ;; at the top of your init file.
+  ;; files. If you choose to remove this push to
+  ;; `compile-angel-excluded-path-suffixes' and compile your pre/post-init
+  ;; files, ensure you understand the implications and thoroughly test your
+  ;; code. For example, if you're using the `use-package' macro, you'll need to
+  ;; explicitly add: (eval-when-compile (require 'use-package)) at the top of
+  ;; your init file.
   (push "/init.el" compile-angel-excluded-path-suffixes)
   (push "/early-init.el" compile-angel-excluded-path-suffixes)
   (push "/pre-init.el" compile-angel-excluded-path-suffixes)
   (push "/post-init.el" compile-angel-excluded-path-suffixes)
-  (push "/pre-early-init.el" compile-angel-excluded-files)
-  (push "/post-early-init.el" compile-angel-excluded-files))
+  (push "/pre-early-init.el" compile-angel-excluded-path-suffixes)
+  (push "/post-early-init.el" compile-angel-excluded-path-suffixes))
 ```
 <!-- post-init.el:end -->
 
@@ -499,13 +499,59 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-(use-package embark-consult)
+(use-package embark-consult
+  :after (embark consult))
 
 ;; Consult offers a suite of commands for efficient searching, previewing, and
 ;; interacting with buffers, file contents, and more, improving various tasks.
 
 (use-package consult
-  :commands (consult-xref consult-register-window consult-customize)
+  :commands (consult-fd
+             consult-customize
+             consult-register-window
+             consult-ripgrep
+             consult-bookmark
+             consult-buffer
+             consult-buffer-other-frame
+             consult-buffer-other-tab
+             consult-buffer-other-window
+             consult-complex-command
+             consult-find
+             consult-flymake
+             consult-focus-lines
+             consult-global-mark
+             consult-goto-line
+             consult-grep
+             consult-grep-match
+             consult-history
+             consult-isearch-history
+             consult-keep-lines
+             consult-kmacro
+             consult-line
+             consult-line-multi
+             consult-locate
+             consult-man
+             consult-mark
+             consult-mode-command
+             consult-org-agenda
+             consult-org-heading
+             consult-outline
+             consult-project-buffer
+             consult-recent-file
+             consult-register
+             consult-register-load
+             consult-register-store
+             consult-register-format
+             consult-theme
+             consult-yank-pop
+             consult-yank-from-kill-ring
+             consult-yank-replace
+             consult-imenu
+             consult-info
+             consult-xref)
+  :functions (consult--customize-put
+              consult-narrow-help)
+
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
@@ -578,6 +624,10 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; after lazily loading the package.
 
   :config
+  (require 'consult-imenu)
+  (require 'consult-xref)
+  (require 'consult-info)
+
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
   ;; (setq consult-preview-key 'any)
@@ -803,24 +853,6 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 ```
 <!-- post-init.el:end -->
 
-You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
-<!-- post-init.el:begin -->
-```emacs-lisp
-(eval-when-compile
-  (defmacro evil-define-operator (name args docstring &rest body)
-    "Byte-compile stub: expands to a defun."
-    `(defun ,name ,args ,docstring ,@body)))
-;; The following code enables commenting and uncommenting by pressing gcc in
-;; normal mode and gc in visual mode.
-(with-eval-after-load "evil"
-  (evil-define-operator my-evil-comment-or-uncomment (beg end)
-    "Toggle comment for the region between BEG and END."
-    (interactive "<r>")
-    (comment-or-uncomment-region beg end))
-  (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
-```
-<!-- post-init.el:end -->
-
 ### Persisting and Restoring all buffers, windows/split, tab-bar, frames...
 
 The [easysession](https://github.com/jamescherti/easysession.el) package provides a comprehensive session management for Emacs. It is capable of persisting and restoring file-visiting buffers, indirect buffers (clones), buffer narrowing, Dired buffers, window configurations, the built-in tab-bar (including tabs, their buffers, and associated windows), as well as entire Emacs frames.
@@ -923,8 +955,8 @@ This configuration sets up `markdown-mode` with deferred loading to improve star
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc
              markdown-toc--toc-already-present-p)
-  :init
-  (setq markdown-toc-header-toc-title "**Table of Contents**"))
+  :custom
+  (markdown-toc-header-toc-title "**Table of Contents**"))
 ```
 <!-- post-init.el:end -->
 
@@ -1273,11 +1305,11 @@ To configure the *diff-hl* package, add the following to your `~/.emacs.d/post-i
   :commands (diff-hl-mode
              global-diff-hl-mode)
   :hook (prog-mode . diff-hl-mode)
-  :init
-  (setq diff-hl-flydiff-delay 0.4)  ; Faster
-  (setq diff-hl-show-staged-changes nil)  ; Realtime feedback
-  (setq diff-hl-update-async t)  ; Do not block Emacs
-  (setq diff-hl-global-modes '(not pdf-view-mode image-mode)))
+  :custom
+  (diff-hl-flydiff-delay 0.4)  ; Faster
+  (diff-hl-show-staged-changes nil)  ; Realtime feedback
+  (diff-hl-update-async t)  ; Do not block Emacs
+  (diff-hl-global-modes '(not pdf-view-mode image-mode)))
 ```
 <!-- post-init.el:end -->
 
@@ -1301,7 +1333,11 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
   (setq org-hide-leading-stars t)
   (setq org-startup-indented t)
   (setq org-adapt-indentation nil)
-  (setq org-edit-src-content-indentation 0)
+
+  (setq org-src-content-indentation 0)
+  (with-suppressed-warnings ((obsolete org-edit-src-content-indentation))
+    (setq org-edit-src-content-indentation 0))
+
   ;; (setq org-fontify-done-headline t)
   ;; (setq org-fontify-todo-headline t)
   ;; (setq org-fontify-whole-heading-line t)
@@ -1981,7 +2017,10 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "•")
-(setq uniquify-after-kill-buffer-p t)
+
+(setq uniquify-after-kill-buffer-flag t)
+(with-suppressed-warnings ((obsolete uniquify-after-kill-buffer-p))
+  (setq uniquify-after-kill-buffer-p t))
 
 ;; Window dividers separate windows visually. Window dividers are bars that can
 ;; be dragged with the mouse, thus allowing you to easily resize adjacent
@@ -2145,9 +2184,9 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
   :mode ("\\.csv\\'" . csv-mode)
   :hook ((csv-mode . csv-align-mode)
          (csv-mode . csv-guess-set-separator))
-  :init
-  (setq csv-align-max-width 100)
-  (setq csv-separators '("," ";" " " "|" "\t")))
+  :custom
+  (csv-align-max-width 100)
+  (csv-separators '("," ";" " " "|" "\t")))
 
 ;; Support for Go
 ;;
@@ -2162,8 +2201,8 @@ These modes are optional and can be added selectively to `~/.emacs.d/post-init.e
 (use-package rust-mode
   :commands rust-mode
   :mode ("\\.rs\\'" . rust-mode)
-  :init
-  (setq rust-indent-offset 2))
+  :custom
+  (rust-indent-offset 2))
 
 ;; Major mode for editing crontab files
 (use-package crontab-mode
@@ -2227,6 +2266,7 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
 <!-- post-init.el:begin -->
 ```elisp
 (use-package buffer-guardian
+  :demand t
   :commands (buffer-guardian-mode)
   :init
   ;; When non-nil, include remote files in the auto-save process
