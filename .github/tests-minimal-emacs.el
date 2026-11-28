@@ -92,12 +92,49 @@ order in which each filename first appears.  Empty blocks are skipped."
             (push (list fname content) groups)))))
     (nreverse groups)))
 
+(defun minimal-emacs--describe-file (fname)
+  "Return a brief DESCRIPTION for the user customization file FNAME.
+Descriptions are taken from the README's description of each file's role in
+the startup sequence."
+  (or (cdr (assoc (file-name-nondirectory fname)
+                  '(("pre-early-init.el" . "User customization loaded before early-init.el")
+                    ("post-early-init.el" . "User customization loaded after early-init.el")
+                    ("pre-init.el" . "User customization loaded before init.el")
+                    ("post-init.el" . "User customization loaded after init.el"))))
+      "User customization"))
+
 (defun minimal-emacs--materialize (fname content)
-  "Write CONTENT to repo-root/FNAME with a `lexical-binding' header.
+  "Write CONTENT to repo-root/FNAME as a well-formed Emacs Lisp file.
+The layout follows the project conventions used by `init.el': a
+`;;; FNAME --- DESCRIPTION -*- lexical-binding: t; -*-' line, the metadata
+block, a `;;; Commentary:' section, a `;;; Code:' marker preceding CONTENT,
+and a `;;; FNAME ends here' footer.  Only `lexical-binding: t;' is set (not
+`no-byte-compile: t;') so the ERT suite can still byte-compile the
+materialized file to verify it parses.
 Returns the absolute file name of the materialized file."
-  (let ((path (expand-file-name fname minimal-emacs--repo-root)))
+  (let* ((base (file-name-nondirectory fname))
+         (desc (minimal-emacs--describe-file base))
+         (body (string-trim content))
+         (path (expand-file-name fname minimal-emacs--repo-root)))
     (with-temp-file path
-      (insert (concat ";;; -*- lexical-binding: t; -*-\n" content)))
+      (insert
+       (format ";;; %s --- %s -*- lexical-binding: t; -*-\n\n" base desc)
+       ";; Author: James Cherti <https://www.jamescherti.com/contact/>\n"
+       ";; URL: https://github.com/jamescherti/minimal-emacs.d\n"
+       ";; Package-Requires: ((emacs \"29.1\"))\n"
+       ";; Keywords: maint\n"
+       ";; Version: 1.5.2\n"
+       ";; SPDX-License-Identifier: GPL-3.0-or-later\n\n"
+       ";;; Commentary:\n"
+       (format ";; %s\n" desc)
+       ";;\n"
+       ";; Materialized from the matching code block in README.md by the ERT\n"
+       ";; suite to verify it is well-formed Emacs Lisp.\n\n"
+       ";;; Code:\n\n")
+      (insert body)
+      (unless (string-suffix-p "\n" body)
+        (insert "\n"))
+      (insert (format "\n;;; %s ends here\n" base)))
     path))
 
 (defun minimal-emacs--byte-compile-config (file)
