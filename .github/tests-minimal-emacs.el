@@ -141,14 +141,14 @@ Returns the absolute file name of the materialized file."
   "Byte-compile FILE in-process, succeeding only if it produces a .elc.
 `byte-compile-file' reports hard parse/syntax errors to stderr and returns
 nil (rather than signalling), so a produced .elc is the authoritative success
-signal.  Warnings are not treated as failures: these are the user
-customization files (`pre-early-init.el', `post-init.el') that CI never
-byte-compiles, and they legitimately reference packages and symbols absent
-from the minimal test environment.  A stray markdown code-fence marker such
-as ```elisp leaks into the extracted source and yields a hard parse error,
-which fails the test.
+signal.  Warnings ARE treated as errors (`byte-compile-error-on-warn' is t):
+the code blocks in README.md must be byte-compilation-clean.  Only
+`free-vars' and `obsolete' warnings are excluded, since the blocks reference
+packages that are not installed in the minimal test environment.  A stray
+markdown code-fence marker such as ```elisp leaks into the extracted source
+and yields a hard parse error, which also fails the test.
 Returns t on success, otherwise a string describing the failure."
-  (let* ((byte-compile-error-on-warn nil)
+  (let* ((byte-compile-error-on-warn t)
          (byte-compile-warnings '(not obsolete free-vars))
          (elc (concat file "c")))
     (unwind-protect
