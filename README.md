@@ -215,6 +215,18 @@ Ensure all libraries are byte-compiled and native-compiled using [compile-angel.
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
   :demand t
+  :commands (compile-angel-on-load-mode
+             compile-angel-on-save-local-mode
+             compile-angel-on-save-mode)
+  :init
+  ;; A local mode that compiles .el files whenever the user saves them.
+  (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
+
+  ;; A global mode that compiles .el files prior to loading them via `load' or
+  ;; `require'. Additionally, it compiles all packages that were loaded before
+  ;; the mode `compile-angel-on-load-mode' was activated.
+  (compile-angel-on-load-mode 1)
+
   :config
   ;; Set `compile-angel-verbose' to nil to disable compile-angel messages.
   ;; (When set to nil, compile-angel won't show which file is being compiled.)
@@ -232,15 +244,7 @@ Ensure all libraries are byte-compiled and native-compiled using [compile-angel.
   (push "/pre-init.el" compile-angel-excluded-files)
   (push "/post-init.el" compile-angel-excluded-files)
   (push "/pre-early-init.el" compile-angel-excluded-files)
-  (push "/post-early-init.el" compile-angel-excluded-files)
-
-  ;; A local mode that compiles .el files whenever the user saves them.
-  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
-
-  ;; A global mode that compiles .el files prior to loading them via `load' or
-  ;; `require'. Additionally, it compiles all packages that were loaded before
-  ;; the mode `compile-angel-on-load-mode' was activated.
-  (compile-angel-on-load-mode 1))
+  (push "/post-early-init.el" compile-angel-excluded-files))
 ```
 <!-- post-init.el:end -->
 
@@ -296,6 +300,7 @@ The recentf, savehist, saveplace, and auto-revert built-in packages are already 
 ;; recently.
 (use-package recentf
   :ensure nil
+  :commands (recentf-mode recentf-cleanup)
   :init
   (setq recentf-auto-cleanup (if (daemonp) 300 'never))
   (setq recentf-exclude
@@ -372,6 +377,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ;; current candidates, positioned either below or above the point. Candidates
 ;; can be selected by navigating up or down.
 (use-package corfu
+  :commands (global-corfu-mode)
   :init
   ;; Disable Ispell completion function. As an alternative try `cape-dict'.
   (setq text-mode-ispell-word-completion nil)
@@ -421,6 +427,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; Vertico provides a vertical completion interface, making it easier to
 ;; navigate and select from completion candidates (e.g., when `M-x` is pressed).
 (use-package vertico
+  :commands (vertico-mode)
   :init
   ;; (setq vertico-scroll-margin 0) ;; Different scroll margin
   ;; (setq vertico-count 20) ;; Show more candidates
@@ -442,6 +449,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; In addition to that, Marginalia also enhances Vertico by adding rich
 ;; annotations to the completion candidates displayed in Vertico's interface.
 (use-package marginalia
+  :commands (marginalia-mode)
   ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
   ;; available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
@@ -450,7 +458,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 
   ;; The :init section is always executed.
   :init
-
   ;; Marginalia must be activated in the :init section of use-package such that
   ;; the mode gets enabled right away. Note that this forces loading the
   ;; package.
@@ -461,13 +468,13 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; improving user efficiency and workflow within Emacs. Together, they create a
 ;; cohesive environment for managing completions and interactions.
 (use-package embark
+  :commands (embark-prefix-help-command)
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
   :init
-
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
 
@@ -497,6 +504,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; interacting with buffers, file contents, and more, improving various tasks.
 
 (use-package consult
+  :commands (consult-xref consult-register-window consult-customize)
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
@@ -554,7 +562,6 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 
   ;; The :init configuration is always executed (Not lazy)
   :init
-
   ;; Tweak the register preview for `consult-register-load',
   ;; `consult-register-store' and the built-in commands.  This improves the
   ;; register formatting, adds thin separator lines, register sorting and hides
@@ -568,8 +575,8 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
-  :config
 
+  :config
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
   ;; (setq consult-preview-key 'any)
@@ -624,6 +631,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu-session package complements undo-fu by enabling the saving
 ;; and restoration of undo history across Emacs sessions, even after restarting.
 (use-package undo-fu-session
+  :commands (undo-fu-session-global-mode)
   :init
   (undo-fu-session-global-mode 1))
 ```
@@ -689,6 +697,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 ;; Vim emulation
 (use-package evil
+  :commands (evil-mode evil-select-search-module evil-define-operator evil-define-key)
   :init
   ;; It has to be defined before evil
   (setq evil-want-integration t)
@@ -733,6 +742,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 (use-package evil-collection
   :after evil
+  :commands (evil-collection-init)
   :init
   ;; It has to be defined before evil-collection
   (setq evil-collection-setup-minibuffer t)
@@ -754,6 +764,7 @@ You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-ba
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
+  :commands (vim-tab-bar-mode)
   :init
   (vim-tab-bar-mode 1))
 ```
@@ -773,6 +784,7 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 ;; using S" or gS".
 (use-package evil-surround
   :after evil
+  :commands (global-evil-surround-mode)
   :init
   (setq evil-surround-pairs-alist
         '((?\( . ("(" . ")"))
@@ -792,7 +804,11 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 
 You can also add the following code to enable commenting and uncommenting by pressing `gcc` in normal mode and `gc` in visual mode (thanks you to the Reddit user u/mistakenuser for this contribution, which replaces the evil-commentary package):
 <!-- post-init.el:begin -->
-``` emacs-lisp
+```emacs-lisp
+(eval-when-compile
+  (defmacro evil-define-operator (name args docstring &rest body)
+    "Byte-compile stub: expands to a defun."
+    `(defun ,name ,args ,docstring ,@body)))
 ;; The following code enables commenting and uncommenting by pressing gcc in
 ;; normal mode and gc in visual mode.
 (with-eval-after-load "evil"
@@ -824,17 +840,16 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 (use-package easysession
   ;; ':demand t' ensures the package is loaded immediately upon startup
   :demand t
+  :commands (easysession-switch-to
+             easysession-save
+             easysession-switch-to-and-restore-geometry
+             easysession-rename
+             easysession-reset
+             easysession-unload
+             easysession-delete
+             easysession-setup)
 
-  :config
-  ;; Key mappings
-  (global-set-key (kbd "C-c sl") #'easysession-switch-to) ; Load session
-  (global-set-key (kbd "C-c ss") #'easysession-save) ; Save session
-  (global-set-key (kbd "C-c sL") #'easysession-switch-to-and-restore-geometry)
-  (global-set-key (kbd "C-c sr") #'easysession-rename)
-  (global-set-key (kbd "C-c sR") #'easysession-reset)
-  (global-set-key (kbd "C-c su") #'easysession-unload)
-  (global-set-key (kbd "C-c sd") #'easysession-delete)
-
+  :init
   ;; Save every 10 minutes
   (setq easysession-save-interval (* 10 60))
 
@@ -857,7 +872,17 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
   ;; - To enable automatic session loading during `emacs-startup-hook', or
   ;;   `server-after-make-frame-hook' when running in daemon mode.
   ;; - To save the session at regular intervals, and when Emacs exits.
-  (easysession-setup))
+  (easysession-setup)
+
+  :config
+  ;; Key mappings
+  (global-set-key (kbd "C-c sl") #'easysession-switch-to) ; Load session
+  (global-set-key (kbd "C-c ss") #'easysession-save) ; Save session
+  (global-set-key (kbd "C-c sL") #'easysession-switch-to-and-restore-geometry)
+  (global-set-key (kbd "C-c sr") #'easysession-rename)
+  (global-set-key (kbd "C-c sR") #'easysession-reset)
+  (global-set-key (kbd "C-c su") #'easysession-unload)
+  (global-set-key (kbd "C-c sd") #'easysession-delete))
 ```
 <!-- post-init.el:end -->
 
@@ -935,7 +960,8 @@ To configure **kirigami**, add the following to `~/.emacs.d/post-init.el`:
 <!-- post-init.el:begin -->
 ```elisp
 (use-package kirigami
-  :commands (kirigami-open-fold
+  :commands (kirigami-global-mode
+             kirigami-open-fold
              kirigami-open-fold-rec
              kirigami-close-fold
              kirigami-toggle-fold
@@ -1179,6 +1205,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 ;; can include placeholders, fields, and dynamic content.
 (use-package yasnippet
   :after yasnippet-snippets
+  :commands (yas-global-mode)
   :init
   (setq yas-also-auto-indent-first-line t)  ; Indent first line of snippet
   (setq yas-also-indent-empty-lines t)
@@ -1345,6 +1372,7 @@ To configure **buffer-terminator**, add the following to `~/.emacs.d/post-init.e
 <!-- post-init.el:begin -->
 ```emacs-lisp
 (use-package buffer-terminator
+  :commands (buffer-terminator-mode)
   :init
   ;; Enable/Disable verbose mode to log buffer cleanup events
   (setq buffer-terminator-verbose nil)
@@ -1383,7 +1411,12 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
              treemacs-select-directory
              treemacs-bookmark
              treemacs-find-file
-             treemacs-find-tag)
+             treemacs-find-tag
+             treemacs-hide-gitignored-files-mode
+             treemacs-git-mode
+             treemacs-follow-mode
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode)
 
   :bind
   (:map global-map
@@ -1642,6 +1675,7 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
 ;;   for navigation.
 (use-package inhibit-mouse
+  :commands (inhibit-mouse-mode)
   :init
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
@@ -1739,6 +1773,7 @@ To configure the *persist-text-scale* package, add the following to your `~/.ema
 <!-- post-init.el:begin -->
 ```elisp
 (use-package persist-text-scale
+  :commands (persist-text-scale-mode)
   :init
   (setq text-scale-mode-step 1.07)
   (persist-text-scale-mode 1))
@@ -1829,6 +1864,7 @@ To start the Emacs server after initialization, add the following form to your `
 (use-package server
   :ensure nil
   :if (not (daemonp))
+  :commands (server-running-p server-start)
   :preface
   (defun my-server-start ()
     "Start the Emacs server if no server process is currently active."
@@ -1874,7 +1910,10 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 
 ;; Set the fringes to match the pixel height of a character. This ensures the
 ;; fringe is wide enough, scaling dynamically with the current font size.
-(fringe-mode (frame-char-width))
+(use-package fringe
+  :commands (fringe-mode)
+  :config
+  (fringe-mode (frame-char-width)))
 
 ;; When Delete Selection mode is enabled, typed text replaces the selection
 ;; if the selection is active.
@@ -1955,11 +1994,13 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
 ;; Dired buffers: Automatically hide file details (permissions, size,
 ;; modification date, etc.) and all the files in the `dired-omit-files' regular
 ;; expression for a cleaner display.
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(use-package dired-hide-details
+  :commands (dired-hide-details-mode)
+  :hook (dired-mode . dired-hide-details-mode))
 
 ;; Hide files from dired
 (setq dired-omit-files (concat "\\`[.]\\'"
-                               "\\|\\(?:\\.js\\)?\\.meta\\'"
+                               "\\|\\(\\.js\\)?\\.meta\\'"
                                "\\|\\.\\(?:elc\\|a\\|o\\|pyc\\|pyo\\|swp\\|class\\)\\'"
                                "\\|^\\.DS_Store\\'"
                                "\\|^\\.\\(?:svn\\|git\\)\\'"
@@ -1968,7 +2009,9 @@ In Emacs, customization variables modified via the UI (e.g., `M-x customize`) ar
                                "\\|^\\.project\\(?:ile\\)?\\'"
                                "\\|^flycheck_.*"
                                "\\|^flymake_.*"))
-(add-hook 'dired-mode-hook #'dired-omit-mode)
+(use-package dired-omit
+  :commands (dired-omit-mode)
+  :hook (dired-mode . dired-omit-mode))
 
 ;; dired: Group directories first
 (with-eval-after-load 'dired
@@ -2183,6 +2226,7 @@ To configure the *buffer-guardian* package, add the following to your `~/.emacs.
 <!-- post-init.el:begin -->
 ```elisp
 (use-package buffer-guardian
+  :commands (buffer-guardian-mode)
   :init
   ;; When non-nil, include remote files in the auto-save process
   (setq buffer-guardian-inhibit-saving-remote-files t)
